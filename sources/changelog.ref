@@ -1,0 +1,19 @@
+; Copyright 2024 Paul Maddern (paul@arcadegeek.co.uk)
+
+[Page:Changelog]
+SectionType=BulletPoints
+
+[Changelog:20261022]
+-
+
+- Annotated the game status buffer, player, actors, interrupts, introduction,
+  room unpacker, event handlers and graphics utilities.
+- Linked equivalent Booty routines with the BOOTY macro.
+- Added the in-game sound clips to the Sound page.
+- Added Graphics pages for the fonts, player, introduction
+  frames and rooms.
+
+[Changelog:20240409]
+-
+
+- Added CHANGELOG!

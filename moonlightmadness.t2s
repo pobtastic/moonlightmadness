@@ -1,0 +1,13 @@
+; tap2sna.py file for Moonlight Madness. Run
+;
+;   $ tap2sna.py @moonlightmadness.t2s
+;
+; to create a Z80 snapshot.
+
+https://worldofspectrum.net/pub/sinclair/games/m/MoonlightMadness.tzx.zip
+MoonlightMadness.z80
+
+--tape-name "Moonlight Madness.tzx"
+--tape-sum 0cd6f34cb5250bc4f8c9e1a06f9b478f
+;--start 0x4885
+--start 0xD5AC

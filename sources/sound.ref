@@ -1,0 +1,33 @@
+; Copyright 2026 Paul Maddern (paul@arcadegeek.co.uk)
+
+[Audio:ThemeTune:Theme Tune]
+
+#AUDIO0(theme-tune.wav)(#INCLUDE(ThemeTune))
+
+[Audio:Score:Score]
+
+#AUDIO0(score.wav)(#INCLUDE(Score))
+
+[Audio:Pickup:Pickup]
+
+#AUDIO0(pickup.wav)(#INCLUDE(Pickup))
+
+[Audio:Action:Action]
+
+#AUDIO0(action.wav)(#INCLUDE(Action))
+
+[Audio:Bonus:Bonus]
+
+#AUDIO0(bonus.wav)(#INCLUDE(Bonus))
+
+[Audio:Click:Click]
+
+#AUDIO0(click.wav)(#INCLUDE(Click))
+
+Note, this uses #R$F433 and so isn't the same twice.
+
+[Audio:Beep:Beep]
+
+#AUDIO0(beep.wav)(#INCLUDE(Beep))
+
+Note, this uses #R$F433 and so isn't the same twice.

@@ -1,0 +1,4 @@
+GAME=moonlightmadness
+SRCFILES=$(echo moonlightmadness.skool {moonlightmadness,analytics,bases,changelog,data,pokes,rooms,sound}.ref {dark,wide}.css)
+SKOOL2BINOPTS="-i 18565"
+WAVCONVERT="action.wav beep.wav bonus.wav click.wav pickup.wav score.wav theme-tune.wav"

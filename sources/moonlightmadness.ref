@@ -1,0 +1,111 @@
+;
+; SkoolKit ref file for Moonlight Madness
+;
+; To build the HTML disassembly, run these commands:
+;   tap2sna.py @moonlightmadness.t2s
+;   sna2skool.py -H -c sources/moonlightmadness.ctl MoonlightMadness.z80 > sources/moonlightmadness.skool
+;   skool2html.py -H sources/moonlightmadness.skool -T dark -T wide -toOa
+
+[Config]
+Expand=#INCLUDE(Expand)
+RefFiles=bases.ref;analytics.ref;changelog.ref;data.ref;pokes.ref;rooms.ref;sound.ref
+GameDir=moonlightmadness
+
+[Game]
+Game=Moonlight Madness
+Logo=#SCR$02,$09,$11,$0A,$04,$4000,$5800(/images/logo)
+Copyright=&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.
+Repository=https://github.com/pobtastic/moonlightmadness/
+LinkInternalOperands=1
+AddressAnchor={address#IF({base}==16)(:04x)}
+
+[PageHeaders]
+GameIndex=The complete<>RAM disassembly (work in progress)
+
+[Titles]
+GameStatusBuffer=Game Status Buffer
+UnusedMap=Unused Addresses
+
+[Index:Graphics:Graphics And Sound]
+Font Bank 1
+Font Bank 2
+Font Bank 3
+Tile Font
+Player
+Menu Font
+Introduction Screen
+Introduction Frames
+Rooms
+Sound
+
+[Paths]
+Rooms=graphics/rooms.html
+Sound=sound/sound.html
+
+[Page:Font Bank 1]
+Content=asm/#N$8470.html
+
+[Page:Font Bank 2]
+Content=asm/#N$8870.html
+
+[Page:Font Bank 3]
+Content=asm/#N$8C70.html
+
+[Page:Tile Font]
+Content=asm/#N$9070.html
+
+[Page:Player]
+Content=asm/#N$B5B1.html
+
+[Page:Menu Font]
+Content=asm/#N$D2FE.html
+
+[Page:Introduction Screen]
+Content=asm/#N$9870.html
+
+[Page:Introduction Frames]
+Content=asm/#N$D381.html
+
+[Page:Rooms]
+SectionPrefix=Room
+
+[Page:Sound]
+SectionPrefix=Audio
+
+[Expand]
+#DEF(#ROOM(id,scale=$02)
+  #PUSHS
+  #UDGTABLE(default,centre)
+  #SIM(start=$D5AC,stop=$D5E0,iy=$5C3A,sp=$5BFF)
+  #SIM(start=$D5F5,stop=$D615)
+  #SIM(start=$EA02,stop=$EAA6,a=$FF)
+  #SIM(start=$EAA6,stop=$ECF1,a=$id)
+  { #SCR$scale(room-#EVAL($id,$0A,$02)) }
+  UDGTABLE#
+  #POPS)
+
+#DEF(#COLOUR(id)
+  #LET(ink=$id&$07)#IF({ink}>=$00)(INK:
+    #MAP({ink})(
+      UNKNOWN,
+      0:BLACK,
+      1:BLUE,
+      2:RED,
+      3:MAGENTA,
+      4:GREEN,
+      5:CYAN,
+      6:YELLOW,
+      7:WHITE)),
+  #LET(paper=$id>>$03&$07)#IF({paper}>=$00)(PAPER:
+    #MAP({paper})(
+      UNKNOWN,
+      0:BLACK,
+      1:BLUE,
+      2:RED,
+      3:MAGENTA,
+      4:GREEN,
+      5:CYAN,
+      6:YELLOW,
+      7:WHITE))
+  #LET(bright=$id&$40)#IF({bright}>$00)((BRIGHT))
+  #LET(flash=$id&$80)#IF({flash}>$00)(FLASH: ON))
