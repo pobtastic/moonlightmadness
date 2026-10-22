@@ -391,8 +391,8 @@ u$5B00 DEFB $00,$00,$00,$00,$00,$00,$00,$00
 ;
 ; Leftover loader/BASIC credits in the system variable area.
 @label=Messaging_Credits
-t$5D32 DEFM "Moonlight Madness              ",$7F ; #STR(#PC,$04,$20)
- $5D52 DEFM " 1986 John F. Cain. "                ; #STR(#PC,$04,$14)
+t$5D32 DEFM "Moonlight Madness              ",$7F ; "#STR(#PC,$04,$20)".
+ $5D52 DEFM " 1986 John F. Cain. "                ; "#STR(#PC,$04,$14)".
 
 ; Unused
 u$5D66 DEFB $0D,$80,$EF,$22,$22,$0D,$80,$00
@@ -1878,9 +1878,6 @@ b$7C70 DEFB $00,$00,$00,$00,$00,$00,$00,$00
 ; Graphics: Font Bank 1
 ;
 ; Copied to #R$7C70 by #R$ED2D.
-; #UDGTABLE
-; { #FONT$8470,attr=$07,chars=$80(font-bank-1) }
-; UDGTABLE#
 @label=Graphics_FontBank1
 b$8470 DEFB $FF,$F8,$0F,$00,$00,$00,$00,$00 ; #UDGTABLE(default,centre)
                                             ; { #N((#PC-$8470)/$08) } { #UDG(#PC) }
@@ -2270,9 +2267,6 @@ b$8470 DEFB $FF,$F8,$0F,$00,$00,$00,$00,$00 ; #UDGTABLE(default,centre)
 ; Graphics: Font Bank 2
 ;
 ; Copied to #R$7C70 by #R$ED39.
-; #UDGTABLE
-; { #FONT$8870,attr=$07,chars=$80(font-bank-2) }
-; UDGTABLE#
 @label=Graphics_FontBank2
 b$8870 DEFB $FF,$80,$FF,$75,$75,$3F,$01,$01 ; #UDGTABLE(default,centre)
                                             ; { #N((#PC-$8870)/$08) } { #UDG(#PC) }
@@ -2662,9 +2656,6 @@ b$8870 DEFB $FF,$80,$FF,$75,$75,$3F,$01,$01 ; #UDGTABLE(default,centre)
 ; Graphics: Font Bank 3
 ;
 ; Copied to #R$7C70 by #R$ED45.
-; #UDGTABLE
-; { #FONT$8C70,attr=$07,chars=$80(font-bank-3) }
-; UDGTABLE#
 @label=Graphics_FontBank3
 b$8C70 DEFB $FF,$7F,$3E,$0E,$07,$07,$02,$02 ; #UDGTABLE(default,centre)
                                             ; { #N((#PC-$8C70)/$08) } { #UDG(#PC) }
@@ -5496,14 +5487,28 @@ c$D5AC DI            ; Disable interrupts.
  $D729 XOR A         ; {Write #N$00 to *#R$647E.
  $D72A LD ($647E),A  ; }
  $D72D JP $D628      ; Jump to #R$D628.
-; Start a new game from room #N$00.
+; View the equivalent code in #BOOTY$CD14.
+
+; Start Game
+;
+; Used by the routine at #R$D5AC.
+; .
+; Starts a new game from room #N$00.
 @label=Start_Game
-*$D730 LD HL,$03E8   ; {Write #N$03E8 to *#R$E82A.
+c$D730 LD HL,$03E8   ; {Write #N$03E8 to *#R$E82A.
  $D733 LD ($E82A),HL ; }
  $D736 LD A,$FF      ; #REGa=#N$FF.
-; This entry point is used by the routines at #R$D765, #R$DC62 and #R$DE19.
+; View the equivalent code in #BOOTY$D08A.
+; .
+; Continue on to #R$D738.
+
+; Change Room
+;
+; Used by the routines at #R$D765, #R$DC62 and #R$DE19.
+; .
+; Loads the room in #REGa.
 @label=Change_Room
-*$D738 CALL $E9FC    ; Call #R$E9FC.
+c$D738 CALL $E9FC    ; Call #R$E9FC.
  $D73B CALL $DA15    ; Call #R$DA15.
  $D73E LD BC,$0096   ; {Write #N$0096 to *#R$6470.
  $D741 LD ($6470),BC ; }
@@ -5521,11 +5526,11 @@ c$D5AC DI            ; Disable interrupts.
  $D75E LD (HL),$12   ; }
  $D760 LD A,$01      ; {Write #N$01 to *#R$64B4.
  $D762 LD ($64B4),A  ; }
-; View the equivalent code in #BOOTY$CD14.
+; Continue on to #R$D765.
 
 ; Game Loop
 ;
-; Used by the routines at #R$D5AC and #R$D7A2.
+; Used by the routines at #R$D738 and #R$D7A2.
 ; .
 ; Watches demo input and *#R$6470. Jumps to #R$D7A2 while
 ; the game is active or the demo timer is running, else picks a
@@ -5604,9 +5609,9 @@ c$D7D2 LD IX,($6424) ; #REGix=*#R$6424.
  $D7E8 LD A,($64A5)  ; {Jump to #R$D7F8 if the row does not match *#R$64A5.
  $D7EB CP (IX+$01)   ;
  $D7EE JR NZ,$D7F8   ; }
- $D7F0 LD A,(IX+$02) ; {Set bit 7 of the record and jump to #R$E9FF.
- $D7F3 SET 7,A       ;
- $D7F5 JP $E9FF      ; }
+ $D7F0 LD A,(IX+$02) ; {Set bit 7 of the record.
+ $D7F3 SET 7,A       ; }
+ $D7F5 JP $E9FF      ; Jump to #R$E9FF.
 @label=Handler_Collectibles_Next
 *$D7F8 LD DE,$0003   ; {#REGix+=#N($0003,$04,$04).
  $D7FB ADD IX,DE     ; }
@@ -5759,14 +5764,15 @@ c$D894 LD IX,($642A)  ; #REGix=*#R$642A.
  $D8CF JR NZ,$D8D2    ; }
  $D8D1 LD A,C         ; {Jump to #R$D8E9 if they differ.
 @label=Handler_MovingObjects_LimitHit
-*$D8D2 CP (IX+$0E)    ; }
- $D8D5 JR NZ,$D8E9    ; Call #R$DC37.
- $D8D7 CALL $DC37     ; {Swap the two limit bytes and call #R$F448 again.
- $D8DA LD A,(IX+$0E)  ;
+*$D8D2 CP (IX+$0E)    ;
+ $D8D5 JR NZ,$D8E9    ; }
+; Reverse at the stored limit.
+ $D8D7 CALL $DC37     ; Call #R$DC37.
+ $D8DA LD A,(IX+$0E)  ; {Swap the two limit bytes.
  $D8DD LD B,(IX+$0F)  ;
  $D8E0 LD (IX+$0F),A  ;
- $D8E3 LD (IX+$0E),B  ;
- $D8E6 CALL $F448     ; }
+ $D8E3 LD (IX+$0E),B  ; }
+ $D8E6 CALL $F448     ; Call #R$F448.
 @label=Handler_MovingObjects_Update
 *$D8E9 CALL $F424     ; Call #R$F424.
  $D8EC CALL $F442     ; Call #R$F442.
@@ -5826,10 +5832,11 @@ c$D904 LD A,($64A2)    ; {Return if *#R$64A2 is not #N$16.
 *$D95D LD (IX+$00),$05 ; {Write the right-moving frame into the actor.
  $D961 LD (IX+$0A),$05 ;
  $D965 LD (IX+$08),$05 ; }
+; Play a short beep.
 @label=Handler_RoomSixteen_Sound
-*$D969 LD B,$FF        ; {Call #R$E4B1 with #REGb=#N$FF and #REGd=#N$32.
- $D96B LD D,$32        ;
- $D96D CALL $E4B1      ; }
+*$D969 LD B,$FF        ; #REGb=#N$FF.
+ $D96B LD D,$32        ; #REGd=#N$32.
+ $D96D CALL $E4B1      ; Call #R$E4B1.
  $D970 LD A,($64A5)    ; {Jump to #R$D982 if the player row is #N$14.
  $D973 CP $14          ;
  $D975 JR Z,$D982      ; }
@@ -5910,7 +5917,7 @@ c$D9B6 LD IX,$644D     ; #REGix=#R$644D.
  $DA0F LD A,$02        ; {Write #N$02 to *#R$641A.
  $DA11 LD ($641A),A    ; }
  $DA14 RET             ; Return.
-; This entry point is used by the routines at #R$D5AC and #R$DBC9.
+; This entry point is used by the routines at #R$D738 and #R$DBC9.
 ; .
 ; Draw the collected-item icons along the top of the screen.
 @label=Print_CollectionBar
@@ -5990,12 +5997,12 @@ c$DA3F LD HL,$7C70    ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
  $DAB1 LD B,(IX+$01)  ;
  $DAB4 RES 7,C        ;
  $DAB6 CALL $F43C     ; }
- $DAB9 LD DE,$5DCE    ; {Write #N$0E/#N$0F into that tile and return.
+ $DAB9 LD DE,$5DCE    ; {Write #N$0E/#N$0F into that tile.
  $DABC ADD HL,DE      ;
  $DABD LD (HL),$0E    ;
  $DABF INC HL         ;
- $DAC0 LD (HL),$0F    ;
- $DAC2 RET            ; }
+ $DAC0 LD (HL),$0F    ; }
+ $DAC2 RET            ; Return.
 @label=Pendulum_Position
  $DAC3 DEFB $00       ;
 @label=Pendulum_Delta
@@ -6051,9 +6058,9 @@ c$DB05 LD A,($64A2)   ; {Return if *#R$64A2 is #N$0C or higher.
  $DB0D RET C          ; }
  $DB0E CP $0A         ; {Jump to #R$DAC5 if the room is #N$0A or #N$0B.
  $DB10 JR NC,$DAC5    ; }
- $DB12 LD A,($64A4)   ; {#REGa=*#R$64A4-#N$04 and #REGb=#N$E0.
- $DB15 SUB $04        ;
- $DB17 LD B,$E0       ; }
+ $DB12 LD A,($64A4)   ; {#REGa=*#R$64A4-#N$04.
+ $DB15 SUB $04        ; }
+ $DB17 LD B,$E0       ; #REGb=#N$E0.
 @label=Handler_PendulumRooms_NextRoom
 *$DB19 SUB $06        ; {Subtract #N$06 until #REGa is negative, decreasing
  $DB1B BIT 7,A        ; #REGb by two each pass.
@@ -6148,9 +6155,9 @@ c$DB05 LD A,($64A2)   ; {Return if *#R$64A2 is #N$0C or higher.
  $DBAB DEC A          ;
  $DBAC CP $C8         ;
  $DBAE RET NC         ; }
- $DBAF LD A,(IY+$08)  ; {Store the actor state in *#R$64AC and write #N$03.
- $DBB2 LD ($64AC),A   ;
- $DBB5 LD A,$03       ; }
+ $DBAF LD A,(IY+$08)  ; {Store the actor state in *#R$64AC.
+ $DBB2 LD ($64AC),A   ; }
+ $DBB5 LD A,$03       ; #REGa=#N$03.
  $DBB7 LD ($6434),A   ; {Write the actor pointer to *#R$644B.
  $DBBA LD A,(IY+$09)  ;
  $DBBD OR A           ;
@@ -6229,14 +6236,14 @@ c$DC26 LD A,($649F)  ; {Return if *#R$649F is zero.
 ; .
 ; Reverse an object's horizontal/vertical direction.
 @label=Reverse_Direction
-*$DC37 LD A,(IX+$09) ; {Negate (IX+#N$09) and (IX+#N$08).
+*$DC37 LD A,(IX+$09) ; {Negate *#REGix+#N$09 and *#REGix+#N$08.
  $DC3A DEC A         ;
  $DC3B XOR $FF       ;
  $DC3D LD (IX+$09),A ;
  $DC40 LD A,(IX+$08) ; }
  $DC43 DEC A         ; {Return if the vertical delta is now zero.
  $DC44 XOR $FF       ; }
- $DC46 LD (IX+$08),A ; {Toggle bit 7 of (IX+#N$07).
+ $DC46 LD (IX+$08),A ; {Toggle bit 7 of *#REGix+#N$07.
  $DC49 RET Z         ;
  $DC4A LD A,$80      ; }
  $DC4C XOR (IX+$07)  ; {Return.
@@ -6253,8 +6260,8 @@ c$DC26 LD A,($649F)  ; {Return if *#R$649F is zero.
  $DC5A LD BC,$03E8   ; {Call #R$F430 with a pause of #N$03E8.
  $DC5D CALL $F430    ; }
 @label=Pause_LeavingRoom_Done
-*$DC60 POP AF        ; {Restore #REGaf from the stack and return.
- $DC61 RET           ; }
+*$DC60 POP AF        ; Restore #REGaf from the stack.
+ $DC61 RET           ; Return.
 
 ; Handler: Enemies
 ;
@@ -6269,15 +6276,16 @@ c$DC62 LD HL,$9070    ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
 *$DC6C LD A,(IX+$00)  ; {Return if the terminator #N$FF is reached.
  $DC6F INC A          ;
  $DC70 RET Z          ; }
- $DC71 BIT 7,A        ; {Call #R$DC53 and jump to #R$DCED if inactive.
- $DC73 CALL NZ,$DC53  ;
- $DC76 JP NZ,$DCED    ; }
+ $DC71 BIT 7,A        ; {Call #R$DC53 if this enemy is inactive.
+ $DC73 CALL NZ,$DC53  ; }
+ $DC76 JP NZ,$DCED    ; Jump to #R$DCED if it is inactive.
  $DC79 LD A,(IX+$06)  ; {Jump to #R$DC92 if the sprite ID is #N$E2 or higher.
  $DC7C CP $E2         ;
  $DC7E JR NC,$DC92    ; }
- $DC80 ADD A,$06      ; {#REGc=the sprite ID+#N$06 and #REGb=#N$24.
- $DC82 LD C,A         ;
- $DC83 LD B,$24       ; }
+; Wrap the walking-enemy frame.
+ $DC80 ADD A,$06      ; {#REGc=the sprite ID+#N$06.
+ $DC82 LD C,A         ; }
+ $DC83 LD B,$24       ; #REGb=#N$24.
 @label=Handler_Enemies_BelowPlayer
 *$DC85 SUB B          ; {Subtract #N$24 until the frame is in range.
  $DC86 JR Z,$DC8C     ;
@@ -6300,14 +6308,15 @@ c$DC62 LD HL,$9070    ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
  $DCA5 SUB (IX+$05)   ;
  $DCA8 LD B,A         ;
  $DCA9 INC C          ; }
- $DCAA CALL $F42D     ; {Call #R$F42D and reverse if that #R$5DCE tile is
- $DCAD LD HL,($6412)  ; solid.
+; Reverse if that #R$5DCE tile is solid.
+ $DCAA CALL $F42D     ; Call #R$F42D.
+ $DCAD LD HL,($6412)  ; {Point #REGhl at that #R$5DCE tile.
  $DCB0 LD DE,$5DCE    ;
- $DCB3 ADD HL,DE      ;
- $DCB4 LD A,(HL)      ;
+ $DCB3 ADD HL,DE      ; }
+ $DCB4 LD A,(HL)      ; {Call #R$DC37 if the tile is solid.
  $DCB5 CP $10         ;
- $DCB7 CALL NC,$DC37  ;
- $DCBA JR $DCDE       ; }
+ $DCB7 CALL NC,$DC37  ; }
+ $DCBA JR $DCDE       ; Jump to #R$DCDE.
 @label=Handler_Enemies_ProbeLeft
 *$DCBC LD A,(IX+$01)  ; {Jump to #R$DCDE if the enemy is past column #N$23.
  $DCBF SUB (IX+$05)   ;
@@ -6315,13 +6324,14 @@ c$DC62 LD HL,$9070    ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
  $DCC3 LD A,(IX+$00)  ;
  $DCC6 CP $23         ;
  $DCC8 JR NC,$DCDE    ; }
- $DCCA SUB (IX+$04)   ; {Call #R$F42D to the left and reverse if that tile
- $DCCD LD C,A         ; is solid.
- $DCCE CALL $F42D     ;
- $DCD1 LD HL,($6412)  ;
+; Probe the cell to the left.
+ $DCCA SUB (IX+$04)   ; {#REGc=the column minus the width.
+ $DCCD LD C,A         ; }
+ $DCCE CALL $F42D     ; Call #R$F42D.
+ $DCD1 LD HL,($6412)  ; {Point #REGhl at that #R$5DCE tile.
  $DCD4 LD DE,$5DCE    ;
- $DCD7 ADD HL,DE      ;
- $DCD8 LD A,(HL)      ;
+ $DCD7 ADD HL,DE      ; }
+ $DCD8 LD A,(HL)      ; {Call #R$DC37 if the tile is solid.
  $DCD9 CP $10         ;
  $DCDB CALL NC,$DC37  ; }
 @label=Handler_Enemies_Update
@@ -6376,9 +6386,9 @@ c$DC62 LD HL,$9070    ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
  $DD28 POP BC         ; Restore #REGbc from the stack.
  $DD29 CALL $DD12     ; Call #R$DD12.
  $DD2C CALL $04C2     ; Call #SKOOLKID$04C2(SA_BYTES).
- $DD2F LD A,($64A2)   ; {Set bit 7 of *#R$64A2 and jump to #R$D738.
- $DD32 SET 7,A        ;
- $DD34 JP $D738       ; }
+ $DD2F LD A,($64A2)   ; {Set bit 7 of *#R$64A2.
+ $DD32 SET 7,A        ; }
+ $DD34 JP $D738       ; Jump to #R$D738.
 ; This entry point is used by the routine at #R$DD97.
 ; .
 ; Load a saved game from tape.
@@ -6404,9 +6414,9 @@ c$DC62 LD HL,$9070    ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
  $DD60 CP L           ;
  $DD61 JP NZ,$D5D5    ; }
 @label=Tape_Load_Resume
-*$DD64 LD A,($64A2)   ; {Set bit 7 of *#R$64A2 and jump to #R$D738.
- $DD67 SET 7,A        ;
- $DD69 JP $D738       ; }
+*$DD64 LD A,($64A2)   ; {Set bit 7 of *#R$64A2.
+ $DD67 SET 7,A        ; }
+ $DD69 JP $D738       ; Jump to #R$D738.
 ; Add every byte from #R$647C through the tape block.
 @label=Tape_Checksum
 *$DD6C CALL $DD12     ; Call #R$DD12.
@@ -6581,8 +6591,8 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $DE79 JR NC,$DE85     ;
  $DE7B LD A,$02        ;
  $DE7D LD ($6434),A    ; }
- $DE80 LD (IX+$09),$00 ; {Clear (IX+#N$09) and return.
- $DE84 RET             ; }
+ $DE80 LD (IX+$09),$00 ; Write #N$00 to *#REGix+#N$09.
+ $DE84 RET             ; Return.
 @label=Probe_Ceiling_Next
 *$DE85 INC DE          ; {Increase both pointers and loop back to #R$DE72.
  $DE86 INC HL          ;
@@ -6646,10 +6656,10 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $DEE2 RLA             ;
  $DEE3 JR C,$DEEF      ;
  $DEE5 DJNZ $DEDD      ; }
- $DEE7 XOR A           ; {Clear *#R$6448 and return if none is set.
+ $DEE7 XOR A           ; {Write #N($0000,$04,$04) to *#R$6448.
  $DEE8 LD ($6448),A    ;
- $DEEB LD ($6449),A    ;
- $DEEE RET             ; }
+ $DEEB LD ($6449),A    ; }
+ $DEEE RET             ; Return.
 @label=Build_PlayerMask_Width
 *$DEEF LD B,$00        ; {Count the run of set bits into *#R$6448.
 @label=Build_PlayerMask_Count
@@ -6705,8 +6715,8 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
 @label=Player_MoveLeft
 *$DF44 BIT 7,(IX+$07)  ; {Jump to #R$DF53 if already facing left.
  $DF48 JR NZ,$DF53     ; }
- $DF4A SET 7,(IX+$07)  ; {Face left and set frame #N$60.
- $DF4E LD (IX+$06),$60 ; }
+ $DF4A SET 7,(IX+$07)  ; Face left.
+ $DF4E LD (IX+$06),$60 ; Set frame #N$60.
  $DF52 RET             ; Return.
 @label=Player_MoveLeft_Step
 *$DF53 LD A,(IX+$06)   ; {Advance the walk frame, wrapping at #N$30.
@@ -6726,8 +6736,8 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
 @label=Player_MoveRight
 *$DF69 BIT 7,(IX+$07)  ; {Jump to #R$DF78 if already facing right.
  $DF6D JR Z,$DF78      ; }
- $DF6F LD (IX+$06),$60 ; {Face right and set frame #N$60.
- $DF73 RES 7,(IX+$07)  ; }
+ $DF6F LD (IX+$06),$60 ; Set frame #N$60.
+ $DF73 RES 7,(IX+$07)  ; Face right.
  $DF77 RET             ; Return.
 @label=Player_MoveRight_Step
 *$DF78 LD A,(IX+$06)   ; {Advance the walk frame, wrapping at #N$30.
@@ -6820,9 +6830,9 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $DFFD LD A,(HL)       ;
  $DFFE CP $2A          ;
  $E000 JP NZ,$E9FF     ; }
- $E003 LD HL,$0001     ; {Write #N($0001,$04,$04) to *#R$E82A and jump to
- $E006 LD ($E82A),HL   ; #R$E9FF.
- $E009 JP $E9FF        ; }
+ $E003 LD HL,$0001     ; {Write #N($0001,$04,$04) to *#R$E82A.
+ $E006 LD ($E82A),HL   ; }
+ $E009 JP $E9FF        ; Jump to #R$E9FF.
 @label=Player_Action_DoorNext
 *$E00C LD DE,$0005     ; {#REGhl+=#N($0005,$04,$04).
  $E00F ADD HL,DE       ; }
@@ -6864,15 +6874,15 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $E04D LD A,(HL)       ; {Jump to #R$E05C unless the ladder column matches.
  $E04E CP (IX+$00)     ;
  $E051 JR NZ,$E05C     ; }
- $E053 LD A,$07        ; {Write the remaining fine-X as the horizontal delta
- $E055 SUB (IX+$02)    ; and return.
- $E058 LD (IX+$08),A   ;
- $E05B RET             ; }
+ $E053 LD A,$07        ; {Write the remaining fine-X as the horizontal delta.
+ $E055 SUB (IX+$02)    ;
+ $E058 LD (IX+$08),A   ; }
+ $E05B RET             ; Return.
 @label=Player_ClimbDown_Offset
-*$E05C LD A,$FF        ; {Write the opposite climb delta and return.
+*$E05C LD A,$FF        ; {Write the opposite climb delta.
  $E05E SUB (IX+$02)    ;
- $E061 LD (IX+$08),A   ;
- $E064 RET             ; }
+ $E061 LD (IX+$08),A   ; }
+ $E064 RET             ; Return.
 @label=Player_ClimbDown_Next
 *$E065 INC HL          ; {Increase #REGhl by three.
  $E066 INC HL          ;
@@ -6920,15 +6930,15 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $E0B1 LD A,(HL)       ; {Jump to #R$E0C0 unless the ladder column matches.
  $E0B2 CP (IX+$00)     ;
  $E0B5 JR NZ,$E0C0     ; }
- $E0B7 LD A,$07        ; {Write the remaining fine-X as the horizontal delta
- $E0B9 SUB (IX+$02)    ; and return.
- $E0BC LD (IX+$08),A   ;
- $E0BF RET             ; }
+ $E0B7 LD A,$07        ; {Write the remaining fine-X as the horizontal delta.
+ $E0B9 SUB (IX+$02)    ;
+ $E0BC LD (IX+$08),A   ; }
+ $E0BF RET             ; Return.
 @label=Player_ClimbUp_Offset
-*$E0C0 LD A,$FF        ; {Write the opposite climb delta and return.
+*$E0C0 LD A,$FF        ; {Write the opposite climb delta.
  $E0C2 SUB (IX+$02)    ;
- $E0C5 LD (IX+$08),A   ;
- $E0C8 RET             ; }
+ $E0C5 LD (IX+$08),A   ; }
+ $E0C8 RET             ; Return.
 @label=Player_ClimbUp_Next
 *$E0C9 INC HL          ; {Increase #REGhl by three.
  $E0CA INC HL          ;
@@ -7019,22 +7029,24 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $E161 LD BC,$0064     ;
  $E164 LD DE,$00C8     ;
  $E167 CALL $E501      ; }
+; Advance, store and erase the falling player.
 @label=Player_Hit_Fall
-*$E16A LD (IX+$09),$FF ; {Advance, store and erase the falling player.
- $E16E CALL $F448      ;
- $E171 CALL $F424      ;
- $E174 CALL $F442      ; }
- $E177 LD A,($641A)    ; {Clip the draw against *#R$644A and call #R$F44B.
- $E17A PUSH AF         ;
- $E17B LD A,($644A)    ;
- $E17E LD ($641A),A    ;
- $E181 CALL $F44B      ;
- $E184 POP AF          ; }
- $E185 LD ($641A),A    ; {Decrease *#R$6435 and jump to #R$DF22 when it hits
- $E188 LD A,($6435)    ; zero.
- $E18B DEC A           ;
- $E18C JP Z,$DF22      ;
- $E18F LD ($6435),A    ; }
+*$E16A LD (IX+$09),$FF ; Write #N$FF as the vertical delta.
+ $E16E CALL $F448      ; Call #R$F448.
+ $E171 CALL $F424      ; Call #R$F424.
+ $E174 CALL $F442      ; Call #R$F442.
+; Clip the draw against *#R$644A.
+ $E177 LD A,($641A)    ; #REGa=*#R$641A.
+ $E17A PUSH AF         ; Stash it on the stack.
+ $E17B LD A,($644A)    ; {Write *#R$644A to *#R$641A.
+ $E17E LD ($641A),A    ; }
+ $E181 CALL $F44B      ; Call #R$F44B.
+ $E184 POP AF          ; Restore *#R$641A from the stack.
+ $E185 LD ($641A),A    ; Write it back to *#R$641A.
+ $E188 LD A,($6435)    ; {Decrease *#R$6435.
+ $E18B DEC A           ; }
+ $E18C JP Z,$DF22      ; Jump to #R$DF22 if it is now zero.
+ $E18F LD ($6435),A    ; Write the new count back.
  $E192 RET             ; Return.
 ; This entry point is used by the routine at #R$E1CC.
 ; .
@@ -7303,10 +7315,11 @@ c$E1CC LD A,($646F)    ; {Return if *#R$646F is set (demo / intro).
  $E36B XOR A           ;
  $E36C LD ($6410),A    ;
  $E36F LD (IX+$09),$FC ; }
+; Store, move and draw the player.
 @label=Handler_Player_Paint
-*$E373 CALL $F424      ; {Store, move and draw the player.
- $E376 CALL $F442      ;
- $E379 CALL $F44B      ; }
+*$E373 CALL $F424      ; Call #R$F424.
+ $E376 CALL $F442      ; Call #R$F442.
+ $E379 CALL $F44B      ; Call #R$F44B.
  $E37C LD A,($6434)    ; {Draw a collided actor through #R$F45A.
  $E37F CP $03          ;
  $E381 JR NZ,$E38A     ;
@@ -7379,24 +7392,26 @@ c$E3DE CALL $DE96     ; Call #R$DE96.
  $E3E9 RET Z          ; }
  $E3EA BIT 7,A        ; {Jump to #R$E41E if this actor is inactive.
  $E3EC JR NZ,$E41E    ; }
- $E3EE PUSH IY        ; {Copy #REGix to #REGiy (using the stack) and test the
- $E3F0 PUSH IX        ; player.
- $E3F2 POP IY         ;
- $E3F4 CALL $DB3F     ;
- $E3F7 POP IY         ; }
+; Test this actor against the player.
+ $E3EE PUSH IY        ; Stash #REGiy on the stack.
+ $E3F0 PUSH IX        ; {Copy #REGix to #REGiy (using the stack).
+ $E3F2 POP IY         ; }
+ $E3F4 CALL $DB3F     ; Call #R$DB3F.
+ $E3F7 POP IY         ; Restore #REGiy from the stack.
  $E3F9 CALL $F45D     ; Call #R$F45D.
- $E3FC BIT 7,(IX+$07) ; {Restore the stored row when bit 7 of (IX+#N$07) is
+ $E3FC BIT 7,(IX+$07) ; {Restore the stored row when bit 7 of *#REGix+#N$07 is
  $E400 JR Z,$E40C     ; set.
  $E402 RES 7,(IX+$07) ;
  $E406 LD A,(IX+$0B)  ;
  $E409 LD (IX+$01),A  ; }
+; Store the new position.
 @label=Handler_Actors_Commit
-*$E40C CALL $F448     ; {Store the new position and call #R$F45A.
- $E40F LD (IX+$00),C  ;
+*$E40C CALL $F448     ; Call #R$F448.
+ $E40F LD (IX+$00),C  ; {Store the new column, row, fine-X and fine-Y.
  $E412 LD (IX+$01),B  ;
  $E415 LD (IX+$02),E  ;
- $E418 LD (IX+$03),D  ;
- $E41B CALL $F45A     ; }
+ $E418 LD (IX+$03),D  ; }
+ $E41B CALL $F45A     ; Call #R$F45A.
 @label=Handler_Actors_Next
 *$E41E LD DE,$000D    ; {#REGix+=#N($000D,$04,$04).
  $E421 ADD IX,DE      ; }
@@ -7406,37 +7421,37 @@ c$E3DE CALL $DE96     ; Call #R$DE96.
 @label=Actor_AfterCollision
 *$E426 CP $02         ; {Jump to #R$E436 if the actor type is #N$02.
  $E428 JP Z,$E436     ; }
- $E42B CALL $E441     ; {Clear the actor deltas and return.
- $E42E XOR A          ;
+ $E42B CALL $E441     ; Call #R$E441.
+ $E42E XOR A          ; {Write #N$00 to both actor deltas.
  $E42F LD (IY+$08),A  ;
- $E432 LD (IY+$09),A  ;
- $E435 RET            ; }
+ $E432 LD (IY+$09),A  ; }
+ $E435 RET            ; Return.
 @label=Actor_Lock
-*$E436 SET 7,(IY+$07) ; {Set bit 7 of (IY+#N$07) and return.
- $E43A RET            ; }
+*$E436 SET 7,(IY+$07) ; Set bit 7 of *#REGiy+#N$07.
+ $E43A RET            ; Return.
 ; This entry point is used by the routine at #R$DB05.
 @label=Actor_Reverse
-*$E43B LD A,(IY+$0C)  ; {Jump to #R$E426 if (IY+#N$0C) is set.
+*$E43B LD A,(IY+$0C)  ; {Jump to #R$E426 if *#REGiy+#N$0C is set.
  $E43E OR A           ;
  $E43F JR NZ,$E426    ; }
 @label=Actor_SwapDestination
-*$E441 LD A,(IY+$05)  ; {Swap (IY+#N$05) with (IY+#N$0A).
+*$E441 LD A,(IY+$05)  ; {Swap *#REGiy+#N$05 with *#REGiy+#N$0A.
  $E444 LD C,(IY+$0A)  ;
  $E447 LD (IY+$05),C  ;
  $E44A LD (IY+$0A),A  ; }
- $E44D LD A,(IY+$06)  ; {Swap (IY+#N$06) with (IY+#N$0B).
+ $E44D LD A,(IY+$06)  ; {Swap *#REGiy+#N$06 with *#REGiy+#N$0B.
  $E450 LD C,(IY+$0B)  ;
  $E453 LD (IY+$0B),A  ;
  $E456 LD (IY+$06),C  ; }
- $E459 LD A,(IY+$08)  ; {#REGa=(IY+#N$08)-#N$01.
+ $E459 LD A,(IY+$08)  ; {#REGa=*#REGiy+#N$08-#N$01.
  $E45C DEC A          ; }
  $E45D XOR %11111111  ; Invert every bit.
  $E45F LD (IY+$08),A  ; Write the new horizontal delta.
- $E462 LD A,(IY+$09)  ; {#REGa=(IY+#N$09)-#N$01.
+ $E462 LD A,(IY+$09)  ; {#REGa=*#REGiy+#N$09-#N$01.
  $E465 DEC A          ; }
  $E466 XOR %11111111  ; Invert every bit.
- $E468 LD (IY+$09),A  ; {Write the new vertical delta and return.
- $E46B RET            ; }
+ $E468 LD (IY+$09),A  ; Write the new vertical delta.
+ $E46B RET            ; Return.
 
 ; Handler: Interrupts
 ;
@@ -7467,13 +7482,13 @@ c$E46C PUSH AF       ; {Stash #REGaf, #REGbc, #REGde, #REGhl and #REGix.
  $E495 LD BC,$1106   ; {Call #R$E666 with note length #N$1106.
  $E498 CALL $E666    ; }
 @label=Handler_Interrupts_Done
-*$E49B POP IX        ; {Restore the stashed registers and return.
+*$E49B POP IX        ; {Restore the stashed registers from the stack.
  $E49D POP HL        ;
  $E49E POP DE        ;
  $E49F POP BC        ;
- $E4A0 POP AF        ;
- $E4A1 EI            ;
- $E4A2 RET           ; }
+ $E4A0 POP AF        ; }
+ $E4A1 EI            ; Enable interrupts.
+ $E4A2 RET           ; Return.
 ; #HTML(#AUDIO0(beep.wav)(#INCLUDE(Beep)))
 @label=Handler_Interrupts_Beep
 *$E4A3 DEC A         ; {Decrease *#R$6473 and play a short beep.
@@ -7513,11 +7528,11 @@ c$E46C PUSH AF       ; {Stash #REGaf, #REGbc, #REGde, #REGhl and #REGix.
 ; Falling-pitch score sound.
 ; #HTML(#AUDIO0(score.wav)(#INCLUDE(Score)))
 @label=Sound_Score
-*$E4D3 AND $EF       ; {Clear bit 4 of *#R$6472 and jump to #R$E4E1.
- $E4D5 LD ($6472),A  ;
- $E4D8 LD DE,$0032   ;
- $E4DB LD BC,$0064   ;
- $E4DE JP $E4E1      ; }
+*$E4D3 AND %11101111 ; Clear bit 4.
+ $E4D5 LD ($6472),A  ; Write #REGa to *#R$6472.
+ $E4D8 LD DE,$0032   ; #REGde=#N($0032,$04,$04).
+ $E4DB LD BC,$0064   ; #REGbc=#N($0064,$04,$04).
+ $E4DE JP $E4E1      ; Jump to #R$E4E1.
 ; This entry point is used by the routine at #R$DE19.
 ; .
 ; Square-wave sound while #REGde and #REGbc count down.
@@ -7866,58 +7881,78 @@ b$E6EC DEFB $04,$13,$0B,$03,$26,$04,$13
 ;
 ; Control-byte message printed by #R$F460.
 @label=Messaging_Title
-t$E6F3 DEFB $DE,$1B,$17,$D8,$28,$20,$4D,$4F
- $E6FB DEFB $4F,$4E,$4C,$49,$47,$48,$54,$20
- $E703 DEFB $4D,$41,$44,$4E,$45,$53,$53,$20
- $E70B DEFB $DE,$1C,$15,$20,$42,$55,$42,$42
- $E713 DEFB $4C,$45,$20,$42,$55,$53,$20,$53
- $E71B DEFB $4F,$46,$54,$57,$41,$52,$45,$20
- $E723 DEFB $DE,$1C,$13,$20,$7F,$20,$31,$39
- $E72B DEFB $38,$36,$20,$4A,$4F,$48,$4E,$20
- $E733 DEFB $46,$2E,$43,$41,$49,$4E,$2E,$20
- $E73B DEFB $FF
+t$E6F3 DEFB $DE,$1B,$17                   ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                          ; #N(#PEEK(#PC+$02)).
+ $E6F6 DEFB $D8,$28                       ; #COLOUR(#PEEK(#PC+$01)).
+ $E6F8 DEFM " MOONLIGHT MADNESS "         ; "#STR(#PC,$04,$13)".
+ $E70B DEFB $DE,$1C,$15                   ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                          ; #N(#PEEK(#PC+$02)).
+ $E70E DEFM " BUBBLE BUS SOFTWARE "       ; "#STR(#PC,$04,$15)".
+ $E723 DEFB $DE,$1C,$13                   ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                          ; #N(#PEEK(#PC+$02)).
+ $E726 DEFM " ",$7F," 1986 JOHN F.CAIN. " ; "#STR(#PC,$04,$15)".
+ $E73B DEFB $FF                           ; Terminator.
 
 ; Messaging: Menu
 @label=Messaging_Menu
-t$E73C DEFB $DE,$1B,$0D,$D8,$07,$30,$20,$2D
- $E744 DEFB $20,$53,$54,$41,$52,$54,$20,$47
- $E74C DEFB $41,$4D,$45,$FF
+t$E73C DEFB $DE,$1B,$0D      ; PRINT AT: #N(#PEEK(#PC+$01)),
+                             ; #N(#PEEK(#PC+$02)).
+ $E73F DEFB $D8,$07          ; #COLOUR(#PEEK(#PC+$01)).
+ $E741 DEFM "0 - START GAME" ; "#STR(#PC,$04,$0E)".
+ $E74F DEFB $FF              ; Terminator.
 
 ; Messaging: Keyboard
 @label=Messaging_Keyboard
-t$E750 DEFB $DE,$1B,$0B,$31,$20,$2D,$20,$4B
- $E758 DEFB $45,$59,$42,$4F,$41,$52,$44,$D8
- $E760 DEFB $07,$FF
+t$E750 DEFB $DE,$1B,$0B    ; PRINT AT: #N(#PEEK(#PC+$01)), #N(#PEEK(#PC+$02)).
+ $E753 DEFM "1 - KEYBOARD" ; "#STR(#PC,$04,$0C)".
+ $E75F DEFB $D8,$07        ; #COLOUR(#PEEK(#PC+$01)).
+ $E761 DEFB $FF            ; Terminator.
 
 ; Messaging: Kempston
 @label=Messaging_Kempston
-t$E762 DEFB $DE,$1B,$09,$32,$20,$2D,$20,$4B
- $E76A DEFB $45,$4D,$50,$53,$54,$4F,$4E,$20
- $E772 DEFB $4A,$4F,$59,$53,$54,$49,$43,$4B
- $E77A DEFB $D8,$07,$DE,$1B,$07,$33,$20,$2D
- $E782 DEFB $20,$44,$45,$46,$49,$4E,$45,$20
- $E78A DEFB $4B,$45,$59,$53,$FF
+t$E762 DEFB $DE,$1B,$09             ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                    ; #N(#PEEK(#PC+$02)).
+ $E765 DEFM "2 - KEMPSTON JOYSTICK" ; "#STR(#PC,$04,$15)".
+ $E77A DEFB $D8,$07                 ; #COLOUR(#PEEK(#PC+$01)).
+ $E77C DEFB $DE,$1B,$07             ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                    ; #N(#PEEK(#PC+$02)).
+ $E77F DEFM "3 - DEFINE KEYS"       ; "#STR(#PC,$04,$0F)".
+ $E78E DEFB $FF                     ; Terminator.
 
 ; Messaging: Define Keys
 @label=Messaging_DefineKeys
-t$E78F DEFB $D8,$07,$DE,$17,$10,$44,$45,$46
- $E797 DEFB $49,$4E,$45,$20,$4B,$45,$59,$53
- $E79F DEFB $DE,$17,$0D,$4C,$45,$46,$54,$DE
- $E7A7 DEFB $17,$0B,$52,$49,$47,$48,$54,$DE
- $E7AF DEFB $17,$09,$55,$50,$DE,$17,$07,$44
- $E7B7 DEFB $4F,$57,$4E,$DE,$17,$05,$45,$4E
- $E7BF DEFB $54,$45,$52,$20,$52,$4F,$4F,$4D
- $E7C7 DEFB $2F,$50,$55,$53,$48,$20,$42,$55
- $E7CF DEFB $54,$54,$4F,$4E,$DE,$17,$03,$D8
- $E7D7 DEFB $87,$53,$50,$41,$43,$45,$20,$45
- $E7DF DEFB $58,$49,$54,$53,$FF
+t$E78F DEFB $D8,$07                  ; #COLOUR(#PEEK(#PC+$01)).
+ $E791 DEFB $DE,$17,$10              ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                     ; #N(#PEEK(#PC+$02)).
+ $E794 DEFM "DEFINE KEYS"            ; "#STR(#PC,$04,$0B)".
+ $E79F DEFB $DE,$17,$0D              ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                     ; #N(#PEEK(#PC+$02)).
+ $E7A2 DEFM "LEFT"                   ; "#STR(#PC,$04,$04)".
+ $E7A6 DEFB $DE,$17,$0B              ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                     ; #N(#PEEK(#PC+$02)).
+ $E7A9 DEFM "RIGHT"                  ; "#STR(#PC,$04,$05)".
+ $E7AE DEFB $DE,$17,$09              ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                     ; #N(#PEEK(#PC+$02)).
+ $E7B1 DEFM "UP"                     ; "#STR(#PC,$04,$02)".
+ $E7B3 DEFB $DE,$17,$07              ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                     ; #N(#PEEK(#PC+$02)).
+ $E7B6 DEFM "DOWN"                   ; "#STR(#PC,$04,$04)".
+ $E7BA DEFB $DE,$17,$05              ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                     ; #N(#PEEK(#PC+$02)).
+ $E7BD DEFM "ENTER ROOM/PUSH BUTTON" ; "#STR(#PC,$04,$16)".
+ $E7D3 DEFB $DE,$17,$03              ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                     ; #N(#PEEK(#PC+$02)).
+ $E7D6 DEFB $D8,$87                  ; #COLOUR(#PEEK(#PC+$01)).
+ $E7D8 DEFM "SPACE EXITS"            ; "#STR(#PC,$04,$0B)".
+ $E7E3 DEFB $FF                      ; Terminator.
 
 ; Messaging: Load Game
 @label=Messaging_LoadGame
-t$E7E4 DEFB $DE,$1D,$03,$D8,$39,$50,$52,$45
- $E7EC DEFB $53,$53,$20,$59,$20,$54,$4F,$20
- $E7F4 DEFB $4C,$4F,$41,$44,$20,$4F,$4C,$44
- $E7FC DEFB $20,$47,$41,$4D,$45,$FF
+t$E7E4 DEFB $DE,$1D,$03                ; PRINT AT: #N(#PEEK(#PC+$01)),
+                                       ; #N(#PEEK(#PC+$02)).
+ $E7E7 DEFB $D8,$39                    ; #COLOUR(#PEEK(#PC+$01)).
+ $E7E9 DEFM "PRESS Y TO LOAD OLD GAME" ; "#STR(#PC,$04,$18)".
+ $E801 DEFB $FF                        ; Terminator.
 
 ; Table: Key Map
 ;
@@ -8015,7 +8050,7 @@ u$E858 DEFB $88,$13,$00,$00,$00,$00,$00,$00
 
 ; Initialise Rooms
 ;
-; Used by the routine at #R$D5AC.
+; Used by the routine at #R$D738.
 ; .
 ; Jumps to #R$EA02 to unpack the #N$17 rooms from #R$BC11.
 @label=Initialise_Rooms
@@ -8024,7 +8059,7 @@ c$E9FC JP $EA02      ; Jump to #R$EA02.
 
 ; Dispatch Events
 ;
-; Used by the routines at #R$D5AC, #R$D7D2, #R$DC26, #R$DC62 and #R$DE19.
+; Used by the routines at #R$D738, #R$D7D2, #R$DC26, #R$DC62 and #R$DE19.
 ; .
 ; Jumps to #R$EDD9 with the event ID in #REGa.
 @label=Dispatch_Events
@@ -8057,9 +8092,10 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EA30 XOR A         ;
  $EA31 LD ($64A1),A  ;
  $EA34 LD ($647D),A  ; }
- $EA37 LD HL,$BC11   ; {#REGhl=#R$BC11, #REGix=#R$64C5, #REGde=#R$64F7.
- $EA3A LD IX,$64C5   ;
- $EA3E LD DE,$64F7   ; }
+; Point at the packed rooms and the unpack buffers.
+ $EA37 LD HL,$BC11   ; #REGhl=#R$BC11.
+ $EA3A LD IX,$64C5   ; #REGix=#R$64C5.
+ $EA3E LD DE,$64F7   ; #REGde=#R$64F7.
  $EA41 LD B,$17      ; #REGb=#N$17.
 @label=Unpack_Rooms_Loop
 *$EA43 PUSH BC       ; Stash the room count on the stack.
@@ -8093,10 +8129,10 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EA8B CALL $EA9A    ; }
  $EA8E POP BC        ; {Restore the room count and loop back to #R$EA43.
  $EA8F DJNZ $EA43    ; }
- $EA91 LD (IX+$00),E ; {Store the final pointer and jump to #R$EAA6.
- $EA94 LD (IX+$01),D ;
- $EA97 XOR A         ;
- $EA98 JR $EAA6      ; }
+ $EA91 LD (IX+$00),E ; {Store the final pointer.
+ $EA94 LD (IX+$01),D ; }
+ $EA97 XOR A         ; #REGa=#N$00.
+ $EA98 JR $EAA6      ; Jump to #R$EAA6.
 @label=Copy_TerminatedField
 *$EA9A LD A,(HL)     ; {Copy the next byte and advance both pointers.
  $EA9B LD (DE),A     ;
@@ -8104,10 +8140,11 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EA9D INC DE        ; }
  $EA9E INC A         ; {Return if that byte was #N$FF.
  $EA9F RET Z         ; }
- $EAA0 PUSH BC       ; {Copy the remaining #REGbc bytes and jump to
- $EAA1 LDIR          ; #R$EA9A.
- $EAA3 POP BC        ;
- $EAA4 JR $EA9A      ; }
+; Copy the remaining bytes of this field.
+ $EAA0 PUSH BC       ; Stash the count on the stack.
+ $EAA1 LDIR          ; Copy the remaining #REGbc bytes.
+ $EAA3 POP BC        ; Restore the count from the stack.
+ $EAA4 JR $EA9A      ; Jump to #R$EA9A.
 ; Load the room in #REGa.
 @label=Load_Room
 *$EAA6 LD ($64A2),A  ; Write #REGa to *#R$64A2.
@@ -8153,7 +8190,8 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
 *$EADD LD A,($64A2)  ; {Clear bit 7 of *#R$64A2.
  $EAE0 RES 7,A       ;
  $EAE2 LD ($64A2),A  ; }
- $EAE5 POP IX        ; Restore the room pointer into #REGix.
+ $EAE5 POP IX        ; Restore the room pointer from the stack into
+                     ; #REGix.
  $EAE7 LD HL,$7C70   ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
  $EAEA LD ($5C36),HL ; }
  $EAED CALL $ED51    ; Call #R$ED51.
@@ -8177,9 +8215,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EB14 JR Z,$EB22    ; }
  $EB16 BIT 7,A       ; {Call #R$EDB1 if this record is visible.
  $EB18 CALL Z,$EDB1  ; }
- $EB1B LD BC,$0006   ; {#REGix+=#N($0006,$04,$04) and jump to #R$EB0F.
- $EB1E ADD IX,BC     ;
- $EB20 JR $EB0F      ; }
+ $EB1B LD BC,$0006   ; {#REGix+=#N($0006,$04,$04).
+ $EB1E ADD IX,BC     ; }
+ $EB20 JR $EB0F      ; Jump to #R$EB0F.
 ; Draw each visible furniture record into *#R$6420.
 @label=Load_Room_Furniture
 *$EB22 INC IX        ; {Write #REGix to *#R$6420.
@@ -8192,9 +8230,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EB31 JR NZ,$EB36   ; }
  $EB33 CALL $ED82    ; Call #R$ED82.
 @label=Load_Room_Furniture_Continue
-*$EB36 LD DE,$0005   ; {#REGix+=#N($0005,$04,$04) and jump to #R$EB28.
- $EB39 ADD IX,DE     ;
- $EB3B JR $EB28      ; }
+*$EB36 LD DE,$0005   ; {#REGix+=#N($0005,$04,$04).
+ $EB39 ADD IX,DE     ; }
+ $EB3B JR $EB28      ; Jump to #R$EB28.
 ; Draw each visible door record into *#R$6422.
 @label=Load_Room_Doors
 *$EB3D INC IX        ; {Write #REGix to *#R$6422.
@@ -8207,9 +8245,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EB4C JR NZ,$EB51   ; }
  $EB4E CALL $ED9A    ; Call #R$ED9A.
 @label=Load_Room_Doors_Continue
-*$EB51 LD DE,$0005   ; {#REGix+=#N($0005,$04,$04) and jump to #R$EB43.
- $EB54 ADD IX,DE     ;
- $EB56 JR $EB43      ; }
+*$EB51 LD DE,$0005   ; {#REGix+=#N($0005,$04,$04).
+ $EB54 ADD IX,DE     ; }
+ $EB56 JR $EB43      ; Jump to #R$EB43.
 ; Skip each collectible record into *#R$6424.
 @label=Load_Room_Collectibles
 *$EB58 INC IX        ; {Write #REGix to *#R$6424.
@@ -8218,9 +8256,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
 *$EB5E LD A,(IX+$00) ; {Jump to #R$EB6C if the terminator #N$FF is reached.
  $EB61 CP $FF        ;
  $EB63 JR Z,$EB6C    ; }
- $EB65 LD DE,$0003   ; {#REGix+=#N($0003,$04,$04) and jump to #R$EB5E.
- $EB68 ADD IX,DE     ;
- $EB6A JR $EB5E      ; }
+ $EB65 LD DE,$0003   ; {#REGix+=#N($0003,$04,$04).
+ $EB68 ADD IX,DE     ; }
+ $EB6A JR $EB5E      ; Jump to #R$EB5E.
 ; Draw each visible inventory item into *#R$6426.
 @label=Load_Room_Inventory
 *$EB6C INC IX        ; {Write #REGix to *#R$6426.
@@ -8240,9 +8278,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EB8B LD DE,$0202   ; #N$02.
  $EB8E CALL $F445    ; }
 @label=Load_Room_Inventory_Continue
-*$EB91 INC IX        ; {Advance #REGix by two and jump to #R$EB72.
- $EB93 INC IX        ;
- $EB95 JR $EB72      ; }
+*$EB91 INC IX        ; {Advance #REGix by two.
+ $EB93 INC IX        ; }
+ $EB95 JR $EB72      ; Jump to #R$EB72.
 ; Draw each visible ladder into *#R$6428.
 @label=Load_Room_Ladders
 *$EB97 INC IX        ; {Write #REGix to *#R$6428.
@@ -8269,10 +8307,10 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EBC5 LD DE,$0402   ; #N$02.
  $EBC8 CALL $F445    ; }
 @label=Load_Room_Ladders_Continue
-*$EBCB INC IX        ; {Advance #REGix by three and jump to #R$EB9D.
+*$EBCB INC IX        ; {Advance #REGix by three.
  $EBCD INC IX        ;
- $EBCF INC IX        ;
- $EBD1 JR $EB9D      ; }
+ $EBCF INC IX        ; }
+ $EBD1 JR $EB9D      ; Jump to #R$EB9D.
 ; Draw each visible decoration into *#R$642E.
 @label=Load_Room_Decorations
 *$EBD3 INC IX        ; {Write #REGix to *#R$642E.
@@ -8293,9 +8331,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EBF7 LD D,(IX+$05) ;
  $EBFA CALL $F445    ; }
 @label=Load_Room_Decorations_Continue
-*$EBFD LD DE,$0006   ; {#REGix+=#N($0006,$04,$04) and jump to #R$EBD9.
- $EC00 ADD IX,DE     ;
- $EC02 JR $EBD9      ; }
+*$EBFD LD DE,$0006   ; {#REGix+=#N($0006,$04,$04).
+ $EC00 ADD IX,DE     ; }
+ $EC02 JR $EBD9      ; Jump to #R$EBD9.
 ; Draw each visible actor into *#R$6430.
 @label=Load_Room_Actors
 *$EC04 INC IX        ; {Write #REGix to *#R$6430.
@@ -8308,9 +8346,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EC13 JR NZ,$EC18   ; }
  $EC15 CALL $F45A    ; Call #R$F45A.
 @label=Load_Room_Actors_Continue
-*$EC18 LD DE,$000D   ; {#REGix+=#N($000D,$04,$04) and jump to #R$EC0A.
- $EC1B ADD IX,DE     ;
- $EC1D JR $EC0A      ; }
+*$EC18 LD DE,$000D   ; {#REGix+=#N($000D,$04,$04).
+ $EC1B ADD IX,DE     ; }
+ $EC1D JR $EC0A      ; Jump to #R$EC0A.
 ; Draw each visible enemy into *#R$6432.
 @label=Load_Room_Enemies
 *$EC1F LD HL,$9070   ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
@@ -8325,9 +8363,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EC34 JR NZ,$EC39   ; }
  $EC36 CALL $F44B    ; Call #R$F44B.
 @label=Load_Room_Enemies_Continue
-*$EC39 LD DE,$000E   ; {#REGix+=#N($000E,$04,$04) and jump to #R$EC2B.
- $EC3C ADD IX,DE     ;
- $EC3E JR $EC2B      ; }
+*$EC39 LD DE,$000E   ; {#REGix+=#N($000E,$04,$04).
+ $EC3C ADD IX,DE     ; }
+ $EC3E JR $EC2B      ; Jump to #R$EC2B.
 ; Draw each visible moving object into *#R$642A.
 @label=Load_Room_Movers
 *$EC40 INC IX        ; {Write #REGix to *#R$642A.
@@ -8343,9 +8381,9 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EC57 LD ($6419),BC ; }
  $EC5B CALL $F44B    ; Call #R$F44B.
 @label=Load_Room_Movers_Continue
-*$EC5E LD DE,$0013   ; {#REGix+=#N($0013,$04,$04) and jump to #R$EC46.
- $EC61 ADD IX,DE     ;
- $EC63 JR $EC46      ; }
+*$EC5E LD DE,$0013   ; {#REGix+=#N($0013,$04,$04).
+ $EC61 ADD IX,DE     ; }
+ $EC63 JR $EC46      ; Jump to #R$EC46.
 ; Draw the status bar and reset the per-room flags.
 @label=Load_Room_Status
 *$EC65 INC IX        ; Advance past the terminator.
@@ -8357,10 +8395,11 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EC74 LD A,$08      ;
  $EC76 CALL $F454    ; }
  $EC79 CALL $ECF2    ; Call #R$ECF2.
- $EC7C LD BC,$011F   ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS) and call
- $EC7F LD HL,$7C70   ; #R$F427.
- $EC82 LD ($5C36),HL ;
- $EC85 CALL $F427    ; }
+; Draw the status icons.
+ $EC7C LD BC,$011F   ; #REGbc=#N$011F.
+ $EC7F LD HL,$7C70   ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
+ $EC82 LD ($5C36),HL ; }
+ $EC85 CALL $F427    ; Call #R$F427.
  $EC88 LD A,($6411)  ; {Call #R$ED71 when *#R$6411 is set.
  $EC8B OR A          ;
  $EC8C CALL NZ,$ED71 ; }
@@ -8403,7 +8442,7 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
 
 ; Print Inventory
 ;
-; Used by the routines at #R$EA02 and #R$EDD9.
+; Used by the routines at #R$EA02, #R$F256 and #R$F2B2.
 ; .
 ; Prints the four #R$64C1 digits and flashes them when every slot is
 ; #N$09.
@@ -8414,16 +8453,17 @@ c$ECF2 LD A,$0F      ; {Write #INK$0F to *#SKOOLKID$5C8F(ATTR_T).
  $ECFA LD ($5C36),HL ; }
  $ECFD LD BC,$0107   ; {Call #R$F42D at column #N$07, row #N$01.
  $ED00 CALL $F42D    ; }
- $ED03 LD BC,$0400   ; {Point #REGhl at #R$64C1 and set #REGb=#N$04.
- $ED06 LD HL,$64C1   ; }
+; Print the four combination digits.
+ $ED03 LD BC,$0400   ; #REGbc=#N$0400.
+ $ED06 LD HL,$64C1   ; #REGhl=#R$64C1.
 @label=Print_Inventory_Target
 *$ED09 LD A,(HL)     ; {Jump to #R$ED0F unless this digit is #N$09.
  $ED0A CP $09        ;
  $ED0C JR NZ,$ED0F   ; }
  $ED0E INC C         ; Increase the "#N$09" count.
 @label=Print_Inventory_Continue
-*$ED0F ADD A,$30     ; {Convert the digit into ASCII and call #R$F436.
- $ED11 CALL $F436    ; }
+*$ED0F ADD A,$30     ; Convert the digit into ASCII.
+ $ED11 CALL $F436    ; Call #R$F436.
  $ED14 INC HL        ; {Advance the digit pointer and loop back to #R$ED09.
  $ED15 DJNZ $ED09    ; }
 ; Flash the four cells when every digit is #N$09.
@@ -8488,8 +8528,8 @@ c$ED51 PUSH AF       ; Stash #REGaf on the stack.
  $ED68 LD (HL),$00   ; {Fill #R$60EE with #N$00.
  $ED6A LD BC,$031F   ;
  $ED6D LDIR          ; }
- $ED6F POP AF        ; {Restore #REGaf from the stack and return.
- $ED70 RET           ; }
+ $ED6F POP AF        ; Restore #REGaf from the stack.
+ $ED70 RET           ; Return.
 
 ; Reset Player
 ;
@@ -8497,46 +8537,57 @@ c$ED51 PUSH AF       ; Stash #REGaf on the stack.
 @label=Reset_Player
 c$ED71 LD BC,$1212   ; {Place the player at column #N$12, row #N$12.
  $ED74 LD DE,$0302   ; }
- $ED77 LD A,$60      ; {Use sprite #N$60 and colour #INK$45.
- $ED79 LD L,$45      ; }
- $ED7B LD IX,$64A4   ; {Point #REGix at #R$64A4 and jump to #R$F457.
- $ED7F JP $F457      ; }
+; Use sprite #N$60.
+ $ED77 LD A,$60      ; #REGa=#N$60.
+ $ED79 LD L,$45      ; #REGl=#INK$45.
+ $ED7B LD IX,$64A4   ; #REGix=#R$64A4.
+ $ED7F JP $F457      ; Jump to #R$F457.
 
 ; Draw Furniture
 ;
 ; Used by the routine at #R$EA02.
+;
+; .
+;
+; Call #R$F42D at the furniture column and row.
 @label=Draw_FurnitureItem
-c$ED82 LD C,(IX+$00) ; {Call #R$F42D at the furniture column and row.
- $ED85 LD B,(IX+$01) ;
- $ED88 CALL $F42D    ; }
+c$ED82 LD C,(IX+$00) ; {#REGbc=the furniture column and row.
+ $ED85 LD B,(IX+$01) ; }
+ $ED88 CALL $F42D    ; Call #R$F42D.
  $ED8B LD A,(IX+$02) ; {Write the furniture colour to
  $ED8E LD ($5C8F),A  ; *#SKOOLKID$5C8F(ATTR_T).}
- $ED91 LD A,(IX+$03) ; {Jump to #R$F445 with the stored glyph and size
- $ED94 LD DE,$0403   ; #N$04 by #N$03.
- $ED97 JP $F445      ; }
+; Use the stored glyph.
+ $ED91 LD A,(IX+$03) ; #REGa=the stored glyph.
+ $ED94 LD DE,$0403   ; #REGde=#N$0403.
+ $ED97 JP $F445      ; Jump to #R$F445.
 
 ; Draw Door
 ;
 ; Used by the routine at #R$EA02.
+;
+; .
+;
+; Call #R$F42D at the door column and row.
 @label=Draw_Door
-c$ED9A LD C,(IX+$00) ; {Call #R$F42D at the door column and row.
- $ED9D LD B,(IX+$01) ;
- $EDA0 CALL $F42D    ; }
+c$ED9A LD C,(IX+$00) ; {#REGbc=the door column and row.
+ $ED9D LD B,(IX+$01) ; }
+ $EDA0 CALL $F42D    ; Call #R$F42D.
  $EDA3 LD A,(IX+$02) ; {Write the door colour to *#SKOOLKID$5C8F(ATTR_T).
  $EDA6 LD ($5C8F),A  ; }
- $EDA9 LD A,$84      ; {Jump to #R$F445 with glyph #N$84 and size #N$02
- $EDAB LD DE,$0202   ; by #N$02.
- $EDAE JP $F445      ; }
+; Use glyph #N$84.
+ $EDA9 LD A,$84      ; #REGa=#N$84.
+ $EDAB LD DE,$0202   ; #REGde=#N$0202.
+ $EDAE JP $F445      ; Jump to #R$F445.
 
 ; Draw Header Furniture
 ;
-; Used by the routines at #R$EA02 and #R$EDD9.
+; Used by the routines at #R$EA02 and #R$EFE6.
 @label=Draw_HeaderFurniture
 c$EDB1 LD B,(IX+$01) ; {Fetch the print row and the stored column.
  $EDB4 LD A,(IX+$00) ; }
  $EDB7 AND %01111111 ; Keep only bits 0-6.
- $EDB9 LD C,A        ; {Call #R$F42D at that column and row.
- $EDBA CALL $F42D    ; }
+ $EDB9 LD C,A        ; #REGc=the column.
+ $EDBA CALL $F42D    ; Call #R$F42D.
  $EDBD LD A,(IX+$02) ; {Write the furniture colour to
  $EDC0 LD ($5C8F),A  ; *#SKOOLKID$5C8F(ATTR_T).}
  $EDC3 LD B,(IX+$05) ; #REGb=the remaining height.
@@ -8544,8 +8595,8 @@ c$EDB1 LD B,(IX+$01) ; {Fetch the print row and the stored column.
 *$EDC6 LD A,(IX+$03) ; {Fetch the starting glyph and the remaining width.
  $EDC9 LD C,(IX+$04) ; }
 @label=Draw_HeaderFurniture_Continue
-*$EDCC CALL $F436    ; {Call #R$F436 and #R$F43F.
- $EDCF CALL $F43F    ; }
+*$EDCC CALL $F436    ; Call #R$F436.
+ $EDCF CALL $F43F    ; Call #R$F43F.
  $EDD2 INC A         ; {Increase the glyph and loop back to #R$EDCC
  $EDD3 DEC C         ; until this row is drawn.
  $EDD4 JR NZ,$EDCC   ; }
@@ -8559,138 +8610,154 @@ c$EDB1 LD B,(IX+$01) ; {Fetch the print row and the stored column.
 ; Dispatches the event ID in #REGa. Each ID is a collectible, door or
 ; scenery action for the current room.
 @label=Handler_Events
-c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
- $EDDB LD HL,($5C36)   ; stack.
- $EDDE PUSH HL         ; }
- $EDDF LD HL,$EECB     ; {Push #R$EECA as the return address.
- $EDE2 PUSH HL         ; }
- $EDE3 LD HL,$7C70     ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
- $EDE6 LD ($5C36),HL   ; }
- $EDE9 CP $26          ; {Return if the event is #N$26.
- $EDEB RET Z           ; }
- $EDEC LD L,A          ; {Return if *#R$649F is already running.
- $EDED LD A,($649F)    ;
- $EDF0 OR A            ;
- $EDF1 RET NZ          ; }
- $EDF2 BIT 7,L         ; {Jump to #R$EDFB if this is a collectible event.
- $EDF4 JR NZ,$EDFB     ; }
- $EDF6 LD A,$10        ; {Write #N$10 to *#R$6472.
- $EDF8 LD ($6472),A    ; }
+c$EDD9 PUSH IX       ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
+ $EDDB LD HL,($5C36) ; stack.
+ $EDDE PUSH HL       ; }
+ $EDDF LD HL,$EECB   ; {Push #R$EECB as the return address.
+ $EDE2 PUSH HL       ; }
+ $EDE3 LD HL,$7C70   ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
+ $EDE6 LD ($5C36),HL ; }
+ $EDE9 CP $26        ; {Return if the event is #N$26.
+ $EDEB RET Z         ; }
+ $EDEC LD L,A        ; {Return if *#R$649F is already running.
+ $EDED LD A,($649F)  ;
+ $EDF0 OR A          ;
+ $EDF1 RET NZ        ; }
+ $EDF2 BIT 7,L       ; {Jump to #R$EDFB if this is a collectible event.
+ $EDF4 JR NZ,$EDFB   ; }
+ $EDF6 LD A,$10      ; {Write #N$10 to *#R$6472.
+ $EDF8 LD ($6472),A  ; }
 ; Jump to the handler for this event ID.
 @label=Handler_Events_Dispatch
-*$EDFB LD A,L          ; Copy the event ID into #REGa.
- $EDFC AND %01111111   ; Keep only bits 0-6.
- $EDFE OR A            ; {Jump to #R$EFE6 if the event is #N$00.
- $EDFF JP Z,$EFE6      ; }
- $EE02 CP $01          ; {Jump to #R$EFF5 if the event is #N$01.
- $EE04 JP Z,$EFF5      ; }
- $EE07 CP $03          ; {Jump to #R$F000 if the event is #N$03.
- $EE09 JP Z,$F000      ; }
- $EE0C CP $02          ; {Jump to #R$F011 if the event is #N$02.
- $EE0E JP Z,$F011      ; }
- $EE11 CP $04          ; {Jump to #R$F350 if the event is #N$04.
- $EE13 JP Z,$F350      ; }
- $EE16 CP $05          ; {Jump to #R$F03E if the event is #N$05.
- $EE18 JP Z,$F03E      ; }
- $EE1B CP $06          ; {Jump to #R$EEFA if the event is #N$06.
- $EE1D JP Z,$EEFA      ; }
- $EE20 CP $07          ; {Jump to #R$F0C0 if the event is #N$07.
- $EE22 JP Z,$F0C0      ; }
- $EE25 CP $08          ; {Jump to #R$EF8A if the event is #N$08.
- $EE27 JP Z,$EF8A      ; }
- $EE2A CP $09          ; {Jump to #R$F395 if the event is #N$09.
- $EE2C JP Z,$F395      ; }
- $EE2F CP $0A          ; {Jump to #R$F06A if the event is #N$0A.
- $EE31 JP Z,$F06A      ; }
- $EE34 CP $0B          ; {Jump to #R$F1C4 if the event is #N$0B.
- $EE36 JP Z,$F1C4      ; }
- $EE39 CP $0C          ; {Jump to #R$F1D4 if the event is #N$0C.
- $EE3B JP Z,$F1D4      ; }
- $EE3E CP $0D          ; {Jump to #R$F26A if the event is #N$0D.
- $EE40 JP Z,$F26A      ; }
- $EE43 CP $0E          ; {Jump to #R$EFD3 if the event is #N$0E.
- $EE45 JP Z,$EFD3      ; }
- $EE48 CP $0F          ; {Jump to #R$F28F if the event is #N$0F.
- $EE4A JP Z,$F28F      ; }
- $EE4D CP $11          ; {Jump to #R$F22C if the event is #N$11.
- $EE4F JP Z,$F22C      ; }
- $EE52 CP $12          ; {Jump to #R$F2E0 if the event is #N$12.
- $EE54 JP Z,$F2E0      ; }
- $EE57 CP $13          ; {Jump to #R$F31D if the event is #N$13.
- $EE59 JP Z,$F31D      ; }
- $EE5C CP $14          ; {Jump to #R$EEE5 if the event is #N$14.
- $EE5E JP Z,$EEE5      ; }
- $EE61 CP $15          ; {Jump to #R$F328 if the event is #N$15.
- $EE63 JP Z,$F328      ; }
- $EE66 CP $16          ; {Jump to #R$F2B2 if the event is #N$16.
- $EE68 JP Z,$F2B2      ; }
- $EE6B CP $17          ; {Jump to #R$F072 if the event is #N$17.
- $EE6D JP Z,$F072      ; }
- $EE70 CP $18          ; {Jump to #R$F164 if the event is #N$18.
- $EE72 JP Z,$F164      ; }
- $EE75 CP $19          ; {Jump to #R$F0E4 if the event is #N$19.
- $EE77 JP Z,$F0E4      ; }
- $EE7A CP $1A          ; {Jump to #R$EF3A if the event is #N$1A.
- $EE7C JP Z,$EF3A      ; }
- $EE7F CP $1B          ; {Jump to #R$F125 if the event is #N$1B.
- $EE81 JP Z,$F125      ; }
- $EE84 CP $1C          ; {Jump to #R$EF5C if the event is #N$1C.
- $EE86 JP Z,$EF5C      ; }
- $EE89 CP $1D          ; {Jump to #R$F361 if the event is #N$1D.
- $EE8B JP Z,$F361      ; }
- $EE8E CP $1E          ; {Jump to #R$F1EE if the event is #N$1E.
- $EE90 JP Z,$F1EE      ; }
- $EE93 CP $1F          ; {Jump to #R$F217 if the event is #N$1F.
- $EE95 JP Z,$F217      ; }
- $EE98 CP $20          ; {Jump to #R$F249 if the event is #N$20.
- $EE9A JP Z,$F249      ; }
- $EE9D CP $21          ; {Jump to #R$F244 if the event is #N$21.
- $EE9F JP Z,$F244      ; }
- $EEA2 CP $22          ; {Jump to #R$F188 if the event is #N$22.
- $EEA4 JP Z,$F188      ; }
- $EEA7 CP $23          ; {Jump to #R$F24E if the event is #N$23.
- $EEA9 JP Z,$F24E      ; }
- $EEAC CP $24          ; {Jump to #R$F07D if the event is #N$24.
- $EEAE JP Z,$F07D      ; }
- $EEB1 CP $25          ; {Jump to #R$F253 if the event is #N$25.
- $EEB3 JP Z,$F253      ; }
- $EEB6 CP $27          ; {Jump to #R$F006 if the event is #N$27.
- $EEB8 JP Z,$F006      ; }
- $EEBB CP $28          ; {Jump to #R$F0B4 if the event is #N$28.
- $EEBD JP Z,$F0B4      ; }
- $EEC0 CP $29          ; {Jump to #R$F1B6 if the event is #N$29.
- $EEC2 JP Z,$F1B6      ; }
- $EEC5 CP $2A          ; {Jump to #R$EED2 if the event is #N$2A.
- $EEC7 JP Z,$EED2      ; }
+*$EDFB LD A,L        ; Copy the event ID into #REGa.
+ $EDFC AND %01111111 ; Keep only bits 0-6.
+ $EDFE OR A          ; {Jump to #R$EFE6 if the event is #N$00.
+ $EDFF JP Z,$EFE6    ; }
+ $EE02 CP $01        ; {Jump to #R$EFF5 if the event is #N$01.
+ $EE04 JP Z,$EFF5    ; }
+ $EE07 CP $03        ; {Jump to #R$F000 if the event is #N$03.
+ $EE09 JP Z,$F000    ; }
+ $EE0C CP $02        ; {Jump to #R$F011 if the event is #N$02.
+ $EE0E JP Z,$F011    ; }
+ $EE11 CP $04        ; {Jump to #R$F350 if the event is #N$04.
+ $EE13 JP Z,$F350    ; }
+ $EE16 CP $05        ; {Jump to #R$F03E if the event is #N$05.
+ $EE18 JP Z,$F03E    ; }
+ $EE1B CP $06        ; {Jump to #R$EEFA if the event is #N$06.
+ $EE1D JP Z,$EEFA    ; }
+ $EE20 CP $07        ; {Jump to #R$F0C0 if the event is #N$07.
+ $EE22 JP Z,$F0C0    ; }
+ $EE25 CP $08        ; {Jump to #R$EF8A if the event is #N$08.
+ $EE27 JP Z,$EF8A    ; }
+ $EE2A CP $09        ; {Jump to #R$F395 if the event is #N$09.
+ $EE2C JP Z,$F395    ; }
+ $EE2F CP $0A        ; {Jump to #R$F06A if the event is #N$0A.
+ $EE31 JP Z,$F06A    ; }
+ $EE34 CP $0B        ; {Jump to #R$F1C4 if the event is #N$0B.
+ $EE36 JP Z,$F1C4    ; }
+ $EE39 CP $0C        ; {Jump to #R$F1D4 if the event is #N$0C.
+ $EE3B JP Z,$F1D4    ; }
+ $EE3E CP $0D        ; {Jump to #R$F26A if the event is #N$0D.
+ $EE40 JP Z,$F26A    ; }
+ $EE43 CP $0E        ; {Jump to #R$EFD3 if the event is #N$0E.
+ $EE45 JP Z,$EFD3    ; }
+ $EE48 CP $0F        ; {Jump to #R$F28F if the event is #N$0F.
+ $EE4A JP Z,$F28F    ; }
+ $EE4D CP $11        ; {Jump to #R$F22C if the event is #N$11.
+ $EE4F JP Z,$F22C    ; }
+ $EE52 CP $12        ; {Jump to #R$F2E0 if the event is #N$12.
+ $EE54 JP Z,$F2E0    ; }
+ $EE57 CP $13        ; {Jump to #R$F31D if the event is #N$13.
+ $EE59 JP Z,$F31D    ; }
+ $EE5C CP $14        ; {Jump to #R$EEE5 if the event is #N$14.
+ $EE5E JP Z,$EEE5    ; }
+ $EE61 CP $15        ; {Jump to #R$F328 if the event is #N$15.
+ $EE63 JP Z,$F328    ; }
+ $EE66 CP $16        ; {Jump to #R$F2B2 if the event is #N$16.
+ $EE68 JP Z,$F2B2    ; }
+ $EE6B CP $17        ; {Jump to #R$F072 if the event is #N$17.
+ $EE6D JP Z,$F072    ; }
+ $EE70 CP $18        ; {Jump to #R$F164 if the event is #N$18.
+ $EE72 JP Z,$F164    ; }
+ $EE75 CP $19        ; {Jump to #R$F0E4 if the event is #N$19.
+ $EE77 JP Z,$F0E4    ; }
+ $EE7A CP $1A        ; {Jump to #R$EF3A if the event is #N$1A.
+ $EE7C JP Z,$EF3A    ; }
+ $EE7F CP $1B        ; {Jump to #R$F125 if the event is #N$1B.
+ $EE81 JP Z,$F125    ; }
+ $EE84 CP $1C        ; {Jump to #R$EF5C if the event is #N$1C.
+ $EE86 JP Z,$EF5C    ; }
+ $EE89 CP $1D        ; {Jump to #R$F361 if the event is #N$1D.
+ $EE8B JP Z,$F361    ; }
+ $EE8E CP $1E        ; {Jump to #R$F1EE if the event is #N$1E.
+ $EE90 JP Z,$F1EE    ; }
+ $EE93 CP $1F        ; {Jump to #R$F217 if the event is #N$1F.
+ $EE95 JP Z,$F217    ; }
+ $EE98 CP $20        ; {Jump to #R$F249 if the event is #N$20.
+ $EE9A JP Z,$F249    ; }
+ $EE9D CP $21        ; {Jump to #R$F244 if the event is #N$21.
+ $EE9F JP Z,$F244    ; }
+ $EEA2 CP $22        ; {Jump to #R$F188 if the event is #N$22.
+ $EEA4 JP Z,$F188    ; }
+ $EEA7 CP $23        ; {Jump to #R$F24E if the event is #N$23.
+ $EEA9 JP Z,$F24E    ; }
+ $EEAC CP $24        ; {Jump to #R$F07D if the event is #N$24.
+ $EEAE JP Z,$F07D    ; }
+ $EEB1 CP $25        ; {Jump to #R$F253 if the event is #N$25.
+ $EEB3 JP Z,$F253    ; }
+ $EEB6 CP $27        ; {Jump to #R$F006 if the event is #N$27.
+ $EEB8 JP Z,$F006    ; }
+ $EEBB CP $28        ; {Jump to #R$F0B4 if the event is #N$28.
+ $EEBD JP Z,$F0B4    ; }
+ $EEC0 CP $29        ; {Jump to #R$F1B6 if the event is #N$29.
+ $EEC2 JP Z,$F1B6    ; }
+ $EEC5 CP $2A        ; {Jump to #R$EED2 if the event is #N$2A.
+ $EEC7 JP Z,$EED2    ; }
 @label=Handler_Events_Done
- $EECA POP HL          ; {Restore *#SKOOLKID$5C36(CHARS) and #REGix, then
- $EECB POP HL          ; return.
- $EECC LD ($5C36),HL   ;
- $EECF POP IX          ;
- $EED1 RET             ; }
+ $EECA POP HL        ; Drop the unused return address.
+@label=Handler_Events_Restore
+ $EECB POP HL        ; Restore *#SKOOLKID$5C36(CHARS) from the stack.
+ $EECC LD ($5C36),HL ; Write it back to *#SKOOLKID$5C36(CHARS).
+ $EECF POP IX        ; Restore #REGix from the stack.
+ $EED1 RET           ; Return.
+
+; Hide Enemies
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$2A: hide the first two enemies.
 @label=Event_HideEnemies
-*$EED2 CALL $F006      ; {Call #R$F006 and #R$F164.
- $EED5 CALL $F164      ; }
- $EED8 LD IX,($6432)   ; #REGix=*#R$6432.
- $EEDC SET 7,(IX+$00)  ; {Set bit 7 on the first two enemy records.
- $EEE0 SET 7,(IX+$0E)  ; }
- $EEE4 RET             ; Return.
+c$EED2 CALL $F006     ; Call #R$F006.
+ $EED5 CALL $F164     ; Call #R$F164.
+ $EED8 LD IX,($6432)  ; #REGix=*#R$6432.
+ $EEDC SET 7,(IX+$00) ; {Set bit 7 on the first two enemy records.
+ $EEE0 SET 7,(IX+$0E) ; }
+ $EEE4 RET            ; Return.
+
+; Reveal Decorations
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$14: reveal two decorations.
 @label=Event_RevealDecorations
-*$EEE5 LD IX,($642E)   ; {#REGix=*#R$642E and #REGb=#N$02.
- $EEE9 LD B,$02        ; }
+c$EEE5 LD IX,($642E) ; #REGix=*#R$642E.
+ $EEE9 LD B,$02      ; #REGb=#N$02.
 @label=Event_RevealDecorations_Target
-*$EEEB PUSH BC         ; {Stash the count and call #R$F193.
- $EEEC CALL $F193      ; }
- $EEEF LD DE,$0006     ; {Advance to the next decoration and loop back to
- $EEF2 ADD IX,DE       ; #R$EEEB.
- $EEF4 POP BC          ;
- $EEF5 DJNZ $EEEB      ; }
- $EEF7 JP $F164        ; Jump to #R$F164.
+*$EEEB PUSH BC       ; Stash the count on the stack.
+ $EEEC CALL $F193    ; Call #R$F193.
+ $EEEF LD DE,$0006   ; {Advance to the next decoration.
+ $EEF2 ADD IX,DE     ; }
+ $EEF4 POP BC        ; Restore the count from the stack.
+ $EEF5 DJNZ $EEEB    ; Decrease the count and loop back to #R$EEEB.
+ $EEF7 JP $F164      ; Jump to #R$F164.
+
+; Reveal Header
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$06: reveal the room-header item.
 @label=Event_RevealHeader
-*$EEFA LD IX,($641E)   ; #REGix=*#R$641E.
+c$EEFA LD IX,($641E)   ; #REGix=*#R$641E.
  $EEFE BIT 7,(IX+$00)  ; {Return if this header item is already visible.
  $EF02 RET Z           ; }
  $EF03 LD BC,$2020     ; {Write #N$2020 to *#R$6472.
@@ -8702,8 +8769,8 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $EF17 LD D,$01        ;
  $EF19 LD L,(IX+$02)   ;
  $EF1C LD A,(IX+$03)   ; }
- $EF1F LD IX,$648B     ; {Point #REGix at #R$648B and call #R$F457.
- $EF23 CALL $F457      ; }
+ $EF1F LD IX,$648B     ; #REGix=#R$648B.
+ $EF23 CALL $F457      ; Call #R$F457.
  $EF26 CALL $F333      ; Call #R$F333.
  $EF29 LD (IX+$08),$01 ; Write #N$01 as the horizontal delta.
  $EF2D LD A,(IX+$00)   ; {Subtract the width from the column and store it.
@@ -8711,46 +8778,63 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $EF33 LD (IX+$00),A   ;
  $EF36 LD (IX+$13),A   ; }
  $EF39 RET             ; Return.
+
+; Reveal Pair
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$1A: reveal two decorations and a mover.
 @label=Event_RevealPair
-*$EF3A LD IX,($642E)   ; {#REGix=*#R$642E+#N($000C,$04,$04).
- $EF3E LD DE,$000C     ;
- $EF41 ADD IX,DE       ; }
- $EF43 CALL $F193      ; Call #R$F193.
- $EF46 LD DE,$0006     ; {Advance one decoration and call #R$F193 again.
- $EF49 ADD IX,DE       ;
- $EF4B CALL $F193      ; }
- $EF4E LD IX,($642A)   ; {Clear bit 7 of *#R$642A+#N($0026,$04,$04).
- $EF52 LD DE,$0026     ;
- $EF55 ADD IX,DE       ;
- $EF57 RES 7,(IX+$00)  ; }
- $EF5B RET             ; Return.
+c$EF3A LD IX,($642E)  ; {#REGix=*#R$642E+#N($000C,$04,$04).
+ $EF3E LD DE,$000C    ;
+ $EF41 ADD IX,DE      ; }
+ $EF43 CALL $F193     ; Call #R$F193.
+ $EF46 LD DE,$0006    ; {Advance one decoration.
+ $EF49 ADD IX,DE      ; }
+ $EF4B CALL $F193     ; Call #R$F193.
+ $EF4E LD IX,($642A)  ; {Clear bit 7 of *#R$642A+#N($0026,$04,$04).
+ $EF52 LD DE,$0026    ;
+ $EF55 ADD IX,DE      ;
+ $EF57 RES 7,(IX+$00) ; }
+ $EF5B RET            ; Return.
+
+; Reveal Triple
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$1C: reveal three decorations and three movers.
 @label=Event_RevealTriple
-*$EF5C LD IX,($642E)   ; {#REGix=*#R$642E+#N($0018,$04,$04).
- $EF60 LD DE,$0018     ;
- $EF63 ADD IX,DE       ; }
- $EF65 LD B,$03        ; #REGb=#N$03.
+c$EF5C LD IX,($642E)  ; {#REGix=*#R$642E+#N($0018,$04,$04).
+ $EF60 LD DE,$0018    ;
+ $EF63 ADD IX,DE      ; }
+ $EF65 LD B,$03       ; #REGb=#N$03.
+; Reveal three decorations.
 @label=Event_RevealTriple_Target
-*$EF67 PUSH BC         ; {Call #R$F193 and advance to the next decoration.
- $EF68 CALL $F193      ;
- $EF6B POP BC          ;
- $EF6C LD DE,$0006     ;
- $EF6F ADD IX,DE       ;
- $EF71 DJNZ $EF67      ; }
- $EF73 LD IX,($642A)   ; {#REGix=*#R$642A+#N($0039,$04,$04) and #REGb=#N$03.
- $EF77 LD DE,$0039     ;
- $EF7A ADD IX,DE       ;
- $EF7C LD B,$03        ;
- $EF7E LD DE,$0013     ; }
+*$EF67 PUSH BC        ; Stash the count on the stack.
+ $EF68 CALL $F193     ; Call #R$F193.
+ $EF6B POP BC         ; Restore the count from the stack.
+ $EF6C LD DE,$0006    ; {Advance to the next decoration.
+ $EF6F ADD IX,DE      ; }
+ $EF71 DJNZ $EF67     ; Decrease the count and loop back to #R$EF67.
+; Reveal three movers.
+ $EF73 LD IX,($642A)  ; {#REGix=*#R$642A+#N($0039,$04,$04).
+ $EF77 LD DE,$0039    ;
+ $EF7A ADD IX,DE      ; }
+ $EF7C LD B,$03       ; #REGb=#N$03.
+ $EF7E LD DE,$0013    ; #REGde=#N($0013,$04,$04).
 @label=Event_RevealTriple_Target2
-*$EF81 RES 7,(IX+$00)  ; {Clear bit 7 of each mover and loop back to
- $EF85 ADD IX,DE       ; #R$EF81.
- $EF87 DJNZ $EF81      ; }
- $EF89 RET             ; Return.
+*$EF81 RES 7,(IX+$00) ; Clear bit 7 of this mover.
+ $EF85 ADD IX,DE      ; #REGix+=#REGde.
+ $EF87 DJNZ $EF81     ; Decrease the count and loop back to #R$EF81.
+ $EF89 RET            ; Return.
+
+; Start Actor
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$08: start an actor walking.
 @label=Event_StartActor
-*$EF8A LD IX,($6430)   ; #REGix=*#R$6430.
+c$EF8A LD IX,($6430)   ; #REGix=*#R$6430.
 @label=Event_StartActor_Target
 *$EF8E LD A,(IX+$00)   ; {Return if the terminator #N$FF is reached.
  $EF91 CP $FF          ;
@@ -8765,63 +8849,94 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $EFA4 JR Z,$EFB7      ; }
  $EFA6 CP (IX+$00)     ; {Jump to #R$EFB1 if the actor is left of the
  $EFA9 JR NC,$EFB1     ; destination.}
- $EFAB LD (IX+$08),$FE ; {Write #N$FE as the horizontal delta and jump to
- $EFAF JR $EFCC        ; #R$EFCC.}
+ $EFAB LD (IX+$08),$FE ; Write #N$FE as the horizontal delta.
+ $EFAF JR $EFCC        ; Jump to #R$EFCC.
 @label=Event_StartActor_Branch
-*$EFB1 LD (IX+$08),$02 ; {Write #N$02 as the horizontal delta and jump to
- $EFB5 JR $EFCC        ; #R$EFCC.}
+*$EFB1 LD (IX+$08),$02 ; Write #N$02 as the horizontal delta.
+ $EFB5 JR $EFCC        ; Jump to #R$EFCC.
 @label=Event_StartActor_Skip
 *$EFB7 LD A,(IX+$06)   ; {Jump to #R$EFCC if there is no vertical
  $EFBA OR A            ; destination.
  $EFBB JR Z,$EFCC      ; }
  $EFBD CP (IX+$01)     ; {Jump to #R$EFC8 if the actor is above the
  $EFC0 JR NC,$EFC8     ; destination.}
- $EFC2 LD (IX+$09),$FE ; {Write #N$FE as the vertical delta and jump to
- $EFC6 JR $EFCC        ; #R$EFCC.}
+ $EFC2 LD (IX+$09),$FE ; Write #N$FE as the vertical delta.
+ $EFC6 JR $EFCC        ; Jump to #R$EFCC.
 @label=Event_StartActor_Branch2
 *$EFC8 LD (IX+$09),$02 ; Write #N$02 as the vertical delta.
 @label=Event_StartActor_Continue
-*$EFCC LD DE,$000D     ; {#REGix+=#N($000D,$04,$04) and jump to #R$EF8E.
- $EFCF ADD IX,DE       ;
- $EFD1 JR $EF8E        ; }
+*$EFCC LD DE,$000D     ; {#REGix+=#N($000D,$04,$04).
+ $EFCF ADD IX,DE       ; }
+ $EFD1 JR $EF8E        ; Jump to #R$EF8E.
+
+; Swap Keys
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$0E: swap the left/right keys.
 @label=Event_SwapKeys
-*$EFD3 LD BC,($647F)   ; {Swap *#R$647F with *#R$6480.
- $EFD7 LD H,C          ;
- $EFD8 LD L,B          ;
- $EFD9 LD ($647F),HL   ; }
- $EFDC LD BC,($6486)   ; {Swap the two bytes at *#R$6486.
- $EFE0 LD H,C          ;
- $EFE1 LD L,B          ;
- $EFE2 LD ($6486),HL   ; }
- $EFE5 RET             ; Return.
+c$EFD3 LD BC,($647F) ; {Swap *#R$647F with *#R$6480.
+ $EFD7 LD H,C        ;
+ $EFD8 LD L,B        ;
+ $EFD9 LD ($647F),HL ; }
+ $EFDC LD BC,($6486) ; {Swap the two bytes at *#R$6486.
+ $EFE0 LD H,C        ;
+ $EFE1 LD L,B        ;
+ $EFE2 LD ($6486),HL ; }
+ $EFE5 RET           ; Return.
+
+; Draw Header
+;
+; Used by the routines at #R$EDD9 and #R$F000.
+; .
 ; Event #N$00: draw the first header item.
 @label=Event_DrawHeader
-*$EFE6 LD IX,($641E)   ; #REGix=*#R$641E.
+c$EFE6 LD IX,($641E) ; #REGix=*#R$641E.
+; This entry point is used by the routines at #R$EFF5, #R$F006 and #R$F0C0.
 @label=Event_DrawHeader_Body
-*$EFEA LD A,(IX+$00)   ; #REGa=the header record.
- $EFED AND %01111111   ; Keep only bits 0-6.
- $EFEF LD (IX+$00),A   ; {Write it back and jump to #R$EDB1.
- $EFF2 JP $EDB1        ; }
+*$EFEA LD A,(IX+$00) ; #REGa=the header record.
+ $EFED AND %01111111 ; Keep only bits 0-6.
+ $EFEF LD (IX+$00),A ; Write it back.
+ $EFF2 JP $EDB1      ; Jump to #R$EDB1.
+
+; Draw Next Header
+;
+; Used by the routines at #R$EDD9 and #R$F000.
+; .
 ; Event #N$01: draw the next header item.
 @label=Event_DrawHeaderNext
-*$EFF5 LD IX,($641E)   ; #REGix=*#R$641E.
- $EFF9 LD DE,$0006     ; {#REGix+=#N($0006,$04,$04) and jump to #R$EFEA.
- $EFFC ADD IX,DE       ;
- $EFFE JR $EFEA        ; }
+c$EFF5 LD IX,($641E) ; #REGix=*#R$641E.
+ $EFF9 LD DE,$0006   ; {#REGix+=#N($0006,$04,$04).
+ $EFFC ADD IX,DE     ; }
+ $EFFE JR $EFEA      ; Jump to #R$EFEA.
+
+; Draw Header Pair
+;
+; Used by the routines at #R$EDD9 and #R$F072.
+; .
 ; Event #N$03: draw the first two header items.
 @label=Event_DrawHeaderPair
-*$F000 CALL $EFE6      ; Call #R$EFE6.
- $F003 JP $EFF5        ; Jump to #R$EFF5.
+c$F000 CALL $EFE6    ; Call #R$EFE6.
+ $F003 JP $EFF5      ; Jump to #R$EFF5.
+
+; Draw Fourth Header
+;
+; Used by the routines at #R$EDD9 and #R$EED2.
+; .
 ; Event #N$27: draw the fourth header item.
 @label=Event_DrawHeaderFourth
-*$F006 LD IX,($641E)   ; #REGix=*#R$641E.
- $F00A LD DE,$0012     ; {#REGix+=#N($0012,$04,$04) and jump to #R$EFEA.
- $F00D ADD IX,DE       ;
- $F00F JR $EFEA        ; }
+c$F006 LD IX,($641E) ; #REGix=*#R$641E.
+ $F00A LD DE,$0012   ; {#REGix+=#N($0012,$04,$04).
+ $F00D ADD IX,DE     ; }
+ $F00F JR $EFEA      ; Jump to #R$EFEA.
+
+; Nudge Actor
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$02: nudge the first actor.
 @label=Event_NudgeActor
-*$F011 LD IX,($6430)   ; #REGix=*#R$6430.
+c$F011 LD IX,($6430)   ; #REGix=*#R$6430.
 @label=Event_NudgeActor_Target
 *$F015 LD A,(IX+$00)   ; {Return if the terminator #N$FF is reached.
  $F018 INC A           ;
@@ -8835,106 +8950,146 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $F025 LD A,(IX+$06)   ; {Jump to #R$F033 if the actor is above the
  $F028 CP (IX+$0B)     ; destination.
  $F02B JR NC,$F033     ; }
- $F02D LD (IX+$09),$FE ; {Write #N$FE as the vertical delta and jump to
- $F031 JR $F037        ; #R$F037.}
+ $F02D LD (IX+$09),$FE ; Write #N$FE as the vertical delta.
+ $F031 JR $F037        ; Jump to #R$F037.
 @label=Event_NudgeActor_Branch
 *$F033 LD (IX+$09),$02 ; Write #N$02 as the vertical delta.
 @label=Event_NudgeActor_Skip
-*$F037 LD DE,$000D     ; {#REGix+=#N($000D,$04,$04) and jump to #R$F015.
- $F03A ADD IX,DE       ;
- $F03C JR $F015        ; }
+*$F037 LD DE,$000D     ; {#REGix+=#N($000D,$04,$04).
+ $F03A ADD IX,DE       ; }
+ $F03C JR $F015        ; Jump to #R$F015.
+
+; Start Enemy
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$05: start the first enemy.
 @label=Event_StartEnemy
-*$F03E LD BC,$2614     ; {Write #N$2614 to *#R$649F.
- $F041 LD ($649F),BC   ; }
- $F045 LD IX,($6432)   ; #REGix=*#R$6432.
+c$F03E LD BC,$2614   ; {Write #N$2614 to *#R$649F.
+ $F041 LD ($649F),BC ; }
+ $F045 LD IX,($6432) ; #REGix=*#R$6432.
 @label=Event_StartEnemy_Target
-*$F049 LD A,(IX+$00)   ; {Return if the terminator #N$FF is reached.
- $F04C INC A           ;
- $F04D RET Z           ; }
- $F04E BIT 7,A         ; {Jump to #R$F063 if this enemy is hidden.
- $F050 JR NZ,$F063     ; }
- $F052 LD A,(IX+$08)   ; {Negate the horizontal delta.
- $F055 DEC A           ; }
- $F056 XOR %11111111   ; Invert the subtracted byte.
- $F058 LD (IX+$08),A   ; Write the new horizontal delta.
- $F05B LD A,(IX+$07)   ; #REGa=(IX+#N$07).
- $F05E XOR %10000000   ; Toggle bit 7.
- $F060 LD (IX+$07),A   ; Write the facing flag back.
+*$F049 LD A,(IX+$00) ; {Return if the terminator #N$FF is reached.
+ $F04C INC A         ;
+ $F04D RET Z         ; }
+ $F04E BIT 7,A       ; {Jump to #R$F063 if this enemy is hidden.
+ $F050 JR NZ,$F063   ; }
+ $F052 LD A,(IX+$08) ; {Negate the horizontal delta.
+ $F055 DEC A         ; }
+ $F056 XOR %11111111 ; Invert the subtracted byte.
+ $F058 LD (IX+$08),A ; Write the new horizontal delta.
+ $F05B LD A,(IX+$07) ; #REGa=*#REGix+#N$07.
+ $F05E XOR %10000000 ; Toggle bit 7.
+ $F060 LD (IX+$07),A ; Write the facing flag back.
 @label=Event_StartEnemy_Continue
-*$F063 LD DE,$000E     ; {#REGix+=#N($000E,$04,$04) and jump to #R$F049.
- $F066 ADD IX,DE       ;
- $F068 JR $F049        ; }
+*$F063 LD DE,$000E   ; {#REGix+=#N($000E,$04,$04).
+ $F066 ADD IX,DE     ; }
+ $F068 JR $F049      ; Jump to #R$F049.
+
+; Start Short Timer
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$0A: start a short event timer.
 @label=Event_ShortTimer
-*$F06A LD BC,$021C     ; {Write #N$021C to *#R$649F.
- $F06D LD ($649F),BC   ; }
- $F071 RET             ; Return.
+c$F06A LD BC,$021C   ; {Write #N$021C to *#R$649F.
+ $F06D LD ($649F),BC ; }
+ $F071 RET           ; Return.
+
+; Draw Header Timer
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$17: draw two header items and start a timer.
 @label=Event_HeaderAndTimer
-*$F072 CALL $F000      ; Call #R$F000.
- $F075 LD BC,$246E     ; {Write #N$246E to *#R$649F.
- $F078 LD ($649F),BC   ; }
- $F07C RET             ; Return.
+c$F072 CALL $F000    ; Call #R$F000.
+ $F075 LD BC,$246E   ; {Write #N$246E to *#R$649F.
+ $F078 LD ($649F),BC ; }
+ $F07C RET           ; Return.
+
+; Hide Header Pair
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$24: hide two header items.
 @label=Event_HideHeaderPair
-*$F07D LD B,$02        ; {#REGb=#N$02 and #REGix=*#R$641E.
- $F07F LD IX,($641E)   ; }
+c$F07D LD B,$02      ; #REGb=#N$02.
+ $F07F LD IX,($641E) ; #REGix=*#R$641E.
 @label=Event_HideHeaderPair_Target
-*$F083 PUSH BC         ; {Call #R$F090 and advance to the next header
- $F084 CALL $F090      ; record.
- $F087 POP BC          ;
- $F088 LD DE,$0006     ;
- $F08B ADD IX,DE       ; }
- $F08D DJNZ $F083      ; Decrease the count and loop back to #R$F083.
- $F08F RET             ; Return.
-; Hide one header item by overprinting #N$C8.
+*$F083 PUSH BC       ; Stash the count on the stack.
+ $F084 CALL $F090    ; Call #R$F090.
+ $F087 POP BC        ; Restore the count from the stack.
+ $F088 LD DE,$0006   ; {Advance to the next header record.
+ $F08B ADD IX,DE     ; }
+ $F08D DJNZ $F083    ; Decrease the count and loop back to #R$F083.
+ $F08F RET           ; Return.
+
+; Hide Header Item
+;
+; Used by the routines at #R$F07D, #R$F0B4 and #R$F0C0.
+; .
+; Hides one header item by overprinting #N$C8.
 @label=Hide_HeaderItem
-*$F090 LD A,(IX+$00)   ; #REGa=the header record.
- $F093 AND %01111111   ; Keep only bits 0-6.
- $F095 LD C,A          ; {Set bit 7 and call #R$F42D at that column and
- $F096 SET 7,(IX+$00)  ; row.
- $F09A LD B,(IX+$01)   ;
- $F09D CALL $F42D      ; }
- $F0A0 LD B,(IX+$05)   ; #REGb=the remaining height.
+c$F090 LD A,(IX+$00)  ; #REGa=the header record.
+ $F093 AND %01111111  ; Keep only bits 0-6.
+ $F095 LD C,A         ; #REGc=the column.
+ $F096 SET 7,(IX+$00) ; Set bit 7 of the header record.
+ $F09A LD B,(IX+$01)  ; #REGb=the row.
+ $F09D CALL $F42D     ; Call #R$F42D.
+ $F0A0 LD B,(IX+$05)  ; #REGb=the remaining height.
 @label=Hide_HeaderItem_Target
-*$F0A3 LD C,(IX+$04)   ; #REGc=the remaining width.
+*$F0A3 LD C,(IX+$04)  ; #REGc=the remaining width.
 @label=Hide_HeaderItem_Continue
-*$F0A6 LD A,$C8        ; {Print #N$C8 and write it into the room buffer.
- $F0A8 CALL $F436      ;
- $F0AB CALL $F43F      ; }
- $F0AE DEC C           ; {Decrease the width and loop back to #R$F0A6.
- $F0AF JR NZ,$F0A6     ; }
- $F0B1 DJNZ $F0A3      ; Decrease the height and loop back to #R$F0A3.
- $F0B3 RET             ; Return.
+*$F0A6 LD A,$C8       ; #REGa=#N$C8.
+ $F0A8 CALL $F436     ; Call #R$F436.
+ $F0AB CALL $F43F     ; Call #R$F43F.
+ $F0AE DEC C          ; {Decrease the width and loop back to #R$F0A6.
+ $F0AF JR NZ,$F0A6    ; }
+ $F0B1 DJNZ $F0A3     ; Decrease the height and loop back to #R$F0A3.
+ $F0B3 RET            ; Return.
+
+; Hide Fourth Header
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$28: hide the fourth header item.
 @label=Event_HideHeaderFourth
-*$F0B4 LD IX,($641E)   ; #REGix=*#R$641E.
- $F0B8 LD DE,$0012     ; {#REGix+=#N($0012,$04,$04) and jump to #R$F090.
- $F0BB ADD IX,DE       ;
- $F0BD JP $F090        ; }
+c$F0B4 LD IX,($641E) ; #REGix=*#R$641E.
+ $F0B8 LD DE,$0012   ; {#REGix+=#N($0012,$04,$04).
+ $F0BB ADD IX,DE     ; }
+ $F0BD JP $F090      ; Jump to #R$F090.
+
+; Reveal Header Triple
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$07: reveal three header items.
 @label=Event_RevealHeaderTriple
-*$F0C0 LD BC,$2614     ; {Write #N$2614 to *#R$649F.
- $F0C3 LD ($649F),BC   ; }
- $F0C7 LD B,$03        ; {#REGb=#N$03 and #REGix=*#R$641E.
- $F0C9 LD IX,($641E)   ; }
+c$F0C0 LD BC,$2614   ; {Write #N$2614 to *#R$649F.
+ $F0C3 LD ($649F),BC ; }
+ $F0C7 LD B,$03      ; #REGb=#N$03.
+ $F0C9 LD IX,($641E) ; #REGix=*#R$641E.
 @label=Event_RevealHeaderTriple_Target
-*$F0CD PUSH BC         ; {Call #R$EFEA if the item is hidden, or #R$F090
- $F0CE LD A,(IX+$00)   ; if it is already visible.
- $F0D1 BIT 7,A         ;
- $F0D3 PUSH AF         ;
- $F0D4 CALL NZ,$EFEA   ;
- $F0D7 POP AF          ;
- $F0D8 CALL Z,$F090    ; }
- $F0DB POP BC          ; {Advance to the next header record and loop back
- $F0DC LD DE,$0006     ; to #R$F0CD.
- $F0DF ADD IX,DE       ;
- $F0E1 DJNZ $F0CD      ; }
- $F0E3 RET             ; Return.
+*$F0CD PUSH BC       ; Stash the count on the stack.
+ $F0CE LD A,(IX+$00) ; #REGa=the header record.
+ $F0D1 BIT 7,A       ; Test bit 7.
+ $F0D3 PUSH AF       ; Stash the flags on the stack.
+ $F0D4 CALL NZ,$EFEA ; Call #R$EFEA if the item is hidden.
+ $F0D7 POP AF        ; Restore the flags from the stack.
+ $F0D8 CALL Z,$F090  ; Call #R$F090 if the item is visible.
+ $F0DB POP BC        ; Restore the count from the stack.
+ $F0DC LD DE,$0006   ; {Advance to the next header record.
+ $F0DF ADD IX,DE     ; }
+ $F0E1 DJNZ $F0CD    ; Decrease the count and loop back to #R$F0CD.
+ $F0E3 RET           ; Return.
+
+; Reveal Furniture
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$19: reveal the first furniture item.
 @label=Event_RevealFurniture
-*$F0E4 LD IX,($6420)   ; #REGix=*#R$6420.
+c$F0E4 LD IX,($6420)   ; #REGix=*#R$6420.
  $F0E8 BIT 7,(IX+$00)  ; {Return if this furniture item is already visible.
  $F0EC RET Z           ; }
  $F0ED RES 7,(IX+$00)  ; Clear bit 7 of the furniture record.
@@ -8946,8 +9101,8 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $F101 LD A,(IX+$03)   ;
  $F104 LD E,$03        ;
  $F106 LD D,$04        ; }
- $F108 LD IX,$648B     ; {Point #REGix at #R$648B and call #R$F457.
- $F10C CALL $F457      ; }
+ $F108 LD IX,$648B     ; #REGix=#R$648B.
+ $F10C CALL $F457      ; Call #R$F457.
  $F10F CALL $F333      ; Call #R$F333.
  $F112 LD A,(IX+$01)   ; {Store the drop row four cells above the furniture.
  $F115 LD (IX+$0F),A   ;
@@ -8956,9 +9111,14 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $F11D LD (IX+$11),A   ;
  $F120 LD (IX+$09),$01 ; }
  $F124 RET             ; Return.
+
+; Reveal Ladder
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$1B: reveal the first ladder.
 @label=Event_RevealLadder
-*$F125 LD IX,($6428)   ; #REGix=*#R$6428.
+c$F125 LD IX,($6428)   ; #REGix=*#R$6428.
  $F129 BIT 7,(IX+$00)  ; {Return if this ladder is already visible.
  $F12D RET Z           ; }
  $F12E RES 7,(IX+$00)  ; Clear bit 7 of the ladder record.
@@ -8969,8 +9129,8 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $F13F LD L,(IX+$02)   ;
  $F142 LD A,$D9        ;
  $F144 LD DE,$0502     ; }
- $F147 LD IX,$648B     ; {Point #REGix at #R$648B and call #R$F457.
- $F14B CALL $F457      ; }
+ $F147 LD IX,$648B     ; #REGix=#R$648B.
+ $F14B CALL $F457      ; Call #R$F457.
  $F14E CALL $F333      ; Call #R$F333.
  $F151 LD A,(IX+$01)   ; {Store the drop row five cells above the ladder.
  $F154 LD (IX+$0F),A   ;
@@ -8979,202 +9139,303 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $F15C LD (IX+$11),A   ;
  $F15F LD (IX+$09),$01 ; }
  $F163 RET             ; Return.
+
+; Show Enemy
+;
+; Used by the routines at #R$EDD9, #R$EED2 and #R$EEE5.
+; .
 ; Event #N$18: show the first hidden enemy.
 @label=Event_ShowEnemy
-*$F164 LD IX,($6432)   ; #REGix=*#R$6432.
+c$F164 LD IX,($6432) ; #REGix=*#R$6432.
 @label=Event_ShowEnemy_Target
-*$F168 LD A,(IX+$00)   ; {Return if the terminator #N$FF is reached.
- $F16B CP $FF          ;
- $F16D RET Z           ; }
- $F16E BIT 7,A         ; {Jump to #R$F181 if this enemy is already visible.
- $F170 JR Z,$F181      ; }
- $F172 AND %01111111   ; Keep only bits 0-6.
- $F174 LD (IX+$00),A   ; {Write the visible ID and call #R$F463.
- $F177 LD C,A          ;
- $F178 LD B,(IX+$01)   ;
- $F17B LD DE,$0302     ;
- $F17E CALL $F463      ; }
+*$F168 LD A,(IX+$00) ; {Return if the terminator #N$FF is reached.
+ $F16B CP $FF        ;
+ $F16D RET Z         ; }
+ $F16E BIT 7,A       ; {Jump to #R$F181 if this enemy is already visible.
+ $F170 JR Z,$F181    ; }
+ $F172 AND %01111111 ; Keep only bits 0-6.
+ $F174 LD (IX+$00),A ; Write the visible ID.
+ $F177 LD C,A        ; {#REGbc=the column and row; size #N$03 by #N$02.
+ $F178 LD B,(IX+$01) ;
+ $F17B LD DE,$0302   ; }
+ $F17E CALL $F463    ; Call #R$F463.
 @label=Event_ShowEnemy_Skip
-*$F181 LD DE,$000E     ; {#REGix+=#N($000E,$04,$04) and jump to #R$F168.
- $F184 ADD IX,DE       ;
- $F186 JR $F168        ; }
+*$F181 LD DE,$000E   ; {#REGix+=#N($000E,$04,$04).
+ $F184 ADD IX,DE     ; }
+ $F186 JR $F168      ; Jump to #R$F168.
+
+; Award Digit
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$22: award a combination digit.
 @label=Event_AwardDigit
-*$F188 CALL $F249      ; Call #R$F249.
- $F18B LD BC,$2005     ; {Write #N$2005 to *#R$649F.
- $F18E LD ($649F),BC   ; }
- $F192 RET             ; Return.
-; Hide one decoration by filling its tiles with #N$C8.
+c$F188 CALL $F249    ; Call #R$F249.
+ $F18B LD BC,$2005   ; {Write #N$2005 to *#R$649F.
+ $F18E LD ($649F),BC ; }
+ $F192 RET           ; Return.
+
+; Hide Decoration
+;
+; Used by the routines at #R$EEE5, #R$EF3A, #R$EF5C, #R$F1C4 and #R$F1D4.
+; .
+; Hides one decoration by filling its tiles with #N$C8.
 @label=Reveal_Decoration
-*$F193 POP BC          ; Restore the return address from the stack.
- $F194 BIT 7,(IX+$00)  ; {Return if this decoration is already hidden.
- $F198 RET NZ          ; }
- $F199 PUSH BC         ; {Set bit 7 and convert the decoration cell.
- $F19A LD C,(IX+$00)   ;
- $F19D SET 7,(IX+$00)  ;
- $F1A1 LD B,(IX+$01)   ;
- $F1A4 CALL $F43C      ; }
- $F1A7 LD DE,$5DCE     ; {Point #REGhl at that #R$5DCE tile.
- $F1AA ADD HL,DE       ; }
- $F1AB LD C,(IX+$04)   ; {Jump to #R$F454 with #N$C8.
- $F1AE LD B,(IX+$05)   ;
- $F1B1 LD A,$C8        ;
- $F1B3 JP $F454        ; }
+c$F193 POP BC         ; Restore the return address from the stack.
+ $F194 BIT 7,(IX+$00) ; {Return if this decoration is already hidden.
+ $F198 RET NZ         ; }
+ $F199 PUSH BC        ; Stash the return address on the stack.
+ $F19A LD C,(IX+$00)  ; #REGc=the column.
+ $F19D SET 7,(IX+$00) ; Set bit 7 of the decoration record.
+ $F1A1 LD B,(IX+$01)  ; #REGb=the row.
+ $F1A4 CALL $F43C     ; Call #R$F43C.
+ $F1A7 LD DE,$5DCE    ; {Point #REGhl at that #R$5DCE tile.
+ $F1AA ADD HL,DE      ; }
+ $F1AB LD C,(IX+$04)  ; {#REGbc=the remaining width and height.
+ $F1AE LD B,(IX+$05)  ; }
+ $F1B1 LD A,$C8       ; #REGa=#N$C8.
+ $F1B3 JP $F454       ; Jump to #R$F454.
+
+; Test Header
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$29: test the second header item.
 @label=Event_TestHeader
-*$F1B6 LD IX,($641E)   ; #REGix=*#R$641E.
- $F1BA LD DE,$0006     ; {Return if bit 7 of the next header record is
- $F1BD ADD IX,DE       ; clear.
- $F1BF BIT 7,(IX+$00)  ;
- $F1C3 RET Z           ; }
+c$F1B6 LD IX,($641E)  ; #REGix=*#R$641E.
+ $F1BA LD DE,$0006    ; {Return if bit 7 of the next header record is
+ $F1BD ADD IX,DE      ; clear.
+ $F1BF BIT 7,(IX+$00) ;
+ $F1C3 RET Z          ; }
+; Continue on to #R$F1C4.
+
+; Reveal Decor And Mover
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$0B: reveal a decoration and a mover.
 @label=Event_RevealDecorAndMover
-*$F1C4 LD IX,($642E)   ; #REGix=*#R$642E.
- $F1C8 CALL $F193      ; Call #R$F193.
- $F1CB LD IX,($642A)   ; {Clear bit 7 of *#R$642A.
- $F1CF RES 7,(IX+$00)  ; }
- $F1D3 RET             ; Return.
+c$F1C4 LD IX,($642E)  ; #REGix=*#R$642E.
+ $F1C8 CALL $F193     ; Call #R$F193.
+ $F1CB LD IX,($642A)  ; {Clear bit 7 of *#R$642A.
+ $F1CF RES 7,(IX+$00) ; }
+ $F1D3 RET            ; Return.
+
+; Reveal Next Pair
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$0C: reveal the next decoration and mover.
 @label=Event_RevealNextPair
-*$F1D4 LD IX,($642E)   ; {#REGix=*#R$642E+#N($0006,$04,$04).
- $F1D8 LD BC,$0006     ;
- $F1DB ADD IX,BC       ; }
- $F1DD CALL $F193      ; Call #R$F193.
- $F1E0 LD IX,($642A)   ; {Clear bit 7 of *#R$642A+#N($0013,$04,$04).
- $F1E4 LD BC,$0013     ;
- $F1E7 ADD IX,BC       ;
- $F1E9 RES 7,(IX+$00)  ; }
- $F1ED RET             ; Return.
+c$F1D4 LD IX,($642E)  ; {#REGix=*#R$642E+#N($0006,$04,$04).
+ $F1D8 LD BC,$0006    ;
+ $F1DB ADD IX,BC      ; }
+ $F1DD CALL $F193     ; Call #R$F193.
+ $F1E0 LD IX,($642A)  ; {Clear bit 7 of *#R$642A+#N($0013,$04,$04).
+ $F1E4 LD BC,$0013    ;
+ $F1E7 ADD IX,BC      ;
+ $F1E9 RES 7,(IX+$00) ; }
+ $F1ED RET            ; Return.
+
+; Reveal Three Decorations
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$1E: reveal three decorations.
 @label=Event_RevealThreeDecorations
-*$F1EE LD IX,($642E)   ; {#REGix=*#R$642E and #REGb=#N$03.
- $F1F2 LD B,$03        ; }
+c$F1EE LD IX,($642E)  ; #REGix=*#R$642E.
+ $F1F2 LD B,$03       ; #REGb=#N$03.
 @label=Event_RevealThreeDecorations_Target
-*$F1F4 PUSH BC         ; {Jump to #R$F20F if this decoration is hidden.
- $F1F5 LD A,(IX+$00)   ;
- $F1F8 BIT 7,A         ;
- $F1FA JR NZ,$F20F     ; }
- $F1FC LD C,(IX+$00)   ; {Call #R$F463 with the stored size and set bit 7.
- $F1FF LD B,(IX+$01)   ;
- $F202 LD E,(IX+$04)   ;
- $F205 LD D,(IX+$05)   ;
- $F208 CALL $F463      ;
- $F20B SET 7,(IX+$00)  ; }
+*$F1F4 PUSH BC        ; Stash the count on the stack.
+ $F1F5 LD A,(IX+$00)  ; {Jump to #R$F20F if this decoration is hidden.
+ $F1F8 BIT 7,A        ;
+ $F1FA JR NZ,$F20F    ; }
+ $F1FC LD C,(IX+$00)  ; {Fetch the column, row and size.
+ $F1FF LD B,(IX+$01)  ;
+ $F202 LD E,(IX+$04)  ;
+ $F205 LD D,(IX+$05)  ; }
+ $F208 CALL $F463     ; Call #R$F463.
+ $F20B SET 7,(IX+$00) ; Set bit 7 of the decoration record.
 @label=Event_RevealThreeDecorations_Continue
-*$F20F POP BC          ; {Advance to the next decoration and loop back to
- $F210 LD DE,$0006     ; #R$F1F4.
- $F213 ADD IX,DE       ;
- $F215 DJNZ $F1F4      ; }
+*$F20F POP BC         ; Restore the count from the stack.
+ $F210 LD DE,$0006    ; {Advance to the next decoration.
+ $F213 ADD IX,DE      ; }
+ $F215 DJNZ $F1F4     ; Decrease the count and loop back to #R$F1F4.
+; Continue on to #R$F217.
+
+; Show Movers
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$1F: show every moving object.
 @label=Event_ShowMovers
-*$F217 LD IX,($642A)   ; #REGix=*#R$642A.
+c$F217 LD IX,($642A)  ; #REGix=*#R$642A.
 @label=Event_ShowMovers_Target
-*$F21B LD A,(IX+$00)   ; {Return if the terminator #N$FF is reached.
- $F21E CP $FF          ;
- $F220 RET Z           ; }
- $F221 RES 7,(IX+$00)  ; Clear bit 7 of this mover.
- $F225 LD DE,$0013     ; {#REGix+=#N($0013,$04,$04) and jump to #R$F21B.
- $F228 ADD IX,DE       ;
- $F22A JR $F21B        ; }
+*$F21B LD A,(IX+$00)  ; {Return if the terminator #N$FF is reached.
+ $F21E CP $FF         ;
+ $F220 RET Z          ; }
+ $F221 RES 7,(IX+$00) ; Clear bit 7 of this mover.
+ $F225 LD DE,$0013    ; {#REGix+=#N($0013,$04,$04).
+ $F228 ADD IX,DE      ; }
+ $F22A JR $F21B       ; Jump to #R$F21B.
+
+; Hide Furniture
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$11: hide the first furniture item.
 @label=Event_HideFurniture
-*$F22C LD IX,($6420)   ; #REGix=*#R$6420.
- $F230 LD A,(IX+$00)   ; #REGa=the furniture record.
- $F233 AND %01111111   ; Keep only bits 0-6.
- $F235 LD C,A          ; {Set bit 7 and fetch the furniture row.
- $F236 SET 7,A         ;
- $F238 LD (IX+$00),A   ;
- $F23B LD B,(IX+$01)   ; }
- $F23E LD DE,$0403     ; {Jump to #R$F463 with size #N$04 by #N$03.
- $F241 JP $F463        ; }
+c$F22C LD IX,($6420) ; #REGix=*#R$6420.
+ $F230 LD A,(IX+$00) ; #REGa=the furniture record.
+ $F233 AND %01111111 ; Keep only bits 0-6.
+ $F235 LD C,A        ; #REGc=the column.
+ $F236 SET 7,A       ; {Set bit 7 of the furniture record.
+ $F238 LD (IX+$00),A ; }
+ $F23B LD B,(IX+$01) ; #REGb=the row.
+ $F23E LD DE,$0403   ; {Jump to #R$F463 with size #N$04 by #N$03.
+ $F241 JP $F463      ; }
+
+; Bump Digit Three
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$21: increment combination digit 3.
 @label=Event_DigitThree
-*$F244 LD HL,$64C3     ; {#REGhl=#R$64C3 and jump to #R$F256.
- $F247 JR $F256        ; }
+c$F244 LD HL,$64C3   ; #REGhl=#R$64C3.
+ $F247 JR $F256      ; Jump to #R$F256.
+
+; Bump Digit Four
+;
+; Used by the routines at #R$EDD9 and #R$F188.
+; .
 ; Event #N$20: increment combination digit 4.
 @label=Event_DigitFour
-*$F249 LD HL,$64C4     ; {#REGhl=#R$64C4 and jump to #R$F256.
- $F24C JR $F256        ; }
+c$F249 LD HL,$64C4   ; #REGhl=#R$64C4.
+ $F24C JR $F256      ; Jump to #R$F256.
+
+; Bump Digit Two
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$23: increment combination digit 2.
 @label=Event_DigitTwo
-*$F24E LD HL,$64C2     ; {#REGhl=#R$64C2 and jump to #R$F256.
- $F251 JR $F256        ; }
+c$F24E LD HL,$64C2   ; #REGhl=#R$64C2.
+ $F251 JR $F256      ; Jump to #R$F256.
+
+; Bump Digit One
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$25: increment combination digit 1.
 @label=Event_DigitOne
-*$F253 LD HL,$64C1     ; #REGhl=#R$64C1.
+c$F253 LD HL,$64C1   ; #REGhl=#R$64C1.
+; Continue on to #R$F256.
+
+; Bump Digit
+;
+; Used by the routines at #R$F244, #R$F249 and #R$F24E.
+; .
+; Increases *(#REGhl) and wraps at #N$0A.
 @label=Event_BumpDigit
-*$F256 LD BC,$2614     ; {Write #N$2614 to *#R$649F.
- $F259 LD ($649F),BC   ; }
- $F25D LD A,(HL)       ; {Increase *(#REGhl) and jump to #R$ECF2 unless it
- $F25E INC A           ; wrapped.
- $F25F CP $0A          ;
- $F261 LD (HL),A       ;
- $F262 JP NZ,$ECF2     ; }
- $F265 XOR A           ; {Write #N$00 and jump to #R$ECF2.
- $F266 LD (HL),A       ;
- $F267 JP $ECF2        ; }
+c$F256 LD BC,$2614   ; {Write #N$2614 to *#R$649F.
+ $F259 LD ($649F),BC ; }
+ $F25D LD A,(HL)     ; {Increase #REGa from *(#REGhl).
+ $F25E INC A         ; }
+ $F25F CP $0A        ; Compare it with #N$0A.
+ $F261 LD (HL),A     ; Write it back.
+ $F262 JP NZ,$ECF2   ; Jump to #R$ECF2 if it did not wrap.
+ $F265 XOR A         ; {Write #N$00.
+ $F266 LD (HL),A     ; }
+ $F267 JP $ECF2      ; Jump to #R$ECF2.
+
+; Hide Later Actor
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$0D: hide a later actor.
 @label=Event_HideLaterActor
-*$F26A LD IX,($6430)   ; {#REGix=*#R$6430+#N($0027,$04,$04).
- $F26E LD DE,$0027     ;
- $F271 ADD IX,DE       ; }
- $F273 LD A,(IX+$00)   ; {Return if this actor is already hidden.
- $F276 BIT 7,A         ;
- $F278 RET NZ          ; }
- $F279 CALL $F45D      ; Call #R$F45D.
- $F27C LD A,(IX+$00)   ; #REGa=the actor record.
- $F27F OR %10000000    ; Set bit 7.
- $F281 LD (IX+$00),A   ; Hide the actor.
-; Clear *#R$6434 after a collision.
+c$F26A LD IX,($6430) ; {#REGix=*#R$6430+#N($0027,$04,$04).
+ $F26E LD DE,$0027   ;
+ $F271 ADD IX,DE     ; }
+ $F273 LD A,(IX+$00) ; {Return if this actor is already hidden.
+ $F276 BIT 7,A       ;
+ $F278 RET NZ        ; }
+ $F279 CALL $F45D    ; Call #R$F45D.
+ $F27C LD A,(IX+$00) ; #REGa=the actor record.
+ $F27F OR %10000000  ; Set bit 7.
+ $F281 LD (IX+$00),A ; Hide the actor.
+; Continue on to #R$F284.
+
+; Clear Collision
+;
+; Used by the routine at #R$F28F.
+; .
+; Clears *#R$6434 after a collision.
 @label=Hide_ActorRecord
-*$F284 LD A,($6434)    ; {Return unless *#R$6434 is #N$03.
- $F287 CP $03          ;
- $F289 RET NZ          ; }
- $F28A XOR A           ; {Write #N$00 to *#R$6434.
- $F28B LD ($6434),A    ; }
- $F28E RET             ; Return.
+c$F284 LD A,($6434)  ; {Return unless *#R$6434 is #N$03.
+ $F287 CP $03        ;
+ $F289 RET NZ        ; }
+ $F28A XOR A         ; {Write #N$00 to *#R$6434.
+ $F28B LD ($6434),A  ; }
+ $F28E RET           ; Return.
+
+; Hide Actor
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$0F: hide the first active actor.
 @label=Event_HideActor
-*$F28F CALL $F284      ; Call #R$F284.
- $F292 LD IX,($6430)   ; #REGix=*#R$6430.
+c$F28F CALL $F284    ; Call #R$F284.
+ $F292 LD IX,($6430) ; #REGix=*#R$6430.
 @label=Event_HideActor_Target
-*$F296 LD A,(IX+$00)   ; {Return if the terminator #N$FF is reached.
- $F299 CP $FF          ;
- $F29B RET Z           ; }
- $F29C BIT 7,A         ; {Jump to #R$F2AB if this actor is hidden.
- $F29E JR NZ,$F2AB     ; }
- $F2A0 CALL $F45D      ; Call #R$F45D.
- $F2A3 LD A,(IX+$00)   ; {Set bit 7 of the actor record.
- $F2A6 SET 7,A         ;
- $F2A8 LD (IX+$00),A   ; }
+*$F296 LD A,(IX+$00) ; {Return if the terminator #N$FF is reached.
+ $F299 CP $FF        ;
+ $F29B RET Z         ; }
+ $F29C BIT 7,A       ; {Jump to #R$F2AB if this actor is hidden.
+ $F29E JR NZ,$F2AB   ; }
+ $F2A0 CALL $F45D    ; Call #R$F45D.
+ $F2A3 LD A,(IX+$00) ; {Set bit 7 of the actor record.
+ $F2A6 SET 7,A       ;
+ $F2A8 LD (IX+$00),A ; }
 @label=Event_HideActor_Continue
-*$F2AB LD DE,$000D     ; {#REGix+=#N($000D,$04,$04) and jump to #R$F296.
- $F2AE ADD IX,DE       ;
- $F2B0 JR $F296        ; }
+*$F2AB LD DE,$000D   ; {#REGix+=#N($000D,$04,$04).
+ $F2AE ADD IX,DE     ; }
+ $F2B0 JR $F296      ; Jump to #R$F296.
+
+; Randomise Combination
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$16: randomise the combination.
 @label=Event_RandomCombination
-*$F2B2 LD BC,$013A     ; {Write #N$013A to *#R$649F.
- $F2B5 LD ($649F),BC   ; }
- $F2B9 CALL $F2D9      ; {Call #R$F2D9 and write the digit to *#R$64C1.
- $F2BC LD ($64C1),A    ; }
- $F2BF CALL $F2D9      ; {Call #R$F2D9 and write the digit to *#R$64C2.
- $F2C2 LD ($64C2),A    ; }
- $F2C5 CALL $F2D9      ; {Call #R$F2D9 and write the digit to *#R$64C3.
- $F2C8 LD ($64C3),A    ; }
- $F2CB CALL $F2D9      ; Call #R$F2D9.
- $F2CE RES 0,A         ; Reset bit 0.
- $F2D0 AND %00000111   ; Keep only bits 0-2.
- $F2D2 INC A           ; {Write #N$01-#N$08 to *#R$64C4 and jump to
- $F2D3 LD ($64C4),A    ; #R$ECF2.
- $F2D6 JP $ECF2        ; }
+c$F2B2 LD BC,$013A   ; {Write #N$013A to *#R$649F.
+ $F2B5 LD ($649F),BC ; }
+ $F2B9 CALL $F2D9    ; Call #R$F2D9.
+ $F2BC LD ($64C1),A  ; Write the digit to *#R$64C1.
+ $F2BF CALL $F2D9    ; Call #R$F2D9.
+ $F2C2 LD ($64C2),A  ; Write the digit to *#R$64C2.
+ $F2C5 CALL $F2D9    ; Call #R$F2D9.
+ $F2C8 LD ($64C3),A  ; Write the digit to *#R$64C3.
+ $F2CB CALL $F2D9    ; Call #R$F2D9.
+ $F2CE RES 0,A       ; Reset bit 0.
+ $F2D0 AND %00000111 ; Keep only bits 0-2.
+ $F2D2 INC A         ; {Write #N$01-#N$08 to *#R$64C4.
+ $F2D3 LD ($64C4),A  ; }
+ $F2D6 JP $ECF2      ; Jump to #R$ECF2.
 @label=Event_RandomCombination_Target
-*$F2D9 CALL $F433      ; Call #R$F433.
- $F2DC AND %00000111   ; Keep only bits 0-2.
- $F2DE INC A           ; {Increase #REGa by one and return.
- $F2DF RET             ; }
+*$F2D9 CALL $F433    ; Call #R$F433.
+ $F2DC AND %00000111 ; Keep only bits 0-2.
+ $F2DE INC A         ; Increase #REGa by one.
+ $F2DF RET           ; Return.
+
+; Reveal Door
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$12: reveal the first door.
 @label=Event_RevealDoor
-*$F2E0 LD IX,($6422)   ; #REGix=*#R$6422.
+c$F2E0 LD IX,($6422)   ; #REGix=*#R$6422.
+; This entry point is used by the routines at #R$F31D and #R$F328.
 @label=Event_RevealDoor_Body
 *$F2E4 BIT 7,(IX+$00)  ; {Return if this door is already visible.
  $F2E8 RET Z           ; }
@@ -9187,8 +9448,8 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $F2FB LD L,(IX+$02)   ;
  $F2FE LD A,$84        ;
  $F300 LD DE,$0202     ; }
- $F303 LD IX,$648B     ; {Point #REGix at #R$648B and call #R$F457.
- $F307 CALL $F457      ; }
+ $F303 LD IX,$648B     ; #REGix=#R$648B.
+ $F307 CALL $F457      ; Call #R$F457.
  $F30A CALL $F333      ; Call #R$F333.
  $F30D LD A,(IX+$01)   ; {Store the drop row two cells below the door.
  $F310 LD (IX+$10),A   ;
@@ -9197,23 +9458,38 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $F315 LD (IX+$01),A   ;
  $F318 LD (IX+$09),$FF ; }
  $F31C RET             ; Return.
+
+; Reveal Next Door
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$13: reveal the next door.
 @label=Event_RevealNextDoor
-*$F31D LD IX,($6422)   ; #REGix=*#R$6422.
- $F321 LD DE,$0005     ; {#REGix+=#N($0005,$04,$04) and jump to #R$F2E4.
- $F324 ADD IX,DE       ;
- $F326 JR $F2E4        ; }
+c$F31D LD IX,($6422) ; #REGix=*#R$6422.
+ $F321 LD DE,$0005   ; {#REGix+=#N($0005,$04,$04).
+ $F324 ADD IX,DE     ; }
+ $F326 JR $F2E4      ; Jump to #R$F2E4.
+
+; Reveal Third Door
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$15: reveal the third door.
 @label=Event_RevealThirdDoor
-*$F328 LD IX,($6422)   ; #REGix=*#R$6422.
- $F32C LD DE,$000A     ; {#REGix+=#N($000A,$04,$04) and jump to #R$F2E4.
- $F32F ADD IX,DE       ;
- $F331 JR $F2E4        ; }
-; Copy the carried-object destination into the working
+c$F328 LD IX,($6422) ; #REGix=*#R$6422.
+ $F32C LD DE,$000A   ; {#REGix+=#N($000A,$04,$04).
+ $F32F ADD IX,DE     ; }
+ $F331 JR $F2E4      ; Jump to #R$F2E4.
+
+; Copy Destination
+;
+; Used by the routines at #R$EEFA, #R$F0E4, #R$F125 and #R$F2E0.
+; .
+; Copies the carried-object destination into the working
 ; slot.
 @label=Copy_ActorDestination
-*$F333 LD A,(IX+$00)   ; {Copy the column and row into (IX+#N$0E) and
- $F336 LD (IX+$0E),A   ; (IX+#N$0F).
+c$F333 LD A,(IX+$00)   ; {Copy the column and row into *#REGix+#N$0E and
+ $F336 LD (IX+$0E),A   ; *#REGix+#N$0F.
  $F339 LD A,(IX+$01)   ;
  $F33C LD (IX+$0F),A   ; }
  $F33F LD (IX+$10),$18 ; {Write the default clip window #N$18/#N$02/#N$21/
@@ -9221,56 +9497,72 @@ c$EDD9 PUSH IX         ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $F347 LD (IX+$12),$21 ;
  $F34B LD (IX+$13),$02 ; }
  $F34F RET             ; Return.
+
+; Print Event Message
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$04: print the event message.
 @label=Event_PrintMessage
-*$F350 LD HL,$3C00     ; {Write #N$3C00 to *#SKOOLKID$5C36(CHARS).
- $F353 LD ($5C36),HL   ; }
- $F356 LD A,$3A        ; {Write #INK$3A to *#SKOOLKID$5C8F(ATTR_T).
- $F358 LD ($5C8F),A    ; }
- $F35B LD HL,$F3A5     ; {Jump to #R$F460 with the messaging at #R$F3A5.
- $F35E JP $F460        ; }
+c$F350 LD HL,$3C00   ; {Write #N$3C00 to *#SKOOLKID$5C36(CHARS).
+ $F353 LD ($5C36),HL ; }
+ $F356 LD A,$3A      ; {Write #INK$3A to *#SKOOLKID$5C8F(ATTR_T).
+ $F358 LD ($5C8F),A  ; }
+ $F35B LD HL,$F3A5   ; #REGhl=#R$F3A5.
+ $F35E JP $F460      ; Jump to #R$F460.
+
+; Reveal All Decorations
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$1D: reveal every decoration.
 @label=Event_RevealAllDecorations
-*$F361 LD IX,($642E)   ; #REGix=*#R$642E.
+c$F361 LD IX,($642E)  ; #REGix=*#R$642E.
 @label=Event_RevealAllDecorations_Target
-*$F365 LD A,(IX+$00)   ; {Return if the terminator #N$FF is reached.
- $F368 CP $FF          ;
- $F36A RET Z           ; }
- $F36B BIT 7,A         ; {Jump to #R$F38E if this decoration is already
- $F36D JR Z,$F38E      ; visible.}
- $F36F RES 7,(IX+$00)  ; {Clear bit 7 and call #R$F42D at that cell.
- $F373 LD C,(IX+$00)   ;
- $F376 LD B,(IX+$01)   ;
- $F379 CALL $F42D      ; }
- $F37C LD A,(IX+$02)   ; {Write the decoration colour to
- $F37F LD ($5C8F),A    ; *#SKOOLKID$5C8F(ATTR_T).}
- $F382 LD A,(IX+$03)   ; {Call #R$F445 with the stored glyph and size.
- $F385 LD E,(IX+$04)   ;
- $F388 LD D,(IX+$05)   ;
- $F38B CALL $F445      ; }
+*$F365 LD A,(IX+$00)  ; {Return if the terminator #N$FF is reached.
+ $F368 CP $FF         ;
+ $F36A RET Z          ; }
+ $F36B BIT 7,A        ; {Jump to #R$F38E if this decoration is already
+ $F36D JR Z,$F38E     ; visible.}
+ $F36F RES 7,(IX+$00) ; Clear bit 7 of the decoration record.
+ $F373 LD C,(IX+$00)  ; {#REGbc=the column and row.
+ $F376 LD B,(IX+$01)  ; }
+ $F379 CALL $F42D     ; Call #R$F42D.
+ $F37C LD A,(IX+$02)  ; {Write the decoration colour to
+ $F37F LD ($5C8F),A   ; *#SKOOLKID$5C8F(ATTR_T).}
+ $F382 LD A,(IX+$03)  ; #REGa=the stored glyph.
+ $F385 LD E,(IX+$04)  ; {#REGde=the stored size.
+ $F388 LD D,(IX+$05)  ; }
+ $F38B CALL $F445     ; Call #R$F445.
 @label=Event_RevealAllDecorations_Skip
-*$F38E LD DE,$0006     ; {#REGix+=#N($0006,$04,$04) and jump to #R$F365.
- $F391 ADD IX,DE       ;
- $F393 JR $F365        ; }
+*$F38E LD DE,$0006    ; {#REGix+=#N($0006,$04,$04).
+ $F391 ADD IX,DE      ; }
+ $F393 JR $F365       ; Jump to #R$F365.
+
+; Toggle Tune
+;
+; Used by the routine at #R$EDD9.
+; .
 ; Event #N$09: toggle the silent-tune flag.
 @label=Event_ToggleTune
-*$F395 LD A,($647C)    ; #REGa=*#R$647C.
- $F398 XOR %11111111   ; Invert every bit.
- $F39A LD ($647C),A    ; Write #REGa to *#R$647C.
- $F39D LD BC,$2614     ; {Write #N$2614 to *#R$649F.
- $F3A0 LD ($649F),BC   ; }
- $F3A4 RET             ; Return.
+c$F395 LD A,($647C)  ; #REGa=*#R$647C.
+ $F398 XOR %11111111 ; Invert every bit.
+ $F39A LD ($647C),A  ; Write #REGa to *#R$647C.
+ $F39D LD BC,$2614   ; {Write #N$2614 to *#R$649F.
+ $F3A0 LD ($649F),BC ; }
+ $F3A4 RET           ; Return.
 
 ; Messaging: Event
 ;
 ; Printed by event #N$04 at #R$F350.
 @label=Messaging_Event
-t$F3A5 DEFB $DE,$1F,$16,$54,$48,$49,$53,$20
- $F3AD DEFB $42,$55,$54,$54,$4F,$4E,$DE,$1F
- $F3B5 DEFB $15,$43,$48,$41,$4E,$47,$45,$53
- $F3BD DEFB $20,$54,$48,$45,$DE,$1F,$14,$43
- $F3C5 DEFB $4F,$4D,$42,$49,$4E,$41,$54,$49
- $F3CD DEFB $4F,$4E,$FF
+t$F3A5 DEFB $DE,$1F,$16   ; PRINT AT: #N(#PEEK(#PC+$01)), #N(#PEEK(#PC+$02)).
+ $F3A8 DEFM "THIS BUTTON" ; "#STR(#PC,$04,$0B)".
+ $F3B3 DEFB $DE,$1F,$15   ; PRINT AT: #N(#PEEK(#PC+$01)), #N(#PEEK(#PC+$02)).
+ $F3B6 DEFM "CHANGES THE" ; "#STR(#PC,$04,$0B)".
+ $F3C1 DEFB $DE,$1F,$14   ; PRINT AT: #N(#PEEK(#PC+$01)), #N(#PEEK(#PC+$02)).
+ $F3C4 DEFM "COMBINATION" ; "#STR(#PC,$04,$0B)".
+ $F3CF DEFB $FF           ; Terminator.
 
 ; Unused
 u$F3D0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
@@ -9285,94 +9577,152 @@ u$F3D0 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $F418 DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $F420 DEFB $00,$00,$00,$00
 
-; Jump Table: Graphics
+; Jump Store Position
 ;
 ; Used by the routines at #R$D894, #R$D904, #R$D9B6, #R$DA3F, #R$DC62, #R$DE19
 ; and #R$E1CC.
 @label=JumpTable_StorePosition
 c$F424 JP $F466      ; Jump to #R$F466.
-; This entry point is used by the routine at #R$EA02.
-@label=JumpTable_DrawStatus
-*$F427 JP $F4A8      ; Jump to #R$F4A8.
 
-; Jump Table: Utilities
+; Jump Draw Status
+;
+; Used by the routine at #R$EA02.
+@label=JumpTable_DrawStatus
+c$F427 JP $F4A8      ; Jump to #R$F4A8.
+
+; Jump Initialise Display
 ;
 ; Used by the routine at #R$D5AC.
-; .
-; Jump-table stubs used throughout the game.
 @label=JumpTable_InitialiseDisplay
 c$F42A JP $F56A      ; Jump to #R$F56A.
-; This entry point is used by the routines at #R$D5AC, #R$D9B6, #R$DC62,
-; #R$DD97, #R$DE19, #R$EA02, #R$ECF2, #R$ED82, #R$ED9A, #R$EDB1 and #R$EDD9.
+
+; Jump Set Print Position
+;
+; Used by the routines at #R$D5AC, #R$D9B6, #R$DC62, #R$DD97, #R$DE19, #R$EA02,
+; #R$ECF2, #R$ED82, #R$ED9A, #R$EDB1, #R$F090 and #R$F361.
 @label=JumpTable_SetPrintPosition
-*$F42D JP $F5C4      ; Jump to #R$F5C4.
-; This entry point is used by the routines at #R$D5AC, #R$D877, #R$DC26,
-; #R$DC62, #R$E46C, #R$E51D and #R$E666.
+c$F42D JP $F5C4      ; Jump to #R$F5C4.
+
+; Jump Delay
+;
+; Used by the routines at #R$D5AC, #R$D877, #R$DC26, #R$DC62, #R$E46C, #R$E51D
+; and #R$E666.
 @label=JumpTable_Delay
-*$F430 JP $F5EC      ; Jump to #R$F5EC.
-; This entry point is used by the routines at #R$D765, #R$D904, #R$D9B6,
-; #R$E46C, #R$E51D and #R$EDD9.
+c$F430 JP $F5EC      ; Jump to #R$F5EC.
+
+; Jump Get Random Number
+;
+; Used by the routines at #R$D765, #R$D904, #R$D9B6, #R$E46C, #R$E51D and
+; #R$F2B2.
 @label=JumpTable_GetRandomNumber
-*$F433 JP $F5F4      ; Jump to #R$F5F4.
-; This entry point is used by the routines at #R$D5AC, #R$D9B6, #R$DD97,
-; #R$DE19, #R$ECF2, #R$EDB1 and #R$EDD9.
+c$F433 JP $F5F4      ; Jump to #R$F5F4.
+
+; Jump Print Character
+;
+; Used by the routines at #R$D5AC, #R$D9B6, #R$DD97, #R$DE19, #R$ECF2, #R$EDB1
+; and #R$F090.
 @label=JumpTable_PrintCharacter
-*$F436 JP $F60A      ; Jump to #R$F60A.
+c$F436 JP $F60A      ; Jump to #R$F60A.
+
+; Jump Print Clipped
 @label=JumpTable_PrintClipped
- $F439 JP $F662      ; Jump to #R$F662.
-; This entry point is used by the routines at #R$DA3F, #R$DBC9, #R$E1CC,
-; #R$EA02, #R$ECF2 and #R$EDD9.
+c$F439 JP $F662      ; Jump to #R$F662.
+
+; Jump Convert Coordinate
+;
+; Used by the routines at #R$DA3F, #R$DBC9, #R$E1CC, #R$EA02, #R$ECF2 and
+; #R$F193.
 @label=JumpTable_ConvertCoordinate
-*$F43C JP $F6AA      ; Jump to #R$F6AA.
-; This entry point is used by the routines at #R$EDB1 and #R$EDD9.
+c$F43C JP $F6AA      ; Jump to #R$F6AA.
+
+; Jump Write Tile
+;
+; Used by the routines at #R$EDB1 and #R$F090.
 @label=JumpTable_WriteTile
-*$F43F JP $F6C6      ; Jump to #R$F6C6.
-; This entry point is used by the routines at #R$D894, #R$D904, #R$D9B6,
-; #R$DC62, #R$DE19 and #R$E1CC.
+c$F43F JP $F6C6      ; Jump to #R$F6C6.
+
+; Jump Move Entity
+;
+; Used by the routines at #R$D894, #R$D904, #R$D9B6, #R$DC62, #R$DE19 and
+; #R$E1CC.
 @label=JumpTable_MoveEntity
-*$F442 JP $F6E1      ; Jump to #R$F6E1.
-; This entry point is used by the routines at #R$DA3F, #R$DB05, #R$EA02,
-; #R$ED82, #R$ED9A and #R$EDD9.
+c$F442 JP $F6E1      ; Jump to #R$F6E1.
+
+; Jump Print Sprite
+;
+; Used by the routines at #R$DA3F, #R$DB05, #R$EA02, #R$ED82, #R$ED9A and
+; #R$F361.
 @label=JumpTable_PrintSprite
-*$F445 JP $F7AA      ; Jump to #R$F7AA.
-; This entry point is used by the routines at #R$D894, #R$D904, #R$D9B6,
-; #R$DA3F, #R$DC62, #R$DE19, #R$E1CC and #R$E3DE.
+c$F445 JP $F7AA      ; Jump to #R$F7AA.
+
+; Jump Advance Entity
+;
+; Used by the routines at #R$D894, #R$D904, #R$D9B6, #R$DA3F, #R$DC62, #R$DE19,
+; #R$E1CC and #R$E3DE.
 @label=JumpTable_AdvanceEntity
-*$F448 JP $F804      ; Jump to #R$F804.
-; This entry point is used by the routines at #R$D894, #R$D904, #R$D9B6,
-; #R$DA3F, #R$DC62, #R$DE19, #R$E1CC and #R$EA02.
+c$F448 JP $F804      ; Jump to #R$F804.
+
+; Jump Draw Entity
+;
+; Used by the routines at #R$D894, #R$D904, #R$D9B6, #R$DA3F, #R$DC62, #R$DE19,
+; #R$E1CC and #R$EA02.
 @label=JumpTable_DrawEntity
-*$F44B JP $F8B4      ; Jump to #R$F8B4.
-; This entry point is used by the routines at #R$D894, #R$D904, #R$D9B6 and
-; #R$DC62.
+c$F44B JP $F8B4      ; Jump to #R$F8B4.
+
+; Jump Erase Entity
+;
+; Used by the routines at #R$D894, #R$D904, #R$D9B6 and #R$DC62.
 @label=JumpTable_EraseEntity
-*$F44E JP $F9EE      ; Jump to #R$F9EE.
+c$F44E JP $F9EE      ; Jump to #R$F9EE.
+
+; Jump Fill Tiles
 @label=JumpTable_FillTiles
- $F451 JP $FA9E      ; Jump to #R$FA9E.
-; This entry point is used by the routines at #R$DBC9, #R$EA02 and #R$EDD9.
+c$F451 JP $FA9E      ; Jump to #R$FA9E.
+
+; Jump Fill Attributes
+;
+; Used by the routines at #R$DBC9, #R$EA02 and #R$F193.
 @label=JumpTable_FillAttributes
-*$F454 JP $FA5A      ; Jump to #R$FA5A.
-; This entry point is used by the routines at #R$D904, #R$D9B6, #R$ED71 and
-; #R$EDD9.
+c$F454 JP $FA5A      ; Jump to #R$FA5A.
+
+; Jump Spawn Entity
+;
+; Used by the routines at #R$D904, #R$D9B6, #R$ED71, #R$EEFA, #R$F0E4, #R$F125
+; and #R$F2E0.
 @label=JumpTable_SpawnEntity
-*$F457 JP $FAFE      ; Jump to #R$FAFE.
-; This entry point is used by the routines at #R$E1CC, #R$E3DE and #R$EA02.
+c$F457 JP $FAFE      ; Jump to #R$FAFE.
+
+; Jump Draw Actor
+;
+; Used by the routines at #R$E1CC, #R$E3DE and #R$EA02.
 @label=JumpTable_DrawActor
-*$F45A JP $FB2F      ; Jump to #R$FB2F.
-; This entry point is used by the routines at #R$E3DE and #R$EDD9.
+c$F45A JP $FB2F      ; Jump to #R$FB2F.
+
+; Jump Update Actor
+;
+; Used by the routines at #R$E3DE, #R$F26A and #R$F28F.
 @label=JumpTable_UpdateActor
-*$F45D JP $FB90      ; Jump to #R$FB90.
-; This entry point is used by the routines at #R$D5AC, #R$DC62 and #R$EDD9.
+c$F45D JP $FB90      ; Jump to #R$FB90.
+
+; Jump Print Message
+;
+; Used by the routines at #R$D5AC, #R$DC62 and #R$F350.
 @label=JumpTable_PrintMessage
-*$F460 JP $F544      ; Jump to #R$F544.
-; This entry point is used by the routine at #R$EDD9.
+c$F460 JP $F544      ; Jump to #R$F544.
+
+; Jump Draw Box
+;
+; Used by the routines at #R$F164, #R$F1EE and #R$F22C.
 @label=JumpTable_DrawBox
-*$F463 JP $F48B      ; Jump to #R$F48B.
-; This entry point is used by the routine at #R$F424.
+c$F463 JP $F48B      ; Jump to #R$F48B.
+
+; Store Entity Position
+;
+; Used by the routine at #R$F424.
 ; .
-; Remember the previous position, then write the new one.
+; Remembers the previous position, then writes the new one.
 @label=Store_EntityPosition
-*$F466 LD A,(IX+$00) ; {Store the old column and write #REGc as the new column.
+c$F466 LD A,(IX+$00) ; {Store the old column and write #REGc as the new column.
  $F469 LD (IX+$0A),A ;
  $F46C LD (IX+$00),C ; }
  $F46F LD A,(IX+$01) ; {Store the old row and write #REGb as the new row.
@@ -9385,9 +9735,14 @@ c$F42A JP $F56A      ; Jump to #R$F56A.
  $F484 LD (IX+$0D),A ;
  $F487 LD (IX+$03),D ; }
  $F48A RET           ; Return.
-; Draw a box of character #N$C8.
+
+; Draw Box
+;
+; Used by the routine at #R$F463.
+; .
+; Draws a box of character #N$C8.
 @label=Draw_Box
-*$F48B CALL $FA6A    ; Call #R$FA6A.
+c$F48B CALL $FA6A    ; Call #R$FA6A.
  $F48E XOR A         ; {Return if the width is zero.
  $F48F CP E          ;
  $F490 RET Z         ; }
@@ -9406,13 +9761,16 @@ c$F42A JP $F56A      ; Jump to #R$F56A.
  $F4A2 POP BC        ; Restore the print position from the stack.
  $F4A3 DEC D         ; {Return if every row is drawn.
  $F4A4 RET Z         ; }
- $F4A5 DEC B         ; {Move up one row and jump to #R$F493.
- $F4A6 JR $F493      ; }
-; This entry point is used by the routine at #R$F424.
+ $F4A5 DEC B         ; Move up one row.
+ $F4A6 JR $F493      ; Jump to #R$F493.
+
+; Draw Status Icons
+;
+; Used by the routine at #R$F427.
 ; .
-; Draw one life icon for each remaining life, then a blank.
+; Draws one life icon for each remaining life, then a blank.
 @label=Draw_StatusIcons
-*$F4A8 CALL $F5C4    ; Call #R$F5C4.
+c$F4A8 CALL $F5C4    ; Call #R$F5C4.
  $F4AB LD A,($64B4)  ; {Jump to #R$F4B9 if *#R$64B4 is the last life.
  $F4AE DEC A         ;
  $F4AF JR Z,$F4B9    ; }
@@ -9423,11 +9781,15 @@ c$F42A JP $F56A      ; Jump to #R$F56A.
  $F4B7 DJNZ $F4B4    ; Decrease the life count and loop back to #R$F4B4
                      ; until all lives are drawn.
 @label=Draw_StatusIcons_Skip
-*$F4B9 LD A,$C8      ; {Print a blank #N$C8 cell and return.
- $F4BB JP $F60A      ; }
-; Add *#R$6417 into the score digits at #R$64B5(#N$64BA).
+*$F4B9 LD A,$C8      ; #REGa=#N$C8.
+ $F4BB JP $F60A      ; Jump to #R$F60A.
+; View the equivalent code in #BOOTY$E064.
+
+; Add Score
+;
+; Adds *#R$6417 into the score digits at #R$64B5(#N$64BA).
 @label=Draw_StatusIcons_Target2
-*$F4BE LD A,($6417)  ; {Return if *#R$6417 is zero.
+c$F4BE LD A,($6417)  ; {Return if *#R$6417 is zero.
  $F4C1 OR A          ;
  $F4C2 RET Z         ; }
  $F4C3 LD BC,($6417) ; {Point at the digit that matches the place value.
@@ -9447,15 +9809,22 @@ c$F42A JP $F56A      ; Jump to #R$F56A.
  $F4DB CP $0A        ;
  $F4DD LD (HL),A     ;
  $F4DE JR C,$F4F0    ; }
- $F4E0 SUB $0A       ; {Carry into the next place and jump to #R$F4BE.
+ $F4E0 SUB $0A       ; {Carry into the next place.
  $F4E2 LD (HL),A     ;
  $F4E3 LD BC,($6417) ;
  $F4E7 LD C,$01      ;
  $F4E9 INC B         ;
- $F4EA LD ($6417),BC ;
- $F4EE JR $F4BE      ; }
+ $F4EA LD ($6417),BC ; }
+ $F4EE JR $F4BE      ; Jump to #R$F4BE.
+
+; Print Score
+;
+; Used by the routine at #R$F4BE.
+; .
+; Prints the score digits and copies a new high score when
+; the stored score is lower.
 @label=Draw_StatusIcons_Branch
-*$F4F0 LD DE,$0000   ; {Write #N($0000,$04,$04) to *#R$6417.
+c$F4F0 LD DE,$0000   ; {Write #N($0000,$04,$04) to *#R$6417.
  $F4F3 LD ($6417),DE ; }
  $F4F7 LD HL,$3C00   ; {Write #N$3C00 to *#SKOOLKID$5C36(CHARS).
  $F4FA LD ($5C36),HL ; }
@@ -9482,25 +9851,25 @@ c$F42A JP $F56A      ; Jump to #R$F56A.
  $F522 LD HL,$64B5   ;
  $F525 JP $F535      ; }
 @label=Draw_StatusIcons_Branch2
-*$F528 LD DE,$64B5   ; {Copy the new score over the stored score and jump
- $F52B LD HL,$64BB   ; to #R$F51F.
+*$F528 LD DE,$64B5   ; {Copy the new score over the stored score.
+ $F52B LD HL,$64BB   ;
  $F52E LD BC,$0005   ;
- $F531 LDIR          ;
- $F533 JR $F51F      ; }
+ $F531 LDIR          ; }
+ $F533 JR $F51F      ; Jump to #R$F51F.
 @label=Draw_StatusIcons_Target5
 *$F535 CALL $F5C4    ; Call #R$F5C4.
  $F538 LD B,$05      ; #REGb=#N$05.
 @label=Draw_StatusIcons_Target6
-*$F53A LD A,(HL)     ; {Convert the digit into a character and print it.
- $F53B ADD A,$0A     ;
- $F53D CALL $F60A    ; }
+*$F53A LD A,(HL)     ; {Convert the digit into a character.
+ $F53B ADD A,$0A     ; }
+ $F53D CALL $F60A    ; Call #R$F60A.
  $F540 INC HL        ; {Advance the digit pointer and loop back to #R$F53A
  $F541 DJNZ $F53A    ; until all five digits are printed.}
  $F543 RET           ; Return.
 
 ; Print Message
 ;
-; Used by the routine at #R$F42A.
+; Used by the routine at #R$F460.
 ; .
 ; Prints a control-byte string: bytes below #N$C8 are characters, #N$D8
 ; sets #SKOOLKID$5C8F(ATTR_T), other values set the print position, and #N$FF
@@ -9523,18 +9892,18 @@ c$F544 LD A,(HL)     ; {Jump to #R$F55C if this byte is a character.
  $F554 LD A,(HL)     ;
  $F555 LD B,A        ; }
  $F556 CALL $F5C4    ; Call #R$F5C4.
- $F559 INC HL        ; {Advance the message pointer and jump to #R$F544.
- $F55A JR $F544      ; }
+ $F559 INC HL        ; Advance the message pointer.
+ $F55A JR $F544      ; Jump to #R$F544.
 @label=Print_Message_Branch
 *$F55C CALL $F60A    ; Call #R$F60A.
- $F55F INC HL        ; {Advance the message pointer and jump to #R$F544.
- $F560 JR $F544      ; }
+ $F55F INC HL        ; Advance the message pointer.
+ $F560 JR $F544      ; Jump to #R$F544.
 @label=Print_Message_Skip
 *$F562 INC HL        ; Advance the message pointer.
  $F563 LD A,(HL)     ; {Write the next byte to *#SKOOLKID$5C8F(ATTR_T).
  $F564 LD ($5C8F),A  ; }
- $F567 INC HL        ; {Advance the message pointer and jump to #R$F544.
- $F568 JR $F544      ; }
+ $F567 INC HL        ; Advance the message pointer.
+ $F568 JR $F544      ; Jump to #R$F544.
 
 ; Initialise Display
 ;
@@ -9543,962 +9912,1069 @@ c$F544 LD A,(HL)     ; {Jump to #R$F55C if this byte is a character.
 ; Opens the upper screen, builds the line-address table and fills the IM
 ; #N$02 vector page at #N$FD00 with #N$FE.
 @label=Initialise_Display
-c$F56A LD A,$00        ; {Write #N$00 to *#SKOOLKID$5C6B(DF_SZ).
- $F56C LD ($5C6B),A    ; }
- $F56F LD A,$02        ; {Open channel #N$02 via #SKOOLKID$1601(CHAN_OPEN).
- $F571 CALL $1601      ; }
+c$F56A LD A,$00      ; {Write #N$00 to *#SKOOLKID$5C6B(DF_SZ).
+ $F56C LD ($5C6B),A  ; }
+ $F56F LD A,$02      ; {Open channel #N$02 via #SKOOLKID$1601(CHAN_OPEN).
+ $F571 CALL $1601    ; }
 ; Build #N$19 display-file addresses from #SKOOLKID$0DD9(CL_SET).
- $F574 LD HL,$FF04     ; {Point at the line-address table and start at column
- $F577 LD BC,$0121     ; #N$01, row #N$21.
- $F57A PUSH HL         ; }
+ $F574 LD HL,$FF04   ; #REGhl=#N$FF04.
+ $F577 LD BC,$0121   ; #REGbc=#N$0121.
+ $F57A PUSH HL       ; Stash the table pointer on the stack.
 @label=Initialise_Display_Continue
-*$F57B PUSH BC         ; {Stash the position and call #SKOOLKID$0DD9(CL_SET).
- $F57C CALL $0DD9      ; }
- $F57F POP BC          ; {Fetch *#SKOOLKID$5C84(DF_CC) and add #N$21.
- $F580 LD DE,($5C84)   ;
- $F584 LD HL,$0021     ;
- $F587 ADD HL,DE       ;
- $F588 EX DE,HL        ; }
- $F589 POP HL          ; {Store that address in the table.
- $F58A LD (HL),E       ;
- $F58B INC HL          ;
- $F58C LD (HL),D       ;
- $F58D INC HL          ;
- $F58E PUSH HL         ; }
- $F58F INC B           ; {Increase the row and jump to #R$F57B until #N$19
- $F590 LD A,B          ; rows are stored.
- $F591 CP $19          ;
- $F593 JR NZ,$F57B     ; }
- $F595 POP HL          ; Drop the leftover table pointer.
- $F596 LD BC,$0018     ; {Write the default clip window to *#R$6419.
- $F599 LD ($6419),BC   ;
- $F59D LD BC,$0121     ;
- $F5A0 LD ($641B),BC   ; }
- $F5A4 LD DE,$5CB7     ; {Clear seven bytes at #SKOOLKID$5CB6(UDG).
- $F5A7 LD HL,$5CB6     ;
- $F5AA LD BC,$0007     ;
- $F5AD LD (HL),$00     ;
- $F5AF LDIR            ; }
- $F5B1 LD HL,$643E     ; {Write #N$00 to *#R$643E.
- $F5B4 LD (HL),$00     ; }
- $F5B6 LD HL,$FD00     ; {Fill #N$0100 bytes at #N$FD00 with #N$FE.
- $F5B9 LD DE,$FD01     ;
- $F5BC LD BC,$0100     ;
- $F5BF LD (HL),$FE     ;
- $F5C1 LDIR            ; }
- $F5C3 RET             ; Return.
-; This entry point is used by the routines at #R$F42A and #R$F544.
+*$F57B PUSH BC       ; Stash the position on the stack.
+ $F57C CALL $0DD9    ; Call #SKOOLKID$0DD9(CL_SET).
+ $F57F POP BC        ; {Fetch *#SKOOLKID$5C84(DF_CC) and add #N$21.
+ $F580 LD DE,($5C84) ;
+ $F584 LD HL,$0021   ;
+ $F587 ADD HL,DE     ;
+ $F588 EX DE,HL      ; }
+ $F589 POP HL        ; {Store that address in the table.
+ $F58A LD (HL),E     ;
+ $F58B INC HL        ;
+ $F58C LD (HL),D     ;
+ $F58D INC HL        ;
+ $F58E PUSH HL       ; }
+ $F58F INC B         ; {Increase the row and jump to #R$F57B until #N$19
+ $F590 LD A,B        ; rows are stored.
+ $F591 CP $19        ;
+ $F593 JR NZ,$F57B   ; }
+ $F595 POP HL        ; Drop the leftover table pointer.
+ $F596 LD BC,$0018   ; {Write the default clip window to *#R$6419.
+ $F599 LD ($6419),BC ;
+ $F59D LD BC,$0121   ;
+ $F5A0 LD ($641B),BC ; }
+ $F5A4 LD DE,$5CB7   ; {Clear seven bytes at #SKOOLKID$5CB6(UDG).
+ $F5A7 LD HL,$5CB6   ;
+ $F5AA LD BC,$0007   ;
+ $F5AD LD (HL),$00   ;
+ $F5AF LDIR          ; }
+ $F5B1 LD HL,$643E   ; {Write #N$00 to *#R$643E.
+ $F5B4 LD (HL),$00   ; }
+ $F5B6 LD HL,$FD00   ; {Fill #N$0100 bytes at #N$FD00 with #N$FE.
+ $F5B9 LD DE,$FD01   ;
+ $F5BC LD BC,$0100   ;
+ $F5BF LD (HL),$FE   ;
+ $F5C1 LDIR          ; }
+ $F5C3 RET           ; Return.
+; View the equivalent code in #BOOTY$CD14.
+
+; Set Print Position
+;
+; Used by the routines at #R$F42D, #R$F48B, #R$F4A8, #R$F4F0, #R$F544, #R$F7AA,
+; #R$F8B4 and #R$FA9E.
 ; .
-; Set the print position from #REGbc.
+; Sets the print position from #REGbc.
 @label=Set_PrintPosition
-*$F5C4 LD ($5C88),BC   ; Write #REGbc to *#SKOOLKID$5C88(S_POSN).
- $F5C8 EXX             ; Switch to the shadow registers.
- $F5C9 LD BC,($5C88)   ; {Fetch the stored position and clear #REGa, #REGd and
- $F5CD LD E,B          ; #REGb.
- $F5CE XOR A           ;
- $F5CF LD D,A          ;
- $F5D0 LD B,A          ; }
- $F5D1 LD HL,$FF02     ; {Look up the line address from the table at #N$FF02.
- $F5D4 SLA E           ;
- $F5D6 ADD HL,DE       ; }
- $F5D7 LD E,(HL)       ; {Subtract the column and write *#SKOOLKID$5C84(DF_CC).
- $F5D8 INC HL          ;
- $F5D9 LD D,(HL)       ;
- $F5DA EX DE,HL        ;
- $F5DB SBC HL,BC       ;
- $F5DD LD ($5C84),HL   ; }
- $F5E0 LD A,H          ; {Rotate the high byte into an attribute offset.
- $F5E1 RRCA            ;
- $F5E2 RRCA            ;
- $F5E3 RRCA            ; }
- $F5E4 AND %00000011   ; Keep only bits 0-1.
- $F5E6 LD H,A          ; {Write the offset to *#R$6412.
- $F5E7 LD ($6412),HL   ; }
- $F5EA EXX             ; {Switch back and return.
- $F5EB RET             ; }
-; This entry point is used by the routine at #R$F42A.
+c$F5C4 LD ($5C88),BC ; Write #REGbc to *#SKOOLKID$5C88(S_POSN).
+ $F5C8 EXX           ; Switch to the shadow registers.
+ $F5C9 LD BC,($5C88) ; {Fetch the stored position and clear #REGa, #REGd and
+ $F5CD LD E,B        ; #REGb.
+ $F5CE XOR A         ;
+ $F5CF LD D,A        ;
+ $F5D0 LD B,A        ; }
+ $F5D1 LD HL,$FF02   ; {Look up the line address from the table at #N$FF02.
+ $F5D4 SLA E         ;
+ $F5D6 ADD HL,DE     ; }
+ $F5D7 LD E,(HL)     ; {Subtract the column and write *#SKOOLKID$5C84(DF_CC).
+ $F5D8 INC HL        ;
+ $F5D9 LD D,(HL)     ;
+ $F5DA EX DE,HL      ;
+ $F5DB SBC HL,BC     ;
+ $F5DD LD ($5C84),HL ; }
+ $F5E0 LD A,H        ; {Rotate the high byte into an attribute offset.
+ $F5E1 RRCA          ;
+ $F5E2 RRCA          ;
+ $F5E3 RRCA          ; }
+ $F5E4 AND %00000011 ; Keep only bits 0-1.
+ $F5E6 LD H,A        ; {Write the offset to *#R$6412.
+ $F5E7 LD ($6412),HL ; }
+ $F5EA EXX           ; Switch back.
+ $F5EB RET           ; Return.
+
+; Delay
+;
+; Used by the routine at #R$F430.
 ; .
 ; Delay for #REGbc iterations.
+;
+; BC Length of loop
 @label=Delay
-*$F5EC PUSH BC         ; Stash #REGbc on the stack.
+c$F5EC PUSH BC       ; Stash #REGbc on the stack.
 @label=Delay_Continue
-*$F5ED DEC BC          ; {Decrease #REGbc and jump to #R$F5ED until it is
- $F5EE LD A,B          ; zero.
- $F5EF OR C            ;
- $F5F0 JR NZ,$F5ED     ; }
- $F5F2 POP BC          ; {Restore #REGbc from the stack and return.
- $F5F3 RET             ; }
-; This entry point is used by the routine at #R$F42A.
+*$F5ED DEC BC        ; {Decrease #REGbc and jump to #R$F5ED until it is
+ $F5EE LD A,B        ; zero.
+ $F5EF OR C          ;
+ $F5F0 JR NZ,$F5ED   ; }
+ $F5F2 POP BC        ; Restore #REGbc from the stack.
+ $F5F3 RET           ; Return.
+; View the equivalent code in #BOOTY$F8C0.
+
+; Get Random Number
+;
+; Used by the routine at #R$F433.
 ; .
 ; (((#REGb + #REGc) % #N$100 + #N$AB) % #N$100) * #N$100 +
 ; (#REGc + #N$CD) % #N$100
+;
+; O:A The random number
 @label=Get_RandomNumber
-*$F5F4 PUSH BC         ; Stash #REGbc on the stack.
- $F5F5 LD BC,($64B2)   ; #REGbc=*#R$64B2.
- $F5F9 LD A,C          ; {#REGb=#REGb+#REGc.
- $F5FA ADD A,B         ;
- $F5FB LD B,A          ; }
- $F5FC LD A,$CD        ; {#REGc=#N$CD+#REGc.
- $F5FE ADD A,C         ;
- $F5FF LD C,A          ; }
- $F600 LD A,$AB        ; {#REGb+=#N$AB.
- $F602 ADC A,B         ;
- $F603 LD B,A          ; }
- $F604 LD ($64B2),BC   ; Write the updated #REGbc to *#R$64B2.
- $F608 POP BC          ; Restore #REGbc from the stack.
- $F609 RET             ; Return.
-; This entry point is used by the routines at #R$F42A and #R$F544.
+c$F5F4 PUSH BC       ; Stash #REGbc on the stack.
+ $F5F5 LD BC,($64B2) ; #REGbc=*#R$64B2.
+ $F5F9 LD A,C        ; {#REGb=#REGb+#REGc.
+ $F5FA ADD A,B       ;
+ $F5FB LD B,A        ; }
+ $F5FC LD A,$CD      ; {#REGc=#N$CD+#REGc.
+ $F5FE ADD A,C       ;
+ $F5FF LD C,A        ; }
+ $F600 LD A,$AB      ; {#REGb+=#N$AB.
+ $F602 ADC A,B       ;
+ $F603 LD B,A        ; }
+ $F604 LD ($64B2),BC ; Write the updated #REGbc to *#R$64B2.
+ $F608 POP BC        ; Restore #REGbc from the stack.
+ $F609 RET           ; Return.
+; View the equivalent code in #BOOTY$E349.
+
+; Print Character
+;
+; Used by the routines at #R$F436, #R$F48B, #R$F4A8, #R$F4F0, #R$F544, #R$F7AA,
+; #R$F8B4 and #R$FA9E.
 ; .
-; Print one character using *#SKOOLKID$5C36(CHARS).
+; Prints one character using *#SKOOLKID$5C36(CHARS).
+;
+; A Character to print
 @label=Print_Character
-*$F60A PUSH AF         ; {Stash the character and #REGix on the stack.
- $F60B PUSH IX         ; }
- $F60D EXX             ; Switch to the shadow registers.
- $F60E LD L,A          ; {#REGhl=the character code*#N$08.
- $F60F LD H,$00        ;
- $F611 ADD HL,HL       ;
- $F612 ADD HL,HL       ;
- $F613 ADD HL,HL       ; }
- $F614 LD DE,($5C36)   ; {#REGhl=*#SKOOLKID$5C36(CHARS)+#REGhl.
- $F618 ADD HL,DE       ; }
- $F619 LD DE,($5C84)   ; {Advance *#SKOOLKID$5C84(DF_CC) and leave #REGde on
- $F61D INC DE          ; the cell just claimed.
- $F61E LD ($5C84),DE   ;
- $F622 DEC DE          ; }
+c$F60A PUSH AF       ; {Stash the character and #REGix on the stack.
+ $F60B PUSH IX       ; }
+ $F60D EXX           ; Switch to the shadow registers.
+ $F60E LD L,A        ; {#REGhl=the character code*#N$08.
+ $F60F LD H,$00      ;
+ $F611 ADD HL,HL     ;
+ $F612 ADD HL,HL     ;
+ $F613 ADD HL,HL     ; }
+ $F614 LD DE,($5C36) ; {#REGhl=*#SKOOLKID$5C36(CHARS)+#REGhl.
+ $F618 ADD HL,DE     ; }
+ $F619 LD DE,($5C84) ; {Advance *#SKOOLKID$5C84(DF_CC) and leave #REGde on
+ $F61D INC DE        ; the cell just claimed.
+ $F61E LD ($5C84),DE ;
+ $F622 DEC DE        ; }
 ; Copy the eight pixel rows into the screen buffer.
- $F623 LD B,$08        ; Set the pixel-row counter to #N$08.
+ $F623 LD B,$08      ; Set the pixel-row counter to #N$08.
 @label=Print_Character_Target
-*$F625 LD A,(HL)       ; {Copy one pixel row and move down one screen line.
- $F626 LD (DE),A       ;
- $F627 INC D           ;
- $F628 INC HL          ; }
- $F629 DJNZ $F625      ; Decrease the row counter and loop back to #R$F625
-                       ; until all #N$08 rows are written.
+*$F625 LD A,(HL)     ; {Copy one pixel row and move down one screen line.
+ $F626 LD (DE),A     ;
+ $F627 INC D         ;
+ $F628 INC HL        ; }
+ $F629 DJNZ $F625    ; Decrease the row counter and loop back to #R$F625
+                     ; until all #N$08 rows are written.
 ; Write *#SKOOLKID$5C8F(ATTR_T) into the matching
 ; attribute cell.
- $F62B LD BC,($5C88)   ; {Decrease the print column in *#SKOOLKID$5C88(S_POSN).
- $F62F DEC C           ;
- $F630 LD ($5C88),BC   ; }
- $F634 EX DE,HL        ; {Point #REGhl at the matching attribute cell.
- $F635 DEC H           ;
- $F636 LD A,H          ;
- $F637 RRCA            ;
- $F638 RRCA            ;
- $F639 RRCA            ; }
- $F63A AND %00000011   ; Keep only bits 0-1 of the display-file high
-                       ; byte.
- $F63C OR %01011000    ; Set the attribute-file bit.
- $F63E LD H,A          ; Merge the attribute-file high byte.
- $F63F LD A,($5C91)    ; {Jump to #R$F64E if *#SKOOLKID$5C91(MASK_T) is set.
- $F642 OR A            ;
- $F643 JR NZ,$F64E     ; }
- $F645 LD A,($5C8F)    ; {Write *#SKOOLKID$5C8F(ATTR_T) to that attribute
- $F648 LD (HL),A       ; cell.}
- $F649 EXX             ; {Switch back, restore #REGix and the character, and
- $F64A POP IX          ; return.
- $F64C POP AF          ;
- $F64D RET             ; }
+ $F62B LD BC,($5C88) ; {Decrease the print column in *#SKOOLKID$5C88(S_POSN).
+ $F62F DEC C         ;
+ $F630 LD ($5C88),BC ; }
+ $F634 EX DE,HL      ; {Point #REGhl at the matching attribute cell.
+ $F635 DEC H         ;
+ $F636 LD A,H        ;
+ $F637 RRCA          ;
+ $F638 RRCA          ;
+ $F639 RRCA          ; }
+ $F63A AND %00000011 ; Keep only bits 0-1 of the display-file high
+                     ; byte.
+ $F63C OR %01011000  ; Set the attribute-file bit.
+ $F63E LD H,A        ; Merge the attribute-file high byte.
+ $F63F LD A,($5C91)  ; {Jump to #R$F64E if *#SKOOLKID$5C91(MASK_T) is set.
+ $F642 OR A          ;
+ $F643 JR NZ,$F64E   ; }
+ $F645 LD A,($5C8F)  ; {Write *#SKOOLKID$5C8F(ATTR_T) to that attribute
+ $F648 LD (HL),A     ; cell.}
+ $F649 EXX           ; Switch back.
+ $F64A POP IX        ; {Restore #REGix and the character from the stack.
+ $F64C POP AF        ; }
+ $F64D RET           ; Return.
 @label=Print_Character_Continue
-*$F64E PUSH HL         ; {Merge the existing attribute through the mask.
- $F64F AND (HL)        ;
- $F650 LD (HL),A       ; }
- $F651 LD HL,$5C8F     ; {Keep the paper bits from *#SKOOLKID$5C8F(ATTR_T).
- $F654 LD A,($5C91)    ; }
- $F657 XOR %11111111   ; Invert the mask.
- $F659 AND (HL)        ; {Merge the ink bits and write the attribute.
- $F65A POP HL          ;
- $F65B OR (HL)         ;
- $F65C LD (HL),A       ; }
- $F65D EXX             ; {Switch back, restore #REGix and the character, and
- $F65E POP IX          ; return.
- $F660 POP AF          ;
- $F661 RET             ; }
-; This entry point is used by the routine at #R$F42A.
+*$F64E PUSH HL       ; {Merge the existing attribute through the mask.
+ $F64F AND (HL)      ;
+ $F650 LD (HL),A     ; }
+ $F651 LD HL,$5C8F   ; {Keep the paper bits from *#SKOOLKID$5C8F(ATTR_T).
+ $F654 LD A,($5C91)  ; }
+ $F657 XOR %11111111 ; Invert the mask.
+ $F659 AND (HL)      ; {Merge the ink bits and write the attribute.
+ $F65A POP HL        ;
+ $F65B OR (HL)       ;
+ $F65C LD (HL),A     ; }
+ $F65D EXX           ; Switch back.
+ $F65E POP IX        ; {Restore #REGix and the character from the stack.
+ $F660 POP AF        ; }
+ $F661 RET           ; Return.
+; View the equivalent code in #BOOTY$E6DC.
+
+; Print Clipped
+;
+; Used by the routine at #R$F439.
 ; .
-; Print a clipped rectangular run of characters.
+; Prints a clipped rectangular run of characters.
 @label=Print_Clipped
-*$F662 LD L,A          ; {Store the width in *#R$6416 and keep the tile ID
- $F663 LD A,E          ; in #REGl.
- $F664 LD ($6416),A    ; }
+c$F662 LD L,A        ; Keep the tile ID in #REGl.
+ $F663 LD A,E        ; {Store the width in *#R$6416.
+ $F664 LD ($6416),A  ; }
 @label=Print_Clipped_Target
-*$F667 LD A,($6416)    ; {Reload the remaining width from *#R$6416.
- $F66A LD E,A          ; }
- $F66B LD A,($6419)    ; {Jump to #R$F677 if this row is inside *#R$6419.
- $F66E CP B            ;
- $F66F JR NC,$F677     ; }
+*$F667 LD A,($6416)  ; {Reload the remaining width from *#R$6416.
+ $F66A LD E,A        ; }
+ $F66B LD A,($6419)  ; {Jump to #R$F677 if this row is inside *#R$6419.
+ $F66E CP B          ;
+ $F66F JR NC,$F677   ; }
 @label=Print_Clipped_Continue
-*$F671 DEC D           ; {Skip down until the row is inside the clip window.
- $F672 RET Z           ;
- $F673 DEC B           ;
- $F674 CP B            ;
- $F675 JR NZ,$F671     ; }
+*$F671 DEC D         ; {Skip down until the row is inside the clip window.
+ $F672 RET Z         ;
+ $F673 DEC B         ;
+ $F674 CP B          ;
+ $F675 JR NZ,$F671   ; }
 @label=Print_Clipped_Branch
-*$F677 LD A,($641A)    ; {Return if this row is below *#R$641A.
- $F67A CP B            ;
- $F67B RET NC          ; }
- $F67C LD A,($641C)    ; {Return if this column is past *#R$641C.
- $F67F CP C            ;
- $F680 RET NC          ; }
- $F681 PUSH BC         ; {Jump to #R$F68F if this column is inside
- $F682 LD A,($641B)    ; *#R$641B.
- $F685 CP C            ;
- $F686 JR NC,$F68F     ; }
+*$F677 LD A,($641A)  ; {Return if this row is below *#R$641A.
+ $F67A CP B          ;
+ $F67B RET NC        ; }
+ $F67C LD A,($641C)  ; {Return if this column is past *#R$641C.
+ $F67F CP C          ;
+ $F680 RET NC        ; }
+ $F681 PUSH BC       ; Stash the position on the stack.
+ $F682 LD A,($641B)  ; {Jump to #R$F68F if this column is inside
+ $F685 CP C          ; *#R$641B.
+ $F686 JR NC,$F68F   ; }
 @label=Print_Clipped_Branch2
-*$F688 DEC E           ; {Skip left until the column is inside the clip
- $F689 JR Z,$F6A4      ; window.
- $F68B DEC C           ;
- $F68C CP C            ;
- $F68D JR C,$F688      ; }
+*$F688 DEC E         ; {Skip left until the column is inside the clip
+ $F689 JR Z,$F6A4    ; window.
+ $F68B DEC C         ;
+ $F68C CP C          ;
+ $F68D JR C,$F688    ; }
 @label=Print_Clipped_Branch3
-*$F68F PUSH BC         ; {Call #R$F6AA for this cell.
- $F690 EXX             ;
- $F691 POP BC          ;
- $F692 CALL $F6AA      ; }
- $F695 EXX             ; {Call #R$F6C6 with the tile ID.
- $F696 LD A,L          ;
- $F697 CALL $F6C6      ; }
- $F69A DEC C           ; {Move left one column and loop back to #R$F68F
- $F69B LD A,($641C)    ; until the row is done.
- $F69E CP C            ;
- $F69F JR NC,$F6A4     ;
- $F6A1 DEC E           ;
- $F6A2 JR NZ,$F68F     ; }
+*$F68F PUSH BC       ; {Copy #REGbc to the shadow registers (using the
+ $F690 EXX           ; stack).
+ $F691 POP BC        ; }
+ $F692 CALL $F6AA    ; Call #R$F6AA.
+ $F695 EXX           ; Switch back.
+ $F696 LD A,L        ; #REGa=the tile ID.
+ $F697 CALL $F6C6    ; Call #R$F6C6.
+ $F69A DEC C         ; {Move left one column and loop back to #R$F68F
+ $F69B LD A,($641C)  ; until the row is done.
+ $F69E CP C          ;
+ $F69F JR NC,$F6A4   ;
+ $F6A1 DEC E         ;
+ $F6A2 JR NZ,$F68F   ; }
 @label=Print_Clipped_Skip
-*$F6A4 POP BC          ; {Restore the position, move up one row and jump to
- $F6A5 DEC D           ; #R$F667.
- $F6A6 RET Z           ;
- $F6A7 DEC B           ;
- $F6A8 JR $F667        ; }
-; This entry point is used by the routine at #R$F42A.
+*$F6A4 POP BC        ; Restore the position from the stack.
+ $F6A5 DEC D         ; {Return if the remaining height is zero.
+ $F6A6 RET Z         ; }
+ $F6A7 DEC B         ; Move up one row.
+ $F6A8 JR $F667      ; Jump to #R$F667.
+
+; Convert Coordinate
+;
+; Used by the routines at #R$F43C, #R$F662 and #R$FB2F.
 ; .
-; Convert a column/row pair into an offset.
+; Converts a column/row pair into an offset.
 @label=Convert_Coordinate
-*$F6AA XOR A           ; {Clear #REGa, #REGd and #REGl.
- $F6AB LD D,A          ;
- $F6AC LD L,A          ; }
- $F6AD LD A,$18        ; {#REGa=#N$18-#REGb.
- $F6AF SUB B           ; }
- $F6B0 SRL A           ; {Multiply the row by #N$20 into #REGhl.
- $F6B2 RR L            ;
- $F6B4 SRL A           ;
- $F6B6 RR L            ;
- $F6B8 SRL A           ;
- $F6BA RR L            ;
- $F6BC LD H,A          ; }
- $F6BD LD A,$21        ; {#REGe=#N$21-#REGc.
- $F6BF SUB C           ;
- $F6C0 LD E,A          ; }
- $F6C1 ADD HL,DE       ; {Add the column and write *#R$6412.
- $F6C2 LD ($6412),HL   ; }
- $F6C5 RET             ; Return.
-; This entry point is used by the routine at #R$F42A.
+c$F6AA XOR A         ; {Clear #REGa, #REGd and #REGl.
+ $F6AB LD D,A        ;
+ $F6AC LD L,A        ; }
+ $F6AD LD A,$18      ; {#REGa=#N$18-#REGb.
+ $F6AF SUB B         ; }
+ $F6B0 SRL A         ; {Multiply the row by #N$20 into #REGhl.
+ $F6B2 RR L          ;
+ $F6B4 SRL A         ;
+ $F6B6 RR L          ;
+ $F6B8 SRL A         ;
+ $F6BA RR L          ;
+ $F6BC LD H,A        ; }
+ $F6BD LD A,$21      ; {#REGe=#N$21-#REGc.
+ $F6BF SUB C         ;
+ $F6C0 LD E,A        ; }
+ $F6C1 ADD HL,DE     ; {Add the column and write *#R$6412.
+ $F6C2 LD ($6412),HL ; }
+ $F6C5 RET           ; Return.
+; View the equivalent code in #BOOTY$A86E.
+
+; Write Tile
+;
+; Used by the routines at #R$F43F, #R$F48B, #R$F662 and #R$F7AA.
 ; .
-; Write one tile and its attribute into the room buffers.
+; Writes one tile and its attribute into the room buffers.
 @label=Write_Tile
-*$F6C6 PUSH AF         ; {Stash the tile, #REGde and #REGhl on the stack.
- $F6C7 PUSH DE         ;
- $F6C8 PUSH HL         ; }
- $F6C9 LD HL,($6412)   ; {Increase *#R$6412 by one.
- $F6CC INC HL          ;
- $F6CD LD ($6412),HL   ; }
- $F6D0 LD DE,$5DCD     ; {Point #REGhl at that #R$5DCE cell.
- $F6D3 ADD HL,DE       ;
- $F6D4 LD (HL),A       ; }
- $F6D5 LD DE,$0320     ; {Point #REGhl at the matching #R$60EE cell.
- $F6D8 ADD HL,DE       ; }
- $F6D9 LD A,($5C8F)    ; {Write *#SKOOLKID$5C8F(ATTR_T) there.
- $F6DC LD (HL),A       ; }
- $F6DD POP HL          ; {Restore the stashed registers and return.
- $F6DE POP DE          ;
- $F6DF POP AF          ;
- $F6E0 RET             ; }
-; This entry point is used by the routine at #R$F42A.
+c$F6C6 PUSH AF       ; {Stash the tile, #REGde and #REGhl on the stack.
+ $F6C7 PUSH DE       ;
+ $F6C8 PUSH HL       ; }
+ $F6C9 LD HL,($6412) ; {Increase *#R$6412 by one.
+ $F6CC INC HL        ;
+ $F6CD LD ($6412),HL ; }
+ $F6D0 LD DE,$5DCD   ; {Point #REGhl at that #R$5DCE cell.
+ $F6D3 ADD HL,DE     ;
+ $F6D4 LD (HL),A     ; }
+ $F6D5 LD DE,$0320   ; {Point #REGhl at the matching #R$60EE cell.
+ $F6D8 ADD HL,DE     ; }
+ $F6D9 LD A,($5C8F)  ; {Write *#SKOOLKID$5C8F(ATTR_T) there.
+ $F6DC LD (HL),A     ; }
+ $F6DD POP HL        ; {Restore the stashed registers from the stack.
+ $F6DE POP DE        ;
+ $F6DF POP AF        ; }
+ $F6E0 RET           ; Return.
+
+; Move Entity
+;
+; Used by the routine at #R$F442.
 ; .
-; Move an entity and erase the vacated cells.
+; Moves an entity and erases the vacated cells.
 @label=Move_Entity
-*$F6E1 XOR A           ; {Write #N$00 to *#R$643D.
- $F6E2 LD ($643D),A    ; }
- $F6E5 LD A,C          ; {Jump to #R$F6F7 if the column matches (IX+#N$0A).
- $F6E6 SUB (IX+$0A)    ;
- $F6E9 JR Z,$F6F7      ; }
- $F6EB CP $80          ; {Call #R$F71C when the column moved left.
- $F6ED PUSH AF         ;
- $F6EE CALL NC,$F71C   ;
- $F6F1 POP AF          ; }
- $F6F2 CALL C,$F73C    ; {Call #R$F73C when the column moved right and jump
- $F6F5 JR $F702        ; to #R$F702.}
+c$F6E1 XOR A         ; {Write #N$00 to *#R$643D.
+ $F6E2 LD ($643D),A  ; }
+ $F6E5 LD A,C        ; {Jump to #R$F6F7 if the column matches *#REGix+#N$0A.
+ $F6E6 SUB (IX+$0A)  ;
+ $F6E9 JR Z,$F6F7    ; }
+ $F6EB CP $80        ; {Call #R$F71C when the column moved left.
+ $F6ED PUSH AF       ;
+ $F6EE CALL NC,$F71C ;
+ $F6F1 POP AF        ; }
+ $F6F2 CALL C,$F73C  ; {Call #R$F73C when the column moved right and jump
+ $F6F5 JR $F702      ; to #R$F702.}
 @label=Move_Entity_Skip
-*$F6F7 LD A,E          ; {Jump to #R$F702 if the fine-X matches (IX+#N$0C).
- $F6F8 CP (IX+$0C)     ;
- $F6FB JR Z,$F702      ; }
- $F6FD CP $07          ; {Call #R$F73C when the fine-X wrapped to #N$07.
- $F6FF CALL Z,$F73C    ; }
+*$F6F7 LD A,E        ; {Jump to #R$F702 if the fine-X matches *#REGix+#N$0C.
+ $F6F8 CP (IX+$0C)   ;
+ $F6FB JR Z,$F702    ; }
+ $F6FD CP $07        ; {Call #R$F73C when the fine-X wrapped to #N$07.
+ $F6FF CALL Z,$F73C  ; }
 @label=Move_Entity_Skip2
-*$F702 LD A,B          ; {Jump to #R$F712 if the row matches (IX+#N$0B).
- $F703 SUB (IX+$0B)    ;
- $F706 JR Z,$F712      ; }
- $F708 CP $80          ; {Call #R$F788 when the row moved up.
- $F70A PUSH AF         ;
- $F70B CALL NC,$F788   ;
- $F70E POP AF          ; }
- $F70F JR C,$F761      ; {Jump to #R$F761 if the row moved down, else return.
- $F711 RET             ; }
+*$F702 LD A,B        ; {Jump to #R$F712 if the row matches *#REGix+#N$0B.
+ $F703 SUB (IX+$0B)  ;
+ $F706 JR Z,$F712    ; }
+ $F708 CP $80        ; {Call #R$F788 when the row moved up.
+ $F70A PUSH AF       ;
+ $F70B CALL NC,$F788 ;
+ $F70E POP AF        ; }
+ $F70F JR C,$F761    ; {Jump to #R$F761 if the row moved down, else return.
+ $F711 RET           ; }
 @label=Move_Entity_Skip3
-*$F712 LD A,D          ; {Return if the fine-Y matches (IX+#N$0D).
- $F713 CP (IX+$0D)     ;
- $F716 RET Z           ; }
- $F717 CP $07          ; {Jump to #R$F761 when the fine-Y wrapped to #N$07,
- $F719 JR Z,$F761      ; else return.
- $F71B RET             ; }
+*$F712 LD A,D        ; {Return if the fine-Y matches *#REGix+#N$0D.
+ $F713 CP (IX+$0D)   ;
+ $F716 RET Z         ; }
+ $F717 CP $07        ; {Jump to #R$F761 when the fine-Y wrapped to #N$07,
+ $F719 JR Z,$F761    ; else return.
+ $F71B RET           ; }
 ; Erase the left-hand column that has just been vacated.
 @label=Move_Entity_Target
-*$F71C PUSH BC         ; {Stash the new position and size.
- $F71D PUSH DE         ; }
- $F71E LD A,$FF        ; {Write #N$FF to *#R$643D.
- $F720 LD ($643D),A    ; }
- $F723 LD C,(IX+$0A)   ; {Fill a one-column strip at the old column and row.
- $F726 LD B,(IX+$0B)   ;
- $F729 LD D,(IX+$05)   ;
- $F72C LD E,$01        ; }
- $F72E LD A,(IX+$0D)   ; {Increase the height when the old fine-Y is not
- $F731 CP $07          ; #N$07.
- $F733 JR Z,$F736      ;
- $F735 INC D           ; }
+*$F71C PUSH BC       ; {Stash the new position and size.
+ $F71D PUSH DE       ; }
+ $F71E LD A,$FF      ; {Write #N$FF to *#R$643D.
+ $F720 LD ($643D),A  ; }
+ $F723 LD C,(IX+$0A) ; {Fill a one-column strip at the old column and row.
+ $F726 LD B,(IX+$0B) ;
+ $F729 LD D,(IX+$05) ;
+ $F72C LD E,$01      ; }
+ $F72E LD A,(IX+$0D) ; {Increase the height when the old fine-Y is not
+ $F731 CP $07        ; #N$07.
+ $F733 JR Z,$F736    ;
+ $F735 INC D         ; }
 @label=Move_Entity_Skip4
-*$F736 CALL $FA9E      ; {Call #R$FA9E and restore the registers.
- $F739 POP DE          ;
- $F73A POP BC          ;
- $F73B RET             ; }
+*$F736 CALL $FA9E    ; Call #R$FA9E.
+ $F739 POP DE        ; {Restore the registers from the stack.
+ $F73A POP BC        ; }
+ $F73B RET           ; Return.
 ; Erase the right-hand column that has just been vacated.
 @label=Move_Entity_Target2
-*$F73C LD A,$01        ; {Write #N$01 to *#R$643D.
- $F73E LD ($643D),A    ; }
- $F741 PUSH BC         ; {Stash the new position and size.
- $F742 PUSH DE         ; }
- $F743 LD A,(IX+$0A)   ; {Fill a one-column strip at the old right-hand edge.
- $F746 LD C,(IX+$04)   ;
- $F749 SUB C           ;
- $F74A LD C,A          ;
- $F74B LD B,(IX+$0B)   ;
- $F74E LD D,(IX+$05)   ;
- $F751 LD E,$01        ; }
- $F753 LD A,(IX+$0D)   ; {Increase the height when the old fine-Y is not
- $F756 CP $07          ; #N$07.
- $F758 JR Z,$F75B      ;
- $F75A INC D           ; }
+*$F73C LD A,$01      ; {Write #N$01 to *#R$643D.
+ $F73E LD ($643D),A  ; }
+ $F741 PUSH BC       ; {Stash the new position and size.
+ $F742 PUSH DE       ; }
+ $F743 LD A,(IX+$0A) ; {Fill a one-column strip at the old right-hand edge.
+ $F746 LD C,(IX+$04) ;
+ $F749 SUB C         ;
+ $F74A LD C,A        ;
+ $F74B LD B,(IX+$0B) ;
+ $F74E LD D,(IX+$05) ;
+ $F751 LD E,$01      ; }
+ $F753 LD A,(IX+$0D) ; {Increase the height when the old fine-Y is not
+ $F756 CP $07        ; #N$07.
+ $F758 JR Z,$F75B    ;
+ $F75A INC D         ; }
 @label=Move_Entity_Skip5
-*$F75B CALL $FA9E      ; {Call #R$FA9E and restore the registers.
- $F75E POP DE          ;
- $F75F POP BC          ;
- $F760 RET             ; }
+*$F75B CALL $FA9E    ; Call #R$FA9E.
+ $F75E POP DE        ; {Restore the registers from the stack.
+ $F75F POP BC        ; }
+ $F760 RET           ; Return.
 ; Erase the bottom row that has just been vacated.
 @label=Move_Entity_Branch
-*$F761 PUSH BC         ; {Stash the new position and size.
- $F762 PUSH DE         ; }
- $F763 LD A,(IX+$0B)   ; {Fill a one-row strip at the old bottom edge.
- $F766 LD D,(IX+$05)   ;
- $F769 SUB D           ;
- $F76A LD B,A          ;
- $F76B LD E,(IX+$04)   ;
- $F76E LD C,(IX+$0A)   ;
- $F771 LD D,$01        ; }
- $F773 LD A,(IX+$02)   ; {Increase the width when the fine-X is not #N$07.
- $F776 CP $07          ;
- $F778 JR Z,$F77B      ;
- $F77A INC E           ; }
+*$F761 PUSH BC       ; {Stash the new position and size.
+ $F762 PUSH DE       ; }
+ $F763 LD A,(IX+$0B) ; {Fill a one-row strip at the old bottom edge.
+ $F766 LD D,(IX+$05) ;
+ $F769 SUB D         ;
+ $F76A LD B,A        ;
+ $F76B LD E,(IX+$04) ;
+ $F76E LD C,(IX+$0A) ;
+ $F771 LD D,$01      ; }
+ $F773 LD A,(IX+$02) ; {Increase the width when the fine-X is not #N$07.
+ $F776 CP $07        ;
+ $F778 JR Z,$F77B    ;
+ $F77A INC E         ; }
 @label=Move_Entity_Skip6
-*$F77B LD A,($643D)    ; {Increase the width again when *#R$643D is set.
- $F77E OR A            ;
- $F77F JR Z,$F782      ;
- $F781 INC E           ; }
+*$F77B LD A,($643D)  ; {Increase the width again when *#R$643D is set.
+ $F77E OR A          ;
+ $F77F JR Z,$F782    ;
+ $F781 INC E         ; }
 @label=Move_Entity_Skip7
-*$F782 CALL $FA9E      ; {Call #R$FA9E and restore the registers.
- $F785 POP DE          ;
- $F786 POP BC          ;
- $F787 RET             ; }
+*$F782 CALL $FA9E    ; Call #R$FA9E.
+ $F785 POP DE        ; {Restore the registers from the stack.
+ $F786 POP BC        ; }
+ $F787 RET           ; Return.
 ; Erase the top row that has just been vacated.
 @label=Move_Entity_Target3
-*$F788 PUSH BC         ; {Stash the new position and size.
- $F789 PUSH DE         ; }
- $F78A LD C,(IX+$0A)   ; {Fill a one-row strip at the old column and row.
- $F78D LD B,(IX+$0B)   ;
- $F790 LD D,$01        ;
- $F792 LD E,(IX+$04)   ; }
- $F795 LD A,(IX+$0C)   ; {Increase the width when the old fine-X is not
- $F798 CP $07          ; #N$07.
- $F79A JR Z,$F79D      ;
- $F79C INC E           ; }
+*$F788 PUSH BC       ; {Stash the new position and size.
+ $F789 PUSH DE       ; }
+ $F78A LD C,(IX+$0A) ; {Fill a one-row strip at the old column and row.
+ $F78D LD B,(IX+$0B) ;
+ $F790 LD D,$01      ;
+ $F792 LD E,(IX+$04) ; }
+ $F795 LD A,(IX+$0C) ; {Increase the width when the old fine-X is not
+ $F798 CP $07        ; #N$07.
+ $F79A JR Z,$F79D    ;
+ $F79C INC E         ; }
 @label=Move_Entity_Skip8
-*$F79D LD A,($643D)    ; {Increase the width again when *#R$643D is set.
- $F7A0 OR A            ;
- $F7A1 JR Z,$F7A4      ;
- $F7A3 INC E           ; }
+*$F79D LD A,($643D)  ; {Increase the width again when *#R$643D is set.
+ $F7A0 OR A          ;
+ $F7A1 JR Z,$F7A4    ;
+ $F7A3 INC E         ; }
 @label=Move_Entity_Skip9
-*$F7A4 CALL $FA9E      ; {Call #R$FA9E and restore the registers.
- $F7A7 POP DE          ;
- $F7A8 POP BC          ;
- $F7A9 RET             ; }
-; This entry point is used by the routine at #R$F42A.
+*$F7A4 CALL $FA9E    ; Call #R$FA9E.
+ $F7A7 POP DE        ; {Restore the registers from the stack.
+ $F7A8 POP BC        ; }
+ $F7A9 RET           ; Return.
+
+; Print Sprite
+;
+; Used by the routine at #R$F445.
 ; .
-; Print a sprite of width #REGe and height #REGd.
+; Prints a sprite of width #REGe and height #REGd.
+;
+; A Sprite ID
+; B Vertical co-ordinate
+; C Horizontal co-ordinate
+; D Height (in character blocks)
+; E Width (in character blocks)
 @label=Print_Sprite
-*$F7AA LD L,A          ; {Store the width in *#R$6416 and keep the sprite ID
- $F7AB DEC L           ; minus one in #REGl.
- $F7AC LD A,E          ;
- $F7AD LD ($6416),A    ; }
+c$F7AA LD L,A        ; {Keep the sprite ID minus one in #REGl.
+ $F7AB DEC L         ; }
+ $F7AC LD A,E        ; {Store the width in *#R$6416.
+ $F7AD LD ($6416),A  ; }
 @label=Print_Sprite_Target
-*$F7B0 LD A,($6416)    ; {Reload the remaining width from *#R$6416.
- $F7B3 LD E,A          ; }
- $F7B4 LD A,($6419)    ; {Jump to #R$F7C8 if this row is inside *#R$6419.
- $F7B7 CP B            ;
- $F7B8 JR NC,$F7C8     ; }
+*$F7B0 LD A,($6416)  ; {Reload the remaining width from *#R$6416.
+ $F7B3 LD E,A        ; }
+ $F7B4 LD A,($6419)  ; {Jump to #R$F7C8 if this row is inside *#R$6419.
+ $F7B7 CP B          ;
+ $F7B8 JR NC,$F7C8   ; }
 @label=Print_Sprite_Continue
-*$F7BA LD A,($6416)    ; {Skip down until the row is inside the clip window.
- $F7BD ADD A,L         ;
- $F7BE LD L,A          ;
- $F7BF DEC D           ;
- $F7C0 RET Z           ;
- $F7C1 DEC B           ;
- $F7C2 LD A,($6419)    ;
- $F7C5 CP B            ;
- $F7C6 JR NZ,$F7BA     ; }
+*$F7BA LD A,($6416)  ; {Skip down until the row is inside the clip window.
+ $F7BD ADD A,L       ;
+ $F7BE LD L,A        ;
+ $F7BF DEC D         ;
+ $F7C0 RET Z         ;
+ $F7C1 DEC B         ;
+ $F7C2 LD A,($6419)  ;
+ $F7C5 CP B          ;
+ $F7C6 JR NZ,$F7BA   ; }
 @label=Print_Sprite_Branch
-*$F7C8 LD A,($641A)    ; {Return if this row is below *#R$641A.
- $F7CB CP B            ;
- $F7CC RET NC          ; }
- $F7CD LD A,($641C)    ; {Return if this column is past *#R$641C.
- $F7D0 CP C            ;
- $F7D1 RET NC          ; }
- $F7D2 PUSH BC         ; {Jump to #R$F7E1 if this column is inside
- $F7D3 LD A,($641B)    ; *#R$641B.
- $F7D6 CP C            ;
- $F7D7 JR NC,$F7E1     ; }
+*$F7C8 LD A,($641A)  ; {Return if this row is below *#R$641A.
+ $F7CB CP B          ;
+ $F7CC RET NC        ; }
+ $F7CD LD A,($641C)  ; {Return if this column is past *#R$641C.
+ $F7D0 CP C          ;
+ $F7D1 RET NC        ; }
+ $F7D2 PUSH BC       ; {Jump to #R$F7E1 if this column is inside
+ $F7D3 LD A,($641B)  ; *#R$641B.
+ $F7D6 CP C          ;
+ $F7D7 JR NC,$F7E1   ; }
 @label=Print_Sprite_Branch2
-*$F7D9 INC L           ; {Skip left until the column is inside the clip
- $F7DA DEC E           ; window.
- $F7DB JR Z,$F7F6      ;
- $F7DD DEC C           ;
- $F7DE CP C            ;
- $F7DF JR C,$F7D9      ; }
+*$F7D9 INC L         ; {Skip left until the column is inside the clip
+ $F7DA DEC E         ; window.
+ $F7DB JR Z,$F7F6    ;
+ $F7DD DEC C         ;
+ $F7DE CP C          ;
+ $F7DF JR C,$F7D9    ; }
 @label=Print_Sprite_Branch3
-*$F7E1 CALL $F5C4      ; Call #R$F5C4.
- $F7E4 INC L           ; {Call #R$F60A with the next glyph.
- $F7E5 LD A,L          ;
- $F7E6 CALL $F60A      ; }
- $F7E9 CALL $F6C6      ; Call #R$F6C6.
- $F7EC DEC C           ; {Move left one column and loop back to #R$F7E1
- $F7ED LD A,($641C)    ; until the row is done.
- $F7F0 CP C            ;
- $F7F1 JR NC,$F7FC     ;
- $F7F3 DEC E           ;
- $F7F4 JR NZ,$F7E1     ; }
+*$F7E1 CALL $F5C4    ; Call #R$F5C4.
+ $F7E4 INC L         ; {Call #R$F60A with the next glyph.
+ $F7E5 LD A,L        ;
+ $F7E6 CALL $F60A    ; }
+ $F7E9 CALL $F6C6    ; Call #R$F6C6.
+ $F7EC DEC C         ; {Move left one column and loop back to #R$F7E1
+ $F7ED LD A,($641C)  ; until the row is done.
+ $F7F0 CP C          ;
+ $F7F1 JR NC,$F7FC   ;
+ $F7F3 DEC E         ;
+ $F7F4 JR NZ,$F7E1   ; }
 @label=Print_Sprite_Skip
-*$F7F6 POP BC          ; {Restore the position, move up one row and jump to
- $F7F7 DEC D           ; #R$F7B0.
- $F7F8 RET Z           ;
- $F7F9 DEC B           ;
- $F7FA JR $F7B0        ; }
+*$F7F6 POP BC        ; Restore the position from the stack.
+ $F7F7 DEC D         ; {Return if the remaining height is zero.
+ $F7F8 RET Z         ; }
+ $F7F9 DEC B         ; Move up one row.
+ $F7FA JR $F7B0      ; Jump to #R$F7B0.
 @label=Print_Sprite_Branch4
-*$F7FC DEC E           ; {Advance the glyph past the clipped cells and jump
- $F7FD JR Z,$F7F6      ; to #R$F7F6.
- $F7FF LD A,L          ;
- $F800 ADD A,E         ;
- $F801 LD L,A          ;
- $F802 JR $F7F6        ; }
-; This entry point is used by the routine at #R$F42A.
+*$F7FC DEC E         ; {Jump to #R$F7F6 if the remaining width is zero.
+ $F7FD JR Z,$F7F6    ; }
+ $F7FF LD A,L        ; {Advance the glyph past the clipped cells.
+ $F800 ADD A,E       ;
+ $F801 LD L,A        ; }
+ $F802 JR $F7F6      ; Jump to #R$F7F6.
+; View the equivalent code in #BOOTY$EA93.
+
+; Advance Entity
+;
+; Used by the routine at #R$F448.
 ; .
-; Advance an entity by its stored deltas.
+; Advances an entity by its stored deltas.
+;
+;   IX Entity data
+; O:B Updated row
+; O:C Updated column
+; O:D Updated fine-Y
+; O:E Updated fine-X
 @label=Advance_Entity
-*$F804 LD C,(IX+$00)   ; {#REGc=the column and #REGb=the row.
- $F807 LD B,(IX+$01)   ; }
- $F80A LD A,(IX+$08)   ; {Add (IX+#N$08) to the fine-X.
- $F80D ADD A,(IX+$02)  ; }
- $F810 CP $08          ; {Jump to #R$F81D if the fine-X is still in range.
- $F812 JR C,$F81D      ; }
- $F814 CP $80          ; {Jump to #R$F81A if the entity moved left.
- $F816 JR NC,$F81A     ; }
- $F818 INC C           ; {Step the column two right, then...
- $F819 INC C           ; }
+c$F804 LD C,(IX+$00)  ; {#REGc=the column and #REGb=the row.
+ $F807 LD B,(IX+$01)  ; }
+ $F80A LD A,(IX+$08)  ; {Add *#REGix+#N$08 to the fine-X.
+ $F80D ADD A,(IX+$02) ; }
+ $F810 CP $08         ; {Jump to #R$F81D if the fine-X is still in range.
+ $F812 JR C,$F81D     ; }
+ $F814 CP $80         ; {Jump to #R$F81A if the entity moved left.
+ $F816 JR NC,$F81A    ; }
+ $F818 INC C          ; {Step the column two right, then...
+ $F819 INC C          ; }
 @label=Advance_Entity_Branch
-*$F81A DEC C           ; ...one left.
- $F81B AND %00000111   ; Keep only bits 0-2.
+*$F81A DEC C          ; ...one left.
+ $F81B AND %00000111  ; Keep only bits 0-2.
 @label=Advance_Entity_Branch2
-*$F81D LD E,A          ; {Store the fine-X and add (IX+#N$09) to the fine-Y.
- $F81E LD A,(IX+$09)   ;
- $F821 ADD A,(IX+$03)  ; }
- $F824 CP $08          ; {Jump to #R$F831 if the fine-Y is still in range.
- $F826 JR C,$F831      ; }
- $F828 CP $80          ; {Jump to #R$F82E if the entity moved up.
- $F82A JR NC,$F82E     ; }
- $F82C INC B           ; {Step the row two down, then...
- $F82D INC B           ; }
+*$F81D LD E,A         ; Store the fine-X.
+ $F81E LD A,(IX+$09)  ; {Add *#REGix+#N$09 to the fine-Y.
+ $F821 ADD A,(IX+$03) ; }
+ $F824 CP $08         ; {Jump to #R$F831 if the fine-Y is still in range.
+ $F826 JR C,$F831     ; }
+ $F828 CP $80         ; {Jump to #R$F82E if the entity moved up.
+ $F82A JR NC,$F82E    ; }
+ $F82C INC B          ; {Step the row two down, then...
+ $F82D INC B          ; }
 @label=Advance_Entity_Branch3
-*$F82E DEC B           ; ...one up.
- $F82F AND %00000111   ; Keep only bits 0-2.
+*$F82E DEC B          ; ...one up.
+ $F82F AND %00000111  ; Keep only bits 0-2.
 @label=Advance_Entity_Branch4
-*$F831 LD D,A          ; {Store the fine-Y and return.
- $F832 RET             ; }
-; Draw a left-facing entity by shifting each tile left.
-@label=Advance_Entity_Target
-*$F833 AND %01111111   ; Keep only bits 0-6.
- $F835 LD ($5C8F),A    ; Write the colour to *#SKOOLKID$5C8F(ATTR_T).
- $F838 LD A,($F917)    ; {Add #N$08 to the stored shift count at
- $F83B ADD A,$08       ; #R$F915(#N$F917).
- $F83D LD ($F870),A    ; }
- $F840 LD DE,($5C36)   ; #REGde=*#SKOOLKID$5C36(CHARS).
- $F844 LD HL,($F936)   ; {Copy the stored stride from #R$F8B4(#N$F936) into
- $F847 LD ($F88E),HL   ; the add at #R$F833(#N$F88E).}
- $F84A XOR A           ; {Clear the self-modified OR at #R$F833(#N$F881).
- $F84B LD H,A          ;
- $F84C LD ($F881),A    ; }
- $F84F LD A,(IX+$06)   ; {Point #REGhl at the last source tile of this
- $F852 ADD A,(IX+$04)  ; frame.
- $F855 DEC A           ;
- $F856 LD L,A          ;
- $F857 ADD HL,HL       ;
- $F858 ADD HL,HL       ;
- $F859 ADD HL,HL       ;
- $F85A ADD HL,DE       ; }
- $F85B LD E,(IX+$04)   ; {#REGde=the sprite width and height.
- $F85E LD D,(IX+$05)   ; }
- $F861 PUSH HL         ; {#REGix=#REGhl and #REGhl=#N$5CBE.
- $F862 POP IX          ;
- $F864 LD HL,$5CBE     ; }
-@label=Advance_Entity_Continue
-*$F867 PUSH IX         ; {Stash the source pointer and remaining size.
- $F869 PUSH DE         ; }
-@label=Advance_Entity_Continue2
-*$F86A PUSH IX         ; {Stash the source pointer and set #REGb=#N$08.
- $F86C LD B,$08        ; }
-@label=Advance_Entity_Target2
-*$F86E PUSH BC         ; {Stash the row count and load the next source byte.
- $F86F LD B,$FF        ;
- $F871 LD C,(IX+$00)   ;
- $F874 XOR A           ;
- $F875 LD E,A          ; }
-@label=Advance_Entity_Target3
-*$F876 SLA C           ; {Shift one source bit into the overflow bytes.
- $F878 RR A            ;
- $F87A RR E            ;
- $F87C DJNZ $F876      ; }
- $F87E LD (IY+$00),E   ; Write the overflow bits to the next column.
- $F881 NOP             ; Self-modified: NOP or OR (HL).
- $F882 LD (HL),A       ; {Write the rotated byte and advance the pointers.
- $F883 INC HL          ;
- $F884 INC IX          ;
- $F886 INC IY          ;
- $F888 POP BC          ;
- $F889 DJNZ $F86E      ; }
- $F88B POP IX          ; {Advance to the next source column and loop back
- $F88D LD BC,$0000     ; to #R$F86A.
- $F890 ADD IX,BC       ;
- $F892 DEC D           ;
- $F893 JR NZ,$F86A     ; }
- $F895 LD A,$B6        ; {Write OR (HL) into *#R$F833(#N$F881) and clear
- $F897 LD ($F881),A    ; eight overflow bytes.
- $F89A XOR A           ;
- $F89B LD B,$08        ; }
-@label=Advance_Entity_Target4
-*$F89D LD (HL),A       ; {Clear one overflow byte and loop back to #R$F89D.
- $F89E LD (IY+$00),A   ;
- $F8A1 INC HL          ;
- $F8A2 INC IY          ;
- $F8A4 DJNZ $F89D      ; }
- $F8A6 POP DE          ; {Step back one source character and loop back to
- $F8A7 POP IX          ; #R$F867, then jump to #R$F959.
- $F8A9 LD BC,$FFF8     ;
- $F8AC ADD IX,BC       ;
- $F8AE DEC E           ;
- $F8AF JR NZ,$F867     ;
- $F8B1 JP $F959        ; }
-; This entry point is used by the routine at #R$F42A.
+*$F831 LD D,A         ; Store the fine-Y.
+ $F832 RET            ; Return.
+; View the equivalent code in #BOOTY$EEA6.
+
+; Shift Sprite Left
+;
+; Used by the routine at #R$F8B4.
 ; .
-; Draw the entity pointed to by #REGix.
+; Draws a left-facing entity by shifting each tile left.
+@label=Advance_Entity_Target
+c$F833 AND %01111111  ; Keep only bits 0-6.
+ $F835 LD ($5C8F),A   ; Write the colour to *#SKOOLKID$5C8F(ATTR_T).
+ $F838 LD A,($F917)   ; {Add #N$08 to the shift count at #R$F916(#N$F917)
+ $F83B ADD A,$08      ; and write it to #R$F86F(#N$F870).
+ $F83D LD ($F870),A   ; }
+ $F840 LD DE,($5C36)  ; #REGde=*#SKOOLKID$5C36(CHARS).
+ $F844 LD HL,($F936)  ; {Copy the stored stride from #R$F935(#N$F936) into
+ $F847 LD ($F88E),HL  ; the add at #R$F88D(#N$F88E).}
+ $F84A XOR A          ; {Clear the self-modified OR at #R$F881.
+ $F84B LD H,A         ;
+ $F84C LD ($F881),A   ; }
+ $F84F LD A,(IX+$06)  ; {Point #REGhl at the last source tile of this
+ $F852 ADD A,(IX+$04) ; frame.
+ $F855 DEC A          ;
+ $F856 LD L,A         ;
+ $F857 ADD HL,HL      ;
+ $F858 ADD HL,HL      ;
+ $F859 ADD HL,HL      ;
+ $F85A ADD HL,DE      ; }
+ $F85B LD E,(IX+$04)  ; {#REGde=the sprite width and height.
+ $F85E LD D,(IX+$05)  ; }
+ $F861 PUSH HL        ; {Copy #REGhl to #REGix (using the stack).
+ $F862 POP IX         ; }
+ $F864 LD HL,$5CBE    ; #REGhl=#N$5CBE.
+@label=Advance_Entity_Continue
+*$F867 PUSH IX        ; {Stash the source pointer and remaining size.
+ $F869 PUSH DE        ; }
+@label=Advance_Entity_Continue2
+*$F86A PUSH IX        ; Stash the source pointer on the stack.
+ $F86C LD B,$08       ; #REGb=#N$08.
+@label=Advance_Entity_Target2
+*$F86E PUSH BC        ; Stash the row count.
+@label=Advance_Entity_ShiftCount
+ $F86F LD B,$FF       ; #REGb=the shift count (self-modified).
+ $F871 LD C,(IX+$00)  ; {Load the next source byte.
+ $F874 XOR A          ;
+ $F875 LD E,A         ; }
+@label=Advance_Entity_Target3
+*$F876 SLA C          ; {Shift one source bit into the overflow bytes.
+ $F878 RR A           ;
+ $F87A RR E           ;
+ $F87C DJNZ $F876     ; }
+ $F87E LD (IY+$00),E  ; Write the overflow bits to the next column.
+@label=Advance_Entity_Merge
+ $F881 NOP            ; Self-modified: NOP or OR (HL).
+ $F882 LD (HL),A      ; Write the rotated byte.
+ $F883 INC HL         ; {Advance the destination and source pointers.
+ $F884 INC IX         ;
+ $F886 INC IY         ; }
+ $F888 POP BC         ; Restore the row count from the stack.
+ $F889 DJNZ $F86E     ; Decrease the count and loop back to #R$F86E.
+ $F88B POP IX         ; Restore the source pointer from the stack.
+@label=Advance_Entity_Stride
+ $F88D LD BC,$0000    ; #REGbc=the stored stride (self-modified).
+ $F890 ADD IX,BC      ; {Advance to the next source column and loop back
+ $F892 DEC D          ; to #R$F86A.
+ $F893 JR NZ,$F86A    ; }
+ $F895 LD A,$B6       ; {Write OR (HL) into *#R$F881.
+ $F897 LD ($F881),A   ; }
+ $F89A XOR A          ; #REGa=#N$00.
+ $F89B LD B,$08       ; #REGb=#N$08.
+@label=Advance_Entity_Target4
+*$F89D LD (HL),A      ; {Clear one overflow byte and loop back to #R$F89D.
+ $F89E LD (IY+$00),A  ;
+ $F8A1 INC HL         ;
+ $F8A2 INC IY         ;
+ $F8A4 DJNZ $F89D     ; }
+ $F8A6 POP DE         ; {Step back one source character and loop back to
+ $F8A7 POP IX         ; #R$F867, then jump to #R$F959.
+ $F8A9 LD BC,$FFF8    ;
+ $F8AC ADD IX,BC      ;
+ $F8AE DEC E          ;
+ $F8AF JR NZ,$F867    ;
+ $F8B1 JP $F959       ; }
+
+; Draw Entity
+;
+; Used by the routine at #R$F44B.
+; .
+; Draws the entity pointed to by #REGix.
+;
+; IX Entity data
 @label=Draw_Entity
-*$F8B4 XOR A           ; {Clear the self-modified OR at #R$F8B4(#N$F929).
- $F8B5 LD ($F929),A    ; }
- $F8B8 LD H,A          ; {Stash *#SKOOLKID$5C36(CHARS) on the stack.
- $F8B9 LD DE,($5C36)   ;
- $F8BD PUSH DE         ; }
- $F8BE PUSH IY         ; {Stash #REGiy and #REGix on the stack.
- $F8C0 PUSH IX         ; }
- $F8C2 LD A,$07        ; {Write #N$07-(IX+#N$02) to the shift count at
- $F8C4 SUB (IX+$02)    ; #R$F915(#N$F917).
- $F8C7 LD ($F917),A    ; }
- $F8CA LD E,(IX+$04)   ; {#REGde=the sprite width and height.
- $F8CD LD D,(IX+$05)   ; }
- $F8D0 LD C,D          ; {#REGiy=#N$5CBE+(height+#N$01)*#N$08.
- $F8D1 INC C           ;
- $F8D2 SLA C           ;
- $F8D4 SLA C           ;
- $F8D6 SLA C           ;
- $F8D8 LD B,$00        ;
- $F8DA LD IY,$5CBE     ;
- $F8DE ADD IY,BC       ; }
- $F8E0 LD A,E          ; {Write the width*#N$08 to the stride at
- $F8E1 SLA A           ; #R$F8B4(#N$F936).
- $F8E3 SLA A           ;
- $F8E5 SLA A           ;
- $F8E7 LD ($F936),A    ; }
- $F8EA LD A,(IX+$07)   ; {Jump to #R$F833 if bit 7 of the colour is set.
- $F8ED BIT 7,A         ;
- $F8EF JP NZ,$F833     ; }
- $F8F2 LD ($5C8F),A    ; Write the colour to *#SKOOLKID$5C8F(ATTR_T).
- $F8F5 LD DE,($5C36)   ; #REGde=*#SKOOLKID$5C36(CHARS).
- $F8F9 LD L,(IX+$06)   ; {Point #REGhl at this frame's source UDGs.
- $F8FC LD H,$00        ;
- $F8FE ADD HL,HL       ;
- $F8FF ADD HL,HL       ;
- $F900 ADD HL,HL       ;
- $F901 ADD HL,DE       ; }
- $F902 LD D,(IX+$05)   ; {#REGde=the size, #REGix=#REGhl and
- $F905 LD E,(IX+$04)   ; #REGhl=#N$5CBE.
- $F908 PUSH HL         ;
- $F909 POP IX          ;
- $F90B LD HL,$5CBE     ; }
+c$F8B4 XOR A         ; {Clear the self-modified OR at #R$F929.
+ $F8B5 LD ($F929),A  ; }
+ $F8B8 LD H,A        ; {Stash *#SKOOLKID$5C36(CHARS) on the stack.
+ $F8B9 LD DE,($5C36) ;
+ $F8BD PUSH DE       ; }
+ $F8BE PUSH IY       ; {Stash #REGiy and #REGix on the stack.
+ $F8C0 PUSH IX       ; }
+ $F8C2 LD A,$07      ; {Write #N$07-*#REGix+#N$02 to the shift count at
+ $F8C4 SUB (IX+$02)  ; #R$F916(#N$F917).
+ $F8C7 LD ($F917),A  ; }
+ $F8CA LD E,(IX+$04) ; {#REGde=the sprite width and height.
+ $F8CD LD D,(IX+$05) ; }
+ $F8D0 LD C,D        ; {#REGiy=#N$5CBE+(height+#N$01)*#N$08.
+ $F8D1 INC C         ;
+ $F8D2 SLA C         ;
+ $F8D4 SLA C         ;
+ $F8D6 SLA C         ;
+ $F8D8 LD B,$00      ;
+ $F8DA LD IY,$5CBE   ;
+ $F8DE ADD IY,BC     ; }
+ $F8E0 LD A,E        ; {Write the width*#N$08 to the stride at
+ $F8E1 SLA A         ; #R$F935(#N$F936).
+ $F8E3 SLA A         ;
+ $F8E5 SLA A         ;
+ $F8E7 LD ($F936),A  ; }
+ $F8EA LD A,(IX+$07) ; {Jump to #R$F833 if bit 7 of the colour is set.
+ $F8ED BIT 7,A       ;
+ $F8EF JP NZ,$F833   ; }
+ $F8F2 LD ($5C8F),A  ; Write the colour to *#SKOOLKID$5C8F(ATTR_T).
+ $F8F5 LD DE,($5C36) ; #REGde=*#SKOOLKID$5C36(CHARS).
+ $F8F9 LD L,(IX+$06) ; {Point #REGhl at this frame's source UDGs.
+ $F8FC LD H,$00      ;
+ $F8FE ADD HL,HL     ;
+ $F8FF ADD HL,HL     ;
+ $F900 ADD HL,HL     ;
+ $F901 ADD HL,DE     ; }
+ $F902 LD D,(IX+$05) ; {#REGde=the sprite width and height.
+ $F905 LD E,(IX+$04) ; }
+ $F908 PUSH HL       ; {Copy #REGhl to #REGix (using the stack).
+ $F909 POP IX        ; }
+ $F90B LD HL,$5CBE   ; #REGhl=#N$5CBE.
 @label=Draw_Entity_Continue
-*$F90E PUSH IX         ; {Stash the source pointer and remaining size.
- $F910 PUSH DE         ; }
+*$F90E PUSH IX       ; {Stash the source pointer and remaining size.
+ $F910 PUSH DE       ; }
 @label=Draw_Entity_Continue2
-*$F911 PUSH IX         ; {Stash the source pointer and set #REGb=#N$08.
- $F913 LD B,$08        ; }
+*$F911 PUSH IX       ; Stash the source pointer on the stack.
+ $F913 LD B,$08      ; #REGb=#N$08.
 @label=Draw_Entity_Target
-*$F915 PUSH BC         ; {Stash the row count and load the next source byte.
- $F916 LD B,$FF        ;
- $F918 XOR A           ;
- $F919 CP B            ;
- $F91A LD C,A          ;
- $F91B LD A,(IX+$00)   ;
- $F91E JR Z,$F926      ; }
+*$F915 PUSH BC       ; Stash the row count.
+@label=Draw_Entity_ShiftCount
+ $F916 LD B,$FF      ; #REGb=the shift count (self-modified).
+ $F918 XOR A         ; #REGa=#N$00.
+ $F919 CP B          ; Test the shift count.
+ $F91A LD C,A        ; #REGc=#N$00.
+ $F91B LD A,(IX+$00) ; #REGa=the next source byte.
+ $F91E JR Z,$F926    ; Jump to #R$F926 if the shift count is zero.
 @label=Draw_Entity_Target2
-*$F920 SRL A           ; {Shift one source bit into the overflow byte.
- $F922 RR C            ;
- $F924 DJNZ $F920      ; }
+*$F920 SRL A         ; {Shift one source bit into the overflow byte.
+ $F922 RR C          ;
+ $F924 DJNZ $F920    ; }
 @label=Draw_Entity_Skip
-*$F926 LD (IY+$00),C   ; Write the overflow bits to the next column.
- $F929 NOP             ; Self-modified: NOP or OR (HL).
- $F92A LD (HL),A       ; {Write the rotated byte and advance the pointers.
- $F92B INC HL          ;
- $F92C INC IX          ;
- $F92E INC IY          ;
- $F930 POP BC          ;
- $F931 DJNZ $F915      ; }
- $F933 POP IX          ; {Advance to the next source column and loop back
- $F935 LD BC,$0000     ; to #R$F911.
- $F938 ADD IX,BC       ;
- $F93A DEC D           ;
- $F93B JR NZ,$F911     ; }
- $F93D LD A,$B6        ; {Write OR (HL) into *#R$F8B4(#N$F929) and clear
- $F93F LD ($F929),A    ; eight overflow bytes.
- $F942 XOR A           ;
- $F943 LD B,$08        ; }
+*$F926 LD (IY+$00),C ; Write the overflow bits to the next column.
+@label=Draw_Entity_Merge
+ $F929 NOP           ; Self-modified: NOP or OR (HL).
+ $F92A LD (HL),A     ; Write the rotated byte.
+ $F92B INC HL        ; {Advance the destination and source pointers.
+ $F92C INC IX        ;
+ $F92E INC IY        ; }
+ $F930 POP BC        ; Restore the row count from the stack.
+ $F931 DJNZ $F915    ; Decrease the count and loop back to #R$F915.
+ $F933 POP IX        ; Restore the source pointer from the stack.
+@label=Draw_Entity_Stride
+ $F935 LD BC,$0000   ; #REGbc=the stored stride (self-modified).
+ $F938 ADD IX,BC     ; {Advance to the next source column and loop back
+ $F93A DEC D         ; to #R$F911.
+ $F93B JR NZ,$F911   ; }
+ $F93D LD A,$B6      ; {Write OR (HL) into *#R$F929.
+ $F93F LD ($F929),A  ; }
+ $F942 XOR A         ; #REGa=#N$00.
+ $F943 LD B,$08      ; #REGb=#N$08.
 @label=Draw_Entity_Target3
-*$F945 LD (HL),A       ; {Clear one overflow byte and loop back to #R$F945.
- $F946 LD (IY+$00),A   ;
- $F949 INC HL          ;
- $F94A INC IY          ;
- $F94C DJNZ $F945      ; }
- $F94E POP DE          ; {Step to the next source character and loop back
- $F94F POP IX          ; to #R$F90E.
- $F951 LD BC,$0008     ;
- $F954 ADD IX,BC       ;
- $F956 DEC E           ;
- $F957 JR NZ,$F90E     ; }
+*$F945 LD (HL),A     ; {Clear one overflow byte and loop back to #R$F945.
+ $F946 LD (IY+$00),A ;
+ $F949 INC HL        ;
+ $F94A INC IY        ;
+ $F94C DJNZ $F945    ; }
+ $F94E POP DE        ; {Step to the next source character and loop back
+ $F94F POP IX        ; to #R$F90E.
+ $F951 LD BC,$0008   ;
+ $F954 ADD IX,BC     ;
+ $F956 DEC E         ;
+ $F957 JR NZ,$F90E   ; }
+; This entry point is used by the routine at #R$F833.
 @label=Draw_Entity_Target4
-*$F959 LD HL,$5BB6     ; {Point *#SKOOLKID$5C36(CHARS) at the shifted
- $F95C POP IX          ; workspace plus the fine-Y.
- $F95E LD E,(IX+$03)   ;
- $F961 INC E           ;
- $F962 LD D,A          ;
- $F963 ADD HL,DE       ;
- $F964 LD ($5C36),HL   ; }
- $F967 LD D,(IX+$05)   ; {Increase the printed width when the fine-X is not
- $F96A LD A,(IX+$02)   ; #N$07.
- $F96D CP $07          ;
- $F96F LD E,(IX+$04)   ;
- $F972 JR Z,$F975      ;
- $F974 INC E           ; }
+*$F959 LD HL,$5BB6   ; {Point *#SKOOLKID$5C36(CHARS) at the shifted
+ $F95C POP IX        ; workspace plus the fine-Y.
+ $F95E LD E,(IX+$03) ;
+ $F961 INC E         ;
+ $F962 LD D,A        ;
+ $F963 ADD HL,DE     ;
+ $F964 LD ($5C36),HL ; }
+ $F967 LD D,(IX+$05) ; {Increase the printed width when the fine-X is not
+ $F96A LD A,(IX+$02) ; #N$07.
+ $F96D CP $07        ;
+ $F96F LD E,(IX+$04) ;
+ $F972 JR Z,$F975    ;
+ $F974 INC E         ; }
 @label=Draw_Entity_Skip2
-*$F975 INC D           ; {Store the printed height in *#R$6414.
- $F976 LD A,D          ;
- $F977 LD ($6414),A    ; }
- $F97A LD A,$07        ; {Decrease the height when the fine-Y is #N$07.
- $F97C CP (IX+$03)     ;
- $F97F JR NZ,$F982     ;
- $F981 DEC D           ; }
+*$F975 INC D         ; {Store the printed height in *#R$6414.
+ $F976 LD A,D        ;
+ $F977 LD ($6414),A  ; }
+ $F97A LD A,$07      ; {Decrease the height when the fine-Y is #N$07.
+ $F97C CP (IX+$03)   ;
+ $F97F JR NZ,$F982   ;
+ $F981 DEC D         ; }
 @label=Draw_Entity_Continue3
-*$F982 LD B,(IX+$01)   ; {Call #R$F992 at the entity column and row.
- $F985 LD C,(IX+$00)   ;
- $F988 POP IY          ;
- $F98A CALL $F992      ; }
- $F98D POP HL          ; {Restore *#SKOOLKID$5C36(CHARS) and return.
- $F98E LD ($5C36),HL   ;
- $F991 RET             ; }
+*$F982 LD B,(IX+$01) ; {Call #R$F992 at the entity column and row.
+ $F985 LD C,(IX+$00) ;
+ $F988 POP IY        ;
+ $F98A CALL $F992    ; }
+ $F98D POP HL        ; Restore *#SKOOLKID$5C36(CHARS) from the stack.
+ $F98E LD ($5C36),HL ; Write it back to *#SKOOLKID$5C36(CHARS).
+ $F991 RET           ; Return.
 ; Print the shifted sprite inside the clip window.
 @label=Draw_Entity_Target5
-*$F992 LD L,$1F        ; {Write the remaining width into the load at
- $F994 LD A,E          ; #R$F998(#N$F99A).
- $F995 LD ($F99A),A    ; }
+*$F992 LD L,$1F      ; {Write the remaining width into the load at
+ $F994 LD A,E        ; #R$F999(#N$F99A).
+ $F995 LD ($F99A),A  ; }
 @label=Draw_Entity_Target6
-*$F998 INC L           ; {Advance the glyph base and reload the width.
- $F999 LD E,$00        ; }
- $F99B LD A,($6419)    ; {Jump to #R$F9AA if this row is inside *#R$6419.
- $F99E CP B            ;
- $F99F JR NC,$F9AA     ; }
+*$F998 INC L         ; Advance the glyph base.
+@label=Draw_Entity_Width
+ $F999 LD E,$00      ; #REGe=the remaining width (self-modified).
+ $F99B LD A,($6419)  ; {Jump to #R$F9AA if this row is inside *#R$6419.
+ $F99E CP B          ;
+ $F99F JR NC,$F9AA   ; }
 @label=Draw_Entity_Target7
-*$F9A1 DEC D           ; {Skip down until the row is inside the clip window.
- $F9A2 RET Z           ;
- $F9A3 INC L           ;
- $F9A4 DEC B           ;
- $F9A5 CP B            ;
- $F9A6 JR NC,$F9AA     ;
- $F9A8 JR $F9A1        ; }
+*$F9A1 DEC D         ; {Skip down until the row is inside the clip window.
+ $F9A2 RET Z         ;
+ $F9A3 INC L         ;
+ $F9A4 DEC B         ;
+ $F9A5 CP B          ;
+ $F9A6 JR NC,$F9AA   ;
+ $F9A8 JR $F9A1      ; }
 @label=Draw_Entity_Branch
-*$F9AA LD A,($641C)    ; {Return if this column is past *#R$641C.
- $F9AD CP C            ;
- $F9AE RET NC          ; }
- $F9AF LD A,($641A)    ; {Return if this row is below *#R$641A.
- $F9B2 CP B            ;
- $F9B3 RET NC          ; }
- $F9B4 PUSH BC         ; {Jump to #R$F9D1 if this column is inside
- $F9B5 LD A,($641B)    ; *#R$641B.
- $F9B8 CP C            ;
- $F9B9 JR NC,$F9D1     ; }
- $F9BB LD H,L          ; Copy the glyph base into #REGh.
+*$F9AA LD A,($641C)  ; {Return if this column is past *#R$641C.
+ $F9AD CP C          ;
+ $F9AE RET NC        ; }
+ $F9AF LD A,($641A)  ; {Return if this row is below *#R$641A.
+ $F9B2 CP B          ;
+ $F9B3 RET NC        ; }
+ $F9B4 PUSH BC       ; {Jump to #R$F9D1 if this column is inside
+ $F9B5 LD A,($641B)  ; *#R$641B.
+ $F9B8 CP C          ;
+ $F9B9 JR NC,$F9D1   ; }
+ $F9BB LD H,L        ; Copy the glyph base into #REGh.
 @label=Draw_Entity_Branch2
-*$F9BC DEC E           ; {Jump to #R$F9E8 if the remaining width is zero.
- $F9BD JR Z,$F9E8      ; }
- $F9BF LD A,($6414)    ; {Skip left until the column is inside the clip
- $F9C2 ADD A,H         ; window.
- $F9C3 LD H,A          ;
- $F9C4 DEC C           ;
- $F9C5 LD A,($641B)    ;
- $F9C8 CP C            ;
- $F9C9 JR C,$F9BC      ; }
- $F9CB CALL $F5C4      ; {Call #R$F5C4 and jump to #R$F9D5 with the
- $F9CE LD A,H          ; clipped glyph.
- $F9CF JR $F9D5        ; }
+*$F9BC DEC E         ; {Jump to #R$F9E8 if the remaining width is zero.
+ $F9BD JR Z,$F9E8    ; }
+ $F9BF LD A,($6414)  ; {Skip left until the column is inside the clip
+ $F9C2 ADD A,H       ; window.
+ $F9C3 LD H,A        ;
+ $F9C4 DEC C         ;
+ $F9C5 LD A,($641B)  ;
+ $F9C8 CP C          ;
+ $F9C9 JR C,$F9BC    ; }
+ $F9CB CALL $F5C4    ; Call #R$F5C4.
+ $F9CE LD A,H        ; #REGa=the clipped glyph.
+ $F9CF JR $F9D5      ; Jump to #R$F9D5.
 @label=Draw_Entity_Branch3
-*$F9D1 CALL $F5C4      ; {Call #R$F5C4 with the unclipped glyph.
- $F9D4 LD A,L          ; }
+*$F9D1 CALL $F5C4    ; {Call #R$F5C4 with the unclipped glyph.
+ $F9D4 LD A,L        ; }
 @label=Draw_Entity_Continue4
-*$F9D5 CALL $F60A      ; {Call #R$F60A and keep the glyph in #REGh.
- $F9D8 LD H,A          ; }
- $F9D9 DEC C           ; {Jump to #R$F9E8 if this column is past *#R$641C.
- $F9DA LD A,($641C)    ;
- $F9DD CP C            ;
- $F9DE JP NC,$F9E8     ; }
- $F9E1 LD A,($6414)    ; {Advance the glyph and loop back to #R$F9D5.
- $F9E4 ADD A,H         ;
- $F9E5 DEC E           ;
- $F9E6 JR NZ,$F9D5     ; }
+*$F9D5 CALL $F60A    ; {Call #R$F60A and keep the glyph in #REGh.
+ $F9D8 LD H,A        ; }
+ $F9D9 DEC C         ; {Jump to #R$F9E8 if this column is past *#R$641C.
+ $F9DA LD A,($641C)  ;
+ $F9DD CP C          ;
+ $F9DE JP NC,$F9E8   ; }
+ $F9E1 LD A,($6414)  ; {Advance the glyph and loop back to #R$F9D5.
+ $F9E4 ADD A,H       ;
+ $F9E5 DEC E         ;
+ $F9E6 JR NZ,$F9D5   ; }
 @label=Draw_Entity_Skip3
-*$F9E8 POP BC          ; {Restore the position, move up one row and jump
- $F9E9 DEC D           ; to #R$F998.
- $F9EA RET Z           ;
- $F9EB DEC B           ;
- $F9EC JR $F998        ; }
-; This entry point is used by the routine at #R$F42A.
+*$F9E8 POP BC        ; Restore the position from the stack.
+ $F9E9 DEC D         ; {Return if the remaining height is zero.
+ $F9EA RET Z         ; }
+ $F9EB DEC B         ; Move up one row.
+ $F9EC JR $F998      ; Jump to #R$F998.
+; View the equivalent code in #BOOTY$EED7.
+
+; Erase Entity
+;
+; Used by the routine at #R$F44E.
 ; .
-; Test whether the entity overlaps the player.
+; Tests whether the entity overlaps the player.
 @label=Erase_Entity
-*$F9EE LD A,($6411)    ; {Return if *#R$6411 is already set.
- $F9F1 OR A            ;
- $F9F2 RET NZ          ; }
- $F9F3 LD C,(IX+$00)   ; {Fetch the column, row, width and height.
- $F9F6 LD B,(IX+$01)   ;
- $F9F9 LD E,(IX+$04)   ;
- $F9FC LD D,(IX+$05)   ; }
- $F9FF CALL $FA6A      ; Call #R$FA6A.
- $FA02 XOR A           ; {Return if the clipped width or height is zero.
- $FA03 CP E            ;
- $FA04 RET Z           ;
- $FA05 CP D            ;
- $FA06 RET Z           ; }
- $FA07 LD L,E          ; {Write the width*#N$08+#N$10 into the compare at
- $FA08 LD H,D          ; #R$F9EE(#N$FA35).
- $FA09 ADD HL,HL       ;
- $FA0A ADD HL,HL       ;
- $FA0B ADD HL,HL       ;
- $FA0C LD A,$10        ;
- $FA0E ADD A,L         ;
- $FA0F LD ($FA35),A    ; }
- $FA12 LD A,$18        ; {Write the height*#N$08+#N$18 into the compare at
- $FA14 ADD A,H         ; #R$F9EE(#N$FA4F).
- $FA15 LD ($FA4F),A    ; }
- $FA18 PUSH IY         ; {Point #REGiy at the player at #R$64A4.
- $FA1A LD IY,$64A4     ; }
- $FA1E LD A,C          ; {Jump to #R$FA57 unless the entity overlaps the
- $FA1F ADD A,A         ; player horizontally.
- $FA20 ADD A,A         ;
- $FA21 ADD A,A         ;
- $FA22 ADD A,(IX+$02)  ;
- $FA25 LD C,A          ;
- $FA26 LD A,(IY+$00)   ;
- $FA29 ADD A,A         ;
- $FA2A ADD A,A         ;
- $FA2B ADD A,A         ;
- $FA2C ADD A,(IY+$02)  ;
- $FA2F CP C            ;
- $FA30 SBC A,$00       ;
- $FA32 ADD A,L         ;
- $FA33 SUB C           ;
- $FA34 CP $00          ;
- $FA36 JR NC,$FA57     ; }
- $FA38 LD A,B          ; {Jump to #R$FA57 unless the entity overlaps the
- $FA39 ADD A,A         ; player vertically.
- $FA3A ADD A,A         ;
- $FA3B ADD A,A         ;
- $FA3C ADD A,(IX+$03)  ;
- $FA3F LD C,A          ;
- $FA40 LD A,(IY+$01)   ;
- $FA43 ADD A,A         ;
- $FA44 ADD A,A         ;
- $FA45 ADD A,A         ;
- $FA46 ADD A,(IY+$03)  ;
- $FA49 CP C            ;
- $FA4A SBC A,$00       ;
- $FA4C ADD A,H         ;
- $FA4D SUB C           ;
- $FA4E CP $00          ;
- $FA50 JR NC,$FA57     ; }
- $FA52 LD A,$01        ; {Write #N$01 to *#R$6411.
- $FA54 LD ($6411),A    ; }
+c$F9EE LD A,($6411)   ; {Return if *#R$6411 is already set.
+ $F9F1 OR A           ;
+ $F9F2 RET NZ         ; }
+ $F9F3 LD C,(IX+$00)  ; {Fetch the column, row, width and height.
+ $F9F6 LD B,(IX+$01)  ;
+ $F9F9 LD E,(IX+$04)  ;
+ $F9FC LD D,(IX+$05)  ; }
+ $F9FF CALL $FA6A     ; Call #R$FA6A.
+ $FA02 XOR A          ; {Return if the clipped width or height is zero.
+ $FA03 CP E           ;
+ $FA04 RET Z          ;
+ $FA05 CP D           ;
+ $FA06 RET Z          ; }
+ $FA07 LD L,E         ; {Write the width*#N$08+#N$10 into the compare at
+ $FA08 LD H,D         ; #R$FA34(#N$FA35).
+ $FA09 ADD HL,HL      ;
+ $FA0A ADD HL,HL      ;
+ $FA0B ADD HL,HL      ;
+ $FA0C LD A,$10       ;
+ $FA0E ADD A,L        ;
+ $FA0F LD ($FA35),A   ; }
+ $FA12 LD A,$18       ; {Write the height*#N$08+#N$18 into the compare at
+ $FA14 ADD A,H        ; #R$FA4E(#N$FA4F).
+ $FA15 LD ($FA4F),A   ; }
+ $FA18 PUSH IY        ; {Point #REGiy at the player at #R$64A4.
+ $FA1A LD IY,$64A4    ; }
+ $FA1E LD A,C         ; {Jump to #R$FA57 unless the entity overlaps the
+ $FA1F ADD A,A        ; player horizontally.
+ $FA20 ADD A,A        ;
+ $FA21 ADD A,A        ;
+ $FA22 ADD A,(IX+$02) ;
+ $FA25 LD C,A         ;
+ $FA26 LD A,(IY+$00)  ;
+ $FA29 ADD A,A        ;
+ $FA2A ADD A,A        ;
+ $FA2B ADD A,A        ;
+ $FA2C ADD A,(IY+$02) ;
+ $FA2F CP C           ;
+ $FA30 SBC A,$00      ;
+ $FA32 ADD A,L        ;
+ $FA33 SUB C          ; }
+@label=Erase_Entity_WidthCompare
+ $FA34 CP $00         ; {Compare against the stored width and jump to
+ $FA36 JR NC,$FA57    ; #R$FA57 if there is no overlap.}
+ $FA38 LD A,B         ; {Jump to #R$FA57 unless the entity overlaps the
+ $FA39 ADD A,A        ; player vertically.
+ $FA3A ADD A,A        ;
+ $FA3B ADD A,A        ;
+ $FA3C ADD A,(IX+$03) ;
+ $FA3F LD C,A         ;
+ $FA40 LD A,(IY+$01)  ;
+ $FA43 ADD A,A        ;
+ $FA44 ADD A,A        ;
+ $FA45 ADD A,A        ;
+ $FA46 ADD A,(IY+$03) ;
+ $FA49 CP C           ;
+ $FA4A SBC A,$00      ;
+ $FA4C ADD A,H        ;
+ $FA4D SUB C          ; }
+@label=Erase_Entity_HeightCompare
+ $FA4E CP $00         ; {Compare against the stored height and jump to
+ $FA50 JR NC,$FA57    ; #R$FA57 if there is no overlap.}
+ $FA52 LD A,$01       ; {Write #N$01 to *#R$6411.
+ $FA54 LD ($6411),A   ; }
 @label=Erase_Entity_Branch
-*$FA57 POP IY          ; {Restore #REGiy and return.
- $FA59 RET             ; }
-; This entry point is used by the routine at #R$F42A.
+*$FA57 POP IY         ; Restore #REGiy from the stack.
+ $FA59 RET            ; Return.
+
+; Fill Attributes
+;
+; Used by the routines at #R$F454 and #R$FB2F.
 ; .
-; Fill attributes starting at #REGhl.
+; Fills attributes starting at #REGhl.
+;
+; A Attribute to write
+; HL Attribute-file address
+; B Height
+; C Width
 @label=Fill_Attributes
-*$FA5A PUSH BC         ; {Stash #REGbc and #REGhl and copy the width into
- $FA5B PUSH HL         ; #REGb.
- $FA5C LD B,C          ; }
+c$FA5A PUSH BC       ; {Stash #REGbc and #REGhl and copy the width into
+ $FA5B PUSH HL       ; #REGb.
+ $FA5C LD B,C        ; }
 @label=Fill_Attributes_Target
-*$FA5D LD (HL),A       ; {Write #REGa across this attribute row.
- $FA5E INC HL          ;
- $FA5F DJNZ $FA5D      ; }
- $FA61 POP HL          ; {Move #REGhl down one attribute row and loop back
- $FA62 LD DE,$0020     ; to #R$FA5A.
- $FA65 ADD HL,DE       ;
- $FA66 POP BC          ;
- $FA67 DJNZ $FA5A      ; }
- $FA69 RET             ; Return.
-; This entry point is used by the routine at #R$F42A.
+*$FA5D LD (HL),A     ; {Write #REGa across this attribute row.
+ $FA5E INC HL        ;
+ $FA5F DJNZ $FA5D    ; }
+ $FA61 POP HL        ; {Move #REGhl down one attribute row and loop back
+ $FA62 LD DE,$0020   ; to #R$FA5A.
+ $FA65 ADD HL,DE     ;
+ $FA66 POP BC        ;
+ $FA67 DJNZ $FA5A    ; }
+ $FA69 RET           ; Return.
+
+; Clip Rectangle
+;
+; Used by the routines at #R$F48B, #R$F9EE, #R$FA9E and #R$FB2F.
 ; .
-; Clip the print rectangle against *#R$6419.
+; Clips the print rectangle against *#R$6419.
 @label=Next_PrintCell
-*$FA6A LD A,($6419)    ; {Jump to #R$FA76 if this row is inside *#R$6419.
- $FA6D CP B            ;
- $FA6E JR NC,$FA76     ; }
+c$FA6A LD A,($6419)  ; {Jump to #R$FA76 if this row is inside *#R$6419.
+ $FA6D CP B          ;
+ $FA6E JR NC,$FA76   ; }
 @label=Next_PrintCell_Continue
-*$FA70 DEC D           ; {Skip down until the row is inside the clip window.
- $FA71 RET Z           ;
- $FA72 DEC B           ;
- $FA73 CP B            ;
- $FA74 JR NZ,$FA70     ; }
+*$FA70 DEC D         ; {Skip down until the row is inside the clip window.
+ $FA71 RET Z         ;
+ $FA72 DEC B         ;
+ $FA73 CP B          ;
+ $FA74 JR NZ,$FA70   ; }
 @label=Next_PrintCell_Branch
-*$FA76 LD A,B          ; {#REGl=the bottom row of this rectangle.
- $FA77 SUB D           ;
- $FA78 INC A           ;
- $FA79 LD L,A          ;
- $FA7A LD A,($641A)    ; }
+*$FA76 LD A,B        ; {#REGl=the bottom row of this rectangle.
+ $FA77 SUB D         ;
+ $FA78 INC A         ;
+ $FA79 LD L,A        ;
+ $FA7A LD A,($641A)  ; }
 @label=Next_PrintCell_Target
-*$FA7D CP L            ; {Shrink the height until the bottom is inside
- $FA7E JR C,$FA85      ; *#R$641A.
- $FA80 INC L           ;
- $FA81 DEC D           ;
- $FA82 RET Z           ;
- $FA83 JR $FA7D        ; }
+*$FA7D CP L          ; {Shrink the height until the bottom is inside
+ $FA7E JR C,$FA85    ; *#R$641A.
+ $FA80 INC L         ;
+ $FA81 DEC D         ;
+ $FA82 RET Z         ;
+ $FA83 JR $FA7D      ; }
 @label=Next_PrintCell_Branch2
-*$FA85 LD A,($641B)    ; #REGa=*#R$641B.
+*$FA85 LD A,($641B)  ; #REGa=*#R$641B.
 @label=Next_PrintCell_Target2
-*$FA88 CP C            ; {Skip left until the column is inside *#R$641B.
- $FA89 JR NC,$FA90     ;
- $FA8B DEC E           ;
- $FA8C RET Z           ;
- $FA8D DEC C           ;
- $FA8E JR $FA88        ; }
+*$FA88 CP C          ; {Skip left until the column is inside *#R$641B.
+ $FA89 JR NC,$FA90   ;
+ $FA8B DEC E         ;
+ $FA8C RET Z         ;
+ $FA8D DEC C         ;
+ $FA8E JR $FA88      ; }
 @label=Next_PrintCell_Branch3
-*$FA90 LD A,C          ; {#REGl=the right-hand column of this rectangle.
- $FA91 SUB E           ;
- $FA92 INC A           ;
- $FA93 LD L,A          ;
- $FA94 LD A,($641C)    ; }
+*$FA90 LD A,C        ; {#REGl=the right-hand column of this rectangle.
+ $FA91 SUB E         ;
+ $FA92 INC A         ;
+ $FA93 LD L,A        ;
+ $FA94 LD A,($641C)  ; }
 @label=Next_PrintCell_Target3
-*$FA97 CP L            ; {Shrink the width until the right edge is inside
- $FA98 RET C           ; *#R$641C.
- $FA99 INC L           ;
- $FA9A DEC E           ;
- $FA9B RET Z           ;
- $FA9C JR $FA97        ; }
-; This entry point is used by the routine at #R$F42A.
+*$FA97 CP L          ; {Shrink the width until the right edge is inside
+ $FA98 RET C         ; *#R$641C.
+ $FA99 INC L         ;
+ $FA9A DEC E         ;
+ $FA9B RET Z         ;
+ $FA9C JR $FA97      ; }
+
+; Fill Tiles
+;
+; Used by the routines at #R$F451 and #R$F6E1.
 ; .
-; Fill a rectangle of tiles from the room buffers.
+; Fills a rectangle of tiles from the room buffers.
 @label=Fill_Tiles
-*$FA9E PUSH AF         ; {Stash #REGaf, #REGbc, #REGde and #REGhl.
- $FA9F PUSH BC         ;
- $FAA0 PUSH DE         ;
- $FAA1 PUSH HL         ; }
- $FAA2 LD HL,($5C36)   ; {Switch *#SKOOLKID$5C36(CHARS) to *#R$640E.
- $FAA5 PUSH HL         ;
- $FAA6 LD HL,($640E)   ;
- $FAA9 LD ($5C36),HL   ; }
- $FAAC LD A,E          ; {Store the width in *#R$6416 and call #R$FA6A.
- $FAAD LD ($6416),A    ;
- $FAB0 CALL $FA6A      ; }
- $FAB3 XOR A           ; {Jump to #R$FAF5 if the clipped size is zero.
- $FAB4 CP E            ;
- $FAB5 JP Z,$FAF5      ;
- $FAB8 CP D            ;
- $FAB9 JP Z,$FAF5      ; }
- $FABC LD A,C          ; {Store the starting column in *#R$6414(#N$6415).
- $FABD LD ($6415),A    ; }
+c$FA9E PUSH AF       ; {Stash #REGaf, #REGbc, #REGde and #REGhl.
+ $FA9F PUSH BC       ;
+ $FAA0 PUSH DE       ;
+ $FAA1 PUSH HL       ; }
+ $FAA2 LD HL,($5C36) ; {Switch *#SKOOLKID$5C36(CHARS) to *#R$640E.
+ $FAA5 PUSH HL       ;
+ $FAA6 LD HL,($640E) ;
+ $FAA9 LD ($5C36),HL ; }
+; Clip the fill rectangle.
+ $FAAC LD A,E        ; {Store the width in *#R$6416.
+ $FAAD LD ($6416),A  ; }
+ $FAB0 CALL $FA6A    ; Call #R$FA6A.
+ $FAB3 XOR A         ; {Jump to #R$FAF5 if the clipped size is zero.
+ $FAB4 CP E          ;
+ $FAB5 JP Z,$FAF5    ;
+ $FAB8 CP D          ;
+ $FAB9 JP Z,$FAF5    ; }
+ $FABC LD A,C        ; {Store the starting column in *#R$6414(#N$6415).
+ $FABD LD ($6415),A  ; }
 @label=Fill_Tiles_Target
-*$FAC0 LD A,($6416)    ; {Reload the width and column and call #R$F5C4.
- $FAC3 LD E,A          ;
- $FAC4 LD A,($6415)    ;
- $FAC7 LD C,A          ;
- $FAC8 CALL $F5C4      ; }
+*$FAC0 LD A,($6416)  ; {#REGe=*#R$6416.
+ $FAC3 LD E,A        ; }
+ $FAC4 LD A,($6415)  ; {#REGc=*#R$6414(#N$6415).
+ $FAC7 LD C,A        ; }
+ $FAC8 CALL $F5C4    ; Call #R$F5C4.
 @label=Fill_Tiles_Continue
-*$FACB PUSH BC         ; {Advance *#R$6412 and point #REGhl at that
- $FACC LD HL,($6412)   ; #R$5DCE tile.
- $FACF INC HL          ;
- $FAD0 LD ($6412),HL   ;
- $FAD3 LD BC,$5DCD     ;
- $FAD6 ADD HL,BC       ;
- $FAD7 LD A,(HL)       ; }
- $FAD8 CALL $F60A      ; Call #R$F60A with the stored tile.
- $FADB LD BC,$0320     ; {Copy the matching #R$60EE attribute to the
- $FADE ADD HL,BC       ; screen.
- $FADF LD A,(HL)       ;
- $FAE0 LD BC,$57FF     ;
- $FAE3 LD HL,($6412)   ;
- $FAE6 ADD HL,BC       ;
- $FAE7 LD (HL),A       ; }
- $FAE8 POP BC          ; {Move left one column and loop back to #R$FACB.
- $FAE9 DEC C           ;
- $FAEA DEC E           ;
- $FAEB JR NZ,$FACB     ; }
- $FAED DEC D           ; {Move up one row and jump to #R$FAC0.
- $FAEE JR Z,$FAF5      ;
- $FAF0 PUSH DE         ;
- $FAF1 POP DE          ;
- $FAF2 DEC B           ;
- $FAF3 JR $FAC0        ; }
+*$FACB PUSH BC       ; {Advance *#R$6412 and point #REGhl at that
+ $FACC LD HL,($6412) ; #R$5DCE tile.
+ $FACF INC HL        ;
+ $FAD0 LD ($6412),HL ;
+ $FAD3 LD BC,$5DCD   ;
+ $FAD6 ADD HL,BC     ;
+ $FAD7 LD A,(HL)     ; }
+ $FAD8 CALL $F60A    ; Call #R$F60A with the stored tile.
+ $FADB LD BC,$0320   ; {Copy the matching #R$60EE attribute to the
+ $FADE ADD HL,BC     ; screen.
+ $FADF LD A,(HL)     ;
+ $FAE0 LD BC,$57FF   ;
+ $FAE3 LD HL,($6412) ;
+ $FAE6 ADD HL,BC     ;
+ $FAE7 LD (HL),A     ; }
+ $FAE8 POP BC        ; {Move left one column and loop back to #R$FACB.
+ $FAE9 DEC C         ;
+ $FAEA DEC E         ;
+ $FAEB JR NZ,$FACB   ; }
+ $FAED DEC D         ; Decrease the remaining height.
+ $FAEE JR Z,$FAF5    ; Jump to #R$FAF5 if it is zero.
+ $FAF0 PUSH DE       ; {Copy #REGde to #REGde (using the stack).
+ $FAF1 POP DE        ; }
+ $FAF2 DEC B         ; Move up one row.
+ $FAF3 JR $FAC0      ; Jump to #R$FAC0.
 @label=Fill_Tiles_Skip
-*$FAF5 POP HL          ; {Restore *#SKOOLKID$5C36(CHARS) and the stashed
- $FAF6 LD ($5C36),HL   ; registers.
- $FAF9 POP HL          ;
- $FAFA POP DE          ;
- $FAFB POP BC          ;
- $FAFC POP AF          ;
- $FAFD RET             ; }
-; This entry point is used by the routine at #R$F42A.
+*$FAF5 POP HL        ; Restore *#SKOOLKID$5C36(CHARS) from the stack.
+ $FAF6 LD ($5C36),HL ; Write it back to *#SKOOLKID$5C36(CHARS).
+ $FAF9 POP HL        ; {Restore the stashed registers from the stack.
+ $FAFA POP DE        ;
+ $FAFB POP BC        ;
+ $FAFC POP AF        ; }
+ $FAFD RET           ; Return.
+
+; Spawn Entity
+;
+; Used by the routine at #R$F457.
 ; .
-; Spawn or reset the entity at #REGix.
+; Spawns or resets the entity at #REGix.
+;
+; IX Entity data
+; B Row
+; C Column
+; D Height
+; E Width
+; A Sprite ID
+; L Colour
 @label=Spawn_Entity
-*$FAFE LD (IX+$00),C   ; {Write the column and row into the current and
+c$FAFE LD (IX+$00),C   ; {Write the column and row into the current and
  $FB01 LD (IX+$01),B   ; stored slots.
  $FB04 LD (IX+$0A),C   ;
  $FB07 LD (IX+$0B),B   ; }
@@ -10510,115 +10986,127 @@ c$F56A LD A,$00        ; {Write #N$00 to *#SKOOLKID$5C6B(DF_SZ).
  $FB1A LD (IX+$03),$07 ;
  $FB1E LD (IX+$0C),$07 ;
  $FB22 LD (IX+$0D),$07 ; }
- $FB26 LD (IX+$08),$00 ; {Clear the movement deltas and return.
- $FB2A LD (IX+$09),$00 ;
- $FB2E RET             ; }
-; This entry point is used by the routine at #R$F42A.
+ $FB26 LD (IX+$08),$00 ; {Clear the movement deltas.
+ $FB2A LD (IX+$09),$00 ; }
+ $FB2E RET             ; Return.
+
+; Draw Actor
+;
+; Used by the routine at #R$F45A.
 ; .
-; Draw the actor pointed to by #REGix.
+; Draws the actor pointed to by #REGix.
+;
+; IX Actor data
 @label=Draw_Actor
-*$FB2F LD A,$FF        ; {Write #N$FF to the mask at #R$FB90(#N$FBC5).
- $FB31 LD ($FBC5),A    ; }
- $FB34 LD C,(IX+$00)   ; {Fetch the column, row and width; height #N$01.
- $FB37 LD B,(IX+$01)   ;
- $FB3A LD E,(IX+$04)   ;
- $FB3D LD D,$01        ; }
- $FB3F LD A,(IX+$02)   ; {Increase the width when the fine-X is not #N$07.
- $FB42 CP $07          ;
- $FB44 JR Z,$FB47      ;
- $FB46 INC E           ; }
+c$FB2F LD A,$FF      ; {Write #N$FF to the mask at #R$FBC4(#N$FBC5).
+ $FB31 LD ($FBC5),A  ; }
+ $FB34 LD C,(IX+$00) ; {Fetch the column, row and width; height #N$01.
+ $FB37 LD B,(IX+$01) ;
+ $FB3A LD E,(IX+$04) ;
+ $FB3D LD D,$01      ; }
+ $FB3F LD A,(IX+$02) ; {Increase the width when the fine-X is not #N$07.
+ $FB42 CP $07        ;
+ $FB44 JR Z,$FB47    ;
+ $FB46 INC E         ; }
 @label=Draw_Actor_Skip
-*$FB47 LD A,(IX+$03)   ; {Increase the height when the fine-Y is below
- $FB4A CP $03          ; #N$03.
- $FB4C JR NC,$FB4F     ;
- $FB4E INC D           ; }
+*$FB47 LD A,(IX+$03) ; {Increase the height when the fine-Y is below
+ $FB4A CP $03        ; #N$03.
+ $FB4C JR NC,$FB4F   ;
+ $FB4E INC D         ; }
 @label=Draw_Actor_Branch
-*$FB4F CALL $FA6A      ; Call #R$FA6A.
- $FB52 XOR A           ; {Jump to #R$FB68 if the clipped size is zero.
- $FB53 CP E            ;
- $FB54 JR Z,$FB68      ;
- $FB56 CP D            ;
- $FB57 JR Z,$FB68      ; }
- $FB59 PUSH DE         ; {Call #R$FA5A with the actor colour at that
- $FB5A CALL $F6AA      ; attribute cell.
- $FB5D LD DE,$5800     ;
- $FB60 ADD HL,DE       ;
- $FB61 LD A,(IX+$07)   ;
- $FB64 POP BC          ;
- $FB65 CALL $FA5A      ; }
+*$FB4F CALL $FA6A    ; Call #R$FA6A.
+ $FB52 XOR A         ; {Jump to #R$FB68 if the clipped size is zero.
+ $FB53 CP E          ;
+ $FB54 JR Z,$FB68    ;
+ $FB56 CP D          ;
+ $FB57 JR Z,$FB68    ; }
+ $FB59 PUSH DE       ; {Call #R$FA5A with the actor colour at that
+ $FB5A CALL $F6AA    ; attribute cell.
+ $FB5D LD DE,$5800   ;
+ $FB60 ADD HL,DE     ;
+ $FB61 LD A,(IX+$07) ;
+ $FB64 POP BC        ;
+ $FB65 CALL $FA5A    ; }
 @label=Draw_Actor_Skip2
-*$FB68 LD HL,$6440     ; {Fill #R$6440 with #N$FF for the actor width.
- $FB6B LD DE,$6441     ;
- $FB6E LD (HL),$FF     ;
- $FB70 LD C,(IX+$04)   ;
- $FB73 LD B,$00        ;
- $FB75 LDIR            ; }
- $FB77 XOR A           ; {Write #N$00 after the mask and load the fine-X.
- $FB78 LD (HL),A       ;
- $FB79 LD B,(IX+$02)   ;
- $FB7C INC B           ; }
+*$FB68 LD HL,$6440   ; {Fill #R$6440 with #N$FF for the actor width.
+ $FB6B LD DE,$6441   ;
+ $FB6E LD (HL),$FF   ;
+ $FB70 LD C,(IX+$04) ;
+ $FB73 LD B,$00      ;
+ $FB75 LDIR          ; }
+ $FB77 XOR A         ; {Write #N$00 after the mask and load the fine-X.
+ $FB78 LD (HL),A     ;
+ $FB79 LD B,(IX+$02) ;
+ $FB7C INC B         ; }
 @label=Draw_Actor_Target
-*$FB7D SCF             ; {Build a left-hand mask of (fine-X+#N$01) bits.
- $FB7E RLA             ;
- $FB7F DJNZ $FB7D      ; }
- $FB81 LD DE,$6440     ; {Write the mask to both ends of #R$6440 and jump
- $FB84 LD (DE),A       ; to #R$FB94.
- $FB85 LD L,(IX+$04)   ;
- $FB88 LD H,$00        ;
- $FB8A ADD HL,DE       ;
- $FB8B XOR $FF         ;
- $FB8D LD (HL),A       ;
- $FB8E JR $FB94        ; }
-; This entry point is used by the routine at #R$F42A.
+*$FB7D SCF           ; {Build a left-hand mask of (fine-X+#N$01) bits.
+ $FB7E RLA           ;
+ $FB7F DJNZ $FB7D    ; }
+; Write the mask to both ends of #R$6440.
+ $FB81 LD DE,$6440   ; {Write the mask to *#R$6440.
+ $FB84 LD (DE),A     ; }
+ $FB85 LD L,(IX+$04) ; {Point #REGhl at the other end of #R$6440.
+ $FB88 LD H,$00      ;
+ $FB8A ADD HL,DE     ; }
+ $FB8B XOR %11111111 ; Invert the mask.
+ $FB8D LD (HL),A     ; Write it.
+ $FB8E JR $FB94      ; Jump to #R$FB94.
+
+; Update Actor
+;
+; Used by the routine at #R$F45D.
 ; .
-; Stamp the actor mask onto the display file.
+; Stamps the actor mask onto the display file.
+;
+; IX Actor data
 @label=Update_Actor
-*$FB90 XOR A           ; {Write #N$00 to the mask at #R$FB90(#N$FBC5).
- $FB91 LD ($FBC5),A    ; }
+c$FB90 XOR A          ; {Write #N$00 to the mask at #R$FBC4(#N$FBC5).
+ $FB91 LD ($FBC5),A   ; }
+; This entry point is used by the routine at #R$FB2F.
 @label=Update_Actor_Target
-*$FB94 LD A,$21        ; {Convert the actor column and row into a pixel
- $FB96 SUB (IX+$00)    ; address.
- $FB99 ADD A,A         ;
- $FB9A ADD A,A         ;
- $FB9B ADD A,A         ;
- $FB9C LD C,A          ;
- $FB9D LD A,(IX+$01)   ;
- $FBA0 SUB $03         ;
- $FBA2 ADD A,A         ;
- $FBA3 ADD A,A         ;
- $FBA4 ADD A,A         ;
- $FBA5 ADD A,(IX+$03)  ;
- $FBA8 LD B,A          ; }
- $FBA9 LD E,$04        ; #REGe=#N$04.
+*$FB94 LD A,$21       ; {Convert the actor column and row into a pixel
+ $FB96 SUB (IX+$00)   ; address.
+ $FB99 ADD A,A        ;
+ $FB9A ADD A,A        ;
+ $FB9B ADD A,A        ;
+ $FB9C LD C,A         ;
+ $FB9D LD A,(IX+$01)  ;
+ $FBA0 SUB $03        ;
+ $FBA2 ADD A,A        ;
+ $FBA3 ADD A,A        ;
+ $FBA4 ADD A,A        ;
+ $FBA5 ADD A,(IX+$03) ;
+ $FBA8 LD B,A         ; }
+ $FBA9 LD E,$04       ; #REGe=#N$04.
 @label=Update_Actor_Continue
-*$FBAB PUSH BC         ; {Jump to #R$FBCB if this pixel row is off-screen.
- $FBAC PUSH DE         ;
- $FBAD LD A,B          ;
- $FBAE CP $B0          ;
- $FBB0 JR NC,$FBCB     ; }
- $FBB2 CALL $22AA      ; Call #SKOOLKID$22AA(PIXEL_ADD).
- $FBB5 LD B,(IX+$04)   ; {Increase the copy width when the fine-X is not
- $FBB8 LD A,(IX+$02)   ; #N$07.
- $FBBB CP $07          ;
- $FBBD JR Z,$FBC0      ;
- $FBBF INC B           ; }
+*$FBAB PUSH BC        ; {Jump to #R$FBCB if this pixel row is off-screen.
+ $FBAC PUSH DE        ;
+ $FBAD LD A,B         ;
+ $FBAE CP $B0         ;
+ $FBB0 JR NC,$FBCB    ; }
+ $FBB2 CALL $22AA     ; Call #SKOOLKID$22AA(PIXEL_ADD).
+ $FBB5 LD B,(IX+$04)  ; {Increase the copy width when the fine-X is not
+ $FBB8 LD A,(IX+$02)  ; #N$07.
+ $FBBB CP $07         ;
+ $FBBD JR Z,$FBC0     ;
+ $FBBF INC B          ; }
 @label=Update_Actor_Skip
-*$FBC0 LD DE,$6440     ; #REGde=#R$6440.
+*$FBC0 LD DE,$6440    ; #REGde=#R$6440.
 @label=Update_Actor_Target2
-*$FBC3 LD A,(DE)       ; {Copy one mask byte to the screen (AND is
- $FBC4 AND $FF         ; self-modified).
- $FBC6 LD (HL),A       ;
- $FBC7 INC HL          ;
- $FBC8 INC DE          ;
- $FBC9 DJNZ $FBC3      ; }
+*$FBC3 LD A,(DE)      ; #REGa=*#REGde.
+@label=Update_Actor_Mask
+ $FBC4 AND $FF        ; Merge the mask (self-modified AND).
+ $FBC6 LD (HL),A      ; {Write the byte and loop back to #R$FBC3.
+ $FBC7 INC HL         ;
+ $FBC8 INC DE         ;
+ $FBC9 DJNZ $FBC3     ; }
 @label=Update_Actor_Branch
-*$FBCB POP DE          ; {Move up one pixel row and loop back to #R$FBAB.
- $FBCC POP BC          ;
- $FBCD DEC B           ;
- $FBCE DEC E           ;
- $FBCF JR NZ,$FBAB     ;
- $FBD1 RET             ; }
-; View the equivalent code in #BOOTY$CD14.
+*$FBCB POP DE         ; {Move up one pixel row and loop back to #R$FBAB.
+ $FBCC POP BC         ;
+ $FBCD DEC B          ;
+ $FBCE DEC E          ;
+ $FBCF JR NZ,$FBAB    ;
+ $FBD1 RET            ; }
 
 ; Unused
 u$FBD2 DEFB $00,$00,$00,$00,$00,$00,$00,$00
