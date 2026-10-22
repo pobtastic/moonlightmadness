@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 58334</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="57804.html">57804</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#58334">Map</a></td>
+<td class="next">
+Next: <a href="58476.html">58476</a>
+</td>
+</tr>
+</table>
+<div class="description">58334: Handler: Actors</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Animates the 13-byte records at *<a href="25648.html">ReferenceActors</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Actors</td>
+<td class="address-2"><span id="58334"></span>58334</td>
+<td class="instruction">CALL <a href="56857.html#56982">Build_PlayerMask</a></td>
+<td class="comment-1" rowspan="1">Call <a href="56857.html#56982">Build_PlayerMask</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58337"></span>58337</td>
+<td class="instruction">LD IX,(25648)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25648.html">ReferenceActors</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Actors_Loop</td>
+<td class="address-2"><span id="58341"></span>58341</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="3">Return if the terminator 255 is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58344"></span>58344</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58345"></span>58345</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58346"></span>58346</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="58334.html#58398">Handler_Actors_Next</a> if this actor is inactive.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58348"></span>58348</td>
+<td class="instruction">JR NZ,<a href="58334.html#58398">Handler_Actors_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58350"></span>58350</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="5">Copy <span class="register">IX</span> to <span class="register">IY</span> (using the stack) and test the player.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58352"></span>58352</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58354"></span>58354</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58356"></span>58356</td>
+<td class="instruction">CALL <a href="56069.html#56127">Test_ActorCollision</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58359"></span>58359</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58361"></span>58361</td>
+<td class="instruction">CALL <a href="62506.html#62557">JumpTable_UpdateActor</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62557">JumpTable_UpdateActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58364"></span>58364</td>
+<td class="instruction">BIT 7,(IX+7)</td>
+<td class="comment-1" rowspan="5">Restore the stored row when bit 7 of (IX+7) is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58368"></span>58368</td>
+<td class="instruction">JR Z,<a href="58334.html#58380">Handler_Actors_Commit</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58370"></span>58370</td>
+<td class="instruction">RES 7,(IX+7)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58374"></span>58374</td>
+<td class="instruction">LD A,(IX+11)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58377"></span>58377</td>
+<td class="instruction">LD (IX+1),A</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Actors_Commit</td>
+<td class="address-2"><span id="58380"></span>58380</td>
+<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="6">Store the new position and call <a href="62506.html#62554">JumpTable_DrawActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58383"></span>58383</td>
+<td class="instruction">LD (IX+0),C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58386"></span>58386</td>
+<td class="instruction">LD (IX+1),B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58389"></span>58389</td>
+<td class="instruction">LD (IX+2),E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58392"></span>58392</td>
+<td class="instruction">LD (IX+3),D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58395"></span>58395</td>
+<td class="instruction">CALL <a href="62506.html#62554">JumpTable_DrawActor</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Actors_Next</td>
+<td class="address-2"><span id="58398"></span>58398</td>
+<td class="instruction">LD DE,13</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0013.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58401"></span>58401</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58403"></span>58403</td>
+<td class="instruction">JR <a href="58334.html#58341">Handler_Actors_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="58334.html#58341">Handler_Actors_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58405"></span>58405</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58406"></span>
+<div class="comments">
+<div class="paragraph">
+Lock or reverse an actor after a collision.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Actor_AfterCollision</td>
+<td class="address-2"><span id="58406"></span>58406</td>
+<td class="instruction">CP 2</td>
+<td class="comment-1" rowspan="2">Jump to <a href="58334.html#58422">Actor_Lock</a> if the actor type is 2.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58408"></span>58408</td>
+<td class="instruction">JP Z,<a href="58334.html#58422">Actor_Lock</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58411"></span>58411</td>
+<td class="instruction">CALL <a href="58334.html#58433">Actor_SwapDestination</a></td>
+<td class="comment-1" rowspan="5">Clear the actor deltas and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58414"></span>58414</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58415"></span>58415</td>
+<td class="instruction">LD (IY+8),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58418"></span>58418</td>
+<td class="instruction">LD (IY+9),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58421"></span>58421</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Actor_Lock</td>
+<td class="address-2"><span id="58422"></span>58422</td>
+<td class="instruction">SET 7,(IY+7)</td>
+<td class="comment-1" rowspan="2">Set bit 7 of (IY+7) and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58426"></span>58426</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58427"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="56069.html">Handler_PendulumRooms</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Actor_Reverse</td>
+<td class="address-2"><span id="58427"></span>58427</td>
+<td class="instruction">LD A,(IY+12)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="58334.html#58406">Actor_AfterCollision</a> if (IY+12) is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58430"></span>58430</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58431"></span>58431</td>
+<td class="instruction">JR NZ,<a href="58334.html#58406">Actor_AfterCollision</a></td>
+</tr>
+<tr>
+<td class="asm-label">Actor_SwapDestination</td>
+<td class="address-2"><span id="58433"></span>58433</td>
+<td class="instruction">LD A,(IY+5)</td>
+<td class="comment-1" rowspan="4">Swap (IY+5) with (IY+10).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58436"></span>58436</td>
+<td class="instruction">LD C,(IY+10)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58439"></span>58439</td>
+<td class="instruction">LD (IY+5),C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58442"></span>58442</td>
+<td class="instruction">LD (IY+10),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58445"></span>58445</td>
+<td class="instruction">LD A,(IY+6)</td>
+<td class="comment-1" rowspan="4">Swap (IY+6) with (IY+11).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58448"></span>58448</td>
+<td class="instruction">LD C,(IY+11)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58451"></span>58451</td>
+<td class="instruction">LD (IY+11),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58454"></span>58454</td>
+<td class="instruction">LD (IY+6),C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58457"></span>58457</td>
+<td class="instruction">LD A,(IY+8)</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=(IY+8)-1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58460"></span>58460</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58461"></span>58461</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert every bit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58463"></span>58463</td>
+<td class="instruction">LD (IY+8),A</td>
+<td class="comment-1" rowspan="1">Write the new horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58466"></span>58466</td>
+<td class="instruction">LD A,(IY+9)</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=(IY+9)-1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58469"></span>58469</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58470"></span>58470</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert every bit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58472"></span>58472</td>
+<td class="instruction">LD (IY+9),A</td>
+<td class="comment-1" rowspan="2">Write the new vertical delta and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58475"></span>58475</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="57804.html">57804</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#58334">Map</a></td>
+<td class="next">
+Next: <a href="58476.html">58476</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/E3DE.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

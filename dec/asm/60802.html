@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 60802</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="60785.html">60785</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#60802">Map</a></td>
+<td class="next">
+Next: <a href="60826.html">60826</a>
+</td>
+</tr>
+</table>
+<div class="description">60802: Draw Furniture</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="59906.html">Unpack_Rooms</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_FurnitureItem</td>
+<td class="address-2"><span id="60802"></span>60802</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="3">Call <a href="62506.html#62509">JumpTable_SetPrintPosition</a> at the furniture column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60805"></span>60805</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60808"></span>60808</td>
+<td class="instruction">CALL <a href="62506.html#62509">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60811"></span>60811</td>
+<td class="instruction">LD A,(IX+2)</td>
+<td class="comment-1" rowspan="2">Write the furniture colour to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60814"></span>60814</td>
+<td class="instruction">LD (23695),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60817"></span>60817</td>
+<td class="instruction">LD A,(IX+3)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="62506.html#62533">JumpTable_PrintSprite</a> with the stored glyph and size 4 by 3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60820"></span>60820</td>
+<td class="instruction">LD DE,1027</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60823"></span>60823</td>
+<td class="instruction">JP <a href="62506.html#62533">JumpTable_PrintSprite</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="60785.html">60785</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#60802">Map</a></td>
+<td class="next">
+Next: <a href="60826.html">60826</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/ED82.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

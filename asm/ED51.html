@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at ED51</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="ED45.html">ED45</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ed51">Map</a></td>
+<td class="next">
+Next: <a href="ED71.html">ED71</a>
+</td>
+</tr>
+</table>
+<div class="description">ED51: Clear Room Buffers</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EA02.html">Unpack_Rooms</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Clear_RoomBuffers</td>
+<td class="address-2"><span id="ed51"></span>ED51</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed52"></span>ED52</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 00 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8D.html">ATTR_P</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed53"></span>ED53</td>
+<td class="instruction">LD ($5C8D),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed56"></span>ED56</td>
+<td class="instruction">LD B,$18</td>
+<td class="comment-1" rowspan="2">Clear the bottom 18 lines using <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0E44.html">CL_LINE</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed58"></span>ED58</td>
+<td class="instruction">CALL $0E44</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed5b"></span>ED5B</td>
+<td class="instruction">LD HL,$5DCE</td>
+<td class="comment-1" rowspan="5">Fill <a href="5DCE.html">Buffer_RoomTiles</a> with C8.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed5e"></span>ED5E</td>
+<td class="instruction">LD DE,$5DCF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed61"></span>ED61</td>
+<td class="instruction">LD (HL),$C8</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed63"></span>ED63</td>
+<td class="instruction">LD BC,$0320</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed66"></span>ED66</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed68"></span>ED68</td>
+<td class="instruction">LD (HL),$00</td>
+<td class="comment-1" rowspan="3">Fill <a href="60EE.html">Buffer_RoomAttributes</a> with 00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed6a"></span>ED6A</td>
+<td class="instruction">LD BC,$031F</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed6d"></span>ED6D</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed6f"></span>ED6F</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="2">Restore <span class="register">AF</span> from the stack and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed70"></span>ED70</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="ED45.html">ED45</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ed51">Map</a></td>
+<td class="next">
+Next: <a href="ED71.html">ED71</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/60753.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

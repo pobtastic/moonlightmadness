@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at D894</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D877.html">D877</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d894">Map</a></td>
+<td class="next">
+Next: <a href="D904.html">D904</a>
+</td>
+</tr>
+</table>
+<div class="description">D894: Handler: Moving Objects</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="D7A2.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Animates the 13-byte records at *<a href="642A.html">ReferenceMovingObjects</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects</td>
+<td class="address-2"><span id="d894"></span>D894</td>
+<td class="instruction">LD IX,($642A)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="642A.html">ReferenceMovingObjects</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Loop</td>
+<td class="address-2"><span id="d898"></span>D898</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D894.html#d8fc">Handler_MovingObjects_Done</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d89b"></span>D89B</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d89d"></span>D89D</td>
+<td class="instruction">JR Z,<a href="D894.html#d8fc">Handler_MovingObjects_Done</a></td>
+<td class="comment-1" rowspan="2">Jump to <a href="D894.html#d8f5">Handler_MovingObjects_Next</a> if this object is inactive.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d89f"></span>D89F</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8a1"></span>D8A1</td>
+<td class="instruction">JR NZ,<a href="D894.html#d8f5">Handler_MovingObjects_Next</a></td>
+<td class="comment-1" rowspan="4">Deactivate the object if its timer is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8a3"></span>D8A3</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8a4"></span>D8A4</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8a7"></span>D8A7</td>
+<td class="instruction">JR NZ,<a href="D894.html#d8af">Handler_MovingObjects_Draw</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8a9"></span>D8A9</td>
+<td class="instruction">SET 7,(IX+$00)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D894.html#d8f5">Handler_MovingObjects_Next</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8ad"></span>D8AD</td>
+<td class="instruction">JR <a href="D894.html#d8f5">Handler_MovingObjects_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Draw</td>
+<td class="address-2"><span id="d8af"></span>D8AF</td>
+<td class="instruction">LD HL,$7C70</td>
+<td class="comment-1" rowspan="4">Use <a href="7C70.html">Buffer_ActiveFont</a>, or <a href="9070.html">Graphics_TileFont</a> when the stored font ID differs.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8b2"></span>D8B2</td>
+<td class="instruction">CP (IX+$12)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8b5"></span>D8B5</td>
+<td class="instruction">JR Z,<a href="D894.html#d8ba">Handler_MovingObjects_Font</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8b7"></span>D8B7</td>
+<td class="instruction">LD HL,$9070</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Font</td>
+<td class="address-2"><span id="d8ba"></span>D8BA</td>
+<td class="instruction">LD ($5C36),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8bd"></span>D8BD</td>
+<td class="instruction">LD C,(IX+$10)</td>
+<td class="comment-1" rowspan="3">Write the object's clip window to *<a href="6419.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8c0"></span>D8C0</td>
+<td class="instruction">LD B,(IX+$11)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8c3"></span>D8C3</td>
+<td class="instruction">LD ($6419),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8c7"></span>D8C7</td>
+<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8ca"></span>D8CA</td>
+<td class="instruction">LD A,(IX+$09)</td>
+<td class="comment-1" rowspan="4">Compare the moving edge against the stored limit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8cd"></span>D8CD</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8ce"></span>D8CE</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8cf"></span>D8CF</td>
+<td class="instruction">JR NZ,<a href="D894.html#d8d2">Handler_MovingObjects_LimitHit</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8d1"></span>D8D1</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D894.html#d8e9">Handler_MovingObjects_Update</a> if they differ.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_LimitHit</td>
+<td class="address-2"><span id="d8d2"></span>D8D2</td>
+<td class="instruction">CP (IX+$0E)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8d5"></span>D8D5</td>
+<td class="instruction">JR NZ,<a href="D894.html#d8e9">Handler_MovingObjects_Update</a></td>
+<td class="comment-1" rowspan="1">Call <a href="DC26.html#dc37">Reverse_Direction</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8d7"></span>D8D7</td>
+<td class="instruction">CALL <a href="DC26.html#dc37">Reverse_Direction</a></td>
+<td class="comment-1" rowspan="6">Swap the two limit bytes and call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a> again.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8da"></span>D8DA</td>
+<td class="instruction">LD A,(IX+$0E)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8dd"></span>D8DD</td>
+<td class="instruction">LD B,(IX+$0F)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8e0"></span>D8E0</td>
+<td class="instruction">LD (IX+$0F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8e3"></span>D8E3</td>
+<td class="instruction">LD (IX+$0E),B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8e6"></span>D8E6</td>
+<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Update</td>
+<td class="address-2"><span id="d8e9"></span>D8E9</td>
+<td class="instruction">CALL <a href="F424.html">JumpTable_StorePosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F424.html">JumpTable_StorePosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8ec"></span>D8EC</td>
+<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f442">JumpTable_MoveEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8ef"></span>D8EF</td>
+<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8f2"></span>D8F2</td>
+<td class="instruction">CALL <a href="F42A.html#f44e">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44e">JumpTable_EraseEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Next</td>
+<td class="address-2"><span id="d8f5"></span>D8F5</td>
+<td class="instruction">LD DE,$0013</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0013.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8f8"></span>D8F8</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8fa"></span>D8FA</td>
+<td class="instruction">JR <a href="D894.html#d898">Handler_MovingObjects_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="D894.html#d898">Handler_MovingObjects_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Done</td>
+<td class="address-2"><span id="d8fc"></span>D8FC</td>
+<td class="instruction">LD BC,$0218</td>
+<td class="comment-1" rowspan="2">Write 0218 to *<a href="6419.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d8ff"></span>D8FF</td>
+<td class="instruction">LD ($6419),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d903"></span>D903</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D877.html">D877</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d894">Map</a></td>
+<td class="next">
+Next: <a href="D904.html">D904</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/55444.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

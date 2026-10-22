@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at FEFE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="FBD2.html">FBD2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#fefe">Map</a></td>
+<td class="next">
+Next: <a href="FF01.html">FF01</a>
+</td>
+</tr>
+</table>
+<div class="description">FEFE: Alias: Interrupt Jump Dispatcher</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+IM 02 lands at this address. <a href="D5AC.html">Initialise_Game</a> writes a jump to <a href="E46C.html">Handler_Interrupts</a> here.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">AliasInterruptRedirect</td>
+<td class="address-2"><span id="fefe"></span>FEFE</td>
+<td class="instruction">NOP</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E46C.html">Handler_Interrupts</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="feff"></span>FEFF</td>
+<td class="instruction">NOP</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ff00"></span>FF00</td>
+<td class="instruction">NOP</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/asm/FEFE.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="FBD2.html">FBD2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#fefe">Map</a></td>
+<td class="next">
+Next: <a href="FF01.html">FF01</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/65278.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

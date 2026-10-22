@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 55141</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="54700.html">54700</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55141">Map</a></td>
+<td class="next">
+Next: <a href="55202.html">55202</a>
+</td>
+</tr>
+</table>
+<div class="description">55141: Game Loop</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="54700.html">Initialise_Game</a> and <a href="55202.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Watches demo input and *<a href="25712.html">PauseTimer</a>. Jumps to <a href="55202.html">Dispatch_Handlers</a> while the game is active or the demo timer is running, else picks a room and jumps to <a href="54700.html#55096">Change_Room</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Game_Loop</td>
+<td class="address-2"><span id="55141"></span>55141</td>
+<td class="instruction">LD A,(25711)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55202.html">Dispatch_Handlers</a> if *<a href="25711.html">GameActiveFlag</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55144"></span>55144</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55145"></span>55145</td>
+<td class="instruction">JR Z,<a href="55202.html">Dispatch_Handlers</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55147"></span>55147</td>
+<td class="instruction">CALL <a href="55295.html#55334">Read_Kempston</a></td>
+<td class="comment-1" rowspan="1">Call <a href="55295.html#55334">Read_Kempston</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55150"></span>55150</td>
+<td class="instruction">JR NZ,<a href="55141.html#55157">Demo_Timeout</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55141.html#55157">Demo_Timeout</a> if the port is unstable.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55152"></span>55152</td>
+<td class="instruction">CP 16</td>
+<td class="comment-1" rowspan="2">Jump to <a href="54700.html#54741">Reset_Introduction</a> if fire was pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55154"></span>55154</td>
+<td class="instruction">JP Z,<a href="54700.html#54741">Reset_Introduction</a></td>
+</tr>
+<tr>
+<td class="asm-label">Demo_Timeout</td>
+<td class="address-2"><span id="55157"></span>55157</td>
+<td class="instruction">CALL 654</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/654.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55160"></span>55160</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="3">Jump to <a href="54700.html#54741">Reset_Introduction</a> if any key is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55161"></span>55161</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55162"></span>55162</td>
+<td class="instruction">JP NZ,<a href="54700.html#54741">Reset_Introduction</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55165"></span>55165</td>
+<td class="instruction">LD BC,(25712)</td>
+<td class="comment-1" rowspan="3">Decrease *<a href="25712.html">PauseTimer</a> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55169"></span>55169</td>
+<td class="instruction">DEC BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55170"></span>55170</td>
+<td class="instruction">LD (25712),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55174"></span>55174</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55202.html">Dispatch_Handlers</a> until the timer is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55175"></span>55175</td>
+<td class="instruction">OR C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55176"></span>55176</td>
+<td class="instruction">JR NZ,<a href="55202.html">Dispatch_Handlers</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55178"></span>55178</td>
+<td class="instruction">LD A,(55432)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="54700.html#54741">Reset_Introduction</a> if *<a href="55415.html#55432">Demo_RoomCount</a> is 1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55181"></span>55181</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55182"></span>55182</td>
+<td class="instruction">JP Z,<a href="54700.html#54741">Reset_Introduction</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55185"></span>55185</td>
+<td class="instruction">LD (55432),A</td>
+<td class="comment-1" rowspan="1">Write the decreased count back to *<a href="55415.html#55432">Demo_RoomCount</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55188"></span>55188</td>
+<td class="instruction">CALL <a href="62506.html#62515">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62515">JumpTable_GetRandomNumber</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55191"></span>55191</td>
+<td class="instruction">AND %00001111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55193"></span>55193</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1">Copy that room nibble into <span class="register">E</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55194"></span>55194</td>
+<td class="instruction">CALL <a href="62506.html#62515">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62515">JumpTable_GetRandomNumber</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55197"></span>55197</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55199"></span>55199</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-1" rowspan="1">Add the two nibbles together.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55200"></span>55200</td>
+<td class="instruction">JR <a href="54700.html#55096">Change_Room</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="54700.html#55096">Change_Room</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="54700.html">54700</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55141">Map</a></td>
+<td class="next">
+Next: <a href="55202.html">55202</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/D765.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

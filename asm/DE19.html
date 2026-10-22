@@ -1,0 +1,2633 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at DE19</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="DD97.html">DD97</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#de19">Map</a></td>
+<td class="next">
+Next: <a href="E1CC.html">E1CC</a>
+</td>
+</tr>
+</table>
+<div class="description">DE19: Handler: Combination</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="D7A2.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Prints the four <a href="64C1.html">CollectionSlots</a> digits on room 00.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Combination</td>
+<td class="address-2"><span id="de19"></span>DE19</td>
+<td class="instruction">LD A,($647D)</td>
+<td class="comment-1" rowspan="2">Return if *<a href="647D.html">GameCompleteFlag</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de1c"></span>DE1C</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de1d"></span>DE1D</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="2">Return if *<a href="64A2.html">CurrentRoom</a> is not zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de1e"></span>DE1E</td>
+<td class="instruction">LD A,($64A2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de21"></span>DE21</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="4">Write 3C00 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de22"></span>DE22</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de23"></span>DE23</td>
+<td class="instruction">LD HL,$3C00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de26"></span>DE26</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de29"></span>DE29</td>
+<td class="instruction">LD A,$17</td>
+<td class="comment-1" rowspan="2">Write WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de2b"></span>DE2B</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de2e"></span>DE2E</td>
+<td class="instruction">LD BC,$1413</td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at column 14 row 13.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de31"></span>DE31</td>
+<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="64C1.html">CollectionSlots</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de34"></span>DE34</td>
+<td class="instruction">LD HL,$64C1</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=04.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de37"></span>DE37</td>
+<td class="instruction">LD B,$04</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Combination_Loop</td>
+<td class="address-2"><span id="de39"></span>DE39</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Print *(<span class="register">HL</span>) as a decimal digit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de3a"></span>DE3A</td>
+<td class="instruction">ADD A,$30</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de3c"></span>DE3C</td>
+<td class="instruction">CALL <a href="F42A.html#f436">JumpTable_PrintCharacter</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de3f"></span>DE3F</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Increase <span class="register">HL</span> and loop back to <a href="DE19.html#de39">Handler_Combination_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de40"></span>DE40</td>
+<td class="instruction">DJNZ <a href="DE19.html#de39">Handler_Combination_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de42"></span>DE42</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="de43"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Probe the three tiles above the player for a solid.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Probe_Ceiling</td>
+<td class="address-2"><span id="de43"></span>DE43</td>
+<td class="instruction">LD A,(IX+$03)</td>
+<td class="comment-1" rowspan="8">Keep the player's fine-Y in range 00-03.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de46"></span>DE46</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de47"></span>DE47</td>
+<td class="instruction">AND $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de49"></span>DE49</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de4b"></span>DE4B</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de4c"></span>DE4C</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de4d"></span>DE4D</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de4e"></span>DE4E</td>
+<td class="instruction">SUB C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de4f"></span>DE4F</td>
+<td class="instruction">LD ($DE83),A</td>
+<td class="comment-1" rowspan="10">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> for the cell above the player.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de52"></span>DE52</td>
+<td class="instruction">LD C,(IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de55"></span>DE55</td>
+<td class="instruction">LD B,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de58"></span>DE58</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de59"></span>DE59</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de5a"></span>DE5A</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de5b"></span>DE5B</td>
+<td class="instruction">LD A,$07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de5d"></span>DE5D</td>
+<td class="instruction">CP (IX+$03)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de60"></span>DE60</td>
+<td class="instruction">JR Z,<a href="DE19.html#de63">Probe_Ceiling_Ready</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de62"></span>DE62</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label">Probe_Ceiling_Ready</td>
+<td class="address-2"><span id="de63"></span>DE63</td>
+<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="4">Point <span class="register">HL</span> at that <a href="5DCE.html">Buffer_RoomTiles</a> tile and <span class="register">DE</span> at <a href="643A.html">Player_Mask</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de66"></span>DE66</td>
+<td class="instruction">LD HL,($6412)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de69"></span>DE69</td>
+<td class="instruction">LD DE,$5DCE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de6c"></span>DE6C</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de6d"></span>DE6D</td>
+<td class="instruction">LD DE,$643A</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="643A.html">Player_Mask</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de70"></span>DE70</td>
+<td class="instruction">LD B,$03</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=03.</td>
+</tr>
+<tr>
+<td class="asm-label">Probe_Ceiling_Loop</td>
+<td class="address-2"><span id="de72"></span>DE72</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#de85">Probe_Ceiling_Next</a> if this mask byte is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de73"></span>DE73</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de74"></span>DE74</td>
+<td class="instruction">JR Z,<a href="DE19.html#de85">Probe_Ceiling_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de76"></span>DE76</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="5">Stop the jump if the tile is solid (10 or higher).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de77"></span>DE77</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de79"></span>DE79</td>
+<td class="instruction">JR NC,<a href="DE19.html#de85">Probe_Ceiling_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de7b"></span>DE7B</td>
+<td class="instruction">LD A,$02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de7d"></span>DE7D</td>
+<td class="instruction">LD ($6434),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de80"></span>DE80</td>
+<td class="instruction">LD (IX+$09),$00</td>
+<td class="comment-1" rowspan="2">Clear (IX+09) and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de84"></span>DE84</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Probe_Ceiling_Next</td>
+<td class="address-2"><span id="de85"></span>DE85</td>
+<td class="instruction">INC DE</td>
+<td class="comment-1" rowspan="3">Increase both pointers and loop back to <a href="DE19.html#de72">Probe_Ceiling_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de86"></span>DE86</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de87"></span>DE87</td>
+<td class="instruction">DJNZ <a href="DE19.html#de72">Probe_Ceiling_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de89"></span>DE89</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="de8a"></span>
+<div class="comments">
+<div class="paragraph">
+Mirror the <span class="register">DE</span> bitmask into <span class="register">E</span>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Mirror_Mask</td>
+<td class="address-2"><span id="de8a"></span>DE8A</td>
+<td class="instruction">LD B,$08</td>
+<td class="comment-1" rowspan="6">Reverse the eight bits of <span class="register">D</span> into <span class="register">E</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de8c"></span>DE8C</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label">Mirror_Mask_Loop</td>
+<td class="address-2"><span id="de8d"></span>DE8D</td>
+<td class="instruction">RR D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de8f"></span>DE8F</td>
+<td class="instruction">RL E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de91"></span>DE91</td>
+<td class="instruction">DJNZ <a href="DE19.html#de8d">Mirror_Mask_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de93"></span>DE93</td>
+<td class="instruction">RR D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de95"></span>DE95</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="de96"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="E1CC.html">Handler_Player</a> and <a href="E3DE.html">Handler_Actors</a>.
+</div>
+<div class="paragraph">
+Build the player's shifted collision mask.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Build_PlayerMask</td>
+<td class="address-2"><span id="de96"></span>DE96</td>
+<td class="instruction">LD DE,($64AA)</td>
+<td class="comment-1" rowspan="11"><span class="register">HL</span>=<a href="B5D8.html">Data_PlayerMasks</a>+(*<a href="64A4.html#64aa">Player_SpriteFrame</a>)*08.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de9a"></span>DE9A</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de9b"></span>DE9B</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de9c"></span>DE9C</td>
+<td class="instruction">SLA E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="de9e"></span>DE9E</td>
+<td class="instruction">RL D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dea0"></span>DEA0</td>
+<td class="instruction">SLA E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dea2"></span>DEA2</td>
+<td class="instruction">RL D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dea4"></span>DEA4</td>
+<td class="instruction">SLA E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dea6"></span>DEA6</td>
+<td class="instruction">RL D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dea8"></span>DEA8</td>
+<td class="instruction">LD HL,$B5D8</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deab"></span>DEAB</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deac"></span>DEAC</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="8">Mirror the mask when the player is facing left.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dead"></span>DEAD</td>
+<td class="instruction">LD DE,$0008</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deb0"></span>DEB0</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deb1"></span>DEB1</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deb2"></span>DEB2</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deb3"></span>DEB3</td>
+<td class="instruction">LD A,($64AB)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deb6"></span>DEB6</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deb8"></span>DEB8</td>
+<td class="instruction">CALL NZ,<a href="DE19.html#de8a">Mirror_Mask</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="debb"></span>DEBB</td>
+<td class="instruction">LD BC,($64A5)</td>
+<td class="comment-1" rowspan="9">Shift the mask down by the player's fine-Y.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="debf"></span>DEBF</td>
+<td class="instruction">INC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dec0"></span>DEC0</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label">Build_PlayerMask_Shift</td>
+<td class="address-2"><span id="dec1"></span>DEC1</td>
+<td class="instruction">SLA D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dec3"></span>DEC3</td>
+<td class="instruction">RL E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dec5"></span>DEC5</td>
+<td class="instruction">RL A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dec7"></span>DEC7</td>
+<td class="instruction">DJNZ <a href="DE19.html#dec1">Build_PlayerMask_Shift</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dec9"></span>DEC9</td>
+<td class="instruction">LD ($643A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="decc"></span>DECC</td>
+<td class="instruction">LD ($643B),DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ded0"></span>DED0</td>
+<td class="instruction">LD A,($64A4)</td>
+<td class="comment-1" rowspan="14">Walk left from the player column until a set bit is found.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ded3"></span>DED3</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ded4"></span>DED4</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ded5"></span>DED5</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ded6"></span>DED6</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ded7"></span>DED7</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ded8"></span>DED8</td>
+<td class="instruction">LD B,$18</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deda"></span>DEDA</td>
+<td class="instruction">LD A,($643A)</td>
+</tr>
+<tr>
+<td class="asm-label">Build_PlayerMask_Scan</td>
+<td class="address-2"><span id="dedd"></span>DEDD</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dede"></span>DEDE</td>
+<td class="instruction">SLA D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dee0"></span>DEE0</td>
+<td class="instruction">RL E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dee2"></span>DEE2</td>
+<td class="instruction">RLA</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dee3"></span>DEE3</td>
+<td class="instruction">JR C,<a href="DE19.html#deef">Build_PlayerMask_Width</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dee5"></span>DEE5</td>
+<td class="instruction">DJNZ <a href="DE19.html#dedd">Build_PlayerMask_Scan</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dee7"></span>DEE7</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="4">Clear *<a href="6448.html">Player_Footprint</a> and return if none is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dee8"></span>DEE8</td>
+<td class="instruction">LD ($6448),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deeb"></span>DEEB</td>
+<td class="instruction">LD ($6449),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deee"></span>DEEE</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Build_PlayerMask_Width</td>
+<td class="address-2"><span id="deef"></span>DEEF</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="5">Count the run of set bits into *<a href="6448.html">Player_Footprint</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Build_PlayerMask_Count</td>
+<td class="address-2"><span id="def1"></span>DEF1</td>
+<td class="instruction">SLA A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="def3"></span>DEF3</td>
+<td class="instruction">INC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="def4"></span>DEF4</td>
+<td class="instruction">JR C,<a href="DE19.html#def1">Build_PlayerMask_Count</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="def6"></span>DEF6</td>
+<td class="instruction">LD ($6448),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="defa"></span>DEFA</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="defb"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Award points and flash the player after a successful action. <audio controls="" src="../audio/action.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/action.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Award_Action</td>
+<td class="address-2"><span id="defb"></span>DEFB</td>
+<td class="instruction">LD A,($6489)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="6489.html">ActionTimer</a> is already running.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="defe"></span>DEFE</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="deff"></span>DEFF</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df00"></span>DF00</td>
+<td class="instruction">LD BC,$0096</td>
+<td class="comment-1" rowspan="3">Call <a href="E46C.html#e4e1">Sound_Square</a> (score sound).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df03"></span>DF03</td>
+<td class="instruction">LD DE,$0064</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df06"></span>DF06</td>
+<td class="instruction">CALL <a href="E46C.html#e4e1">Sound_Square</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df09"></span>DF09</td>
+<td class="instruction">LD BC,$0001</td>
+<td class="comment-1" rowspan="3">Call <a href="E46C.html#e501">Sound_Pickup</a> (pickup sound).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df0c"></span>DF0C</td>
+<td class="instruction">LD DE,$0064</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df0f"></span>DF0F</td>
+<td class="instruction">CALL <a href="E46C.html#e501">Sound_Pickup</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df12"></span>DF12</td>
+<td class="instruction">LD A,$12</td>
+<td class="comment-1" rowspan="2">Write 12 to *<a href="6489.html">ActionTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df14"></span>DF14</td>
+<td class="instruction">LD ($6489),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df17"></span>DF17</td>
+<td class="instruction">LD A,($64AB)</td>
+<td class="comment-1" rowspan="4">Set the player flash bits in *<a href="64A4.html#64ab">Player_Facing</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df1a"></span>DF1A</td>
+<td class="instruction">AND $80</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df1c"></span>DF1C</td>
+<td class="instruction">OR $42</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df1e"></span>DF1E</td>
+<td class="instruction">LD ($64AB),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df21"></span>DF21</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="df22"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="D7FF.html">Handler_Housekeeping</a>.
+</div>
+<div class="paragraph">
+Lose a life and restart the room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Lose_Life</td>
+<td class="address-2"><span id="df22"></span>DF22</td>
+<td class="instruction">LD A,($649F)</td>
+<td class="comment-1" rowspan="6">Force any pending event to fire first.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df25"></span>DF25</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df26"></span>DF26</td>
+<td class="instruction">JR Z,<a href="DE19.html#df30">Lose_Life_Apply</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df28"></span>DF28</td>
+<td class="instruction">LD A,$01</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df2a"></span>DF2A</td>
+<td class="instruction">LD ($649F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df2d"></span>DF2D</td>
+<td class="instruction">CALL <a href="DC26.html">Handler_EventTimer</a></td>
+</tr>
+<tr>
+<td class="asm-label">Lose_Life_Apply</td>
+<td class="address-2"><span id="df30"></span>DF30</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df31"></span>DF31</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Write 01 to *<a href="6411.html">RestartRoomFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df33"></span>DF33</td>
+<td class="instruction">LD ($6411),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df36"></span>DF36</td>
+<td class="instruction">LD A,($64B4)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D5AC.html#d5d5">Reset_Introduction</a> if *<a href="64B4.html">Player_Lives</a> is 01.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df39"></span>DF39</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df3a"></span>DF3A</td>
+<td class="instruction">JP Z,<a href="D5AC.html#d5d5">Reset_Introduction</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df3d"></span>DF3D</td>
+<td class="instruction">LD ($64B4),A</td>
+<td class="comment-1" rowspan="1">Decrease *<a href="64B4.html">Player_Lives</a> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df40"></span>DF40</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D5AC.html#d738">Change_Room</a> with <span class="register">A</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df41"></span>DF41</td>
+<td class="instruction">JP <a href="D5AC.html#d738">Change_Room</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="df44"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="D7FF.html">Handler_Housekeeping</a> and <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Walk left, or start a left-facing walk.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_MoveLeft</td>
+<td class="address-2"><span id="df44"></span>DF44</td>
+<td class="instruction">BIT 7,(IX+$07)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#df53">Player_MoveLeft_Step</a> if already facing left.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df48"></span>DF48</td>
+<td class="instruction">JR NZ,<a href="DE19.html#df53">Player_MoveLeft_Step</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df4a"></span>DF4A</td>
+<td class="instruction">SET 7,(IX+$07)</td>
+<td class="comment-1" rowspan="2">Face left and set frame 60.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df4e"></span>DF4E</td>
+<td class="instruction">LD (IX+$06),$60</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df52"></span>DF52</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label">Player_MoveLeft_Step</td>
+<td class="address-2"><span id="df53"></span>DF53</td>
+<td class="instruction">LD A,(IX+$06)</td>
+<td class="comment-1" rowspan="6">Advance the walk frame, wrapping at 30.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df56"></span>DF56</td>
+<td class="instruction">ADD A,$06</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df58"></span>DF58</td>
+<td class="instruction">CP $30</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df5a"></span>DF5A</td>
+<td class="instruction">JR C,<a href="DE19.html#df5d">Player_MoveLeft_StoreFrame</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df5c"></span>DF5C</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label">Player_MoveLeft_StoreFrame</td>
+<td class="address-2"><span id="df5d"></span>DF5D</td>
+<td class="instruction">LD (IX+$06),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df60"></span>DF60</td>
+<td class="instruction">LD A,(IX+$08)</td>
+<td class="comment-1" rowspan="3">Increase the horizontal delta by 02.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df63"></span>DF63</td>
+<td class="instruction">ADD A,$02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df65"></span>DF65</td>
+<td class="instruction">LD (IX+$08),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df68"></span>DF68</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="df69"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="D7FF.html">Handler_Housekeeping</a> and <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Walk right, or start a right-facing walk.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_MoveRight</td>
+<td class="address-2"><span id="df69"></span>DF69</td>
+<td class="instruction">BIT 7,(IX+$07)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#df78">Player_MoveRight_Step</a> if already facing right.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df6d"></span>DF6D</td>
+<td class="instruction">JR Z,<a href="DE19.html#df78">Player_MoveRight_Step</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df6f"></span>DF6F</td>
+<td class="instruction">LD (IX+$06),$60</td>
+<td class="comment-1" rowspan="2">Face right and set frame 60.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df73"></span>DF73</td>
+<td class="instruction">RES 7,(IX+$07)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df77"></span>DF77</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label">Player_MoveRight_Step</td>
+<td class="address-2"><span id="df78"></span>DF78</td>
+<td class="instruction">LD A,(IX+$06)</td>
+<td class="comment-1" rowspan="6">Advance the walk frame, wrapping at 30.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df7b"></span>DF7B</td>
+<td class="instruction">ADD A,$06</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df7d"></span>DF7D</td>
+<td class="instruction">CP $30</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df7f"></span>DF7F</td>
+<td class="instruction">JR C,<a href="DE19.html#df82">Player_MoveRight_StoreFrame</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df81"></span>DF81</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label">Player_MoveRight_StoreFrame</td>
+<td class="address-2"><span id="df82"></span>DF82</td>
+<td class="instruction">LD (IX+$06),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df85"></span>DF85</td>
+<td class="instruction">LD A,(IX+$08)</td>
+<td class="comment-1" rowspan="3">Decrease the horizontal delta by 02.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df88"></span>DF88</td>
+<td class="instruction">SUB $02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df8a"></span>DF8A</td>
+<td class="instruction">LD (IX+$08),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df8d"></span>DF8D</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="df8e"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="D7FF.html">Handler_Housekeeping</a> and <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Fire / use the furniture in front of the player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action</td>
+<td class="address-2"><span id="df8e"></span>DF8E</td>
+<td class="instruction">LD HL,($6420)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="6420.html">ReferenceFurniture</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_Loop</td>
+<td class="address-2"><span id="df91"></span>DF91</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#dfc8">Player_Action_Doors</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df92"></span>DF92</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df94"></span>DF94</td>
+<td class="instruction">JR Z,<a href="DE19.html#dfc8">Player_Action_Doors</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df96"></span>DF96</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#dfc2">Player_Action_Next</a> if this record is inactive.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df98"></span>DF98</td>
+<td class="instruction">JR NZ,<a href="DE19.html#dfc2">Player_Action_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df9a"></span>DF9A</td>
+<td class="instruction">CP (IX+$00)</td>
+<td class="comment-1" rowspan="8">Jump to <a href="DE19.html#dfc2">Player_Action_Next</a> unless it matches the player cell.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df9d"></span>DF9D</td>
+<td class="instruction">JR NZ,<a href="DE19.html#dfc2">Player_Action_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="df9f"></span>DF9F</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfa0"></span>DFA0</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfa1"></span>DFA1</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfa2"></span>DFA2</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfa3"></span>DFA3</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfa6"></span>DFA6</td>
+<td class="instruction">JR NZ,<a href="DE19.html#dfc2">Player_Action_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfa8"></span>DFA8</td>
+<td class="instruction">LD A,($649F)</td>
+<td class="comment-1" rowspan="8">Fire any pending event before using this furniture.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfab"></span>DFAB</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfac"></span>DFAC</td>
+<td class="instruction">JR Z,<a href="DE19.html#dfb8">Player_Action_Use</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfae"></span>DFAE</td>
+<td class="instruction">LD A,$01</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfb0"></span>DFB0</td>
+<td class="instruction">LD ($649F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfb3"></span>DFB3</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfb4"></span>DFB4</td>
+<td class="instruction">CALL <a href="DC26.html">Handler_EventTimer</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfb7"></span>DFB7</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_Use</td>
+<td class="address-2"><span id="dfb8"></span>DFB8</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="8">Jump to <a href="D5AC.html#d738">Change_Room</a> with the furniture event ID.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfb9"></span>DFB9</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfba"></span>DFBA</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfbb"></span>DFBB</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfbc"></span>DFBC</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfbd"></span>DFBD</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfbe"></span>DFBE</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfbf"></span>DFBF</td>
+<td class="instruction">JP <a href="D5AC.html#d738">Change_Room</a></td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_Next</td>
+<td class="address-2"><span id="dfc2"></span>DFC2</td>
+<td class="instruction">LD DE,$0005</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>+=0005.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfc5"></span>DFC5</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfc6"></span>DFC6</td>
+<td class="instruction">JR <a href="DE19.html#df91">Player_Action_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DE19.html#df91">Player_Action_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_Doors</td>
+<td class="address-2"><span id="dfc8"></span>DFC8</td>
+<td class="instruction">LD A,($649F)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="649F.html">EventTimer</a> is running.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfcb"></span>DFCB</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfcc"></span>DFCC</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfcd"></span>DFCD</td>
+<td class="instruction">LD HL,($6422)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="6422.html">ReferenceDoors</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_DoorLoop</td>
+<td class="address-2"><span id="dfd0"></span>DFD0</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Return if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfd1"></span>DFD1</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfd3"></span>DFD3</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfd4"></span>DFD4</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e00c">Player_Action_DoorNext</a> if this door is inactive.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfd6"></span>DFD6</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e00c">Player_Action_DoorNext</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfd8"></span>DFD8</td>
+<td class="instruction">CP (IX+$00)</td>
+<td class="comment-1" rowspan="5">Jump to <a href="DE19.html#e00c">Player_Action_DoorNext</a> unless the door column matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfdb"></span>DFDB</td>
+<td class="instruction">JR Z,<a href="DE19.html#dfe3">Player_Action_DoorMatch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfdd"></span>DFDD</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfde"></span>DFDE</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfe1"></span>DFE1</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e00c">Player_Action_DoorNext</a></td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_DoorMatch</td>
+<td class="address-2"><span id="dfe3"></span>DFE3</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="8">Jump to <a href="DE19.html#e00c">Player_Action_DoorNext</a> unless the door row matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfe4"></span>DFE4</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfe5"></span>DFE5</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfe6"></span>DFE6</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfe9"></span>DFE9</td>
+<td class="instruction">JR Z,<a href="DE19.html#dff1">Player_Action_DoorUse</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfeb"></span>DFEB</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfec"></span>DFEC</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dfef"></span>DFEF</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e00c">Player_Action_DoorNext</a></td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_DoorUse</td>
+<td class="address-2"><span id="dff1"></span>DFF1</td>
+<td class="instruction">LD DE,$0003</td>
+<td class="comment-1" rowspan="8">Bump the door use count when it is not FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dff4"></span>DFF4</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dff5"></span>DFF5</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dff6"></span>DFF6</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dff7"></span>DFF7</td>
+<td class="instruction">JR Z,<a href="DE19.html#dffc">Player_Action_DoorEvent</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dff9"></span>DFF9</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dffa"></span>DFFA</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dffb"></span>DFFB</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_DoorEvent</td>
+<td class="address-2"><span id="dffc"></span>DFFC</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="4">Jump to <a href="E9FF.html">Dispatch_Events</a> unless the event is 2A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dffd"></span>DFFD</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dffe"></span>DFFE</td>
+<td class="instruction">CP $2A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e000"></span>E000</td>
+<td class="instruction">JP NZ,<a href="E9FF.html">Dispatch_Events</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e003"></span>E003</td>
+<td class="instruction">LD HL,$0001</td>
+<td class="comment-1" rowspan="3">Write 0001 to *<a href="E82A.html">Table_RoomPause</a> and jump to <a href="E9FF.html">Dispatch_Events</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e006"></span>E006</td>
+<td class="instruction">LD ($E82A),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e009"></span>E009</td>
+<td class="instruction">JP <a href="E9FF.html">Dispatch_Events</a></td>
+</tr>
+<tr>
+<td class="asm-label">Player_Action_DoorNext</td>
+<td class="address-2"><span id="e00c"></span>E00C</td>
+<td class="instruction">LD DE,$0005</td>
+<td class="comment-1" rowspan="2"><span class="register">HL</span>+=0005.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e00f"></span>E00F</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e010"></span>E010</td>
+<td class="instruction">JR <a href="DE19.html#dfd0">Player_Action_DoorLoop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DE19.html#dfd0">Player_Action_DoorLoop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e012"></span>E012</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e013"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="D7FF.html">Handler_Housekeeping</a> and <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Climb down a ladder from *<a href="6428.html">ReferenceLadders</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbDown</td>
+<td class="address-2"><span id="e013"></span>E013</td>
+<td class="instruction">LD A,(IX+$03)</td>
+<td class="comment-1" rowspan="3">Return unless the player fine-Y is 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e016"></span>E016</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e018"></span>E018</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e019"></span>E019</td>
+<td class="instruction">LD HL,($6428)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="6428.html">ReferenceLadders</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbDown_Loop</td>
+<td class="address-2"><span id="e01c"></span>E01C</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Return if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e01d"></span>E01D</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e01f"></span>E01F</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e020"></span>E020</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e065">Player_ClimbDown_Next</a> if this ladder is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e022"></span>E022</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e065">Player_ClimbDown_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e024"></span>E024</td>
+<td class="instruction">CP (IX+$00)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e036">Player_ClimbDown_Start</a> if the ladder column matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e027"></span>E027</td>
+<td class="instruction">JR Z,<a href="DE19.html#e036">Player_ClimbDown_Start</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e029"></span>E029</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="6">Jump to <a href="DE19.html#e065">Player_ClimbDown_Next</a> unless the player is on the right-hand half.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e02a"></span>E02A</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e02d"></span>E02D</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e065">Player_ClimbDown_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e02f"></span>E02F</td>
+<td class="instruction">LD A,(IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e032"></span>E032</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e034"></span>E034</td>
+<td class="instruction">JR NC,<a href="DE19.html#e065">Player_ClimbDown_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbDown_Start</td>
+<td class="address-2"><span id="e036"></span>E036</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="6">Jump to <a href="DE19.html#e065">Player_ClimbDown_Next</a> unless the player is three rows below the ladder.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e037"></span>E037</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e038"></span>E038</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e039"></span>E039</td>
+<td class="instruction">ADD A,$03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e03b"></span>E03B</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e03e"></span>E03E</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e065">Player_ClimbDown_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e040"></span>E040</td>
+<td class="instruction">SUB $03</td>
+<td class="comment-1" rowspan="4">Write the ladder row to *<a href="648A.html">ClimbRow</a> and start climbing down.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e042"></span>E042</td>
+<td class="instruction">LD ($648A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e045"></span>E045</td>
+<td class="instruction">LD (IX+$06),$5A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e049"></span>E049</td>
+<td class="instruction">LD (IX+$09),$FE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e04d"></span>E04D</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e05c">Player_ClimbDown_Offset</a> unless the ladder column matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e04e"></span>E04E</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e051"></span>E051</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e05c">Player_ClimbDown_Offset</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e053"></span>E053</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="4">Write the remaining fine-X as the horizontal delta and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e055"></span>E055</td>
+<td class="instruction">SUB (IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e058"></span>E058</td>
+<td class="instruction">LD (IX+$08),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e05b"></span>E05B</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbDown_Offset</td>
+<td class="address-2"><span id="e05c"></span>E05C</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="4">Write the opposite climb delta and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e05e"></span>E05E</td>
+<td class="instruction">SUB (IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e061"></span>E061</td>
+<td class="instruction">LD (IX+$08),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e064"></span>E064</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbDown_Next</td>
+<td class="address-2"><span id="e065"></span>E065</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Increase <span class="register">HL</span> by three.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e066"></span>E066</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e067"></span>E067</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e068"></span>E068</td>
+<td class="instruction">JR <a href="DE19.html#e01c">Player_ClimbDown_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DE19.html#e01c">Player_ClimbDown_Loop</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e06a"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="D7FF.html">Handler_Housekeeping</a> and <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Climb up a ladder, or start a jump.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbUp</td>
+<td class="address-2"><span id="e06a"></span>E06A</td>
+<td class="instruction">LD A,($6410)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="6410.html">Player_JumpTimer</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e06d"></span>E06D</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e06e"></span>E06E</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e06f"></span>E06F</td>
+<td class="instruction">LD A,(IX+$03)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e0ce">Player_Jump</a> unless the player fine-Y is 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e072"></span>E072</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e074"></span>E074</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e0ce">Player_Jump</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e076"></span>E076</td>
+<td class="instruction">LD HL,($6428)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="6428.html">ReferenceLadders</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbUp_Loop</td>
+<td class="address-2"><span id="e079"></span>E079</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e0ce">Player_Jump</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e07a"></span>E07A</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e07c"></span>E07C</td>
+<td class="instruction">JR Z,<a href="DE19.html#e0ce">Player_Jump</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e07e"></span>E07E</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e0c9">Player_ClimbUp_Next</a> if this ladder is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e080"></span>E080</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e0c9">Player_ClimbUp_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e082"></span>E082</td>
+<td class="instruction">CP (IX+$00)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e094">Player_ClimbUp_Start</a> if the ladder column matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e085"></span>E085</td>
+<td class="instruction">JR Z,<a href="DE19.html#e094">Player_ClimbUp_Start</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e087"></span>E087</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="6">Jump to <a href="DE19.html#e0c9">Player_ClimbUp_Next</a> unless the player is on the right-hand half.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e088"></span>E088</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e08b"></span>E08B</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e0c9">Player_ClimbUp_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e08d"></span>E08D</td>
+<td class="instruction">LD A,(IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e090"></span>E090</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e092"></span>E092</td>
+<td class="instruction">JR NC,<a href="DE19.html#e0c9">Player_ClimbUp_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbUp_Start</td>
+<td class="address-2"><span id="e094"></span>E094</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="5">Return if the player is already at the top.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e095"></span>E095</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e096"></span>E096</td>
+<td class="instruction">ADD A,$03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e098"></span>E098</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e09b"></span>E09B</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e09c"></span>E09C</td>
+<td class="instruction">DEC HL</td>
+<td class="comment-1" rowspan="4">Jump to <a href="DE19.html#e0c9">Player_ClimbUp_Next</a> unless the player is two rows below the top.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e09d"></span>E09D</td>
+<td class="instruction">SUB $05</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e09f"></span>E09F</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0a2"></span>E0A2</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e0c9">Player_ClimbUp_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0a4"></span>E0A4</td>
+<td class="instruction">ADD A,$02</td>
+<td class="comment-1" rowspan="4">Write the ladder row to *<a href="648A.html">ClimbRow</a> and start climbing up.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0a6"></span>E0A6</td>
+<td class="instruction">LD ($648A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0a9"></span>E0A9</td>
+<td class="instruction">LD (IX+$06),$5A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0ad"></span>E0AD</td>
+<td class="instruction">LD (IX+$09),$02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0b1"></span>E0B1</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e0c0">Player_ClimbUp_Offset</a> unless the ladder column matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0b2"></span>E0B2</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0b5"></span>E0B5</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e0c0">Player_ClimbUp_Offset</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0b7"></span>E0B7</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="4">Write the remaining fine-X as the horizontal delta and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0b9"></span>E0B9</td>
+<td class="instruction">SUB (IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0bc"></span>E0BC</td>
+<td class="instruction">LD (IX+$08),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0bf"></span>E0BF</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbUp_Offset</td>
+<td class="address-2"><span id="e0c0"></span>E0C0</td>
+<td class="instruction">LD A,$FF</td>
+<td class="comment-1" rowspan="4">Write the opposite climb delta and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0c2"></span>E0C2</td>
+<td class="instruction">SUB (IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0c5"></span>E0C5</td>
+<td class="instruction">LD (IX+$08),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0c8"></span>E0C8</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbUp_Next</td>
+<td class="address-2"><span id="e0c9"></span>E0C9</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Increase <span class="register">HL</span> by three.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0ca"></span>E0CA</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0cb"></span>E0CB</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0cc"></span>E0CC</td>
+<td class="instruction">JR <a href="DE19.html#e079">Player_ClimbUp_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DE19.html#e079">Player_ClimbUp_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Jump</td>
+<td class="address-2"><span id="e0ce"></span>E0CE</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="3">Write 07 to *<a href="6410.html">Player_JumpTimer</a> and start the jump.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0d0"></span>E0D0</td>
+<td class="instruction">LD ($6410),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0d3"></span>E0D3</td>
+<td class="instruction">LD (IX+$09),$03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0d7"></span>E0D7</td>
+<td class="instruction">BIT 7,(IX+$07)</td>
+<td class="comment-1" rowspan="5">Choose a left-facing jump frame.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0db"></span>E0DB</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e0e6">Player_Jump_Right</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0dd"></span>E0DD</td>
+<td class="instruction">LD (IX+$06),$30</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0e1"></span>E0E1</td>
+<td class="instruction">LD (IX+$08),$FE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0e5"></span>E0E5</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Jump_Right</td>
+<td class="address-2"><span id="e0e6"></span>E0E6</td>
+<td class="instruction">LD (IX+$06),$30</td>
+<td class="comment-1" rowspan="3">Choose a right-facing jump frame.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0ea"></span>E0EA</td>
+<td class="instruction">LD (IX+$08),$02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0ee"></span>E0EE</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e0ef"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Stop climbing when the stored ladder row is left.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbStop</td>
+<td class="address-2"><span id="e0ef"></span>E0EF</td>
+<td class="instruction">LD A,(IX+$03)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e110">Player_ReadKeys</a> unless the fine-Y is 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0f2"></span>E0F2</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0f4"></span>E0F4</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e110">Player_ReadKeys</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0f6"></span>E0F6</td>
+<td class="instruction">LD A,($648A)</td>
+<td class="comment-1" rowspan="4">Jump to <a href="DE19.html#e107">Player_ClimbStop_Clear</a> if the player is two rows below *<a href="648A.html">ClimbRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0f9"></span>E0F9</td>
+<td class="instruction">SUB $02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0fb"></span>E0FB</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e0fe"></span>E0FE</td>
+<td class="instruction">JR Z,<a href="DE19.html#e107">Player_ClimbStop_Clear</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e100"></span>E100</td>
+<td class="instruction">ADD A,$05</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e110">Player_ReadKeys</a> unless the player is three rows above that point.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e102"></span>E102</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e105"></span>E105</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e110">Player_ReadKeys</a></td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbStop_Clear</td>
+<td class="address-2"><span id="e107"></span>E107</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="4">Return after restoring the walk frame.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e108"></span>E108</td>
+<td class="instruction">LD ($648A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e10b"></span>E10B</td>
+<td class="instruction">LD (IX+$06),$60</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e10f"></span>E10F</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ReadKeys</td>
+<td class="address-2"><span id="e110"></span>E110</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e111"></span>E111</td>
+<td class="instruction">LD A,($647E)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D7FF.html#d864">Controls_Kempston_Climb</a> if Kempston is selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e114"></span>E114</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e115"></span>E115</td>
+<td class="instruction">JP NZ,<a href="D7FF.html#d864">Controls_Kempston_Climb</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e118"></span>E118</td>
+<td class="instruction">CALL $028E</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e11b"></span>E11B</td>
+<td class="instruction">LD IX,$64A4</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="64A4.html">Player</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e11f"></span>E11F</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a> if no key is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e120"></span>E120</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e122"></span>E122</td>
+<td class="instruction">JP Z,<a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e125"></span>E125</td>
+<td class="instruction">LD HL,$6481</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e145">Player_ClimbUp_Anim</a> if the up key matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e128"></span>E128</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e129"></span>E129</td>
+<td class="instruction">JR Z,<a href="DE19.html#e145">Player_ClimbUp_Anim</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e12b"></span>E12B</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a> unless the down key matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e12c"></span>E12C</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e12d"></span>E12D</td>
+<td class="instruction">JP NZ,<a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e130"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="D7FF.html">Handler_Housekeeping</a>.
+</div>
+<div class="paragraph">
+Animate climbing down.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbDown_Anim</td>
+<td class="address-2"><span id="e130"></span>E130</td>
+<td class="instruction">LD A,(IX+$06)</td>
+<td class="comment-1" rowspan="5">Step the climb frame down.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e133"></span>E133</td>
+<td class="instruction">SUB $06</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e135"></span>E135</td>
+<td class="instruction">CP $42</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e137"></span>E137</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e13b">Player_ClimbDown_StoreFrame</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e139"></span>E139</td>
+<td class="instruction">LD A,$5A</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbDown_StoreFrame</td>
+<td class="address-2"><span id="e13b"></span>E13B</td>
+<td class="instruction">LD (IX+$06),A</td>
+<td class="comment-1" rowspan="3">Store the frame, write FE as the vertical delta and jump to <a href="E1CC.html#e358">Handler_Player_Commit</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e13e"></span>E13E</td>
+<td class="instruction">LD (IX+$09),$FE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e142"></span>E142</td>
+<td class="instruction">JP <a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e145"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="D7FF.html">Handler_Housekeeping</a>.
+</div>
+<div class="paragraph">
+Animate climbing up.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbUp_Anim</td>
+<td class="address-2"><span id="e145"></span>E145</td>
+<td class="instruction">LD A,(IX+$06)</td>
+<td class="comment-1" rowspan="5">Step the climb frame up.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e148"></span>E148</td>
+<td class="instruction">ADD A,$06</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e14a"></span>E14A</td>
+<td class="instruction">CP $60</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e14c"></span>E14C</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e150">Player_ClimbUp_StoreFrame</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e14e"></span>E14E</td>
+<td class="instruction">LD A,$48</td>
+</tr>
+<tr>
+<td class="asm-label">Player_ClimbUp_StoreFrame</td>
+<td class="address-2"><span id="e150"></span>E150</td>
+<td class="instruction">LD (IX+$06),A</td>
+<td class="comment-1" rowspan="3">Store the frame, write 02 as the vertical delta and jump to <a href="E1CC.html#e358">Handler_Player_Commit</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e153"></span>E153</td>
+<td class="instruction">LD (IX+$09),$02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e157"></span>E157</td>
+<td class="instruction">JP <a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e15a"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Flash and drop the player after a hit. <audio controls="" src="../audio/bonus.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/bonus.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_Hit</td>
+<td class="address-2"><span id="e15a"></span>E15A</td>
+<td class="instruction">LD A,($6435)</td>
+<td class="comment-1" rowspan="6">Award a bonus if the hit timer is still 32.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e15d"></span>E15D</td>
+<td class="instruction">CP $32</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e15f"></span>E15F</td>
+<td class="instruction">JR NZ,<a href="DE19.html#e16a">Player_Hit_Fall</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e161"></span>E161</td>
+<td class="instruction">LD BC,$0064</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e164"></span>E164</td>
+<td class="instruction">LD DE,$00C8</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e167"></span>E167</td>
+<td class="instruction">CALL <a href="E46C.html#e501">Sound_Pickup</a></td>
+</tr>
+<tr>
+<td class="asm-label">Player_Hit_Fall</td>
+<td class="address-2"><span id="e16a"></span>E16A</td>
+<td class="instruction">LD (IX+$09),$FF</td>
+<td class="comment-1" rowspan="4">Advance, store and erase the falling player.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e16e"></span>E16E</td>
+<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e171"></span>E171</td>
+<td class="instruction">CALL <a href="F424.html">JumpTable_StorePosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e174"></span>E174</td>
+<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e177"></span>E177</td>
+<td class="instruction">LD A,($641A)</td>
+<td class="comment-1" rowspan="6">Clip the draw against *<a href="644A.html">HitCeilingRow</a> and call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e17a"></span>E17A</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e17b"></span>E17B</td>
+<td class="instruction">LD A,($644A)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e17e"></span>E17E</td>
+<td class="instruction">LD ($641A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e181"></span>E181</td>
+<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e184"></span>E184</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e185"></span>E185</td>
+<td class="instruction">LD ($641A),A</td>
+<td class="comment-1" rowspan="5">Decrease *<a href="6435.html">Player_HitTimer</a> and jump to <a href="DE19.html#df22">Lose_Life</a> when it hits zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e188"></span>E188</td>
+<td class="instruction">LD A,($6435)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e18b"></span>E18B</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e18c"></span>E18C</td>
+<td class="instruction">JP Z,<a href="DE19.html#df22">Lose_Life</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e18f"></span>E18F</td>
+<td class="instruction">LD ($6435),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e192"></span>E192</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e193"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Animate the jump frames from *<a href="6410.html">Player_JumpTimer</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_JumpAnim</td>
+<td class="address-2"><span id="e193"></span>E193</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="4">Decrease *<a href="6410.html">Player_JumpTimer</a> and point at <a href="E1CC.html#e292">Handler_Player_Draw</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e194"></span>E194</td>
+<td class="instruction">LD ($6410),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e197"></span>E197</td>
+<td class="instruction">LD HL,$E292</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e19a"></span>E19A</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e19b"></span>E19B</td>
+<td class="instruction">LD (IX+$06),$30</td>
+<td class="comment-1" rowspan="2">Use frame 30 while the timer is 06 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e19f"></span>E19F</td>
+<td class="instruction">CP $06</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1a1"></span>E1A1</td>
+<td class="instruction">RET NC</td>
+<td class="comment-1" rowspan="3">Use frame 36 while the timer is 04 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1a2"></span>E1A2</td>
+<td class="instruction">LD (IX+$06),$36</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1a6"></span>E1A6</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1a8"></span>E1A8</td>
+<td class="instruction">RET NC</td>
+<td class="comment-1" rowspan="3">Use frame 3C while the timer is 03 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1a9"></span>E1A9</td>
+<td class="instruction">LD (IX+$06),$3C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1ad"></span>E1AD</td>
+<td class="instruction">CP $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1af"></span>E1AF</td>
+<td class="instruction">RET NC</td>
+<td class="comment-1" rowspan="3">Use frame 42 while the timer is 01 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1b0"></span>E1B0</td>
+<td class="instruction">LD (IX+$06),$42</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1b4"></span>E1B4</td>
+<td class="instruction">CP $01</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1b6"></span>E1B6</td>
+<td class="instruction">RET NC</td>
+<td class="comment-1" rowspan="2">Use frame 12 for the last tick.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1b7"></span>E1B7</td>
+<td class="instruction">LD (IX+$06),$12</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1bb"></span>E1BB</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e1bc"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Start the hit sequence.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Player_StartHit</td>
+<td class="address-2"><span id="e1bc"></span>E1BC</td>
+<td class="instruction">LD A,$32</td>
+<td class="comment-1" rowspan="5">Write 32 to *<a href="6435.html">Player_HitTimer</a> and store the ceiling row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1be"></span>E1BE</td>
+<td class="instruction">LD ($6435),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1c1"></span>E1C1</td>
+<td class="instruction">LD A,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1c4"></span>E1C4</td>
+<td class="instruction">SUB $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1c6"></span>E1C6</td>
+<td class="instruction">LD ($644A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1c9"></span>E1C9</td>
+<td class="instruction">JP <a href="E1CC.html#e292">Handler_Player_Draw</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E1CC.html#e292">Handler_Player_Draw</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="DD97.html">DD97</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#de19">Map</a></td>
+<td class="next">
+Next: <a href="E1CC.html">E1CC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/56857.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

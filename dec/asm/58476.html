@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 58476</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="58334.html">58334</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#58476">Map</a></td>
+<td class="next">
+Next: <a href="58653.html">58653</a>
+</td>
+</tr>
+</table>
+<div class="description">58476: Handler: Interrupts</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+IM 2 lands here from <a href="65278.html">AliasInterruptRedirect</a>. Plays the next tune note every five ticks and services any pending sound.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Interrupts</td>
+<td class="address-2"><span id="58476"></span>58476</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="5">Stash <span class="register">AF</span>, <span class="register">BC</span>, <span class="register">DE</span>, <span class="register">HL</span> and <span class="register">IX</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58477"></span>58477</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58478"></span>58478</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58479"></span>58479</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58480"></span>58480</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58482"></span>58482</td>
+<td class="instruction">LD A,R</td>
+<td class="comment-1" rowspan="3">Return unless bit 7 of the refresh register is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58484"></span>58484</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58486"></span>58486</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58487"></span>58487</td>
+<td class="instruction">LD A,(25710)</td>
+<td class="comment-1" rowspan="5">Increase *<a href="25710.html">InterruptTick</a> and return unless it reached 5.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58490"></span>58490</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58491"></span>58491</td>
+<td class="instruction">LD (25710),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58494"></span>58494</td>
+<td class="instruction">CP 5</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58496"></span>58496</td>
+<td class="instruction">JR NZ,<a href="58476.html#58523">Handler_Interrupts_Done</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58498"></span>58498</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="25710.html">InterruptTick</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58499"></span>58499</td>
+<td class="instruction">LD (25710),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58502"></span>58502</td>
+<td class="instruction">LD A,(25714)</td>
+<td class="comment-1" rowspan="3">Call <a href="58476.html#58579">Sound_Score</a> if bit 4 of *<a href="25714.html">SoundFlags</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58505"></span>58505</td>
+<td class="instruction">BIT 4,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58507"></span>58507</td>
+<td class="instruction">CALL NZ,<a href="58476.html#58579">Sound_Score</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58510"></span>58510</td>
+<td class="instruction">LD A,(25715)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="58476.html#58531">Handler_Interrupts_Beep</a> if *<a href="25715.html">SoundDuration</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58513"></span>58513</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58514"></span>58514</td>
+<td class="instruction">JP NZ,<a href="58476.html#58531">Handler_Interrupts_Beep</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58517"></span>58517</td>
+<td class="instruction">LD BC,4358</td>
+<td class="comment-1" rowspan="2">Call <a href="58982.html">Play_Tune</a> with note length 4358.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58520"></span>58520</td>
+<td class="instruction">CALL <a href="58982.html">Play_Tune</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Interrupts_Done</td>
+<td class="address-2"><span id="58523"></span>58523</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="7">Restore the stashed registers and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58525"></span>58525</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58526"></span>58526</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58527"></span>58527</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58528"></span>58528</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58529"></span>58529</td>
+<td class="instruction">EI</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58530"></span>58530</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58531"></span>
+<div class="comments">
+<div class="paragraph">
+<audio controls="" src="../../audio/beep.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../../audio/beep.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Interrupts_Beep</td>
+<td class="address-2"><span id="58531"></span>58531</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="5">Decrease *<a href="25715.html">SoundDuration</a> and play a short beep.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58532"></span>58532</td>
+<td class="instruction">LD (25715),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58535"></span>58535</td>
+<td class="instruction">LD B,127</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58537"></span>58537</td>
+<td class="instruction">LD D,12</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58539"></span>58539</td>
+<td class="instruction">CALL <a href="58476.html#58545">Play_Click</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58542"></span>58542</td>
+<td class="instruction">JP <a href="58476.html#58523">Handler_Interrupts_Done</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="58476.html#58523">Handler_Interrupts_Done</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58545"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="55556.html">Handler_RoomSixteen</a>.
+</div>
+<div class="paragraph">
+Click the speaker <span class="register">D</span> times using a random delay. <audio controls="" src="../../audio/click.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../../audio/click.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Play_Click</td>
+<td class="address-2"><span id="58545"></span>58545</td>
+<td class="instruction">CALL <a href="58476.html#58561">Play_Click_Delay</a></td>
+<td class="comment-1" rowspan="8">Toggle bit 4 of the speaker for <span class="register">D</span> iterations.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58548"></span>58548</td>
+<td class="instruction">OUT (254),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58550"></span>58550</td>
+<td class="instruction">CALL <a href="58476.html#58561">Play_Click_Delay</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58553"></span>58553</td>
+<td class="instruction">OR 16</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58555"></span>58555</td>
+<td class="instruction">OUT (254),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58557"></span>58557</td>
+<td class="instruction">DEC D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58558"></span>58558</td>
+<td class="instruction">JR NZ,<a href="58476.html#58545">Play_Click</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58560"></span>58560</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Play_Click_Delay</td>
+<td class="address-2"><span id="58561"></span>58561</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="9">Delay by a random count masked with <span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58562"></span>58562</td>
+<td class="instruction">CALL <a href="62506.html#62515">JumpTable_GetRandomNumber</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58565"></span>58565</td>
+<td class="instruction">AND B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58566"></span>58566</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58567"></span>58567</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58568"></span>58568</td>
+<td class="instruction">JR Z,<a href="58476.html#58574">Play_Click_Done</a></td>
+</tr>
+<tr>
+<td class="asm-label">Play_Click_Wait</td>
+<td class="address-2"><span id="58570"></span>58570</td>
+<td class="instruction">NOP</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58571"></span>58571</td>
+<td class="instruction">NOP</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58572"></span>58572</td>
+<td class="instruction">DJNZ <a href="58476.html#58570">Play_Click_Wait</a></td>
+</tr>
+<tr>
+<td class="asm-label">Play_Click_Done</td>
+<td class="address-2"><span id="58574"></span>58574</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=*<a href="25629.html">Active_BorderColour</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58575"></span>58575</td>
+<td class="instruction">LD A,(25629)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58578"></span>58578</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58579"></span>
+<div class="comments">
+<div class="paragraph">
+Falling-pitch score sound. <audio controls="" src="../../audio/score.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../../audio/score.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Sound_Score</td>
+<td class="address-2"><span id="58579"></span>58579</td>
+<td class="instruction">AND 239</td>
+<td class="comment-1" rowspan="5">Clear bit 4 of *<a href="25714.html">SoundFlags</a> and jump to <a href="58476.html#58593">Sound_Square</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58581"></span>58581</td>
+<td class="instruction">LD (25714),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58584"></span>58584</td>
+<td class="instruction">LD DE,50</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58587"></span>58587</td>
+<td class="instruction">LD BC,100</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58590"></span>58590</td>
+<td class="instruction">JP <a href="58476.html#58593">Sound_Square</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58593"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="56857.html">Handler_Combination</a>.
+</div>
+<div class="paragraph">
+Square-wave sound while <span class="register">DE</span> and <span class="register">BC</span> count down.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Sound_Square</td>
+<td class="address-2"><span id="58593"></span>58593</td>
+<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="comment-1" rowspan="15">Toggle the speaker until both counters are zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58596"></span>58596</td>
+<td class="instruction">LD A,(25629)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58599"></span>58599</td>
+<td class="instruction">OUT (254),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58601"></span>58601</td>
+<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58604"></span>58604</td>
+<td class="instruction">LD A,(25629)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58607"></span>58607</td>
+<td class="instruction">OR 16</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58609"></span>58609</td>
+<td class="instruction">OUT (254),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58611"></span>58611</td>
+<td class="instruction">DEC BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58612"></span>58612</td>
+<td class="instruction">LD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58613"></span>58613</td>
+<td class="instruction">OR B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58614"></span>58614</td>
+<td class="instruction">JR Z,<a href="58476.html#58621">Sound_Square_Done</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58616"></span>58616</td>
+<td class="instruction">DEC DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58617"></span>58617</td>
+<td class="instruction">LD A,D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58618"></span>58618</td>
+<td class="instruction">OR E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58619"></span>58619</td>
+<td class="instruction">JR NZ,<a href="58476.html#58593">Sound_Square</a></td>
+</tr>
+<tr>
+<td class="asm-label">Sound_Square_Done</td>
+<td class="address-2"><span id="58621"></span>58621</td>
+<td class="instruction">LD A,(25714)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="25714.html">SoundFlags</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58624"></span>58624</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="58625"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="56265.html">Handler_InventoryItems</a> and <a href="56857.html">Handler_Combination</a>.
+</div>
+<div class="paragraph">
+Rising-pitch pickup sound. <audio controls="" src="../../audio/pickup.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../../audio/pickup.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Sound_Pickup</td>
+<td class="address-2"><span id="58625"></span>58625</td>
+<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="comment-1" rowspan="14">Toggle the speaker while increasing <span class="register">BC</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58628"></span>58628</td>
+<td class="instruction">LD A,(25629)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58631"></span>58631</td>
+<td class="instruction">OUT (254),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58633"></span>58633</td>
+<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58636"></span>58636</td>
+<td class="instruction">LD A,(25629)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58639"></span>58639</td>
+<td class="instruction">OR 16</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58641"></span>58641</td>
+<td class="instruction">OUT (254),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58643"></span>58643</td>
+<td class="instruction">INC BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58644"></span>58644</td>
+<td class="instruction">DEC DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58645"></span>58645</td>
+<td class="instruction">LD A,E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58646"></span>58646</td>
+<td class="instruction">OR D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58647"></span>58647</td>
+<td class="instruction">JR NZ,<a href="58476.html#58625">Sound_Pickup</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58649"></span>58649</td>
+<td class="instruction">LD A,(25714)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="58652"></span>58652</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/dec/asm/65129.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="58334.html">58334</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#58476">Map</a></td>
+<td class="next">
+Next: <a href="58653.html">58653</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/E46C.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

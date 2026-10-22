@@ -1,0 +1,1913 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at EA02</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E9FF.html">E9FF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ea02">Map</a></td>
+<td class="next">
+Next: <a href="ECF2.html">ECF2</a>
+</td>
+</tr>
+</table>
+<div class="description">EA02: Unpack Rooms</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="E9FC.html">Initialise_Rooms</a>.
+</div>
+<div class="paragraph">
+Builds <a href="64C5.html">Table_RoomData</a> and copies each packed room into <a href="64F7.html">Buffer_UnpackedRooms</a>. <span class="register">A</span>=FF initialises every room, otherwise it loads that room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Unpack_Rooms</td>
+<td class="address-2"><span id="ea02"></span>EA02</td>
+<td class="instruction">CP $1E</td>
+<td class="comment-1" rowspan="2">Return if <span class="register">A</span> is 1E.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea04"></span>EA04</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea05"></span>EA05</td>
+<td class="instruction">CP $FF</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#eaa6">Load_Room</a> unless <span class="register">A</span> is FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea07"></span>EA07</td>
+<td class="instruction">JP NZ,<a href="EA02.html#eaa6">Load_Room</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea0a"></span>EA0A</td>
+<td class="instruction">CALL <a href="ED51.html">Clear_RoomBuffers</a></td>
+<td class="comment-1" rowspan="1">Call <a href="ED51.html">Clear_RoomBuffers</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea0d"></span>EA0D</td>
+<td class="instruction">LD HL,$7C70</td>
+<td class="comment-1" rowspan="2">Write <a href="7C70.html">Buffer_ActiveFont</a> to *<a href="640E.html">Pointer_ActiveFont</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea10"></span>EA10</td>
+<td class="instruction">LD ($640E),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea13"></span>EA13</td>
+<td class="instruction">CALL <a href="ED71.html">Reset_Player</a></td>
+<td class="comment-1" rowspan="1">Call <a href="ED71.html">Reset_Player</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea16"></span>EA16</td>
+<td class="instruction">LD HL,$0000</td>
+<td class="comment-1" rowspan="6">Clear the collection and score words.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea19"></span>EA19</td>
+<td class="instruction">LD ($64BB),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea1c"></span>EA1C</td>
+<td class="instruction">LD ($64BD),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea1f"></span>EA1F</td>
+<td class="instruction">LD ($64BF),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea22"></span>EA22</td>
+<td class="instruction">LD ($64C1),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea25"></span>EA25</td>
+<td class="instruction">LD ($64C3),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea28"></span>EA28</td>
+<td class="instruction">LD A,$04</td>
+<td class="comment-1" rowspan="2">Write 04 to *<a href="64B4.html">Player_Lives</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea2a"></span>EA2A</td>
+<td class="instruction">LD ($64B4),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea2d"></span>EA2D</td>
+<td class="instruction">LD ($6417),HL</td>
+<td class="comment-1" rowspan="4">Write 00 to *<a href="64A1.html">CollectedCount</a> and *<a href="647D.html">GameCompleteFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea30"></span>EA30</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea31"></span>EA31</td>
+<td class="instruction">LD ($64A1),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea34"></span>EA34</td>
+<td class="instruction">LD ($647D),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea37"></span>EA37</td>
+<td class="instruction">LD HL,$BC11</td>
+<td class="comment-1" rowspan="3"><span class="register">HL</span>=<a href="BC11.html">Data_Rooms</a>, <span class="register">IX</span>=<a href="64C5.html">Table_RoomData</a>, <span class="register">DE</span>=<a href="64F7.html">Buffer_UnpackedRooms</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea3a"></span>EA3A</td>
+<td class="instruction">LD IX,$64C5</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea3e"></span>EA3E</td>
+<td class="instruction">LD DE,$64F7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea41"></span>EA41</td>
+<td class="instruction">LD B,$17</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=17.</td>
+</tr>
+<tr>
+<td class="asm-label">Unpack_Rooms_Loop</td>
+<td class="address-2"><span id="ea43"></span>EA43</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the room count on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea44"></span>EA44</td>
+<td class="instruction">LD (IX+$00),E</td>
+<td class="comment-1" rowspan="4">Write the destination address into the next <a href="64C5.html">Table_RoomData</a> slot.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea47"></span>EA47</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea49"></span>EA49</td>
+<td class="instruction">LD (IX+$00),D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea4c"></span>EA4C</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea4e"></span>EA4E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="4">Copy the room header byte.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea4f"></span>EA4F</td>
+<td class="instruction">LD (DE),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea50"></span>EA50</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea51"></span>EA51</td>
+<td class="instruction">INC DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea52"></span>EA52</td>
+<td class="instruction">LD BC,$0005</td>
+<td class="comment-1" rowspan="2">Copy each header-furniture record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea55"></span>EA55</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea58"></span>EA58</td>
+<td class="instruction">LD BC,$0004</td>
+<td class="comment-1" rowspan="2">Copy each furniture record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea5b"></span>EA5B</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea5e"></span>EA5E</td>
+<td class="instruction">LD BC,$0004</td>
+<td class="comment-1" rowspan="2">Copy each door record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea61"></span>EA61</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea64"></span>EA64</td>
+<td class="instruction">LD BC,$0002</td>
+<td class="comment-1" rowspan="2">Copy each collectible record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea67"></span>EA67</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea6a"></span>EA6A</td>
+<td class="instruction">LD BC,$0001</td>
+<td class="comment-1" rowspan="2">Copy each inventory record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea6d"></span>EA6D</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea70"></span>EA70</td>
+<td class="instruction">LD BC,$0002</td>
+<td class="comment-1" rowspan="2">Copy each ladder record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea73"></span>EA73</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea76"></span>EA76</td>
+<td class="instruction">LD BC,$0005</td>
+<td class="comment-1" rowspan="2">Copy each decoration record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea79"></span>EA79</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea7c"></span>EA7C</td>
+<td class="instruction">LD BC,$000C</td>
+<td class="comment-1" rowspan="2">Copy each actor record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea7f"></span>EA7F</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea82"></span>EA82</td>
+<td class="instruction">LD BC,$000D</td>
+<td class="comment-1" rowspan="2">Copy each enemy record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea85"></span>EA85</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea88"></span>EA88</td>
+<td class="instruction">LD BC,$0012</td>
+<td class="comment-1" rowspan="2">Copy each moving-object record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea8b"></span>EA8B</td>
+<td class="instruction">CALL <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea8e"></span>EA8E</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="2">Restore the room count and loop back to <a href="EA02.html#ea43">Unpack_Rooms_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea8f"></span>EA8F</td>
+<td class="instruction">DJNZ <a href="EA02.html#ea43">Unpack_Rooms_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea91"></span>EA91</td>
+<td class="instruction">LD (IX+$00),E</td>
+<td class="comment-1" rowspan="4">Store the final pointer and jump to <a href="EA02.html#eaa6">Load_Room</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea94"></span>EA94</td>
+<td class="instruction">LD (IX+$01),D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea97"></span>EA97</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea98"></span>EA98</td>
+<td class="instruction">JR <a href="EA02.html#eaa6">Load_Room</a></td>
+</tr>
+<tr>
+<td class="asm-label">Copy_TerminatedField</td>
+<td class="address-2"><span id="ea9a"></span>EA9A</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="4">Copy the next byte and advance both pointers.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea9b"></span>EA9B</td>
+<td class="instruction">LD (DE),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea9c"></span>EA9C</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea9d"></span>EA9D</td>
+<td class="instruction">INC DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea9e"></span>EA9E</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="2">Return if that byte was FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ea9f"></span>EA9F</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaa0"></span>EAA0</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="4">Copy the remaining <span class="register">BC</span> bytes and jump to <a href="EA02.html#ea9a">Copy_TerminatedField</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaa1"></span>EAA1</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaa3"></span>EAA3</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaa4"></span>EAA4</td>
+<td class="instruction">JR <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eaa6"></span>
+<div class="comments">
+<div class="paragraph">
+Load the room in <span class="register">A</span>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room</td>
+<td class="address-2"><span id="eaa6"></span>EAA6</td>
+<td class="instruction">LD ($64A2),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="64A2.html">CurrentRoom</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaa9"></span>EAA9</td>
+<td class="instruction">AND %01111111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaab"></span>EAAB</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="9">Look up that room's pointer from <a href="64C5.html">Table_RoomData</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaac"></span>EAAC</td>
+<td class="instruction">LD D,$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaae"></span>EAAE</td>
+<td class="instruction">LD HL,$64C5</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eab1"></span>EAB1</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eab2"></span>EAB2</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eab3"></span>EAB3</td>
+<td class="instruction">LD E,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eab4"></span>EAB4</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eab5"></span>EAB5</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eab6"></span>EAB6</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eab7"></span>EAB7</td>
+<td class="instruction">LD A,($64A2)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="64A2.html">CurrentRoom</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eaba"></span>
+<div class="comments">
+<div class="paragraph">
+Refresh the working copy when this room is not already current.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaba"></span>EABA</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#eadd">Load_Room_Draw</a> if bit 7 of *<a href="64A2.html">CurrentRoom</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eabc"></span>EABC</td>
+<td class="instruction">JR NZ,<a href="EA02.html#eadd">Load_Room_Draw</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eabe"></span>EABE</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eabf"></span>EABF</td>
+<td class="instruction">AND %10000000</td>
+<td class="comment-1" rowspan="1">Keep only bit 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eac1"></span>EAC1</td>
+<td class="instruction">JR Z,<a href="EA02.html#eadd">Load_Room_Draw</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#eadd">Load_Room_Draw</a> if the working copy is already current.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eac3"></span>EAC3</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="6">Fetch the next pointer and copy it to <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eac4"></span>EAC4</td>
+<td class="instruction">LD C,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eac5"></span>EAC5</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eac6"></span>EAC6</td>
+<td class="instruction">LD B,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eac7"></span>EAC7</td>
+<td class="instruction">LD L,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eac8"></span>EAC8</td>
+<td class="instruction">LD H,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eac9"></span>EAC9</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="4"><span class="register">BC</span>=<span class="register">HL</span>-<span class="register">DE</span> (length of this room).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaca"></span>EACA</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eacc"></span>EACC</td>
+<td class="instruction">LD C,L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eacd"></span>EACD</td>
+<td class="instruction">LD B,H</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eace"></span>EACE</td>
+<td class="instruction">LD HL,$64F7</td>
+<td class="comment-1" rowspan="5">Point <span class="register">HL</span> at <a href="64F7.html">Buffer_UnpackedRooms</a> relative to the packed source.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ead1"></span>EAD1</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ead2"></span>EAD2</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ead3"></span>EAD3</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ead4"></span>EAD4</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ead6"></span>EAD6</td>
+<td class="instruction">LD DE,$BC11</td>
+<td class="comment-1" rowspan="4">Add <a href="BC11.html">Data_Rooms</a> and copy the packed room into the working buffer.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ead9"></span>EAD9</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eada"></span>EADA</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eadb"></span>EADB</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Draw</td>
+<td class="address-2"><span id="eadd"></span>EADD</td>
+<td class="instruction">LD A,($64A2)</td>
+<td class="comment-1" rowspan="3">Clear bit 7 of *<a href="64A2.html">CurrentRoom</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eae0"></span>EAE0</td>
+<td class="instruction">RES 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eae2"></span>EAE2</td>
+<td class="instruction">LD ($64A2),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eae5"></span>EAE5</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore the room pointer into <span class="register">IX</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eae7"></span>EAE7</td>
+<td class="instruction">LD HL,$7C70</td>
+<td class="comment-1" rowspan="2">Write <a href="7C70.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaea"></span>EAEA</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaed"></span>EAED</td>
+<td class="instruction">CALL <a href="ED51.html">Clear_RoomBuffers</a></td>
+<td class="comment-1" rowspan="1">Call <a href="ED51.html">Clear_RoomBuffers</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaf0"></span>EAF0</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="3">Write BLUE to *<a href="641D.html">Active_BorderColour</a> and the border.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaf2"></span>EAF2</td>
+<td class="instruction">LD ($641D),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaf5"></span>EAF5</td>
+<td class="instruction">OUT ($FE),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eaf7"></span>
+<div class="comments">
+<div class="paragraph">
+Copy the matching font bank for this room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaf7"></span>EAF7</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the room header.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eafa"></span>EAFA</td>
+<td class="instruction">AND %00110000</td>
+<td class="comment-1" rowspan="1">Keep only bits 4-5.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eafc"></span>EAFC</td>
+<td class="instruction">CALL Z,<a href="ED2D.html">Copy_FontBank1</a></td>
+<td class="comment-1" rowspan="1">Call <a href="ED2D.html">Copy_FontBank1</a> if the font bank is 00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eaff"></span>EAFF</td>
+<td class="instruction">CP $10</td>
+<td class="comment-1" rowspan="2">Call <a href="ED39.html">Copy_FontBank2</a> if the font bank is 10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb01"></span>EB01</td>
+<td class="instruction">CALL Z,<a href="ED39.html">Copy_FontBank2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb04"></span>EB04</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="2">Call <a href="ED45.html">Copy_FontBank3</a> if the font bank is 20.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb06"></span>EB06</td>
+<td class="instruction">CALL Z,<a href="ED45.html">Copy_FontBank3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb09"></span>EB09</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="641E.html">Pointer_RoomHeader</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb0b"></span>EB0B</td>
+<td class="instruction">LD ($641E),IX</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eb0f"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible header-furniture record.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Header</td>
+<td class="address-2"><span id="eb0f"></span>EB0F</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#eb22">Load_Room_Furniture</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb12"></span>EB12</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb14"></span>EB14</td>
+<td class="instruction">JR Z,<a href="EA02.html#eb22">Load_Room_Furniture</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb16"></span>EB16</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Call <a href="EDB1.html">Draw_HeaderFurniture</a> if this record is visible.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb18"></span>EB18</td>
+<td class="instruction">CALL Z,<a href="EDB1.html">Draw_HeaderFurniture</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb1b"></span>EB1B</td>
+<td class="instruction">LD BC,$0006</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0006 and jump to <a href="EA02.html#eb0f">Load_Room_Header</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb1e"></span>EB1E</td>
+<td class="instruction">ADD IX,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb20"></span>EB20</td>
+<td class="instruction">JR <a href="EA02.html#eb0f">Load_Room_Header</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eb22"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible furniture record into *<a href="6420.html">ReferenceFurniture</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Furniture</td>
+<td class="address-2"><span id="eb22"></span>EB22</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="6420.html">ReferenceFurniture</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb24"></span>EB24</td>
+<td class="instruction">LD ($6420),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Furniture_Target</td>
+<td class="address-2"><span id="eb28"></span>EB28</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#eb3d">Load_Room_Doors</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb2b"></span>EB2B</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb2d"></span>EB2D</td>
+<td class="instruction">JR Z,<a href="EA02.html#eb3d">Load_Room_Doors</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb2f"></span>EB2F</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#eb36">Load_Room_Furniture_Continue</a> if this record is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb31"></span>EB31</td>
+<td class="instruction">JR NZ,<a href="EA02.html#eb36">Load_Room_Furniture_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb33"></span>EB33</td>
+<td class="instruction">CALL <a href="ED82.html">Draw_FurnitureItem</a></td>
+<td class="comment-1" rowspan="1">Call <a href="ED82.html">Draw_FurnitureItem</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Furniture_Continue</td>
+<td class="address-2"><span id="eb36"></span>EB36</td>
+<td class="instruction">LD DE,$0005</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0005 and jump to <a href="EA02.html#eb28">Load_Room_Furniture_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb39"></span>EB39</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb3b"></span>EB3B</td>
+<td class="instruction">JR <a href="EA02.html#eb28">Load_Room_Furniture_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eb3d"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible door record into *<a href="6422.html">ReferenceDoors</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Doors</td>
+<td class="address-2"><span id="eb3d"></span>EB3D</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="6422.html">ReferenceDoors</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb3f"></span>EB3F</td>
+<td class="instruction">LD ($6422),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Doors_Target</td>
+<td class="address-2"><span id="eb43"></span>EB43</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#eb58">Load_Room_Collectibles</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb46"></span>EB46</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb48"></span>EB48</td>
+<td class="instruction">JR Z,<a href="EA02.html#eb58">Load_Room_Collectibles</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb4a"></span>EB4A</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#eb51">Load_Room_Doors_Continue</a> if this record is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb4c"></span>EB4C</td>
+<td class="instruction">JR NZ,<a href="EA02.html#eb51">Load_Room_Doors_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb4e"></span>EB4E</td>
+<td class="instruction">CALL <a href="ED9A.html">Draw_Door</a></td>
+<td class="comment-1" rowspan="1">Call <a href="ED9A.html">Draw_Door</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Doors_Continue</td>
+<td class="address-2"><span id="eb51"></span>EB51</td>
+<td class="instruction">LD DE,$0005</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0005 and jump to <a href="EA02.html#eb43">Load_Room_Doors_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb54"></span>EB54</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb56"></span>EB56</td>
+<td class="instruction">JR <a href="EA02.html#eb43">Load_Room_Doors_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eb58"></span>
+<div class="comments">
+<div class="paragraph">
+Skip each collectible record into *<a href="6424.html">ReferenceCollectibles</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Collectibles</td>
+<td class="address-2"><span id="eb58"></span>EB58</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="6424.html">ReferenceCollectibles</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb5a"></span>EB5A</td>
+<td class="instruction">LD ($6424),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Collectibles_Target</td>
+<td class="address-2"><span id="eb5e"></span>EB5E</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#eb6c">Load_Room_Inventory</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb61"></span>EB61</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb63"></span>EB63</td>
+<td class="instruction">JR Z,<a href="EA02.html#eb6c">Load_Room_Inventory</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb65"></span>EB65</td>
+<td class="instruction">LD DE,$0003</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0003 and jump to <a href="EA02.html#eb5e">Load_Room_Collectibles_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb68"></span>EB68</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb6a"></span>EB6A</td>
+<td class="instruction">JR <a href="EA02.html#eb5e">Load_Room_Collectibles_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eb6c"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible inventory item into *<a href="6426.html">ReferenceInventoryItems</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Inventory</td>
+<td class="address-2"><span id="eb6c"></span>EB6C</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="6426.html">ReferenceInventoryItems</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb6e"></span>EB6E</td>
+<td class="instruction">LD ($6426),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Inventory_Target</td>
+<td class="address-2"><span id="eb72"></span>EB72</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#eb97">Load_Room_Ladders</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb75"></span>EB75</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb77"></span>EB77</td>
+<td class="instruction">JR Z,<a href="EA02.html#eb97">Load_Room_Ladders</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb79"></span>EB79</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#eb91">Load_Room_Inventory_Continue</a> if this record is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb7b"></span>EB7B</td>
+<td class="instruction">JR NZ,<a href="EA02.html#eb91">Load_Room_Inventory_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb7d"></span>EB7D</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="3">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at the item's column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb7e"></span>EB7E</td>
+<td class="instruction">LD B,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb81"></span>EB81</td>
+<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb84"></span>EB84</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="2">Write WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb86"></span>EB86</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb89"></span>EB89</td>
+<td class="instruction">LD A,$80</td>
+<td class="comment-1" rowspan="3">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> with glyph 80 and size 02 by 02.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb8b"></span>EB8B</td>
+<td class="instruction">LD DE,$0202</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb8e"></span>EB8E</td>
+<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Inventory_Continue</td>
+<td class="address-2"><span id="eb91"></span>EB91</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="3">Advance <span class="register">IX</span> by two and jump to <a href="EA02.html#eb72">Load_Room_Inventory_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb93"></span>EB93</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb95"></span>EB95</td>
+<td class="instruction">JR <a href="EA02.html#eb72">Load_Room_Inventory_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eb97"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible ladder into *<a href="6428.html">ReferenceLadders</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Ladders</td>
+<td class="address-2"><span id="eb97"></span>EB97</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="6428.html">ReferenceLadders</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eb99"></span>EB99</td>
+<td class="instruction">LD ($6428),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Ladders_Target</td>
+<td class="address-2"><span id="eb9d"></span>EB9D</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#ebd3">Load_Room_Decorations</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eba0"></span>EBA0</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eba2"></span>EBA2</td>
+<td class="instruction">JR Z,<a href="EA02.html#ebd3">Load_Room_Decorations</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eba4"></span>EBA4</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#ebcb">Load_Room_Ladders_Continue</a> if this record is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eba6"></span>EBA6</td>
+<td class="instruction">JR NZ,<a href="EA02.html#ebcb">Load_Room_Ladders_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eba8"></span>EBA8</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="4">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at the ladder's column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eba9"></span>EBA9</td>
+<td class="instruction">LD B,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebac"></span>EBAC</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebad"></span>EBAD</td>
+<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebb0"></span>EBB0</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="2">Write the ladder colour to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebb3"></span>EBB3</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebb6"></span>EBB6</td>
+<td class="instruction">LD A,$0E</td>
+<td class="comment-1" rowspan="3">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> with glyph 0E and size 01 by 02.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebb8"></span>EBB8</td>
+<td class="instruction">LD DE,$0102</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebbb"></span>EBBB</td>
+<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebbe"></span>EBBE</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="3">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> one row higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebbf"></span>EBBF</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebc0"></span>EBC0</td>
+<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebc3"></span>EBC3</td>
+<td class="instruction">LD A,$DB</td>
+<td class="comment-1" rowspan="3">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> with glyph DB and size 04 by 02.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebc5"></span>EBC5</td>
+<td class="instruction">LD DE,$0402</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebc8"></span>EBC8</td>
+<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Ladders_Continue</td>
+<td class="address-2"><span id="ebcb"></span>EBCB</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="4">Advance <span class="register">IX</span> by three and jump to <a href="EA02.html#eb9d">Load_Room_Ladders_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebcd"></span>EBCD</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebcf"></span>EBCF</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebd1"></span>EBD1</td>
+<td class="instruction">JR <a href="EA02.html#eb9d">Load_Room_Ladders_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ebd3"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible decoration into *<a href="642E.html">ReferenceDecorations</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Decorations</td>
+<td class="address-2"><span id="ebd3"></span>EBD3</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="642E.html">ReferenceDecorations</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebd5"></span>EBD5</td>
+<td class="instruction">LD ($642E),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Decorations_Target</td>
+<td class="address-2"><span id="ebd9"></span>EBD9</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#ec04">Load_Room_Actors</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebdc"></span>EBDC</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebde"></span>EBDE</td>
+<td class="instruction">JR Z,<a href="EA02.html#ec04">Load_Room_Actors</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebe0"></span>EBE0</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#ebfd">Load_Room_Decorations_Continue</a> if this record is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebe2"></span>EBE2</td>
+<td class="instruction">JR NZ,<a href="EA02.html#ebfd">Load_Room_Decorations_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebe4"></span>EBE4</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="3">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at the decoration's column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebe5"></span>EBE5</td>
+<td class="instruction">LD B,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebe8"></span>EBE8</td>
+<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebeb"></span>EBEB</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="2">Write the decoration colour to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebee"></span>EBEE</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebf1"></span>EBF1</td>
+<td class="instruction">LD A,(IX+$03)</td>
+<td class="comment-1" rowspan="4">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> with the stored glyph and size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebf4"></span>EBF4</td>
+<td class="instruction">LD E,(IX+$04)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebf7"></span>EBF7</td>
+<td class="instruction">LD D,(IX+$05)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ebfa"></span>EBFA</td>
+<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Decorations_Continue</td>
+<td class="address-2"><span id="ebfd"></span>EBFD</td>
+<td class="instruction">LD DE,$0006</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0006 and jump to <a href="EA02.html#ebd9">Load_Room_Decorations_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec00"></span>EC00</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec02"></span>EC02</td>
+<td class="instruction">JR <a href="EA02.html#ebd9">Load_Room_Decorations_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ec04"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible actor into *<a href="6430.html">ReferenceActors</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Actors</td>
+<td class="address-2"><span id="ec04"></span>EC04</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="6430.html">ReferenceActors</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec06"></span>EC06</td>
+<td class="instruction">LD ($6430),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Actors_Target</td>
+<td class="address-2"><span id="ec0a"></span>EC0A</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#ec1f">Load_Room_Enemies</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec0d"></span>EC0D</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec0f"></span>EC0F</td>
+<td class="instruction">JR Z,<a href="EA02.html#ec1f">Load_Room_Enemies</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec11"></span>EC11</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#ec18">Load_Room_Actors_Continue</a> if this record is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec13"></span>EC13</td>
+<td class="instruction">JR NZ,<a href="EA02.html#ec18">Load_Room_Actors_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec15"></span>EC15</td>
+<td class="instruction">CALL <a href="F42A.html#f45a">JumpTable_DrawActor</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f45a">JumpTable_DrawActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Actors_Continue</td>
+<td class="address-2"><span id="ec18"></span>EC18</td>
+<td class="instruction">LD DE,$000D</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>+=000D and jump to <a href="EA02.html#ec0a">Load_Room_Actors_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec1b"></span>EC1B</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec1d"></span>EC1D</td>
+<td class="instruction">JR <a href="EA02.html#ec0a">Load_Room_Actors_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ec1f"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible enemy into *<a href="6432.html">ReferenceEnemies</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Enemies</td>
+<td class="address-2"><span id="ec1f"></span>EC1F</td>
+<td class="instruction">LD HL,$9070</td>
+<td class="comment-1" rowspan="2">Write <a href="9070.html">Graphics_TileFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec22"></span>EC22</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec25"></span>EC25</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="6432.html">ReferenceEnemies</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec27"></span>EC27</td>
+<td class="instruction">LD ($6432),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Enemies_Target</td>
+<td class="address-2"><span id="ec2b"></span>EC2B</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#ec40">Load_Room_Movers</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec2e"></span>EC2E</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec30"></span>EC30</td>
+<td class="instruction">JR Z,<a href="EA02.html#ec40">Load_Room_Movers</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec32"></span>EC32</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#ec39">Load_Room_Enemies_Continue</a> if this record is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec34"></span>EC34</td>
+<td class="instruction">JR NZ,<a href="EA02.html#ec39">Load_Room_Enemies_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec36"></span>EC36</td>
+<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Enemies_Continue</td>
+<td class="address-2"><span id="ec39"></span>EC39</td>
+<td class="instruction">LD DE,$000E</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>+=000E and jump to <a href="EA02.html#ec2b">Load_Room_Enemies_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec3c"></span>EC3C</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec3e"></span>EC3E</td>
+<td class="instruction">JR <a href="EA02.html#ec2b">Load_Room_Enemies_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ec40"></span>
+<div class="comments">
+<div class="paragraph">
+Draw each visible moving object into *<a href="642A.html">ReferenceMovingObjects</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Movers</td>
+<td class="address-2"><span id="ec40"></span>EC40</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Write <span class="register">IX</span> to *<a href="642A.html">ReferenceMovingObjects</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec42"></span>EC42</td>
+<td class="instruction">LD ($642A),IX</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Movers_Target</td>
+<td class="address-2"><span id="ec46"></span>EC46</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="EA02.html#ec65">Load_Room_Status</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec49"></span>EC49</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec4b"></span>EC4B</td>
+<td class="instruction">JR Z,<a href="EA02.html#ec65">Load_Room_Status</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec4d"></span>EC4D</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EA02.html#ec5e">Load_Room_Movers_Continue</a> if this record is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec4f"></span>EC4F</td>
+<td class="instruction">JR NZ,<a href="EA02.html#ec5e">Load_Room_Movers_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec51"></span>EC51</td>
+<td class="instruction">LD C,(IX+$10)</td>
+<td class="comment-1" rowspan="3">Write the object's clip window to *<a href="6419.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec54"></span>EC54</td>
+<td class="instruction">LD B,(IX+$11)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec57"></span>EC57</td>
+<td class="instruction">LD ($6419),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec5b"></span>EC5B</td>
+<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Movers_Continue</td>
+<td class="address-2"><span id="ec5e"></span>EC5E</td>
+<td class="instruction">LD DE,$0013</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0013 and jump to <a href="EA02.html#ec46">Load_Room_Movers_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec61"></span>EC61</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec63"></span>EC63</td>
+<td class="instruction">JR <a href="EA02.html#ec46">Load_Room_Movers_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ec65"></span>
+<div class="comments">
+<div class="paragraph">
+Draw the status bar and reset the per-room flags.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Load_Room_Status</td>
+<td class="address-2"><span id="ec65"></span>EC65</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="1">Advance past the terminator.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec67"></span>EC67</td>
+<td class="instruction">LD BC,$0221</td>
+<td class="comment-1" rowspan="2">Convert column 21 row 02 into a <a href="5DCE.html">Buffer_RoomTiles</a> offset.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec6a"></span>EC6A</td>
+<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec6d"></span>EC6D</td>
+<td class="instruction">LD DE,$5800</td>
+<td class="comment-1" rowspan="2">Point <span class="register">HL</span> at the matching attribute cell.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec70"></span>EC70</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec71"></span>EC71</td>
+<td class="instruction">LD DE,$0220</td>
+<td class="comment-1" rowspan="3">Fill 0220 attribute cells with BLACK.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec74"></span>EC74</td>
+<td class="instruction">LD A,$08</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec76"></span>EC76</td>
+<td class="instruction">CALL <a href="F42A.html#f454">JumpTable_FillAttributes</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec79"></span>EC79</td>
+<td class="instruction">CALL <a href="ECF2.html">Print_Inventory</a></td>
+<td class="comment-1" rowspan="1">Call <a href="ECF2.html">Print_Inventory</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec7c"></span>EC7C</td>
+<td class="instruction">LD BC,$011F</td>
+<td class="comment-1" rowspan="4">Write <a href="7C70.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a> and call <a href="F424.html#f427">JumpTable_DrawStatus</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec7f"></span>EC7F</td>
+<td class="instruction">LD HL,$7C70</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec82"></span>EC82</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec85"></span>EC85</td>
+<td class="instruction">CALL <a href="F424.html#f427">JumpTable_DrawStatus</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec88"></span>EC88</td>
+<td class="instruction">LD A,($6411)</td>
+<td class="comment-1" rowspan="3">Call <a href="ED71.html">Reset_Player</a> when *<a href="6411.html">RestartRoomFlag</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec8b"></span>EC8B</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec8c"></span>EC8C</td>
+<td class="instruction">CALL NZ,<a href="ED71.html">Reset_Player</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec8f"></span>EC8F</td>
+<td class="instruction">LD BC,$0218</td>
+<td class="comment-1" rowspan="4">Write the default clip window to *<a href="6419.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec92"></span>EC92</td>
+<td class="instruction">LD ($6419),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec96"></span>EC96</td>
+<td class="instruction">LD BC,$0121</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec99"></span>EC99</td>
+<td class="instruction">LD ($641B),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec9d"></span>EC9D</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ec9e"></span>EC9E</td>
+<td class="instruction">LD DE,$6473</td>
+<td class="comment-1" rowspan="5">Clear 0A bytes from *<a href="6472.html">SoundFlags</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eca1"></span>ECA1</td>
+<td class="instruction">LD HL,$6472</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eca4"></span>ECA4</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eca5"></span>ECA5</td>
+<td class="instruction">LD BC,$0009</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eca8"></span>ECA8</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecaa"></span>ECAA</td>
+<td class="instruction">LD HL,$0102</td>
+<td class="comment-1" rowspan="2">Write 0102 to *<a href="6486.html">KempstonMasks</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecad"></span>ECAD</td>
+<td class="instruction">LD ($6486),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecb0"></span>ECB0</td>
+<td class="instruction">LD HL,($6484)</td>
+<td class="comment-1" rowspan="2">Copy *<a href="6484.html">SavedKeys</a> back to *<a href="647F.html">UserDefinedKeys</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecb3"></span>ECB3</td>
+<td class="instruction">LD ($647F),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecb6"></span>ECB6</td>
+<td class="instruction">LD ($6489),A</td>
+<td class="comment-1" rowspan="2">Clear *<a href="6489.html">ActionTimer</a> and *<a href="648A.html">ClimbRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecb9"></span>ECB9</td>
+<td class="instruction">LD ($648A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecbc"></span>ECBC</td>
+<td class="instruction">LD ($644B),A</td>
+<td class="comment-1" rowspan="2">Clear *<a href="644B.html">Pointer_CollidedActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecbf"></span>ECBF</td>
+<td class="instruction">LD ($644C),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecc2"></span>ECC2</td>
+<td class="instruction">LD ($649F),A</td>
+<td class="comment-1" rowspan="3">Clear *<a href="649F.html">EventTimer</a>, *<a href="6410.html">Player_JumpTimer</a> and *<a href="6411.html">RestartRoomFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecc5"></span>ECC5</td>
+<td class="instruction">LD ($6410),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecc8"></span>ECC8</td>
+<td class="instruction">LD ($6411),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eccb"></span>ECCB</td>
+<td class="instruction">LD ($6435),A</td>
+<td class="comment-1" rowspan="5">Clear *<a href="6435.html">Player_HitTimer</a> and the stand timers.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecce"></span>ECCE</td>
+<td class="instruction">LD ($6436),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecd1"></span>ECD1</td>
+<td class="instruction">LD ($6437),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecd4"></span>ECD4</td>
+<td class="instruction">LD ($6438),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecd7"></span>ECD7</td>
+<td class="instruction">LD ($6439),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecda"></span>ECDA</td>
+<td class="instruction">LD ($64A3),A</td>
+<td class="comment-1" rowspan="2">Clear *<a href="64A3.html">TempCurrentRoom</a> and *<a href="6434.html">CollisionState</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecdd"></span>ECDD</td>
+<td class="instruction">LD ($6434),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ece0"></span>ECE0</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="3">Write FF to <a href="644D.html">SpecialActor</a> and <a href="645B.html">645B</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ece1"></span>ECE1</td>
+<td class="instruction">LD ($644D),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ece4"></span>ECE4</td>
+<td class="instruction">LD ($645B),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ece7"></span>ECE7</td>
+<td class="instruction">LD A,$60</td>
+<td class="comment-1" rowspan="2">Write 60 to *<a href="64A4.html#64aa">Player_SpriteFrame</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ece9"></span>ECE9</td>
+<td class="instruction">LD ($64AA),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecec"></span>ECEC</td>
+<td class="instruction">LD A,$80</td>
+<td class="comment-1" rowspan="2">Write 80 to *<a href="648B.html">CarriedObject</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecee"></span>ECEE</td>
+<td class="instruction">LD ($648B),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecf1"></span>ECF1</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E9FF.html">E9FF</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ea02">Map</a></td>
+<td class="next">
+Next: <a href="ECF2.html">ECF2</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/59906.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

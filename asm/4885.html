@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 4885</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="4000.html">4000</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#4885">Map</a></td>
+<td class="next">
+Next: <a href="48A1.html">48A1</a>
+</td>
+</tr>
+</table>
+<div class="description">4885: Decrypt Game</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+After the tape load, the game is still encoded. This stub sits in the loading-screen bitmap, restores the 7F94 bytes below FFFE then starts the title/menu at <a href="D5AC.html">Initialise_Game</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Decrypt_Game</td>
+<td class="address-2"><span id="4885"></span>4885</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Use the whole screen; no rows are reserved for BASIC.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4886"></span>4886</td>
+<td class="instruction">LD ($5C6B),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4889"></span>4889</td>
+<td class="instruction">LD DE,$FFFE</td>
+<td class="comment-1" rowspan="3">Point at the last encoded byte and set the length to 7F94.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="488c"></span>488C</td>
+<td class="instruction">LD HL,$FFFD</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="488f"></span>488F</td>
+<td class="instruction">LD BC,$7F94</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="4892"></span>
+<div class="comments">
+<div class="paragraph">
+Undo the tape encoding: complement, subtract one, and store the byte one address higher. Walks backwards through the loaded game until every encoded byte is restored.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Decrypt_Game_Loop</td>
+<td class="address-2"><span id="4892"></span>4892</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="7">Decode one byte and step both pointers down.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4893"></span>4893</td>
+<td class="instruction">CPL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4894"></span>4894</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4895"></span>4895</td>
+<td class="instruction">LD (DE),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4896"></span>4896</td>
+<td class="instruction">DEC DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4897"></span>4897</td>
+<td class="instruction">DEC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4898"></span>4898</td>
+<td class="instruction">DEC BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="4899"></span>4899</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="4885.html#4892">Decrypt_Game_Loop</a> until the whole image is restored.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="489a"></span>489A</td>
+<td class="instruction">OR C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="489b"></span>489B</td>
+<td class="instruction">JP NZ,<a href="4885.html#4892">Decrypt_Game_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="489e"></span>489E</td>
+<td class="instruction">JP <a href="D5AC.html">Initialise_Game</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="D5AC.html">Initialise_Game</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="4000.html">4000</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#4885">Map</a></td>
+<td class="next">
+Next: <a href="48A1.html">48A1</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/18565.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

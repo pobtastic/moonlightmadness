@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62788</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62506.html">62506</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62788">Map</a></td>
+<td class="next">
+Next: <a href="62826.html">62826</a>
+</td>
+</tr>
+</table>
+<div class="description">62788: Print Message</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62506.html">JumpTable_InitialiseDisplay</a>.
+</div>
+<div class="paragraph">
+Prints a control-byte string: bytes below 200 are characters, 216 sets <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>, other values set the print position, and 255 terminates.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">HL</td>
+<td class="register-desc">Message address</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Message</td>
+<td class="address-2"><span id="62788"></span>62788</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="62788.html#62812">Print_Message_Branch</a> if this byte is a character.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62789"></span>62789</td>
+<td class="instruction">CP 200</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62791"></span>62791</td>
+<td class="instruction">JR C,<a href="62788.html#62812">Print_Message_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62793"></span>62793</td>
+<td class="instruction">CP 255</td>
+<td class="comment-1" rowspan="2">Return if the terminator is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62795"></span>62795</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62796"></span>62796</td>
+<td class="instruction">CP 216</td>
+<td class="comment-1" rowspan="2">Jump to <a href="62788.html#62818">Print_Message_Skip</a> if this byte sets <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62798"></span>62798</td>
+<td class="instruction">JR Z,<a href="62788.html#62818">Print_Message_Skip</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="62800"></span>
+<div class="comments">
+<div class="paragraph">
+Else this is a print-position pair.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62800"></span>62800</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="6">Fetch the column and row into <span class="register">BC</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62801"></span>62801</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62802"></span>62802</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62803"></span>62803</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62804"></span>62804</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62805"></span>62805</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62806"></span>62806</td>
+<td class="instruction">CALL <a href="62826.html#62916">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62826.html#62916">Set_PrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62809"></span>62809</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Advance the message pointer and jump to <a href="62788.html">Print_Message</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62810"></span>62810</td>
+<td class="instruction">JR <a href="62788.html#62788">Print_Message</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Message_Branch</td>
+<td class="address-2"><span id="62812"></span>62812</td>
+<td class="instruction">CALL <a href="62826.html#62986">Print_Character</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62826.html#62986">Print_Character</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62815"></span>62815</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Advance the message pointer and jump to <a href="62788.html">Print_Message</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62816"></span>62816</td>
+<td class="instruction">JR <a href="62788.html#62788">Print_Message</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Message_Skip</td>
+<td class="address-2"><span id="62818"></span>62818</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="1">Advance the message pointer.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62819"></span>62819</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="2">Write the next byte to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62820"></span>62820</td>
+<td class="instruction">LD (23695),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62823"></span>62823</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Advance the message pointer and jump to <a href="62788.html">Print_Message</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62824"></span>62824</td>
+<td class="instruction">JR <a href="62788.html#62788">Print_Message</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62506.html">62506</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62788">Map</a></td>
+<td class="next">
+Next: <a href="62826.html">62826</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F544.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

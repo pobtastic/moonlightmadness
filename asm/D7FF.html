@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at D7FF</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D7D2.html">D7D2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d7ff">Map</a></td>
+<td class="next">
+Next: <a href="D877.html">D877</a>
+</td>
+</tr>
+</table>
+<div class="description">D7FF: Handler: Housekeeping</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="D7A2.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Marks the game complete when all four <a href="64C1.html">CollectionSlots</a> slots are 09 then ticks <a href="6489.html">ActionTimer</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Housekeeping</td>
+<td class="address-2"><span id="d7ff"></span>D7FF</td>
+<td class="instruction">LD HL,$64C1</td>
+<td class="comment-1" rowspan="3">Test the four collection slots for 09.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d802"></span>D802</td>
+<td class="instruction">LD B,$04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d804"></span>D804</td>
+<td class="instruction">LD A,$09</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Housekeeping_SlotLoop</td>
+<td class="address-2"><span id="d806"></span>D806</td>
+<td class="instruction">CP (HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D7FF.html#d818">Handler_Housekeeping_Timer</a> if any slot differs.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d807"></span>D807</td>
+<td class="instruction">JR NZ,<a href="D7FF.html#d818">Handler_Housekeeping_Timer</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d809"></span>D809</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d80a"></span>D80A</td>
+<td class="instruction">DJNZ <a href="D7FF.html#d806">Handler_Housekeeping_SlotLoop</a></td>
+<td class="comment-1" rowspan="3">Jump to <a href="D7FF.html#d818">Handler_Housekeeping_Timer</a> unless *<a href="64A1.html">CollectedCount</a> is 10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d80c"></span>D80C</td>
+<td class="instruction">LD A,($64A1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d80f"></span>D80F</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d811"></span>D811</td>
+<td class="instruction">JR NZ,<a href="D7FF.html#d818">Handler_Housekeeping_Timer</a></td>
+<td class="comment-1" rowspan="3">Write FF to *<a href="647D.html">GameCompleteFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d813"></span>D813</td>
+<td class="instruction">LD A,$FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d815"></span>D815</td>
+<td class="instruction">LD ($647D),A</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Housekeeping_Timer</td>
+<td class="address-2"><span id="d818"></span>D818</td>
+<td class="instruction">LD A,($6489)</td>
+<td class="comment-1" rowspan="2">Return if *<a href="6489.html">ActionTimer</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d81b"></span>D81B</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d81c"></span>D81C</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="3">Decrease *<a href="6489.html">ActionTimer</a> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d81d"></span>D81D</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d81e"></span>D81E</td>
+<td class="instruction">LD ($6489),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d821"></span>D821</td>
+<td class="instruction">OR A</td>
+<td class="comment-1" rowspan="1">Return if the timer is still running.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d822"></span>D822</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#df22">Lose_Life</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d823"></span>D823</td>
+<td class="instruction">JP <a href="DE19.html#df22">Lose_Life</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d826"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="D5AC.html">Initialise_Game</a> and <a href="D765.html">Game_Loop</a>.
+</div>
+<div class="paragraph">
+Read the Kempston port twice and return if the two reads match (the port is stable).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Read_Kempston</td>
+<td class="address-2"><span id="d826"></span>D826</td>
+<td class="instruction">IN A,($1F)</td>
+<td class="comment-1" rowspan="3">Read from the Kempston joystick port twice.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d828"></span>D828</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d829"></span>D829</td>
+<td class="instruction">IN A,($1F)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d82b"></span>D82B</td>
+<td class="instruction">CP E</td>
+<td class="comment-1" rowspan="1">Return if the two reads differ.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d82c"></span>D82C</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d82d"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Demo / Kempston movement for the player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston</td>
+<td class="address-2"><span id="d82d"></span>D82D</td>
+<td class="instruction">LD HL,($6486)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="6486.html">KempstonMasks</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d830"></span>D830</td>
+<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#df44">Player_MoveLeft</a> if left matches the stored mask.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d833"></span>D833</td>
+<td class="instruction">JR NZ,<a href="D7FF.html#d839">Controls_Kempston_Right</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d835"></span>D835</td>
+<td class="instruction">CP L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d836"></span>D836</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df44">Player_MoveLeft</a></td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Right</td>
+<td class="address-2"><span id="d839"></span>D839</td>
+<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#df69">Player_MoveRight</a> if right matches the stored mask.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d83c"></span>D83C</td>
+<td class="instruction">JR NZ,<a href="D7FF.html#d842">Controls_Kempston_Up</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d83e"></span>D83E</td>
+<td class="instruction">CP H</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d83f"></span>D83F</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df69">Player_MoveRight</a></td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Up</td>
+<td class="address-2"><span id="d842"></span>D842</td>
+<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#e06a">Player_ClimbUp</a> if up (bit 3) is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d845"></span>D845</td>
+<td class="instruction">JR NZ,<a href="D7FF.html#d84c">Controls_Kempston_Down</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d847"></span>D847</td>
+<td class="instruction">CP $08</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d849"></span>D849</td>
+<td class="instruction">CALL Z,<a href="DE19.html#e06a">Player_ClimbUp</a></td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Down</td>
+<td class="address-2"><span id="d84c"></span>D84C</td>
+<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#e013">Player_ClimbDown</a> if down (bit 2) is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d84f"></span>D84F</td>
+<td class="instruction">JR NZ,<a href="D7FF.html#d856">Controls_Kempston_Action</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d851"></span>D851</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d853"></span>D853</td>
+<td class="instruction">CALL Z,<a href="DE19.html#e013">Player_ClimbDown</a></td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Action</td>
+<td class="address-2"><span id="d856"></span>D856</td>
+<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E1CC.html#e28c">Handler_Player_Resolve</a> if the port is unstable.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d859"></span>D859</td>
+<td class="instruction">JP NZ,<a href="E1CC.html#e28c">Handler_Player_Resolve</a></td>
+<td class="comment-1" rowspan="2">Call <a href="DE19.html#df8e">Player_Action</a> if fire (bit 4) is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d85c"></span>D85C</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d85e"></span>D85E</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df8e">Player_Action</a></td>
+<td class="comment-1" rowspan="2">Jump to <a href="E1CC.html#e28c">Handler_Player_Resolve</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d861"></span>D861</td>
+<td class="instruction">JP <a href="E1CC.html#e28c">Handler_Player_Resolve</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d864"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="DE19.html">Handler_Combination</a>.
+</div>
+<div class="paragraph">
+Kempston climbing controls.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Climb</td>
+<td class="address-2"><span id="d864"></span>D864</td>
+<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a> if the port is unstable.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d867"></span>D867</td>
+<td class="instruction">JP NZ,<a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e145">Player_ClimbUp_Anim</a> if up is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d86a"></span>D86A</td>
+<td class="instruction">CP $08</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d86c"></span>D86C</td>
+<td class="instruction">JP Z,<a href="DE19.html#e145">Player_ClimbUp_Anim</a></td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e130">Player_ClimbDown_Anim</a> if down is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d86f"></span>D86F</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d871"></span>D871</td>
+<td class="instruction">JP Z,<a href="DE19.html#e130">Player_ClimbDown_Anim</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d874"></span>D874</td>
+<td class="instruction">JP <a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D7D2.html">D7D2</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d7ff">Map</a></td>
+<td class="next">
+Next: <a href="D877.html">D877</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/55295.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

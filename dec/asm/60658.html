@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 60658</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="59906.html">59906</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#60658">Map</a></td>
+<td class="next">
+Next: <a href="60717.html">60717</a>
+</td>
+</tr>
+</table>
+<div class="description">60658: Print Inventory</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="59906.html">Unpack_Rooms</a> and <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Prints the four <a href="25793.html">CollectionSlots</a> digits and flashes them when every slot is 9.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Inventory</td>
+<td class="address-2"><span id="60658"></span>60658</td>
+<td class="instruction">LD A,15</td>
+<td class="comment-1" rowspan="2">Write WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60660"></span>60660</td>
+<td class="instruction">LD (23695),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60663"></span>60663</td>
+<td class="instruction">LD HL,15360</td>
+<td class="comment-1" rowspan="2">Write 15360 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60666"></span>60666</td>
+<td class="instruction">LD (23606),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60669"></span>60669</td>
+<td class="instruction">LD BC,263</td>
+<td class="comment-1" rowspan="2">Call <a href="62506.html#62509">JumpTable_SetPrintPosition</a> at column 7 row 1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60672"></span>60672</td>
+<td class="instruction">CALL <a href="62506.html#62509">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60675"></span>60675</td>
+<td class="instruction">LD BC,1024</td>
+<td class="comment-1" rowspan="2">Point <span class="register">HL</span> at <a href="25793.html">CollectionSlots</a> and set <span class="register">B</span>=4.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60678"></span>60678</td>
+<td class="instruction">LD HL,25793</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Inventory_Target</td>
+<td class="address-2"><span id="60681"></span>60681</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="60658.html#60687">Print_Inventory_Continue</a> unless this digit is 9.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60682"></span>60682</td>
+<td class="instruction">CP 9</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60684"></span>60684</td>
+<td class="instruction">JR NZ,<a href="60658.html#60687">Print_Inventory_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60686"></span>60686</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="1">Increase the "9" count.</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Inventory_Continue</td>
+<td class="address-2"><span id="60687"></span>60687</td>
+<td class="instruction">ADD A,48</td>
+<td class="comment-1" rowspan="2">Convert the digit into ASCII and call <a href="62506.html#62518">JumpTable_PrintCharacter</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60689"></span>60689</td>
+<td class="instruction">CALL <a href="62506.html#62518">JumpTable_PrintCharacter</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60692"></span>60692</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Advance the digit pointer and loop back to <a href="60658.html#60681">Print_Inventory_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60693"></span>60693</td>
+<td class="instruction">DJNZ <a href="60658.html#60681">Print_Inventory_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="60695"></span>
+<div class="comments">
+<div class="paragraph">
+Flash the four cells when every digit is 9.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60695"></span>60695</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3">Return unless all four digits were 9.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60696"></span>60696</td>
+<td class="instruction">CP 4</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60698"></span>60698</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60699"></span>60699</td>
+<td class="instruction">LD BC,263</td>
+<td class="comment-1" rowspan="2">Convert column 7 row 1 into a <a href="24014.html">Buffer_RoomTiles</a> offset.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60702"></span>60702</td>
+<td class="instruction">CALL <a href="62506.html#62524">JumpTable_ConvertCoordinate</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60705"></span>60705</td>
+<td class="instruction">LD DE,22528</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at the matching attribute cells.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60708"></span>60708</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60709"></span>60709</td>
+<td class="instruction">LD B,4</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Inventory_Target2</td>
+<td class="address-2"><span id="60711"></span>60711</td>
+<td class="instruction">SET 7,(HL)</td>
+<td class="comment-1" rowspan="3">Set FLASH on each of the four cells.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60713"></span>60713</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60714"></span>60714</td>
+<td class="instruction">DJNZ <a href="60658.html#60711">Print_Inventory_Target2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60716"></span>60716</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="59906.html">59906</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#60658">Map</a></td>
+<td class="next">
+Next: <a href="60717.html">60717</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/ECF2.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

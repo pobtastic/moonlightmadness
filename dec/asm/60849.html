@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 60849</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="60826.html">60826</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#60849">Map</a></td>
+<td class="next">
+Next: <a href="60889.html">60889</a>
+</td>
+</tr>
+</table>
+<div class="description">60849: Draw Header Furniture</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="59906.html">Unpack_Rooms</a> and <a href="60889.html">Handler_Events</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_HeaderFurniture</td>
+<td class="address-2"><span id="60849"></span>60849</td>
+<td class="instruction">LD B,(IX+1)</td>
+<td class="comment-1" rowspan="2">Fetch the print row and the stored column.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60852"></span>60852</td>
+<td class="instruction">LD A,(IX+0)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60855"></span>60855</td>
+<td class="instruction">AND %01111111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60857"></span>60857</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="2">Call <a href="62506.html#62509">JumpTable_SetPrintPosition</a> at that column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60858"></span>60858</td>
+<td class="instruction">CALL <a href="62506.html#62509">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60861"></span>60861</td>
+<td class="instruction">LD A,(IX+2)</td>
+<td class="comment-1" rowspan="2">Write the furniture colour to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60864"></span>60864</td>
+<td class="instruction">LD (23695),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60867"></span>60867</td>
+<td class="instruction">LD B,(IX+5)</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=the remaining height.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_HeaderFurniture_Target</td>
+<td class="address-2"><span id="60870"></span>60870</td>
+<td class="instruction">LD A,(IX+3)</td>
+<td class="comment-1" rowspan="2">Fetch the starting glyph and the remaining width.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60873"></span>60873</td>
+<td class="instruction">LD C,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_HeaderFurniture_Continue</td>
+<td class="address-2"><span id="60876"></span>60876</td>
+<td class="instruction">CALL <a href="62506.html#62518">JumpTable_PrintCharacter</a></td>
+<td class="comment-1" rowspan="2">Call <a href="62506.html#62518">JumpTable_PrintCharacter</a> and <a href="62506.html#62527">JumpTable_WriteTile</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60879"></span>60879</td>
+<td class="instruction">CALL <a href="62506.html#62527">JumpTable_WriteTile</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60882"></span>60882</td>
+<td class="instruction">INC A</td>
+<td class="comment-1" rowspan="3">Increase the glyph and loop back to <a href="60849.html#60876">Draw_HeaderFurniture_Continue</a> until this row is drawn.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60883"></span>60883</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60884"></span>60884</td>
+<td class="instruction">JR NZ,<a href="60849.html#60876">Draw_HeaderFurniture_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60886"></span>60886</td>
+<td class="instruction">DJNZ <a href="60849.html#60870">Draw_HeaderFurniture_Target</a></td>
+<td class="comment-1" rowspan="1">Decrease the height and loop back to <a href="60849.html#60870">Draw_HeaderFurniture_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="60888"></span>60888</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="60826.html">60826</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#60849">Map</a></td>
+<td class="next">
+Next: <a href="60889.html">60889</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/EDB1.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

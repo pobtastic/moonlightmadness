@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 55556</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55444.html">55444</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55556">Map</a></td>
+<td class="next">
+Next: <a href="55734.html">55734</a>
+</td>
+</tr>
+</table>
+<div class="description">55556: Handler: Room Sixteen</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Special actor for room 22.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSixteen</td>
+<td class="address-2"><span id="55556"></span>55556</td>
+<td class="instruction">LD A,(25762)</td>
+<td class="comment-1" rowspan="2">Return if *<a href="25762.html">CurrentRoom</a> is not 22.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55559"></span>55559</td>
+<td class="instruction">CP 22</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55561"></span>55561</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>=<a href="25677.html">SpecialActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55562"></span>55562</td>
+<td class="instruction">LD IX,25677</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55566"></span>55566</td>
+<td class="instruction">LD BC,1309</td>
+<td class="comment-1" rowspan="2">Write 1309 to *<a href="25625.html#25627">ClipWindow_MinimumColumn</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55569"></span>55569</td>
+<td class="instruction">LD (25627),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55573"></span>55573</td>
+<td class="instruction">BIT 7,(IX+0)</td>
+<td class="comment-1" rowspan="1">Jump to <a href="55556.html#55700">Handler_RoomSixteen_Draw</a> if the actor is already active.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55577"></span>55577</td>
+<td class="instruction">JR Z,<a href="55556.html#55700">Handler_RoomSixteen_Draw</a></td>
+<td class="comment-1" rowspan="4">Jump to <a href="55556.html#55595">Handler_RoomSixteen_Column</a> if the player row is 7 20 or 17.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55579"></span>55579</td>
+<td class="instruction">LD A,(25765)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55582"></span>55582</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55584"></span>55584</td>
+<td class="instruction">JR Z,<a href="55556.html#55595">Handler_RoomSixteen_Column</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55586"></span>55586</td>
+<td class="instruction">CP 20</td>
+<td class="comment-1" rowspan="4">Jump to <a href="55556.html#55726">Handler_RoomSixteen_Done</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55588"></span>55588</td>
+<td class="instruction">JR Z,<a href="55556.html#55595">Handler_RoomSixteen_Column</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55590"></span>55590</td>
+<td class="instruction">CP 17</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55592"></span>55592</td>
+<td class="instruction">JP NZ,<a href="55556.html#55726">Handler_RoomSixteen_Done</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSixteen_Column</td>
+<td class="address-2"><span id="55595"></span>55595</td>
+<td class="instruction">LD A,(25764)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55556.html#55726">Handler_RoomSixteen_Done</a> unless the player column is 15-22.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55598"></span>55598</td>
+<td class="instruction">CP 23</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55600"></span>55600</td>
+<td class="instruction">JP NC,<a href="55556.html#55726">Handler_RoomSixteen_Done</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55603"></span>55603</td>
+<td class="instruction">CP 15</td>
+<td class="comment-1" rowspan="3">Return to <a href="55556.html#55726">Handler_RoomSixteen_Done</a> unless <a href="62506.html#62515">JumpTable_GetRandomNumber</a> is less than 220.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55605"></span>55605</td>
+<td class="instruction">JR C,<a href="55556.html#55726">Handler_RoomSixteen_Done</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55607"></span>55607</td>
+<td class="instruction">CALL <a href="62506.html#62515">JumpTable_GetRandomNumber</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55610"></span>55610</td>
+<td class="instruction">CP 220</td>
+<td class="comment-1" rowspan="4">Call <a href="62506.html#62551">JumpTable_SpawnEntity</a> with sprite 230.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55612"></span>55612</td>
+<td class="instruction">JR NC,<a href="55556.html#55726">Handler_RoomSixteen_Done</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55614"></span>55614</td>
+<td class="instruction">LD A,230</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55616"></span>55616</td>
+<td class="instruction">LD L,71</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55618"></span>55618</td>
+<td class="instruction">LD DE,257</td>
+<td class="comment-1" rowspan="2">Jump to <a href="55556.html#55645">Handler_RoomSixteen_Right</a> if <a href="62506.html#62515">JumpTable_GetRandomNumber</a> is 128 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55621"></span>55621</td>
+<td class="instruction">CALL <a href="62506.html#62551">JumpTable_SpawnEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55624"></span>55624</td>
+<td class="instruction">CALL <a href="62506.html#62515">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="5">Write the left-moving frame into the actor.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55627"></span>55627</td>
+<td class="instruction">CP 128</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55629"></span>55629</td>
+<td class="instruction">JR NC,<a href="55556.html#55645">Handler_RoomSixteen_Right</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55631"></span>55631</td>
+<td class="instruction">LD (IX+0),30</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55635"></span>55635</td>
+<td class="instruction">LD (IX+10),30</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55639"></span>55639</td>
+<td class="instruction">LD (IX+8),251</td>
+<td class="comment-1" rowspan="2">Jump to <a href="55556.html#55657">Handler_RoomSixteen_Sound</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55643"></span>55643</td>
+<td class="instruction">JR <a href="55556.html#55657">Handler_RoomSixteen_Sound</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSixteen_Right</td>
+<td class="address-2"><span id="55645"></span>55645</td>
+<td class="instruction">LD (IX+0),5</td>
+<td class="comment-1" rowspan="3">Write the right-moving frame into the actor.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55649"></span>55649</td>
+<td class="instruction">LD (IX+10),5</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55653"></span>55653</td>
+<td class="instruction">LD (IX+8),5</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSixteen_Sound</td>
+<td class="address-2"><span id="55657"></span>55657</td>
+<td class="instruction">LD B,255</td>
+<td class="comment-1" rowspan="3">Call <a href="58476.html#58545">Play_Click</a> with <span class="register">B</span>=255 and <span class="register">D</span>=50.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55659"></span>55659</td>
+<td class="instruction">LD D,50</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55661"></span>55661</td>
+<td class="instruction">CALL <a href="58476.html#58545">Play_Click</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55664"></span>55664</td>
+<td class="instruction">LD A,(25765)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55556.html#55682">Handler_RoomSixteen_RowLow</a> if the player row is 20.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55667"></span>55667</td>
+<td class="instruction">CP 20</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55669"></span>55669</td>
+<td class="instruction">JR Z,<a href="55556.html#55682">Handler_RoomSixteen_RowLow</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55671"></span>55671</td>
+<td class="instruction">CP 17</td>
+<td class="comment-1" rowspan="2">Jump to <a href="55556.html#55692">Handler_RoomSixteen_RowHigh</a> if the player row is 17.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55673"></span>55673</td>
+<td class="instruction">JR Z,<a href="55556.html#55692">Handler_RoomSixteen_RowHigh</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55675"></span>55675</td>
+<td class="instruction">CALL <a href="62506.html#62515">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="3">Jump to <a href="55556.html#55692">Handler_RoomSixteen_RowHigh</a> if <a href="62506.html#62515">JumpTable_GetRandomNumber</a> is 128 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55678"></span>55678</td>
+<td class="instruction">CP 128</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55680"></span>55680</td>
+<td class="instruction">JR NC,<a href="55556.html#55692">Handler_RoomSixteen_RowHigh</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSixteen_RowLow</td>
+<td class="address-2"><span id="55682"></span>55682</td>
+<td class="instruction">LD (IX+1),19</td>
+<td class="comment-1" rowspan="2">Write row 19 into the actor.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55686"></span>55686</td>
+<td class="instruction">LD (IX+11),19</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55690"></span>55690</td>
+<td class="instruction">JR <a href="55556.html#55700">Handler_RoomSixteen_Draw</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55556.html#55700">Handler_RoomSixteen_Draw</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSixteen_RowHigh</td>
+<td class="address-2"><span id="55692"></span>55692</td>
+<td class="instruction">LD (IX+1),16</td>
+<td class="comment-1" rowspan="2">Write row 16 into the actor.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55696"></span>55696</td>
+<td class="instruction">LD (IX+11),16</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSixteen_Draw</td>
+<td class="address-2"><span id="55700"></span>55700</td>
+<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62536">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55703"></span>55703</td>
+<td class="instruction">CALL <a href="62500.html">JumpTable_StorePosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62500.html">JumpTable_StorePosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55706"></span>55706</td>
+<td class="instruction">CALL <a href="62506.html#62530">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62530">JumpTable_MoveEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55709"></span>55709</td>
+<td class="instruction">CALL <a href="62506.html#62539">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62539">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55712"></span>55712</td>
+<td class="instruction">CALL <a href="62506.html#62542">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62542">JumpTable_EraseEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55715"></span>55715</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="4">Deactivate the actor once column 35 is passed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55718"></span>55718</td>
+<td class="instruction">CP 35</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55720"></span>55720</td>
+<td class="instruction">JR C,<a href="55556.html#55726">Handler_RoomSixteen_Done</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55722"></span>55722</td>
+<td class="instruction">LD (IX+0),128</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSixteen_Done</td>
+<td class="address-2"><span id="55726"></span>55726</td>
+<td class="instruction">LD BC,289</td>
+<td class="comment-1" rowspan="2">Write 289 to *<a href="25625.html#25627">ClipWindow_MinimumColumn</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55729"></span>55729</td>
+<td class="instruction">LD (25627),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55733"></span>55733</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55444.html">55444</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55556">Map</a></td>
+<td class="next">
+Next: <a href="55734.html">55734</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/D904.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

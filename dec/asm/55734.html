@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 55734</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55556.html">55556</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55734">Map</a></td>
+<td class="next">
+Next: <a href="55871.html">55871</a>
+</td>
+</tr>
+</table>
+<div class="description">55734: Handler: Room Seven</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Two bats in room 7 stored at <a href="25677.html">SpecialActor</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven</td>
+<td class="address-2"><span id="55734"></span>55734</td>
+<td class="instruction">LD IX,25677</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="25677.html">SpecialActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55738"></span>55738</td>
+<td class="instruction">LD A,(25762)</td>
+<td class="comment-1" rowspan="2">Return if *<a href="25762.html">CurrentRoom</a> is not 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55741"></span>55741</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55743"></span>55743</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="3">Write 14 to *<a href="25625.html#25626">ClipWindow_MaximumRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55744"></span>55744</td>
+<td class="instruction">LD A,14</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55746"></span>55746</td>
+<td class="instruction">LD (25626),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55749"></span>55749</td>
+<td class="instruction">LD B,2</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=2.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven_Loop</td>
+<td class="address-2"><span id="55751"></span>55751</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the bat count on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55752"></span>55752</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55734.html#55787">Handler_RoomSeven_Move</a> if this bat is already active.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55755"></span>55755</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55757"></span>55757</td>
+<td class="instruction">JR Z,<a href="55734.html#55787">Handler_RoomSeven_Move</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55759"></span>55759</td>
+<td class="instruction">CALL <a href="62506.html#62515">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="3">Jump to <a href="55734.html#55815">Handler_RoomSeven_Next</a> if <a href="62506.html#62515">JumpTable_GetRandomNumber</a> is 190 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55762"></span>55762</td>
+<td class="instruction">CP 190</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55764"></span>55764</td>
+<td class="instruction">JR NC,<a href="55734.html#55815">Handler_RoomSeven_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55766"></span>55766</td>
+<td class="instruction">AND 15</td>
+<td class="comment-1" rowspan="8">Spawn the bat with sprite 231.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55768"></span>55768</td>
+<td class="instruction">ADD A,9</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55770"></span>55770</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55771"></span>55771</td>
+<td class="instruction">LD B,25</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55773"></span>55773</td>
+<td class="instruction">LD DE,257</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55776"></span>55776</td>
+<td class="instruction">LD L,70</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55778"></span>55778</td>
+<td class="instruction">LD A,231</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55780"></span>55780</td>
+<td class="instruction">CALL <a href="62506.html#62551">JumpTable_SpawnEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55783"></span>55783</td>
+<td class="instruction">LD (IX+9),250</td>
+<td class="comment-1" rowspan="1">Write 250 to the bat timer.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven_Move</td>
+<td class="address-2"><span id="55787"></span>55787</td>
+<td class="instruction">LD A,(IX+1)</td>
+<td class="comment-1" rowspan="4">Deactivate the bat if it has reached row 12.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55790"></span>55790</td>
+<td class="instruction">CP 12</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55792"></span>55792</td>
+<td class="instruction">JR NZ,<a href="55734.html#55800">Handler_RoomSeven_Draw</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55794"></span>55794</td>
+<td class="instruction">SET 7,(IX+0)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55798"></span>55798</td>
+<td class="instruction">JR <a href="55734.html#55815">Handler_RoomSeven_Next</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55734.html#55815">Handler_RoomSeven_Next</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven_Draw</td>
+<td class="address-2"><span id="55800"></span>55800</td>
+<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62536">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55803"></span>55803</td>
+<td class="instruction">CALL <a href="62500.html">JumpTable_StorePosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62500.html">JumpTable_StorePosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55806"></span>55806</td>
+<td class="instruction">CALL <a href="62506.html#62530">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62530">JumpTable_MoveEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55809"></span>55809</td>
+<td class="instruction">CALL <a href="62506.html#62539">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62539">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55812"></span>55812</td>
+<td class="instruction">CALL <a href="62506.html#62542">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62542">JumpTable_EraseEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven_Next</td>
+<td class="address-2"><span id="55815"></span>55815</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the bat count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55816"></span>55816</td>
+<td class="instruction">LD DE,14</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0014.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55819"></span>55819</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55821"></span>55821</td>
+<td class="instruction">DJNZ <a href="55734.html#55751">Handler_RoomSeven_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the bat count and loop back to <a href="55734.html#55751">Handler_RoomSeven_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55823"></span>55823</td>
+<td class="instruction">LD A,2</td>
+<td class="comment-1" rowspan="2">Write 2 to *<a href="25625.html#25626">ClipWindow_MaximumRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55825"></span>55825</td>
+<td class="instruction">LD (25626),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55828"></span>55828</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="55829"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="54700.html">Initialise_Game</a> and <a href="56265.html">Handler_InventoryItems</a>.
+</div>
+<div class="paragraph">
+Draw the collected-item icons along the top of the screen.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_CollectionBar</td>
+<td class="address-2"><span id="55829"></span>55829</td>
+<td class="instruction">LD HL,31856</td>
+<td class="comment-1" rowspan="2">Write <a href="31856.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55832"></span>55832</td>
+<td class="instruction">LD (23606),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55835"></span>55835</td>
+<td class="instruction">LD BC,281</td>
+<td class="comment-1" rowspan="2">Call <a href="62506.html#62509">JumpTable_SetPrintPosition</a> at column 1 row 25.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55838"></span>55838</td>
+<td class="instruction">CALL <a href="62506.html#62509">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55841"></span>55841</td>
+<td class="instruction">LD B,0</td>
+<td class="comment-1" rowspan="3">Write WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55843"></span>55843</td>
+<td class="instruction">LD A,7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55845"></span>55845</td>
+<td class="instruction">LD (23695),A</td>
+</tr>
+<tr>
+<td class="asm-label">Print_CollectionBar_Loop</td>
+<td class="address-2"><span id="55848"></span>55848</td>
+<td class="instruction">LD A,(25761)</td>
+<td class="comment-1" rowspan="5">Highlight the current icon in BLACK.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55851"></span>55851</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55852"></span>55852</td>
+<td class="instruction">JR NZ,<a href="55734.html#55859">Print_CollectionBar_Glyph</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55854"></span>55854</td>
+<td class="instruction">LD A,56</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55856"></span>55856</td>
+<td class="instruction">LD (23695),A</td>
+</tr>
+<tr>
+<td class="asm-label">Print_CollectionBar_Glyph</td>
+<td class="address-2"><span id="55859"></span>55859</td>
+<td class="instruction">LD A,228</td>
+<td class="comment-1" rowspan="2">Print glyph 228.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55861"></span>55861</td>
+<td class="instruction">CALL <a href="62506.html#62518">JumpTable_PrintCharacter</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55864"></span>55864</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55734.html#55848">Print_CollectionBar_Loop</a> until 16 icons are printed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55865"></span>55865</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55866"></span>55866</td>
+<td class="instruction">CP 16</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55868"></span>55868</td>
+<td class="instruction">JR NZ,<a href="55734.html#55848">Print_CollectionBar_Loop</a></td>
+<td class="comment-1" rowspan="2">Return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55870"></span>55870</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55556.html">55556</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55734">Map</a></td>
+<td class="next">
+Next: <a href="55871.html">55871</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/D9B6.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

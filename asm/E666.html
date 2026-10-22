@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at E666</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E65B.html">E65B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e666">Map</a></td>
+<td class="next">
+Next: <a href="E6EC.html">E6EC</a>
+</td>
+</tr>
+</table>
+<div class="description">E666: Play Tune</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="E46C.html">Handler_Interrupts</a> and <a href="E51D.html">Animate_Introduction</a>.
+</div>
+<div class="paragraph">
+Plays one note from <a href="B370.html">Data_TuneStream</a> / <a href="B491.html">Data_TuneStreamCopy</a> through the speaker. <span class="register">BC</span> is the note length (1106 in-game, 0A14 on the introduction).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e666"></span>
+<div class="comments">
+<div class="paragraph">
+<audio controls="" src="../audio/theme-tune.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/theme-tune.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Play_Tune</td>
+<td class="address-2"><span id="e666"></span>E666</td>
+<td class="instruction">LD A,($647C)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="F42A.html#f430">JumpTable_Delay</a> if *<a href="647C.html">SkipDelayFlag</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e669"></span>E669</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e66a"></span>E66A</td>
+<td class="instruction">JP NZ,<a href="F42A.html#f430">JumpTable_Delay</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e66d"></span>E66D</td>
+<td class="instruction">LD HL,($6469)</td>
+<td class="comment-1" rowspan="8">Read the next <a href="B370.html">Data_TuneStream</a> byte, wrapping at FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e670"></span>E670</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e671"></span>E671</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e673"></span>E673</td>
+<td class="instruction">JR NZ,<a href="E666.html#e67f">Play_Tune_StorePitch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e675"></span>E675</td>
+<td class="instruction">LD HL,$B491</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e678"></span>E678</td>
+<td class="instruction">LD ($646B),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e67b"></span>E67B</td>
+<td class="instruction">LD HL,$B370</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e67e"></span>E67E</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label">Play_Tune_StorePitch</td>
+<td class="address-2"><span id="e67f"></span>E67F</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="12">Store the pitch and read the matching <a href="B491.html">Data_TuneStreamCopy</a> duration.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e680"></span>E680</td>
+<td class="instruction">LD ($6469),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e683"></span>E683</td>
+<td class="instruction">LD ($646D),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e686"></span>E686</td>
+<td class="instruction">LD HL,($646B)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e689"></span>E689</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e68a"></span>E68A</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e68b"></span>E68B</td>
+<td class="instruction">LD ($646B),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e68e"></span>E68E</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e68f"></span>E68F</td>
+<td class="instruction">LD E,$01</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e691"></span>E691</td>
+<td class="instruction">LD A,($646D)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e694"></span>E694</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e695"></span>E695</td>
+<td class="instruction">LD L,$01</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e697"></span>E697</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="5">Jump to <a href="E666.html#e6d7">Play_Tune_Rest</a> if this is a rest.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e698"></span>E698</td>
+<td class="instruction">JP NZ,<a href="E666.html#e69f">Play_Tune_Tone</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e69b"></span>E69B</td>
+<td class="instruction">LD A,D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e69c"></span>E69C</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e69d"></span>E69D</td>
+<td class="instruction">JR Z,<a href="E666.html#e6d7">Play_Tune_Rest</a></td>
+</tr>
+<tr>
+<td class="asm-label">Play_Tune_Tone</td>
+<td class="address-2"><span id="e69f"></span>E69F</td>
+<td class="instruction">LD A,($641D)</td>
+<td class="comment-1" rowspan="5">Load the border colour and set the half-cycle counters.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6a2"></span>E6A2</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6a3"></span>E6A3</td>
+<td class="instruction">LD A,($641D)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6a6"></span>E6A6</td>
+<td class="instruction">LD IXh,D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6a8"></span>E6A8</td>
+<td class="instruction">LD D,$10</td>
+</tr>
+<tr>
+<td class="asm-label">Play_Tune_Toggle</td>
+<td class="address-2"><span id="e6aa"></span>E6AA</td>
+<td class="instruction">NOP</td>
+<td class="comment-1" rowspan="11">Toggle the speaker and loop back through <a href="E666.html#e6c5">Play_Tune_Hold</a> and <a href="E666.html#e6cc">Play_Tune_Release</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6ab"></span>E6AB</td>
+<td class="instruction">NOP</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6ac"></span>E6AC</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6ad"></span>E6AD</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6ae"></span>E6AE</td>
+<td class="instruction">OUT ($FE),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6b0"></span>E6B0</td>
+<td class="instruction">JR NZ,<a href="E666.html#e6c5">Play_Tune_Hold</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6b2"></span>E6B2</td>
+<td class="instruction">LD E,IXh</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6b4"></span>E6B4</td>
+<td class="instruction">XOR D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6b5"></span>E6B5</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6b6"></span>E6B6</td>
+<td class="instruction">DEC L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6b7"></span>E6B7</td>
+<td class="instruction">JP NZ,<a href="E666.html#e6cc">Play_Tune_Release</a></td>
+</tr>
+<tr>
+<td class="asm-label">Play_Tune_Half</td>
+<td class="address-2"><span id="e6ba"></span>E6BA</td>
+<td class="instruction">OUT ($FE),A</td>
+<td class="comment-1" rowspan="7">Reload the duration and loop back to <a href="E666.html#e6aa">Play_Tune_Toggle</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6bc"></span>E6BC</td>
+<td class="instruction">LD L,H</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6bd"></span>E6BD</td>
+<td class="instruction">XOR D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6be"></span>E6BE</td>
+<td class="instruction">DJNZ <a href="E666.html#e6aa">Play_Tune_Toggle</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6c0"></span>E6C0</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6c1"></span>E6C1</td>
+<td class="instruction">JP NZ,<a href="E666.html#e6aa">Play_Tune_Toggle</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6c4"></span>E6C4</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Play_Tune_Hold</td>
+<td class="address-2"><span id="e6c5"></span>E6C5</td>
+<td class="instruction">JR Z,<a href="E666.html#e6c5">Play_Tune_Hold</a></td>
+<td class="comment-1" rowspan="4">Hold until the inner count expires.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6c7"></span>E6C7</td>
+<td class="instruction">EX AF,AF'</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6c8"></span>E6C8</td>
+<td class="instruction">DEC L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6c9"></span>E6C9</td>
+<td class="instruction">JP Z,<a href="E666.html#e6ba">Play_Tune_Half</a></td>
+</tr>
+<tr>
+<td class="asm-label">Play_Tune_Release</td>
+<td class="address-2"><span id="e6cc"></span>E6CC</td>
+<td class="instruction">OUT ($FE),A</td>
+<td class="comment-1" rowspan="7">Toggle the speaker on the release half-cycle.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6ce"></span>E6CE</td>
+<td class="instruction">NOP</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6cf"></span>E6CF</td>
+<td class="instruction">NOP</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6d0"></span>E6D0</td>
+<td class="instruction">DJNZ <a href="E666.html#e6aa">Play_Tune_Toggle</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6d2"></span>E6D2</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6d3"></span>E6D3</td>
+<td class="instruction">JP NZ,<a href="E666.html#e6aa">Play_Tune_Toggle</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6d6"></span>E6D6</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Play_Tune_Rest</td>
+<td class="address-2"><span id="e6d7"></span>E6D7</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="12">Waste time for a rest.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6d8"></span>E6D8</td>
+<td class="instruction">LD HL,$0000</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6db"></span>E6DB</td>
+<td class="instruction">SRA (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6dd"></span>E6DD</td>
+<td class="instruction">SRA (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6df"></span>E6DF</td>
+<td class="instruction">SRA (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6e1"></span>E6E1</td>
+<td class="instruction">NOP</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6e2"></span>E6E2</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6e3"></span>E6E3</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6e4"></span>E6E4</td>
+<td class="instruction">JP NZ,<a href="E666.html#e6d7">Play_Tune_Rest</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6e7"></span>E6E7</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6e8"></span>E6E8</td>
+<td class="instruction">JP NZ,<a href="E666.html#e6d7">Play_Tune_Rest</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e6eb"></span>E6EB</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E65B.html">E65B</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e666">Map</a></td>
+<td class="next">
+Next: <a href="E6EC.html">E6EC</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/58982.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

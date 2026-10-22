@@ -1,0 +1,1495 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at E1CC</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="DE19.html">DE19</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e1cc">Map</a></td>
+<td class="next">
+Next: <a href="E3DE.html">E3DE</a>
+</td>
+</tr>
+</table>
+<div class="description">E1CC: Handler: Player</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="D7A2.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Moves, collides and draws the player entity at <a href="64A4.html">Player</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player</td>
+<td class="address-2"><span id="e1cc"></span>E1CC</td>
+<td class="instruction">LD A,($646F)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="646F.html">GameActiveFlag</a> is set (demo / intro).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1cf"></span>E1CF</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1d0"></span>E1D0</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1d1"></span>E1D1</td>
+<td class="instruction">LD HL,$B5B1</td>
+<td class="comment-1" rowspan="2">Write <a href="B5B1.html">Graphics_PlayerFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1d4"></span>E1D4</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1d7"></span>E1D7</td>
+<td class="instruction">LD IX,$64A4</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="64A4.html">Player</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1db"></span>E1DB</td>
+<td class="instruction">LD A,($6489)</td>
+<td class="comment-1" rowspan="6">Erase the player while *<a href="6489.html">ActionTimer</a> is running.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1de"></span>E1DE</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1df"></span>E1DF</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1e0"></span>E1E0</td>
+<td class="instruction">CALL NZ,<a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1e3"></span>E1E3</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1e4"></span>E1E4</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1e5"></span>E1E5</td>
+<td class="instruction">LD A,($6435)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e15a">Player_Hit</a> if *<a href="6435.html">Player_HitTimer</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1e8"></span>E1E8</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1e9"></span>E1E9</td>
+<td class="instruction">JP NZ,<a href="DE19.html#e15a">Player_Hit</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1ec"></span>E1EC</td>
+<td class="instruction">LD A,($6410)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DE19.html#e193">Player_JumpAnim</a> if *<a href="6410.html">Player_JumpTimer</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1ef"></span>E1EF</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1f0"></span>E1F0</td>
+<td class="instruction">JP NZ,<a href="DE19.html#e193">Player_JumpAnim</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1f3"></span>E1F3</td>
+<td class="instruction">LD A,($648A)</td>
+<td class="comment-1" rowspan="3">Call <a href="DE19.html#e0ef">Player_ClimbStop</a> if *<a href="648A.html">ClimbRow</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1f6"></span>E1F6</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1f7"></span>E1F7</td>
+<td class="instruction">CALL NZ,<a href="DE19.html#e0ef">Player_ClimbStop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1fa"></span>E1FA</td>
+<td class="instruction">CALL <a href="DE19.html#de96">Build_PlayerMask</a></td>
+<td class="comment-1" rowspan="1">Call <a href="DE19.html#de96">Build_PlayerMask</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e1fd"></span>E1FD</td>
+<td class="instruction">LD A,($6434)</td>
+<td class="comment-1" rowspan="4">Start a fall if *<a href="6434.html">CollisionState</a> is not a collision.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e200"></span>E200</td>
+<td class="instruction">CP $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e202"></span>E202</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e22c">Handler_Player_Apply</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e204"></span>E204</td>
+<td class="instruction">LD (IX+$09),$FC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e208"></span>E208</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IY</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e20a"></span>E20A</td>
+<td class="instruction">LD IY,($6430)</td>
+<td class="comment-1" rowspan="1"><span class="register">IY</span>=*<a href="6430.html">ReferenceActors</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ActorLoop</td>
+<td class="address-2"><span id="e20e"></span>E20E</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e22a">Handler_Player_ActorsDone</a> if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e211"></span>E211</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e213"></span>E213</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e22a">Handler_Player_ActorsDone</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e215"></span>E215</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="E1CC.html#e223">Handler_Player_ActorNext</a> if this actor is inactive.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e217"></span>E217</td>
+<td class="instruction">JR NZ,<a href="E1CC.html#e223">Handler_Player_ActorNext</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e219"></span>E219</td>
+<td class="instruction">CALL <a href="DB05.html#db3f">Test_ActorCollision</a></td>
+<td class="comment-1" rowspan="1">Call <a href="DB05.html#db3f">Test_ActorCollision</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e21c"></span>E21C</td>
+<td class="instruction">LD A,($6434)</td>
+<td class="comment-1" rowspan="3">Stop scanning once *<a href="6434.html">CollisionState</a> is a collision.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e21f"></span>E21F</td>
+<td class="instruction">CP $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e221"></span>E221</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e22a">Handler_Player_ActorsDone</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ActorNext</td>
+<td class="address-2"><span id="e223"></span>E223</td>
+<td class="instruction">LD DE,$000D</td>
+<td class="comment-1" rowspan="2"><span class="register">IY</span>+=000D.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e226"></span>E226</td>
+<td class="instruction">ADD IY,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e228"></span>E228</td>
+<td class="instruction">JR <a href="E1CC.html#e20e">Handler_Player_ActorLoop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E1CC.html#e20e">Handler_Player_ActorLoop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ActorsDone</td>
+<td class="address-2"><span id="e22a"></span>E22A</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">IY</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Apply</td>
+<td class="address-2"><span id="e22c"></span>E22C</td>
+<td class="instruction">LD A,(IX+$09)</td>
+<td class="comment-1" rowspan="6">Probe the ceiling while the vertical delta is negative.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e22f"></span>E22F</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e230"></span>E230</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e246">Handler_Player_Stand</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e232"></span>E232</td>
+<td class="instruction">CP $80</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e234"></span>E234</td>
+<td class="instruction">JR C,<a href="E1CC.html#e246">Handler_Player_Stand</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e236"></span>E236</td>
+<td class="instruction">CALL <a href="DE19.html#de43">Probe_Ceiling</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e239"></span>E239</td>
+<td class="instruction">LD A,($6438)</td>
+<td class="comment-1" rowspan="6">Increase *<a href="6438.html">Player_StandTimer</a> and honour a collision.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e23c"></span>E23C</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e23d"></span>E23D</td>
+<td class="instruction">LD ($6438),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e240"></span>E240</td>
+<td class="instruction">LD A,($6434)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e243"></span>E243</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e244"></span>E244</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e28c">Handler_Player_Resolve</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Stand</td>
+<td class="address-2"><span id="e246"></span>E246</td>
+<td class="instruction">LD A,($6438)</td>
+<td class="comment-1" rowspan="3">Start a hit if *<a href="6438.html">Player_StandTimer</a> reaches 0A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e249"></span>E249</td>
+<td class="instruction">CP $0A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e24b"></span>E24B</td>
+<td class="instruction">JP NC,<a href="DE19.html#e1bc">Player_StartHit</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e24e"></span>E24E</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Clear *<a href="6438.html">Player_StandTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e24f"></span>E24F</td>
+<td class="instruction">LD ($6438),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e252"></span>E252</td>
+<td class="instruction">LD A,($647E)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D7FF.html#d82d">Controls_Kempston</a> if Kempston is selected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e255"></span>E255</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e256"></span>E256</td>
+<td class="instruction">JP NZ,<a href="D7FF.html#d82d">Controls_Kempston</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e259"></span>E259</td>
+<td class="instruction">CALL $028E</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e25c"></span>E25C</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the keypress.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e25d"></span>E25D</td>
+<td class="instruction">LD IX,$64A4</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="64A4.html">Player</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e261"></span>E261</td>
+<td class="instruction">LD HL,$647F</td>
+<td class="comment-1" rowspan="5">Call <a href="DE19.html#df44">Player_MoveLeft</a> if the left key matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e264"></span>E264</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e265"></span>E265</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e266"></span>E266</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df44">Player_MoveLeft</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e269"></span>E269</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e26a"></span>E26A</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="5">Call <a href="DE19.html#df69">Player_MoveRight</a> if the right key matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e26b"></span>E26B</td>
+<td class="instruction">LD HL,$6480</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e26e"></span>E26E</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e26f"></span>E26F</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df69">Player_MoveRight</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e272"></span>E272</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e273"></span>E273</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="5">Call <a href="DE19.html#e06a">Player_ClimbUp</a> if the up key matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e274"></span>E274</td>
+<td class="instruction">LD HL,$6481</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e277"></span>E277</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e278"></span>E278</td>
+<td class="instruction">CALL Z,<a href="DE19.html#e06a">Player_ClimbUp</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e27b"></span>E27B</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e27c"></span>E27C</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="5">Call <a href="DE19.html#e013">Player_ClimbDown</a> if the down key matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e27d"></span>E27D</td>
+<td class="instruction">LD HL,$6482</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e280"></span>E280</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e281"></span>E281</td>
+<td class="instruction">CALL Z,<a href="DE19.html#e013">Player_ClimbDown</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e284"></span>E284</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e285"></span>E285</td>
+<td class="instruction">LD HL,$6483</td>
+<td class="comment-1" rowspan="3">Call <a href="DE19.html#df8e">Player_Action</a> if the action key matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e288"></span>E288</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e289"></span>E289</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df8e">Player_Action</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e28c"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="D7FF.html">Handler_Housekeeping</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Resolve</td>
+<td class="address-2"><span id="e28c"></span>E28C</td>
+<td class="instruction">LD A,($648A)</td>
+<td class="comment-1" rowspan="3">Fall through to <a href="E1CC.html#e292">Handler_Player_Draw</a> when *<a href="648A.html">ClimbRow</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e28f"></span>E28F</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e290"></span>E290</td>
+<td class="instruction">JR NZ,<a href="E1CC.html#e292">Handler_Player_Draw</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e292"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="DE19.html">Handler_Combination</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Draw</td>
+<td class="address-2"><span id="e292"></span>E292</td>
+<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e295"></span>
+<div class="comments">
+<div class="paragraph">
+Start a fall if the new row is off the bottom of the room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e295"></span>E295</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e2aa">Handler_Player_Collision</a> unless the new row is 1B.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e296"></span>E296</td>
+<td class="instruction">CP $1B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e298"></span>E298</td>
+<td class="instruction">JR NZ,<a href="E1CC.html#e2aa">Handler_Player_Collision</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e29a"></span>E29A</td>
+<td class="instruction">LD (IX+$09),$FC</td>
+<td class="comment-1" rowspan="1">Write FC as the vertical delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e29e"></span>E29E</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Write 00 to *<a href="6434.html">CollisionState</a> and *<a href="6410.html">Player_JumpTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e29f"></span>E29F</td>
+<td class="instruction">LD ($6434),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2a2"></span>E2A2</td>
+<td class="instruction">LD ($6410),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2a5"></span>E2A5</td>
+<td class="instruction">LD A,$0C</td>
+<td class="comment-1" rowspan="2">Write 0C to *<a href="6438.html">Player_StandTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2a7"></span>E2A7</td>
+<td class="instruction">LD ($6438),A</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Collision</td>
+<td class="address-2"><span id="e2aa"></span>E2AA</td>
+<td class="instruction">LD A,($6434)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a> if *<a href="6434.html">CollisionState</a> is a collision.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2ad"></span>E2AD</td>
+<td class="instruction">CP $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2af"></span>E2AF</td>
+<td class="instruction">JP Z,<a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e2b2"></span>
+<div class="comments">
+<div class="paragraph">
+Probe the tiles above while the player is jumping.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2b2"></span>E2B2</td>
+<td class="instruction">LD A,($6410)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e2e2">Handler_Player_Horizontal</a> if *<a href="6410.html">Player_JumpTimer</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2b5"></span>E2B5</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2b6"></span>E2B6</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e2e2">Handler_Player_Horizontal</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2b8"></span>E2B8</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e2e2">Handler_Player_Horizontal</a> if the row has not changed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2b9"></span>E2B9</td>
+<td class="instruction">CP (IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2bc"></span>E2BC</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e2e2">Handler_Player_Horizontal</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2be"></span>E2BE</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="5"><span class="register">A</span>=03 or 02 when fine-Y is 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2bf"></span>E2BF</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2c1"></span>E2C1</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2c3"></span>E2C3</td>
+<td class="instruction">ADC A,$02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2c5"></span>E2C5</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2c6"></span>E2C6</td>
+<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+<td class="comment-1" rowspan="5">Convert that cell into a <a href="5DCE.html">Buffer_RoomTiles</a> pointer.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2c9"></span>E2C9</td>
+<td class="instruction">LD DE,$5DCE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2cc"></span>E2CC</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2cd"></span>E2CD</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2ce"></span>E2CE</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ProbeUp</td>
+<td class="address-2"><span id="e2cf"></span>E2CF</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e2df">Handler_Player_ProbeUpNext</a> if this tile is solid (10 or higher).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2d0"></span>E2D0</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2d2"></span>E2D2</td>
+<td class="instruction">JR NC,<a href="E1CC.html#e2df">Handler_Player_ProbeUpNext</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2d4"></span>E2D4</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Clear the vertical delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2d5"></span>E2D5</td>
+<td class="instruction">LD (IX+$09),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2d8"></span>E2D8</td>
+<td class="instruction">INC BC</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e33f">Handler_Player_ProbeLeftTest</a> until the probe count is zero, then clear the sprite.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2d9"></span>E2D9</td>
+<td class="instruction">DJNZ <a href="E1CC.html#e33f">Handler_Player_ProbeLeftTest</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2db"></span>E2DB</td>
+<td class="instruction">LD (IX+$06),$00</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ProbeUpNext</td>
+<td class="address-2"><span id="e2df"></span>E2DF</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Advance the tile pointer and loop back to <a href="E1CC.html#e2cf">Handler_Player_ProbeUp</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2e0"></span>E2E0</td>
+<td class="instruction">DJNZ <a href="E1CC.html#e2cf">Handler_Player_ProbeUp</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e2e2"></span>
+<div class="comments">
+<div class="paragraph">
+Probe the tiles to the right while moving right.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Horizontal</td>
+<td class="address-2"><span id="e2e2"></span>E2E2</td>
+<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2e5"></span>E2E5</td>
+<td class="instruction">LD A,(IX+$08)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e322">Handler_Player_Left</a> if the horizontal delta is negative.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2e8"></span>E2E8</td>
+<td class="instruction">CP $80</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2ea"></span>E2EA</td>
+<td class="instruction">JR NC,<a href="E1CC.html#e322">Handler_Player_Left</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2ec"></span>E2EC</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a> if the column has not changed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2ed"></span>E2ED</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2f0"></span>E2F0</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2f2"></span>E2F2</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="5"><span class="register">A</span>=04 or 03 when fine-Y is 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2f3"></span>E2F3</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2f5"></span>E2F5</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2f7"></span>E2F7</td>
+<td class="instruction">ADC A,$03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2f9"></span>E2F9</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2fa"></span>E2FA</td>
+<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+<td class="comment-1" rowspan="6">Convert that cell into a <a href="5DCE.html">Buffer_RoomTiles</a> pointer.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e2fd"></span>E2FD</td>
+<td class="instruction">LD DE,$5DCE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e300"></span>E300</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e301"></span>E301</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e302"></span>E302</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e303"></span>E303</td>
+<td class="instruction">LD DE,$0020</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ProbeRight</td>
+<td class="address-2"><span id="e306"></span>E306</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e31d">Handler_Player_ProbeRightNext</a> if this tile is solid (10 or higher).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e307"></span>E307</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e309"></span>E309</td>
+<td class="instruction">JR NC,<a href="E1CC.html#e31d">Handler_Player_ProbeRightNext</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e30b"></span>E30B</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Clear the horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e30c"></span>E30C</td>
+<td class="instruction">LD (IX+$08),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e30f"></span>E30F</td>
+<td class="instruction">LD A,($6410)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e31d">Handler_Player_ProbeRightNext</a> if *<a href="6410.html">Player_JumpTimer</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e312"></span>E312</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e313"></span>E313</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e31d">Handler_Player_ProbeRightNext</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e315"></span>E315</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Write 00 to *<a href="6410.html">Player_JumpTimer</a> and clear the sprite.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e316"></span>E316</td>
+<td class="instruction">LD ($6410),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e319"></span>E319</td>
+<td class="instruction">LD (IX+$06),$00</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ProbeRightNext</td>
+<td class="address-2"><span id="e31d"></span>E31D</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="3">Step down one row and loop back to <a href="E1CC.html#e306">Handler_Player_ProbeRight</a>, then jump to <a href="E1CC.html#e358">Handler_Player_Commit</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e31e"></span>E31E</td>
+<td class="instruction">DJNZ <a href="E1CC.html#e306">Handler_Player_ProbeRight</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e320"></span>E320</td>
+<td class="instruction">JR <a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e322"></span>
+<div class="comments">
+<div class="paragraph">
+Probe the tiles to the left while moving left.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Left</td>
+<td class="address-2"><span id="e322"></span>E322</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a> if the column has not changed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e323"></span>E323</td>
+<td class="instruction">CP (IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e326"></span>E326</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e328"></span>E328</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="7">Point two columns left; <span class="register">A</span>=04 or 03 when fine-Y is 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e329"></span>E329</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e32a"></span>E32A</td>
+<td class="instruction">LD A,D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e32b"></span>E32B</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e32d"></span>E32D</td>
+<td class="instruction">LD A,$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e32f"></span>E32F</td>
+<td class="instruction">ADC A,$03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e331"></span>E331</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e332"></span>E332</td>
+<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+<td class="comment-1" rowspan="6">Convert that cell into a <a href="5DCE.html">Buffer_RoomTiles</a> pointer.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e335"></span>E335</td>
+<td class="instruction">LD DE,$5DCE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e338"></span>E338</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e339"></span>E339</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e33a"></span>E33A</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e33b"></span>E33B</td>
+<td class="instruction">LD DE,$0020</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ProbeLeft</td>
+<td class="address-2"><span id="e33e"></span>E33E</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e355">Handler_Player_ProbeLeftNext</a> if this tile is solid (10 or higher).</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ProbeLeftTest</td>
+<td class="address-2"><span id="e33f"></span>E33F</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e341"></span>E341</td>
+<td class="instruction">JR NC,<a href="E1CC.html#e355">Handler_Player_ProbeLeftNext</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e343"></span>E343</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Clear the horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e344"></span>E344</td>
+<td class="instruction">LD (IX+$08),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e347"></span>E347</td>
+<td class="instruction">LD A,($6410)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="E1CC.html#e355">Handler_Player_ProbeLeftNext</a> if *<a href="6410.html">Player_JumpTimer</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e34a"></span>E34A</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e34b"></span>E34B</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e355">Handler_Player_ProbeLeftNext</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e34d"></span>E34D</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Write 00 to *<a href="6410.html">Player_JumpTimer</a> and clear the sprite.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e34e"></span>E34E</td>
+<td class="instruction">LD ($6410),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e351"></span>E351</td>
+<td class="instruction">LD (IX+$06),$00</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ProbeLeftNext</td>
+<td class="address-2"><span id="e355"></span>E355</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2">Step down one row and loop back to <a href="E1CC.html#e33e">Handler_Player_ProbeLeft</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e356"></span>E356</td>
+<td class="instruction">DJNZ <a href="E1CC.html#e33e">Handler_Player_ProbeLeft</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e358"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="D7FF.html">Handler_Housekeeping</a> and <a href="DE19.html">Handler_Combination</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Commit</td>
+<td class="address-2"><span id="e358"></span>E358</td>
+<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e35b"></span>E35B</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="5">Jump to <a href="E1CC.html#e398">Handler_Player_ClearDeltas</a> if the new column is off-screen.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e35c"></span>E35C</td>
+<td class="instruction">CP $22</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e35e"></span>E35E</td>
+<td class="instruction">JP Z,<a href="E1CC.html#e398">Handler_Player_ClearDeltas</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e361"></span>E361</td>
+<td class="instruction">CP $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e363"></span>E363</td>
+<td class="instruction">JP Z,<a href="E1CC.html#e398">Handler_Player_ClearDeltas</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e366"></span>E366</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="6">Start a fall if the new row is 1A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e367"></span>E367</td>
+<td class="instruction">CP $1A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e369"></span>E369</td>
+<td class="instruction">JR NZ,<a href="E1CC.html#e373">Handler_Player_Paint</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e36b"></span>E36B</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e36c"></span>E36C</td>
+<td class="instruction">LD ($6410),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e36f"></span>E36F</td>
+<td class="instruction">LD (IX+$09),$FC</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Paint</td>
+<td class="address-2"><span id="e373"></span>E373</td>
+<td class="instruction">CALL <a href="F424.html">JumpTable_StorePosition</a></td>
+<td class="comment-1" rowspan="3">Store, move and draw the player.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e376"></span>E376</td>
+<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e379"></span>E379</td>
+<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e37c"></span>E37C</td>
+<td class="instruction">LD A,($6434)</td>
+<td class="comment-1" rowspan="5">Draw a collided actor through <a href="F42A.html#f45a">JumpTable_DrawActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e37f"></span>E37F</td>
+<td class="instruction">CP $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e381"></span>E381</td>
+<td class="instruction">JR NZ,<a href="E1CC.html#e38a">Handler_Player_Reset</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e383"></span>E383</td>
+<td class="instruction">LD IX,($644B)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e387"></span>E387</td>
+<td class="instruction">CALL <a href="F42A.html#f45a">JumpTable_DrawActor</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Reset</td>
+<td class="address-2"><span id="e38a"></span>E38A</td>
+<td class="instruction">LD IX,$64A4</td>
+<td class="comment-1" rowspan="10">Clear movement when the player is not jumping.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e38e"></span>E38E</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e38f"></span>E38F</td>
+<td class="instruction">LD ($6434),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e392"></span>E392</td>
+<td class="instruction">LD A,($6410)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e395"></span>E395</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e396"></span>E396</td>
+<td class="instruction">JR NZ,<a href="E1CC.html#e3a4">Handler_Player_Floor</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_ClearDeltas</td>
+<td class="address-2"><span id="e398"></span>E398</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e399"></span>E399</td>
+<td class="instruction">LD ($6410),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e39c"></span>E39C</td>
+<td class="instruction">LD (IX+$08),$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3a0"></span>E3A0</td>
+<td class="instruction">LD (IX+$09),$00</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Floor</td>
+<td class="address-2"><span id="e3a4"></span>E3A4</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="6">Jump to <a href="DE19.html#defb">Award_Action</a> when standing on the floor.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3a7"></span>E3A7</td>
+<td class="instruction">CP $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3a9"></span>E3A9</td>
+<td class="instruction">JR Z,<a href="E1CC.html#e3b0">Handler_Player_Award</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3ab"></span>E3AB</td>
+<td class="instruction">LD A,($6411)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3ae"></span>E3AE</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3af"></span>E3AF</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Player_Award</td>
+<td class="address-2"><span id="e3b0"></span>E3B0</td>
+<td class="instruction">JP <a href="DE19.html#defb">Award_Action</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DE19.html#defb">Award_Action</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e3b3"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="D5AC.html">Initialise_Game</a>.
+</div>
+<div class="paragraph">
+Clear the play area and the room buffers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Clear_PlayArea</td>
+<td class="address-2"><span id="e3b3"></span>E3B3</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write BLACK to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3b4"></span>E3B4</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3b7"></span>E3B7</td>
+<td class="instruction">CALL $1CAD</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/1CAD.html">CL_ALL</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3ba"></span>E3BA</td>
+<td class="instruction">LD HL,$5DCE</td>
+<td class="comment-1" rowspan="9">Write 00 to the 0320 bytes at <a href="5DCE.html">Buffer_RoomTiles</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3bd"></span>E3BD</td>
+<td class="instruction">LD BC,$0320</td>
+</tr>
+<tr>
+<td class="asm-label">Clear_PlayArea_TileLoop</td>
+<td class="address-2"><span id="e3c0"></span>E3C0</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c1"></span>E3C1</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c2"></span>E3C2</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c3"></span>E3C3</td>
+<td class="instruction">DEC BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c4"></span>E3C4</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c5"></span>E3C5</td>
+<td class="instruction">OR C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c6"></span>E3C6</td>
+<td class="instruction">JR NZ,<a href="E1CC.html#e3c0">Clear_PlayArea_TileLoop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3c8"></span>E3C8</td>
+<td class="instruction">LD BC,$0320</td>
+<td class="comment-1" rowspan="9">Fill <a href="60EE.html">Buffer_RoomAttributes</a> with *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3cb"></span>E3CB</td>
+<td class="instruction">LD HL,$60EE</td>
+</tr>
+<tr>
+<td class="asm-label">Clear_PlayArea_AttributeLoop</td>
+<td class="address-2"><span id="e3ce"></span>E3CE</td>
+<td class="instruction">LD A,($5C8F)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d1"></span>E3D1</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d2"></span>E3D2</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d3"></span>E3D3</td>
+<td class="instruction">DEC BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d4"></span>E3D4</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d5"></span>E3D5</td>
+<td class="instruction">OR C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d6"></span>E3D6</td>
+<td class="instruction">JR NZ,<a href="E1CC.html#e3ce">Clear_PlayArea_AttributeLoop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3d8"></span>E3D8</td>
+<td class="instruction">LD B,$18</td>
+<td class="comment-1" rowspan="2">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/0E44.html">CL_LINE</a> for 18 lines.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3da"></span>E3DA</td>
+<td class="instruction">CALL $0E44</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e3dd"></span>E3DD</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/asm/EBD8.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="DE19.html">DE19</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e1cc">Map</a></td>
+<td class="next">
+Next: <a href="E3DE.html">E3DE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/57804.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

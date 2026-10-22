@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 56265</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56069.html">56069</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56265">Map</a></td>
+<td class="next">
+Next: <a href="56358.html">56358</a>
+</td>
+</tr>
+</table>
+<div class="description">56265: Handler: Inventory Items</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Picks up a two-byte record when the player stands on it.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_InventoryItems</td>
+<td class="address-2"><span id="56265"></span>56265</td>
+<td class="instruction">LD HL,31856</td>
+<td class="comment-1" rowspan="2">Write <a href="31856.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56268"></span>56268</td>
+<td class="instruction">LD (23606),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56271"></span>56271</td>
+<td class="instruction">LD IX,(25638)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25638.html">ReferenceInventoryItems</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56275"></span>56275</td>
+<td class="instruction">LD A,(25764)</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=*<a href="25764.html">Player</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56278"></span>56278</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1">Copy the player column into <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_InventoryItems_Loop</td>
+<td class="address-2"><span id="56279"></span>56279</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="2">Return if the terminator 255 is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56282"></span>56282</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56284"></span>56284</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> if this item is already taken.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56285"></span>56285</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56287"></span>56287</td>
+<td class="instruction">JR NZ,<a href="56265.html#56352">Handler_InventoryItems_Next</a></td>
+<td class="comment-1" rowspan="5">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> unless the player column matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56289"></span>56289</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56290"></span>56290</td>
+<td class="instruction">JR Z,<a href="56265.html#56296">Handler_InventoryItems_Row</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56292"></span>56292</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56293"></span>56293</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56294"></span>56294</td>
+<td class="instruction">JR NZ,<a href="56265.html#56352">Handler_InventoryItems_Next</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_InventoryItems_Row</td>
+<td class="address-2"><span id="56296"></span>56296</td>
+<td class="instruction">LD A,(25765)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> unless the player row matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56299"></span>56299</td>
+<td class="instruction">CP (IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56302"></span>56302</td>
+<td class="instruction">JR NZ,<a href="56265.html#56352">Handler_InventoryItems_Next</a></td>
+<td class="comment-1" rowspan="4">Clear a 2 by 2 hole in the tile buffer.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56304"></span>56304</td>
+<td class="instruction">LD C,(IX+0)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56307"></span>56307</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56310"></span>56310</td>
+<td class="instruction">CALL <a href="62506.html#62524">JumpTable_ConvertCoordinate</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56313"></span>56313</td>
+<td class="instruction">LD DE,24014</td>
+<td class="comment-1" rowspan="4">Mark the record collected.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56316"></span>56316</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56317"></span>56317</td>
+<td class="instruction">LD BC,514</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56320"></span>56320</td>
+<td class="instruction">LD A,200</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56322"></span>56322</td>
+<td class="instruction">CALL <a href="62506.html#62548">JumpTable_FillAttributes</a></td>
+<td class="comment-1" rowspan="3">Increase *<a href="25761.html">CollectedCount</a> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56325"></span>56325</td>
+<td class="instruction">LD A,(IX+0)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56328"></span>56328</td>
+<td class="instruction">OR 128</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56330"></span>56330</td>
+<td class="instruction">LD (IX+0),A</td>
+<td class="comment-1" rowspan="4">Call <a href="58476.html#58625">Sound_Pickup</a> (pickup sound).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56333"></span>56333</td>
+<td class="instruction">LD A,(25761)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56336"></span>56336</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56337"></span>56337</td>
+<td class="instruction">LD (25761),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56340"></span>56340</td>
+<td class="instruction">LD BC,50</td>
+<td class="comment-1" rowspan="4">Jump to <a href="55734.html#55829">Print_CollectionBar</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56343"></span>56343</td>
+<td class="instruction">LD DE,25</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56346"></span>56346</td>
+<td class="instruction">CALL <a href="58476.html#58625">Sound_Pickup</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56349"></span>56349</td>
+<td class="instruction">JP <a href="55734.html#55829">Print_CollectionBar</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_InventoryItems_Next</td>
+<td class="address-2"><span id="56352"></span>56352</td>
+<td class="instruction">INC IX</td>
+<td class="comment-1" rowspan="2">Increase <span class="register">IX</span> by two.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56354"></span>56354</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56356"></span>56356</td>
+<td class="instruction">JR <a href="56265.html#56279">Handler_InventoryItems_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="56265.html#56279">Handler_InventoryItems_Loop</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56069.html">56069</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56265">Map</a></td>
+<td class="next">
+Next: <a href="56358.html">56358</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DBC9.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

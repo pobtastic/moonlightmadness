@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at E51D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E46C.html">E46C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e51d">Map</a></td>
+<td class="next">
+Next: <a href="E63A.html">E63A</a>
+</td>
+</tr>
+</table>
+<div class="description">E51D: Animate Introduction</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="D5AC.html">Initialise_Game</a>.
+</div>
+<div class="paragraph">
+Animates the bats and moon on the introduction screen until a key is pressed or *<a href="6470.html">PauseTimer</a> reaches zero.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction</td>
+<td class="address-2"><span id="e51d"></span>E51D</td>
+<td class="instruction">LD BC,$0A14</td>
+<td class="comment-1" rowspan="2">Call <a href="E666.html">Play_Tune</a> with note length 0A14.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e520"></span>E520</td>
+<td class="instruction">CALL <a href="E666.html">Play_Tune</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e523"></span>E523</td>
+<td class="instruction">LD BC,($6470)</td>
+<td class="comment-1" rowspan="5">Decrease *<a href="6470.html">PauseTimer</a> and jump to <a href="E65B.html">Start_DemoGame</a> when it is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e527"></span>E527</td>
+<td class="instruction">DEC BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e528"></span>E528</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e529"></span>E529</td>
+<td class="instruction">OR C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e52a"></span>E52A</td>
+<td class="instruction">JP Z,<a href="E65B.html">Start_DemoGame</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e52d"></span>E52D</td>
+<td class="instruction">LD ($6470),BC</td>
+<td class="comment-1" rowspan="5">Call <a href="F42A.html#f430">JumpTable_Delay</a> when *<a href="647C.html">SkipDelayFlag</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e531"></span>E531</td>
+<td class="instruction">LD A,($647C)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e534"></span>E534</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e535"></span>E535</td>
+<td class="instruction">LD B,$19</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e537"></span>E537</td>
+<td class="instruction">CALL NZ,<a href="F42A.html#f430">JumpTable_Delay</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e53a"></span>
+<div class="comments">
+<div class="paragraph">
+Advance the four frame pointers and draw them across the moon.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e53a"></span>E53A</td>
+<td class="instruction">LD HL,($E632)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="E51D.html#e632">Pointer_IntroFrame1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e53d"></span>E53D</td>
+<td class="instruction">LD DE,$0004</td>
+<td class="comment-1" rowspan="2">Add 0004.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e540"></span>E540</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e541"></span>E541</td>
+<td class="instruction">LD DE,$D4C1</td>
+<td class="comment-1" rowspan="6">Jump to <a href="E51D.html#e54e">Animate_Introduction_Frame1</a> unless the pointer has reached <a href="D4C1.html">SourceCodeRemnants</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e544"></span>E544</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e545"></span>E545</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e546"></span>E546</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e548"></span>E548</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e549"></span>E549</td>
+<td class="instruction">JR NZ,<a href="E51D.html#e54e">Animate_Introduction_Frame1</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e54b"></span>E54B</td>
+<td class="instruction">LD HL,$D381</td>
+<td class="comment-1" rowspan="1">Reset the pointer to <a href="D381.html">Graphics_IntroductionFrames</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_Frame1</td>
+<td class="address-2"><span id="e54e"></span>E54E</td>
+<td class="instruction">LD ($E632),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E51D.html#e632">Pointer_IntroFrame1</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e551"></span>E551</td>
+<td class="instruction">LD DE,$4066</td>
+<td class="comment-1" rowspan="2">Draw that frame at 4066.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e554"></span>E554</td>
+<td class="instruction">CALL <a href="E63A.html">Draw_IntroUDG</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e557"></span>E557</td>
+<td class="instruction">LD HL,($E634)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="E51D.html#e634">Pointer_IntroFrame2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e55a"></span>E55A</td>
+<td class="instruction">LD DE,$0002</td>
+<td class="comment-1" rowspan="3">Subtract 0002.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e55d"></span>E55D</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e55e"></span>E55E</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e560"></span>E560</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="5">Jump to <a href="E51D.html#e56c">Animate_Introduction_Frame2</a> unless the pointer has reached <a href="D381.html">D37F</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e561"></span>E561</td>
+<td class="instruction">LD DE,$D37F</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e564"></span>E564</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e566"></span>E566</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e567"></span>E567</td>
+<td class="instruction">JR NZ,<a href="E51D.html#e56c">Animate_Introduction_Frame2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e569"></span>E569</td>
+<td class="instruction">LD HL,$D4C1</td>
+<td class="comment-1" rowspan="1">Reset the pointer to <a href="D4C1.html">SourceCodeRemnants</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_Frame2</td>
+<td class="address-2"><span id="e56c"></span>E56C</td>
+<td class="instruction">LD ($E634),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E51D.html#e634">Pointer_IntroFrame2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e56f"></span>E56F</td>
+<td class="instruction">LD DE,$4068</td>
+<td class="comment-1" rowspan="2">Draw that frame at 4068.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e572"></span>E572</td>
+<td class="instruction">CALL <a href="E63A.html">Draw_IntroUDG</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e575"></span>E575</td>
+<td class="instruction">LD HL,($E636)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="E51D.html#e636">Pointer_IntroFrame3</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e578"></span>E578</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Advance the pointer by two.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e579"></span>E579</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e57a"></span>E57A</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="6">Jump to <a href="E51D.html#e587">Animate_Introduction_Frame3</a> unless the pointer has reached <a href="D4C1.html">SourceCodeRemnants</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e57b"></span>E57B</td>
+<td class="instruction">LD DE,$D4C1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e57e"></span>E57E</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e57f"></span>E57F</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e581"></span>E581</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e582"></span>E582</td>
+<td class="instruction">JR NZ,<a href="E51D.html#e587">Animate_Introduction_Frame3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e584"></span>E584</td>
+<td class="instruction">LD HL,$D381</td>
+<td class="comment-1" rowspan="1">Reset the pointer to <a href="D381.html">Graphics_IntroductionFrames</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_Frame3</td>
+<td class="address-2"><span id="e587"></span>E587</td>
+<td class="instruction">LD ($E636),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E51D.html#e636">Pointer_IntroFrame3</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e58a"></span>E58A</td>
+<td class="instruction">LD DE,$406A</td>
+<td class="comment-1" rowspan="2">Draw that frame at 406A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e58d"></span>E58D</td>
+<td class="instruction">CALL <a href="E63A.html">Draw_IntroUDG</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e590"></span>E590</td>
+<td class="instruction">LD HL,($E638)</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=*<a href="E51D.html#e638">Pointer_IntroFrame4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e593"></span>E593</td>
+<td class="instruction">LD DE,$0004</td>
+<td class="comment-1" rowspan="3">Subtract 0004.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e596"></span>E596</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e597"></span>E597</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e599"></span>E599</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="5">Jump to <a href="E51D.html#e5a5">Animate_Introduction_Frame4</a> unless the pointer has reached <a href="D381.html">Graphics_IntroductionFrames</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e59a"></span>E59A</td>
+<td class="instruction">LD DE,$D381</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e59d"></span>E59D</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e59f"></span>E59F</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5a0"></span>E5A0</td>
+<td class="instruction">JR NZ,<a href="E51D.html#e5a5">Animate_Introduction_Frame4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5a2"></span>E5A2</td>
+<td class="instruction">LD HL,$D4C1</td>
+<td class="comment-1" rowspan="1">Reset the pointer to <a href="D4C1.html">SourceCodeRemnants</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_Frame4</td>
+<td class="address-2"><span id="e5a5"></span>E5A5</td>
+<td class="instruction">LD ($E638),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a href="E51D.html#e638">Pointer_IntroFrame4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5a8"></span>E5A8</td>
+<td class="instruction">LD DE,$406C</td>
+<td class="comment-1" rowspan="2">Draw that frame at 406C.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5ab"></span>E5AB</td>
+<td class="instruction">CALL <a href="E63A.html">Draw_IntroUDG</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e5ae"></span>
+<div class="comments">
+<div class="paragraph">
+Occasionally stamp a spark on the moon.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5ae"></span>E5AE</td>
+<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f433">JumpTable_GetRandomNumber</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5b1"></span>E5B1</td>
+<td class="instruction">CP $40</td>
+<td class="comment-1" rowspan="2">Jump to <a href="E51D.html#e5ca">Animate_Introduction_Bat</a> if the value is 40 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5b3"></span>E5B3</td>
+<td class="instruction">JR NC,<a href="E51D.html#e5ca">Animate_Introduction_Bat</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5b5"></span>E5B5</td>
+<td class="instruction">CP $20</td>
+<td class="comment-1" rowspan="2">Point <span class="register">HL</span> at <a href="E51D.html#e5ea">Graphics_IntroSpark</a> when the value is 20 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5b7"></span>E5B7</td>
+<td class="instruction">LD HL,$E5EA</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5ba"></span>E5BA</td>
+<td class="instruction">JR NC,<a href="E51D.html#e5bf">Animate_Introduction_Spark</a></td>
+<td class="comment-1" rowspan="2">Otherwise use the second spark at <a href="E51D.html#e5ea">E5EE</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5bc"></span>E5BC</td>
+<td class="instruction">LD HL,$E5EE</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_Spark</td>
+<td class="address-2"><span id="e5bf"></span>E5BF</td>
+<td class="instruction">LD DE,$40D7</td>
+<td class="comment-1" rowspan="2">Point at 40D7 and copy 04 pixel rows.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5c2"></span>E5C2</td>
+<td class="instruction">LD B,$04</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_SparkLoop</td>
+<td class="address-2"><span id="e5c4"></span>E5C4</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="5">Copy one pixel row and loop back to <a href="E51D.html#e5c4">Animate_Introduction_SparkLoop</a> until all four rows are written.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5c5"></span>E5C5</td>
+<td class="instruction">LD (DE),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5c6"></span>E5C6</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5c7"></span>E5C7</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5c8"></span>E5C8</td>
+<td class="instruction">DJNZ <a href="E51D.html#e5c4">Animate_Introduction_SparkLoop</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e5ca"></span>
+<div class="comments">
+<div class="paragraph">
+Occasionally stamp a bat lower down the screen.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_Bat</td>
+<td class="address-2"><span id="e5ca"></span>E5CA</td>
+<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f433">JumpTable_GetRandomNumber</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5cd"></span>E5CD</td>
+<td class="instruction">CP $40</td>
+<td class="comment-1" rowspan="2">Jump to <a href="E51D.html#e5e1">Animate_Introduction_Key</a> if the value is 40 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5cf"></span>E5CF</td>
+<td class="instruction">JR NC,<a href="E51D.html#e5e1">Animate_Introduction_Key</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5d1"></span>E5D1</td>
+<td class="instruction">LD HL,$E5F2</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at <a href="E51D.html#e5f2">Graphics_IntroBatA</a> when the value is 20 or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5d4"></span>E5D4</td>
+<td class="instruction">CP $20</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5d6"></span>E5D6</td>
+<td class="instruction">JR NC,<a href="E51D.html#e5db">Animate_Introduction_BatDraw</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5d8"></span>E5D8</td>
+<td class="instruction">LD HL,$E612</td>
+<td class="comment-1" rowspan="1">Otherwise use <a href="E51D.html#e612">Graphics_IntroBatB</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_BatDraw</td>
+<td class="address-2"><span id="e5db"></span>E5DB</td>
+<td class="instruction">LD DE,$481D</td>
+<td class="comment-1" rowspan="2">Draw that bat at 481D.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5de"></span>E5DE</td>
+<td class="instruction">CALL <a href="E63A.html">Draw_IntroUDG</a></td>
+</tr>
+<tr>
+<td class="asm-label">Animate_Introduction_Key</td>
+<td class="address-2"><span id="e5e1"></span>E5E1</td>
+<td class="instruction">CALL $028E</td>
+<td class="comment-1" rowspan="4">Jump to <a href="E51D.html">Animate_Introduction</a> if no key is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5e4"></span>E5E4</td>
+<td class="instruction">LD A,E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5e5"></span>E5E5</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5e6"></span>E5E6</td>
+<td class="instruction">JP Z,<a href="E51D.html#e51d">Animate_Introduction</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5e9"></span>E5E9</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="asm-label">Graphics_IntroSpark</td>
+<td class="address-1"><span id="e5ea"></span>E5EA</td>
+<td class="instruction">DEFB $FB,$F9,$F8,$F8,$F8,$F8,$F8,$FB</td>
+<td class="comment-1" rowspan="1"><table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="intro-spark" src="../images/udgs/intro-spark.png" /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td class="asm-label">Graphics_IntroBatA</td>
+<td class="address-1"><span id="e5f2"></span>E5F2</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$08,$00,$1C</td>
+<td class="comment-1" rowspan="4"><table class="default">
+<tr>
+<td class="centre" colspan="1" rowspan="1"><img alt="intro-bat-1" src="../images/udgs/intro-bat-1.png" /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e5fa"></span>E5FA</td>
+<td class="instruction">DEFB $00,$1C,$00,$3E,$00,$3E,$00,$03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e602"></span>E602</td>
+<td class="instruction">DEFB $3F,$FB,$7F,$F3,$7C,$07,$7F,$9E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e60a"></span>E60A</td>
+<td class="instruction">DEFB $1F,$BE,$00,$1C,$06,$1C,$00,$08</td>
+</tr>
+<tr>
+<td class="asm-label">Graphics_IntroBatB</td>
+<td class="address-1"><span id="e612"></span>E612</td>
+<td class="instruction">DEFB $00,$00,$00,$00,$00,$10,$00,$38</td>
+<td class="comment-1" rowspan="4"><table class="default">
+<tr>
+<td class="centre" colspan="1" rowspan="1"><img alt="intro-bat-2" src="../images/udgs/intro-bat-2.png" /></td>
+</tr>
+</table></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e61a"></span>E61A</td>
+<td class="instruction">DEFB $00,$38,$00,$7C,$00,$7C,$00,$06</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e622"></span>E622</td>
+<td class="instruction">DEFB $7F,$F6,$FF,$E6,$F8,$0E,$FF,$3C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e62a"></span>E62A</td>
+<td class="instruction">DEFB $3F,$7C,$00,$38,$0C,$38,$00,$10</td>
+</tr>
+<tr>
+<td class="asm-label">Pointer_IntroFrame1</td>
+<td class="address-1"><span id="e632"></span>E632</td>
+<td class="instruction">DEFW <a href="D381.html">Graphics_IntroductionFrames</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Pointer_IntroFrame2</td>
+<td class="address-1"><span id="e634"></span>E634</td>
+<td class="instruction">DEFW <a href="D381.html#d3a1">Graphics_IntroductionFrame2</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Pointer_IntroFrame3</td>
+<td class="address-1"><span id="e636"></span>E636</td>
+<td class="instruction">DEFW <a href="D381.html#d3c1">Graphics_IntroductionFrame3</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Pointer_IntroFrame4</td>
+<td class="address-1"><span id="e638"></span>E638</td>
+<td class="instruction">DEFW <a href="D381.html#d3e1">Graphics_IntroductionFrame4</a></td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/asm/D0AC.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="E46C.html">E46C</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#e51d">Map</a></td>
+<td class="next">
+Next: <a href="E63A.html">E63A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/58653.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

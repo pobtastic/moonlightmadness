@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Game Status Buffer</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="GameStatusBuffer">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Game Status Buffer</td>
+</tr>
+</table>
+<div class="map-intro"></div>
+<table class="map">
+<tr>
+<th>Address</th>
+<th class="map-length">Length</th>
+<th>Description</th>
+</tr>
+<tr>
+<td class="map-g"><span id="5dce"></span><a href="../asm/5DCE.html">5DCE</a></td>
+<td class="map-length">800</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/5DCE.html">Buffer: Room Tiles</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+20 column by 19 row tile buffer. <a href="../asm/E1CC.html#e3b3">Clear_PlayArea</a> clears it, and the print utilities write through it when drawing a room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="60ee"></span><a href="../asm/60EE.html">60EE</a></td>
+<td class="map-length">800</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/60EE.html">Buffer: Room Attributes</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Attribute bytes matching <a href="../asm/5DCE.html">Buffer_RoomTiles</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="640e"></span><a href="../asm/640E.html">640E</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/640E.html">Pointer: Active Font</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6410"></span><a href="../asm/6410.html">6410</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6410.html">Player Jump Timer</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Non-zero while the player is jumping or falling.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6411"></span><a href="../asm/6411.html">6411</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6411.html">Restart Room Flag</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Set when a life is lost so <a href="../asm/E1CC.html">Handler_Player</a> can restart the room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6412"></span><a href="../asm/6412.html">6412</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6412.html">Print Buffer Offset</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Offset into <a href="../asm/5DCE.html">Buffer_RoomTiles</a> calculated by <a href="../asm/F56A.html#f6aa">Convert_Coordinate</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6416"></span><a href="../asm/6416.html">6416</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6416.html">Print Width</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6417"></span><a href="../asm/6417.html">6417</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6417.html">Temporary Pair</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6419"></span><a href="../asm/6419.html">6419</a></td>
+<td class="map-length">4</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6419.html">Clip Window</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Inclusive min/max row and column used by the clipped print routines. Defaults to rows 02-18 and columns 01-21.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="641d"></span><a href="../asm/641D.html">641D</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/641D.html">Active Border Colour</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="641e"></span><a href="../asm/641E.html">641E</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/641E.html">Pointer: Room Header</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6420"></span><a href="../asm/6420.html">6420</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6420.html">Reference: Furniture</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Populated by <a href="../asm/EA02.html">Unpack_Rooms</a>. See <a href="../asm/DE19.html#df8e">Player_Action</a> for usage.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6422"></span><a href="../asm/6422.html">6422</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6422.html">Reference: Doors</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Populated by <a href="../asm/EA02.html">Unpack_Rooms</a>. See <a href="../asm/DE19.html#dfd0">Player_Action_DoorLoop</a> for usage.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6424"></span><a href="../asm/6424.html">6424</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6424.html">Reference: Collectibles</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Three-byte FF-terminated records. See <a href="../asm/D7D2.html">Handler_Collectibles</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6426"></span><a href="../asm/6426.html">6426</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6426.html">Reference: Inventory Items</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Two-byte FF-terminated records. See <a href="../asm/DBC9.html">Handler_InventoryItems</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6428"></span><a href="../asm/6428.html">6428</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6428.html">Reference: Ladders</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Populated by <a href="../asm/EA02.html">Unpack_Rooms</a>. See <a href="../asm/DE19.html#e013">Player_ClimbDown</a> and <a href="../asm/DE19.html#e06a">Player_ClimbUp</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="642a"></span><a href="../asm/642A.html">642A</a></td>
+<td class="map-length">4</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/642A.html">Reference: Moving Objects</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+13-byte records drawn by <a href="../asm/D894.html">Handler_MovingObjects</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="642e"></span><a href="../asm/642E.html">642E</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/642E.html">Reference: Decorations</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6430"></span><a href="../asm/6430.html">6430</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6430.html">Reference: Actors</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+0D-byte records handled by <a href="../asm/E3DE.html">Handler_Actors</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6432"></span><a href="../asm/6432.html">6432</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6432.html">Reference: Enemies</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+0E-byte records handled by <a href="../asm/DC62.html">Handler_Enemies</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6434"></span><a href="../asm/6434.html">6434</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6434.html">Collision State</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+03 means the player has touched an actor.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6435"></span><a href="../asm/6435.html">6435</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6435.html">Player Hit Timer</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6436"></span><a href="../asm/6436.html">6436</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6436.html">Temporary Flags</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6438"></span><a href="../asm/6438.html">6438</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6438.html">Player Stand Timer</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Counts falling frames; a hit starts when it reaches 0A.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="643a"></span><a href="../asm/643A.html">643A</a></td>
+<td class="map-length">3</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/643A.html">Player Mask</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Three-byte shifted collision mask from <a href="../asm/DE19.html#de96">Build_PlayerMask</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="643e"></span><a href="../asm/643E.html">643E</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/643E.html">Sprite Shift Buffer</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6440"></span><a href="../asm/6440.html">6440</a></td>
+<td class="map-length">8</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6440.html">Actor Mask Buffer</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6448"></span><a href="../asm/6448.html">6448</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6448.html">Player Footprint</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="644a"></span><a href="../asm/644A.html">644A</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/644A.html">Hit Ceiling Row</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="644b"></span><a href="../asm/644B.html">644B</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/644B.html">Pointer: Collided Actor</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="644d"></span><a href="../asm/644D.html">644D</a></td>
+<td class="map-length">14</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/644D.html">Special Actor</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Used by the room-07 bats and the room-16 special.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6469"></span><a href="../asm/6469.html">6469</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6469.html">Pointer: Tune Data</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Walks the <a href="../asm/B370.html">Data_TuneStream</a> stream. <a href="../asm/E666.html">Play_Tune</a> reads one byte at a time.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="646b"></span><a href="../asm/646B.html">646B</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/646B.html">Pointer: Tune Data Copy</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Walks the <a href="../asm/B491.html">Data_TuneStreamCopy</a> stream in step with <a href="../asm/6469.html">Pointer_TuneData</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="646d"></span><a href="../asm/646D.html">646D</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/646D.html">Current Tune Byte</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="646e"></span><a href="../asm/646E.html">646E</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/646E.html">Interrupt Tick</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Counts to 05 in <a href="../asm/E46C.html">Handler_Interrupts</a> before the tune is allowed to play.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="646f"></span><a href="../asm/646F.html">646F</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/646F.html">Game Active Flag</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+00 on the introduction/menu. FF after the intro timeout so <a href="../asm/D5AC.html">Initialise_Game</a> starts a game.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6470"></span><a href="../asm/6470.html">6470</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6470.html">Pause Timer</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+16-bit countdown used by the introduction and demo timeout.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6472"></span><a href="../asm/6472.html">6472</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6472.html">Sound Flags</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6473"></span><a href="../asm/6473.html">6473</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6473.html">Sound Duration</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="647c"></span><a href="../asm/647C.html">647C</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/647C.html">Skip Delay Flag</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+When set, <a href="../asm/E666.html">Play_Tune</a> returns through the delay routine instead of playing a note.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="647d"></span><a href="../asm/647D.html">647D</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/647D.html">Game Complete Flag</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Set to FF by <a href="../asm/D7FF.html">Handler_Housekeeping</a> when all four collection slots hold 09.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="647e"></span><a href="../asm/647E.html">647E</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/647E.html">Control Method</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+00 is keyboard. Non-zero selects Kempston (and the define-keys highlight).
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="647f"></span><a href="../asm/647F.html">647F</a></td>
+<td class="map-length">5</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/647F.html">User-Defined Keys</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Five <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a> codes copied from <a href="../asm/E6EC.html">Table_DefaultKeys</a>. Order: left, right, up, down, action.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6484"></span><a href="../asm/6484.html">6484</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6484.html">Saved Keys</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6486"></span><a href="../asm/6486.html">6486</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6486.html">Kempston Masks</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Default 01/02 (right/left) written by <a href="../asm/EA02.html">Unpack_Rooms</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6488"></span><a href="../asm/6488.html">6488</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6488.html">Tape Checksum</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="6489"></span><a href="../asm/6489.html">6489</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6489.html">Action Timer</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="648a"></span><a href="../asm/648A.html">648A</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/648A.html">Climb Row</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="648b"></span><a href="../asm/648B.html">648B</a></td>
+<td class="map-length">20</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/648B.html">Carried Object</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Bit 7 set means nothing is being carried. Drawn by <a href="../asm/DA3F.html">Handler_CarriedObject</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="649f"></span><a href="../asm/649F.html">649F</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/649F.html">Event Timer</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Counts down; when it hits 00 <a href="../asm/DC26.html">Handler_EventTimer</a> fires *<a href="../asm/64A0.html">PendingEvent</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64a0"></span><a href="../asm/64A0.html">64A0</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64A0.html">Pending Event</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64a1"></span><a href="../asm/64A1.html">64A1</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64A1.html">Collected Count</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64a2"></span><a href="../asm/64A2.html">64A2</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64A2.html">Current Room</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Room IDs run from 00 to 16.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64a3"></span><a href="../asm/64A3.html">64A3</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64A3.html">Temporary Room</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64a4"></span><a href="../asm/64A4.html">64A4</a></td>
+<td class="map-length">14</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64A4.html">Player</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Player entity used as <span class="register">IX</span> by <a href="../asm/E1CC.html">Handler_Player</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64b2"></span><a href="../asm/64B2.html">64B2</a></td>
+<td class="map-length">2</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64B2.html">Random Number Seed</a></div>
+<div class="map-entry-desc">
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64b4"></span><a href="../asm/64B4.html">64B4</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64B4.html">Player Lives</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Initialised to 04 by <a href="../asm/EA02.html">Unpack_Rooms</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64c1"></span><a href="../asm/64C1.html">64C1</a></td>
+<td class="map-length">4</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64C1.html">Collection Slots</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Four digits shown on room 00. 09 in every slot sets <a href="../asm/647D.html">GameCompleteFlag</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64c5"></span><a href="../asm/64C5.html">64C5</a></td>
+<td class="map-length">50</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64C5.html">Table: Room Data</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+One pointer per room, filled by <a href="../asm/EA02.html">Unpack_Rooms</a> from <a href="../asm/BC11.html">Data_Rooms</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="64f7"></span><a href="../asm/64F7.html">64F7</a></td>
+<td class="map-length">6009</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64F7.html">Buffer: Unpacked Rooms</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Working copy of the 17 packed rooms. See <a href="../asm/EA02.html">Unpack_Rooms</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/buffers/gbuffer.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

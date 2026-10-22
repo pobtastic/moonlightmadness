@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at D765</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D5AC.html">D5AC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d765">Map</a></td>
+<td class="next">
+Next: <a href="D7A2.html">D7A2</a>
+</td>
+</tr>
+</table>
+<div class="description">D765: Game Loop</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="D5AC.html">Initialise_Game</a> and <a href="D7A2.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Watches demo input and *<a href="6470.html">PauseTimer</a>. Jumps to <a href="D7A2.html">Dispatch_Handlers</a> while the game is active or the demo timer is running, else picks a room and jumps to <a href="D5AC.html#d738">Change_Room</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Game_Loop</td>
+<td class="address-2"><span id="d765"></span>D765</td>
+<td class="instruction">LD A,($646F)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D7A2.html">Dispatch_Handlers</a> if *<a href="646F.html">GameActiveFlag</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d768"></span>D768</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d769"></span>D769</td>
+<td class="instruction">JR Z,<a href="D7A2.html">Dispatch_Handlers</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d76b"></span>D76B</td>
+<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
+<td class="comment-1" rowspan="1">Call <a href="D7FF.html#d826">Read_Kempston</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d76e"></span>D76E</td>
+<td class="instruction">JR NZ,<a href="D765.html#d775">Demo_Timeout</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="D765.html#d775">Demo_Timeout</a> if the port is unstable.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d770"></span>D770</td>
+<td class="instruction">CP $10</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D5AC.html#d5d5">Reset_Introduction</a> if fire was pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d772"></span>D772</td>
+<td class="instruction">JP Z,<a href="D5AC.html#d5d5">Reset_Introduction</a></td>
+</tr>
+<tr>
+<td class="asm-label">Demo_Timeout</td>
+<td class="address-2"><span id="d775"></span>D775</td>
+<td class="instruction">CALL $028E</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/028E.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d778"></span>D778</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D5AC.html#d5d5">Reset_Introduction</a> if any key is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d779"></span>D779</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d77a"></span>D77A</td>
+<td class="instruction">JP NZ,<a href="D5AC.html#d5d5">Reset_Introduction</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d77d"></span>D77D</td>
+<td class="instruction">LD BC,($6470)</td>
+<td class="comment-1" rowspan="3">Decrease *<a href="6470.html">PauseTimer</a> by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d781"></span>D781</td>
+<td class="instruction">DEC BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d782"></span>D782</td>
+<td class="instruction">LD ($6470),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d786"></span>D786</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D7A2.html">Dispatch_Handlers</a> until the timer is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d787"></span>D787</td>
+<td class="instruction">OR C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d788"></span>D788</td>
+<td class="instruction">JR NZ,<a href="D7A2.html">Dispatch_Handlers</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d78a"></span>D78A</td>
+<td class="instruction">LD A,($D888)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D5AC.html#d5d5">Reset_Introduction</a> if *<a href="D877.html#d888">Demo_RoomCount</a> is 01.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d78d"></span>D78D</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d78e"></span>D78E</td>
+<td class="instruction">JP Z,<a href="D5AC.html#d5d5">Reset_Introduction</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d791"></span>D791</td>
+<td class="instruction">LD ($D888),A</td>
+<td class="comment-1" rowspan="1">Write the decreased count back to *<a href="D877.html#d888">Demo_RoomCount</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d794"></span>D794</td>
+<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f433">JumpTable_GetRandomNumber</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d797"></span>D797</td>
+<td class="instruction">AND %00001111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d799"></span>D799</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1">Copy that room nibble into <span class="register">E</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d79a"></span>D79A</td>
+<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f433">JumpTable_GetRandomNumber</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d79d"></span>D79D</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d79f"></span>D79F</td>
+<td class="instruction">ADD A,E</td>
+<td class="comment-1" rowspan="1">Add the two nibbles together.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d7a0"></span>D7A0</td>
+<td class="instruction">JR <a href="D5AC.html#d738">Change_Room</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="D5AC.html#d738">Change_Room</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D5AC.html">D5AC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d765">Map</a></td>
+<td class="next">
+Next: <a href="D7A2.html">D7A2</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/55141.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

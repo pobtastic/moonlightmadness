@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 55871</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55734.html">55734</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55871">Map</a></td>
+<td class="next">
+Next: <a href="56069.html">56069</a>
+</td>
+</tr>
+</table>
+<div class="description">55871: Handler: Carried Object</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Draws <a href="25739.html">CarriedObject</a> and drops it when it lines up with a slot.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_CarriedObject</td>
+<td class="address-2"><span id="55871"></span>55871</td>
+<td class="instruction">LD HL,31856</td>
+<td class="comment-1" rowspan="2">Write <a href="31856.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55874"></span>55874</td>
+<td class="instruction">LD (23606),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55877"></span>55877</td>
+<td class="instruction">LD IX,25739</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="25739.html">CarriedObject</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55881"></span>55881</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="2">Return if bit 7 is set (nothing carried).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55884"></span>55884</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55886"></span>55886</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="4">Stash the current clip window on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55887"></span>55887</td>
+<td class="instruction">LD HL,(25625)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55890"></span>55890</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55891"></span>55891</td>
+<td class="instruction">LD HL,(25627)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55894"></span>55894</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="6">Use the object's own clip window.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55895"></span>55895</td>
+<td class="instruction">LD L,(IX+16)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55898"></span>55898</td>
+<td class="instruction">LD H,(IX+17)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55901"></span>55901</td>
+<td class="instruction">LD (25625),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55904"></span>55904</td>
+<td class="instruction">LD L,(IX+18)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55907"></span>55907</td>
+<td class="instruction">LD H,(IX+19)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55910"></span>55910</td>
+<td class="instruction">LD (25627),HL</td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62536">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55913"></span>55913</td>
+<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62500.html">JumpTable_StorePosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55916"></span>55916</td>
+<td class="instruction">CALL <a href="62500.html">JumpTable_StorePosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62539">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55919"></span>55919</td>
+<td class="instruction">CALL <a href="62506.html#62539">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="3">Restore the clip window from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55922"></span>55922</td>
+<td class="instruction">POP HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55923"></span>55923</td>
+<td class="instruction">LD (25627),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55926"></span>55926</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="7">Return unless the object is at the drop cell.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55927"></span>55927</td>
+<td class="instruction">LD (25625),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55930"></span>55930</td>
+<td class="instruction">LD A,7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55932"></span>55932</td>
+<td class="instruction">CP (IX+3)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55935"></span>55935</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55936"></span>55936</td>
+<td class="instruction">CP (IX+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55939"></span>55939</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55940"></span>55940</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="6">Return unless it matches the stored drop mark.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55943"></span>55943</td>
+<td class="instruction">CP (IX+14)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55946"></span>55946</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55947"></span>55947</td>
+<td class="instruction">LD A,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55950"></span>55950</td>
+<td class="instruction">CP (IX+15)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55953"></span>55953</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55954"></span>55954</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="5">Call <a href="62506.html#62533">JumpTable_PrintSprite</a> to stamp the object into the room.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55957"></span>55957</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55960"></span>55960</td>
+<td class="instruction">LD E,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55963"></span>55963</td>
+<td class="instruction">LD D,(IX+5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55966"></span>55966</td>
+<td class="instruction">LD A,(IX+6)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55969"></span>55969</td>
+<td class="instruction">CALL <a href="62506.html#62533">JumpTable_PrintSprite</a></td>
+<td class="comment-1" rowspan="2">Set bit 7 (no longer carried).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55972"></span>55972</td>
+<td class="instruction">SET 7,(IX+0)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55976"></span>55976</td>
+<td class="instruction">LD A,(IX+6)</td>
+<td class="comment-1" rowspan="3">Return unless the object ID is 217.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55979"></span>55979</td>
+<td class="instruction">CP 217</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55981"></span>55981</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55982"></span>55982</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="4">Convert the drop cell into a <a href="24014.html">Buffer_RoomTiles</a> offset.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55985"></span>55985</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55988"></span>55988</td>
+<td class="instruction">RES 7,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55990"></span>55990</td>
+<td class="instruction">CALL <a href="62506.html#62524">JumpTable_ConvertCoordinate</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55993"></span>55993</td>
+<td class="instruction">LD DE,24014</td>
+<td class="comment-1" rowspan="6">Write 14/15 into that tile and return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55996"></span>55996</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55997"></span>55997</td>
+<td class="instruction">LD (HL),14</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55999"></span>55999</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56000"></span>56000</td>
+<td class="instruction">LD (HL),15</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56002"></span>56002</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Pendulum_Position</td>
+<td class="address-1"><span id="56003"></span>56003</td>
+<td class="instruction">DEFB 0</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="asm-label">Pendulum_Delta</td>
+<td class="address-1"><span id="56004"></span>56004</td>
+<td class="instruction">DEFB 0</td>
+<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56005"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="56069.html">Handler_PendulumRooms</a>.
+</div>
+<div class="paragraph">
+Animate the pendulum in rooms 9-11.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum</td>
+<td class="address-2"><span id="56005"></span>56005</td>
+<td class="instruction">LD A,(56003)</td>
+<td class="comment-1" rowspan="7">Reset the pendulum to 216 / 2 if it holds 255.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56008"></span>56008</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56010"></span>56010</td>
+<td class="instruction">JR NZ,<a href="55871.html#56022">Handler_Pendulum_Step</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56012"></span>56012</td>
+<td class="instruction">LD A,216</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56014"></span>56014</td>
+<td class="instruction">LD (56003),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56017"></span>56017</td>
+<td class="instruction">LD A,2</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56019"></span>56019</td>
+<td class="instruction">LD (56004),A</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum_Step</td>
+<td class="address-2"><span id="56022"></span>56022</td>
+<td class="instruction">LD A,(56003)</td>
+<td class="comment-1" rowspan="5">Add the delta to the position.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56025"></span>56025</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56026"></span>56026</td>
+<td class="instruction">LD A,(56004)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56029"></span>56029</td>
+<td class="instruction">ADD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56030"></span>56030</td>
+<td class="instruction">LD (56003),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56033"></span>56033</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="5">Jump to <a href="55871.html#56058">Handler_Pendulum_Bounce</a> at either end-stop.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56034"></span>56034</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56035"></span>56035</td>
+<td class="instruction">CP 214</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56037"></span>56037</td>
+<td class="instruction">JR Z,<a href="55871.html#56058">Handler_Pendulum_Bounce</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56039"></span>56039</td>
+<td class="instruction">CP 226</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56041"></span>56041</td>
+<td class="instruction">JR Z,<a href="55871.html#56058">Handler_Pendulum_Bounce</a></td>
+<td class="comment-1" rowspan="2">Jump to <a href="56069.html#56100">Draw_Pendulum</a> if the room is 10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56043"></span>56043</td>
+<td class="instruction">LD A,(25762)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56046"></span>56046</td>
+<td class="instruction">CP 10</td>
+<td class="comment-1" rowspan="5">Mirror the position for the other rooms.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56048"></span>56048</td>
+<td class="instruction">JR Z,<a href="56069.html#56100">Draw_Pendulum</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56050"></span>56050</td>
+<td class="instruction">LD A,220</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56052"></span>56052</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56053"></span>56053</td>
+<td class="instruction">ADD A,220</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56055"></span>56055</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56069.html#56100">Draw_Pendulum</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56056"></span>56056</td>
+<td class="instruction">JR <a href="56069.html#56100">Draw_Pendulum</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum_Bounce</td>
+<td class="address-2"><span id="56058"></span>56058</td>
+<td class="instruction">LD A,(56004)</td>
+<td class="comment-1" rowspan="4">Negate *<a href="55871.html#56004">Pendulum_Delta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56061"></span>56061</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56062"></span>56062</td>
+<td class="instruction">XOR 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56064"></span>56064</td>
+<td class="instruction">LD (56004),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56067"></span>56067</td>
+<td class="instruction">JR <a href="55871.html#56022">Handler_Pendulum_Step</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55871.html#56022">Handler_Pendulum_Step</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55734.html">55734</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55871">Map</a></td>
+<td class="next">
+Next: <a href="56069.html">56069</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DA3F.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 55444</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55415.html">55415</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55444">Map</a></td>
+<td class="next">
+Next: <a href="55556.html">55556</a>
+</td>
+</tr>
+</table>
+<div class="description">55444: Handler: Moving Objects</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects</td>
+<td class="address-2"><span id="55444"></span>55444</td>
+<td class="instruction">LD IX,(25642)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25642.html">ReferenceMovingObjects</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Loop</td>
+<td class="address-2"><span id="55448"></span>55448</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="55444.html#55548">Handler_MovingObjects_Done</a> if the terminator 255 is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55451"></span>55451</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55453"></span>55453</td>
+<td class="instruction">JR Z,<a href="55444.html#55548">Handler_MovingObjects_Done</a></td>
+<td class="comment-1" rowspan="2">Jump to <a href="55444.html#55541">Handler_MovingObjects_Next</a> if this object is inactive.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55455"></span>55455</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55457"></span>55457</td>
+<td class="instruction">JR NZ,<a href="55444.html#55541">Handler_MovingObjects_Next</a></td>
+<td class="comment-1" rowspan="4">Deactivate the object if its timer is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55459"></span>55459</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55460"></span>55460</td>
+<td class="instruction">CP (IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55463"></span>55463</td>
+<td class="instruction">JR NZ,<a href="55444.html#55471">Handler_MovingObjects_Draw</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55465"></span>55465</td>
+<td class="instruction">SET 7,(IX+0)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="55444.html#55541">Handler_MovingObjects_Next</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55469"></span>55469</td>
+<td class="instruction">JR <a href="55444.html#55541">Handler_MovingObjects_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Draw</td>
+<td class="address-2"><span id="55471"></span>55471</td>
+<td class="instruction">LD HL,31856</td>
+<td class="comment-1" rowspan="4">Use <a href="31856.html">Buffer_ActiveFont</a>, or <a href="36976.html">Graphics_TileFont</a> when the stored font ID differs.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55474"></span>55474</td>
+<td class="instruction">CP (IX+18)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55477"></span>55477</td>
+<td class="instruction">JR Z,<a href="55444.html#55482">Handler_MovingObjects_Font</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55479"></span>55479</td>
+<td class="instruction">LD HL,36976</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Font</td>
+<td class="address-2"><span id="55482"></span>55482</td>
+<td class="instruction">LD (23606),HL</td>
+<td class="comment-1" rowspan="1">Write <span class="register">HL</span> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55485"></span>55485</td>
+<td class="instruction">LD C,(IX+16)</td>
+<td class="comment-1" rowspan="3">Write the object's clip window to *<a href="25625.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55488"></span>55488</td>
+<td class="instruction">LD B,(IX+17)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55491"></span>55491</td>
+<td class="instruction">LD (25625),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55495"></span>55495</td>
+<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62536">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55498"></span>55498</td>
+<td class="instruction">LD A,(IX+9)</td>
+<td class="comment-1" rowspan="4">Compare the moving edge against the stored limit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55501"></span>55501</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55502"></span>55502</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55503"></span>55503</td>
+<td class="instruction">JR NZ,<a href="55444.html#55506">Handler_MovingObjects_LimitHit</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55505"></span>55505</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="2">Jump to <a href="55444.html#55529">Handler_MovingObjects_Update</a> if they differ.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_LimitHit</td>
+<td class="address-2"><span id="55506"></span>55506</td>
+<td class="instruction">CP (IX+14)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55509"></span>55509</td>
+<td class="instruction">JR NZ,<a href="55444.html#55529">Handler_MovingObjects_Update</a></td>
+<td class="comment-1" rowspan="1">Call <a href="56358.html#56375">Reverse_Direction</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55511"></span>55511</td>
+<td class="instruction">CALL <a href="56358.html#56375">Reverse_Direction</a></td>
+<td class="comment-1" rowspan="6">Swap the two limit bytes and call <a href="62506.html#62536">JumpTable_AdvanceEntity</a> again.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55514"></span>55514</td>
+<td class="instruction">LD A,(IX+14)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55517"></span>55517</td>
+<td class="instruction">LD B,(IX+15)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55520"></span>55520</td>
+<td class="instruction">LD (IX+15),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55523"></span>55523</td>
+<td class="instruction">LD (IX+14),B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55526"></span>55526</td>
+<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Update</td>
+<td class="address-2"><span id="55529"></span>55529</td>
+<td class="instruction">CALL <a href="62500.html">JumpTable_StorePosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62500.html">JumpTable_StorePosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55532"></span>55532</td>
+<td class="instruction">CALL <a href="62506.html#62530">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62530">JumpTable_MoveEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55535"></span>55535</td>
+<td class="instruction">CALL <a href="62506.html#62539">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62539">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55538"></span>55538</td>
+<td class="instruction">CALL <a href="62506.html#62542">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62506.html#62542">JumpTable_EraseEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Next</td>
+<td class="address-2"><span id="55541"></span>55541</td>
+<td class="instruction">LD DE,19</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0019.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55544"></span>55544</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55546"></span>55546</td>
+<td class="instruction">JR <a href="55444.html#55448">Handler_MovingObjects_Loop</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55444.html#55448">Handler_MovingObjects_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_MovingObjects_Done</td>
+<td class="address-2"><span id="55548"></span>55548</td>
+<td class="instruction">LD BC,536</td>
+<td class="comment-1" rowspan="2">Write 536 to *<a href="25625.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55551"></span>55551</td>
+<td class="instruction">LD (25625),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55555"></span>55555</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55415.html">55415</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55444">Map</a></td>
+<td class="next">
+Next: <a href="55556.html">55556</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/D894.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at ECF2</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EA02.html">EA02</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ecf2">Map</a></td>
+<td class="next">
+Next: <a href="ED2D.html">ED2D</a>
+</td>
+</tr>
+</table>
+<div class="description">ECF2: Print Inventory</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="EA02.html">Unpack_Rooms</a> and <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Prints the four <a href="64C1.html">CollectionSlots</a> digits and flashes them when every slot is 09.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Inventory</td>
+<td class="address-2"><span id="ecf2"></span>ECF2</td>
+<td class="instruction">LD A,$0F</td>
+<td class="comment-1" rowspan="2">Write WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecf4"></span>ECF4</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecf7"></span>ECF7</td>
+<td class="instruction">LD HL,$3C00</td>
+<td class="comment-1" rowspan="2">Write 3C00 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecfa"></span>ECFA</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ecfd"></span>ECFD</td>
+<td class="instruction">LD BC,$0107</td>
+<td class="comment-1" rowspan="2">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at column 07 row 01.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed00"></span>ED00</td>
+<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed03"></span>ED03</td>
+<td class="instruction">LD BC,$0400</td>
+<td class="comment-1" rowspan="2">Point <span class="register">HL</span> at <a href="64C1.html">CollectionSlots</a> and set <span class="register">B</span>=04.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed06"></span>ED06</td>
+<td class="instruction">LD HL,$64C1</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Inventory_Target</td>
+<td class="address-2"><span id="ed09"></span>ED09</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="ECF2.html#ed0f">Print_Inventory_Continue</a> unless this digit is 09.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed0a"></span>ED0A</td>
+<td class="instruction">CP $09</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed0c"></span>ED0C</td>
+<td class="instruction">JR NZ,<a href="ECF2.html#ed0f">Print_Inventory_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed0e"></span>ED0E</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="1">Increase the "09" count.</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Inventory_Continue</td>
+<td class="address-2"><span id="ed0f"></span>ED0F</td>
+<td class="instruction">ADD A,$30</td>
+<td class="comment-1" rowspan="2">Convert the digit into ASCII and call <a href="F42A.html#f436">JumpTable_PrintCharacter</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed11"></span>ED11</td>
+<td class="instruction">CALL <a href="F42A.html#f436">JumpTable_PrintCharacter</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed14"></span>ED14</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Advance the digit pointer and loop back to <a href="ECF2.html#ed09">Print_Inventory_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed15"></span>ED15</td>
+<td class="instruction">DJNZ <a href="ECF2.html#ed09">Print_Inventory_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ed17"></span>
+<div class="comments">
+<div class="paragraph">
+Flash the four cells when every digit is 09.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed17"></span>ED17</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3">Return unless all four digits were 09.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed18"></span>ED18</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed1a"></span>ED1A</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed1b"></span>ED1B</td>
+<td class="instruction">LD BC,$0107</td>
+<td class="comment-1" rowspan="2">Convert column 07 row 01 into a <a href="5DCE.html">Buffer_RoomTiles</a> offset.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed1e"></span>ED1E</td>
+<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed21"></span>ED21</td>
+<td class="instruction">LD DE,$5800</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at the matching attribute cells.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed24"></span>ED24</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed25"></span>ED25</td>
+<td class="instruction">LD B,$04</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Inventory_Target2</td>
+<td class="address-2"><span id="ed27"></span>ED27</td>
+<td class="instruction">SET 7,(HL)</td>
+<td class="comment-1" rowspan="3">Set FLASH on each of the four cells.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed29"></span>ED29</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed2a"></span>ED2A</td>
+<td class="instruction">DJNZ <a href="ECF2.html#ed27">Print_Inventory_Target2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ed2c"></span>ED2C</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EA02.html">EA02</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ecf2">Map</a></td>
+<td class="next">
+Next: <a href="ED2D.html">ED2D</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/60658.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

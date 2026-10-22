@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at D9B6</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D904.html">D904</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d9b6">Map</a></td>
+<td class="next">
+Next: <a href="DA3F.html">DA3F</a>
+</td>
+</tr>
+</table>
+<div class="description">D9B6: Handler: Room Seven</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="D7A2.html">Dispatch_Handlers</a>.
+</div>
+<div class="paragraph">
+Two bats in room 07 stored at <a href="644D.html">SpecialActor</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven</td>
+<td class="address-2"><span id="d9b6"></span>D9B6</td>
+<td class="instruction">LD IX,$644D</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="644D.html">SpecialActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9ba"></span>D9BA</td>
+<td class="instruction">LD A,($64A2)</td>
+<td class="comment-1" rowspan="2">Return if *<a href="64A2.html">CurrentRoom</a> is not 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9bd"></span>D9BD</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9bf"></span>D9BF</td>
+<td class="instruction">RET NZ</td>
+<td class="comment-1" rowspan="3">Write 0E to *<a href="6419.html#641a">ClipWindow_MaximumRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9c0"></span>D9C0</td>
+<td class="instruction">LD A,$0E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9c2"></span>D9C2</td>
+<td class="instruction">LD ($641A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9c5"></span>D9C5</td>
+<td class="instruction">LD B,$02</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=02.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven_Loop</td>
+<td class="address-2"><span id="d9c7"></span>D9C7</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the bat count on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9c8"></span>D9C8</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D9B6.html#d9eb">Handler_RoomSeven_Move</a> if this bat is already active.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9cb"></span>D9CB</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9cd"></span>D9CD</td>
+<td class="instruction">JR Z,<a href="D9B6.html#d9eb">Handler_RoomSeven_Move</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9cf"></span>D9CF</td>
+<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="3">Jump to <a href="D9B6.html#da07">Handler_RoomSeven_Next</a> if <a href="F42A.html#f433">JumpTable_GetRandomNumber</a> is BE or higher.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9d2"></span>D9D2</td>
+<td class="instruction">CP $BE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9d4"></span>D9D4</td>
+<td class="instruction">JR NC,<a href="D9B6.html#da07">Handler_RoomSeven_Next</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9d6"></span>D9D6</td>
+<td class="instruction">AND $0F</td>
+<td class="comment-1" rowspan="8">Spawn the bat with sprite E7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9d8"></span>D9D8</td>
+<td class="instruction">ADD A,$09</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9da"></span>D9DA</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9db"></span>D9DB</td>
+<td class="instruction">LD B,$19</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9dd"></span>D9DD</td>
+<td class="instruction">LD DE,$0101</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9e0"></span>D9E0</td>
+<td class="instruction">LD L,$46</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9e2"></span>D9E2</td>
+<td class="instruction">LD A,$E7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9e4"></span>D9E4</td>
+<td class="instruction">CALL <a href="F42A.html#f457">JumpTable_SpawnEntity</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9e7"></span>D9E7</td>
+<td class="instruction">LD (IX+$09),$FA</td>
+<td class="comment-1" rowspan="1">Write FA to the bat timer.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven_Move</td>
+<td class="address-2"><span id="d9eb"></span>D9EB</td>
+<td class="instruction">LD A,(IX+$01)</td>
+<td class="comment-1" rowspan="4">Deactivate the bat if it has reached row 0C.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9ee"></span>D9EE</td>
+<td class="instruction">CP $0C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9f0"></span>D9F0</td>
+<td class="instruction">JR NZ,<a href="D9B6.html#d9f8">Handler_RoomSeven_Draw</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9f2"></span>D9F2</td>
+<td class="instruction">SET 7,(IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9f6"></span>D9F6</td>
+<td class="instruction">JR <a href="D9B6.html#da07">Handler_RoomSeven_Next</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="D9B6.html#da07">Handler_RoomSeven_Next</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven_Draw</td>
+<td class="address-2"><span id="d9f8"></span>D9F8</td>
+<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9fb"></span>D9FB</td>
+<td class="instruction">CALL <a href="F424.html">JumpTable_StorePosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F424.html">JumpTable_StorePosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d9fe"></span>D9FE</td>
+<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f442">JumpTable_MoveEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da01"></span>DA01</td>
+<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da04"></span>DA04</td>
+<td class="instruction">CALL <a href="F42A.html#f44e">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44e">JumpTable_EraseEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_RoomSeven_Next</td>
+<td class="address-2"><span id="da07"></span>DA07</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the bat count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da08"></span>DA08</td>
+<td class="instruction">LD DE,$000E</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=000E.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da0b"></span>DA0B</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da0d"></span>DA0D</td>
+<td class="instruction">DJNZ <a href="D9B6.html#d9c7">Handler_RoomSeven_Loop</a></td>
+<td class="comment-1" rowspan="1">Decrease the bat count and loop back to <a href="D9B6.html#d9c7">Handler_RoomSeven_Loop</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da0f"></span>DA0F</td>
+<td class="instruction">LD A,$02</td>
+<td class="comment-1" rowspan="2">Write 02 to *<a href="6419.html#641a">ClipWindow_MaximumRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da11"></span>DA11</td>
+<td class="instruction">LD ($641A),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da14"></span>DA14</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da15"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="D5AC.html">Initialise_Game</a> and <a href="DBC9.html">Handler_InventoryItems</a>.
+</div>
+<div class="paragraph">
+Draw the collected-item icons along the top of the screen.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_CollectionBar</td>
+<td class="address-2"><span id="da15"></span>DA15</td>
+<td class="instruction">LD HL,$7C70</td>
+<td class="comment-1" rowspan="2">Write <a href="7C70.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da18"></span>DA18</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da1b"></span>DA1B</td>
+<td class="instruction">LD BC,$0119</td>
+<td class="comment-1" rowspan="2">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at column 01 row 19.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da1e"></span>DA1E</td>
+<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da21"></span>DA21</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="3">Write WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da23"></span>DA23</td>
+<td class="instruction">LD A,$07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da25"></span>DA25</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label">Print_CollectionBar_Loop</td>
+<td class="address-2"><span id="da28"></span>DA28</td>
+<td class="instruction">LD A,($64A1)</td>
+<td class="comment-1" rowspan="5">Highlight the current icon in BLACK.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da2b"></span>DA2B</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da2c"></span>DA2C</td>
+<td class="instruction">JR NZ,<a href="D9B6.html#da33">Print_CollectionBar_Glyph</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da2e"></span>DA2E</td>
+<td class="instruction">LD A,$38</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da30"></span>DA30</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label">Print_CollectionBar_Glyph</td>
+<td class="address-2"><span id="da33"></span>DA33</td>
+<td class="instruction">LD A,$E4</td>
+<td class="comment-1" rowspan="2">Print glyph E4.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da35"></span>DA35</td>
+<td class="instruction">CALL <a href="F42A.html#f436">JumpTable_PrintCharacter</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da38"></span>DA38</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D9B6.html#da28">Print_CollectionBar_Loop</a> until 10 icons are printed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da39"></span>DA39</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da3a"></span>DA3A</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da3c"></span>DA3C</td>
+<td class="instruction">JR NZ,<a href="D9B6.html#da28">Print_CollectionBar_Loop</a></td>
+<td class="comment-1" rowspan="2">Return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da3e"></span>DA3E</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D904.html">D904</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d9b6">Map</a></td>
+<td class="next">
+Next: <a href="DA3F.html">DA3F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/55734.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>
