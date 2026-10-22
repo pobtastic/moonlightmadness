@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62095</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62084.html">62084</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62095">Map</a></td>
+<td class="next">
+Next: <a href="62130.html">62130</a>
+</td>
+</tr>
+</table>
+<div class="description">62095: Hide Actor</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 15: hide the first active actor.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_HideActor</td>
+<td class="address-2"><span id="62095"></span>62095</td>
+<td class="instruction">CALL <a href="62084.html">Hide_ActorRecord</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62084.html">Hide_ActorRecord</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62098"></span>62098</td>
+<td class="instruction">LD IX,(25648)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25648.html">ReferenceActors</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_HideActor_Target</td>
+<td class="address-2"><span id="62102"></span>62102</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="3">Return if the terminator 255 is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62105"></span>62105</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62107"></span>62107</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62108"></span>62108</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="62095.html#62123">Event_HideActor_Continue</a> if this actor is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62110"></span>62110</td>
+<td class="instruction">JR NZ,<a href="62095.html#62123">Event_HideActor_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62112"></span>62112</td>
+<td class="instruction">CALL <a href="62557.html">JumpTable_UpdateActor</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62557.html">JumpTable_UpdateActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62115"></span>62115</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="3">Set bit 7 of the actor record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62118"></span>62118</td>
+<td class="instruction">SET 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62120"></span>62120</td>
+<td class="instruction">LD (IX+0),A</td>
+</tr>
+<tr>
+<td class="asm-label">Event_HideActor_Continue</td>
+<td class="address-2"><span id="62123"></span>62123</td>
+<td class="instruction">LD DE,13</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0013.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62126"></span>62126</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62128"></span>62128</td>
+<td class="instruction">JR <a href="62095.html#62102">Event_HideActor_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62095.html#62102">Event_HideActor_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62084.html">62084</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62095">Map</a></td>
+<td class="next">
+Next: <a href="62130.html">62130</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F28F.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

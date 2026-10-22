@@ -170,7 +170,7 @@ IM 2 lands here from <a href="65278.html">AliasInterruptRedirect</a>. Plays the 
 <td class="asm-label">Handler_Interrupts_Done</td>
 <td class="address-2"><span id="58523"></span>58523</td>
 <td class="instruction">POP IX</td>
-<td class="comment-1" rowspan="7">Restore the stashed registers and return.</td>
+<td class="comment-1" rowspan="5">Restore the stashed registers from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -196,11 +196,13 @@ IM 2 lands here from <a href="65278.html">AliasInterruptRedirect</a>. Plays the 
 <td class="asm-label"></td>
 <td class="address-1"><span id="58529"></span>58529</td>
 <td class="instruction">EI</td>
+<td class="comment-1" rowspan="1">Enable interrupts.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58530"></span>58530</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -311,7 +313,7 @@ Click the speaker <span class="register">D</span> times using a random delay. <a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58562"></span>58562</td>
-<td class="instruction">CALL <a href="62506.html#62515">JumpTable_GetRandomNumber</a></td>
+<td class="instruction">CALL <a href="62515.html">JumpTable_GetRandomNumber</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -380,28 +382,32 @@ Falling-pitch score sound. <audio controls="" src="../../audio/score.wav">
 <tr>
 <td class="asm-label">Sound_Score</td>
 <td class="address-2"><span id="58579"></span>58579</td>
-<td class="instruction">AND 239</td>
-<td class="comment-1" rowspan="5">Clear bit 4 of *<a href="25714.html">SoundFlags</a> and jump to <a href="58476.html#58593">Sound_Square</a>.</td>
+<td class="instruction">AND %11101111</td>
+<td class="comment-1" rowspan="1">Clear bit 4.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58581"></span>58581</td>
 <td class="instruction">LD (25714),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="25714.html">SoundFlags</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58584"></span>58584</td>
 <td class="instruction">LD DE,50</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0050.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58587"></span>58587</td>
 <td class="instruction">LD BC,100</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=0100.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58590"></span>58590</td>
 <td class="instruction">JP <a href="58476.html#58593">Sound_Square</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="58476.html#58593">Sound_Square</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -419,7 +425,7 @@ Square-wave sound while <span class="register">DE</span> and <span class="regist
 <tr>
 <td class="asm-label">Sound_Square</td>
 <td class="address-2"><span id="58593"></span>58593</td>
-<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
 <td class="comment-1" rowspan="15">Toggle the speaker until both counters are zero.</td>
 </tr>
 <tr>
@@ -435,7 +441,7 @@ Square-wave sound while <span class="register">DE</span> and <span class="regist
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58601"></span>58601</td>
-<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -522,7 +528,7 @@ Rising-pitch pickup sound. <audio controls="" src="../../audio/pickup.wav">
 <tr>
 <td class="asm-label">Sound_Pickup</td>
 <td class="address-2"><span id="58625"></span>58625</td>
-<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
 <td class="comment-1" rowspan="14">Toggle the speaker while increasing <span class="register">BC</span>.</td>
 </tr>
 <tr>
@@ -538,7 +544,7 @@ Rising-pitch pickup sound. <audio controls="" src="../../audio/pickup.wav">
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58633"></span>58633</td>
-<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

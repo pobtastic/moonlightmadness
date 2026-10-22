@@ -39,7 +39,7 @@ Next: <a href="60717.html">60717</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="59906.html">Unpack_Rooms</a> and <a href="60889.html">Handler_Events</a>.
+Used by the routines at <a href="59906.html">Unpack_Rooms</a>, <a href="62038.html">Event_BumpDigit</a> and <a href="62130.html">Event_RandomCombination</a>.
 </div>
 <div class="paragraph">
 Prints the four <a href="25793.html">CollectionSlots</a> digits and flashes them when every slot is 9.
@@ -73,23 +73,34 @@ Prints the four <a href="25793.html">CollectionSlots</a> digits and flashes them
 <td class="asm-label"></td>
 <td class="address-1"><span id="60669"></span>60669</td>
 <td class="instruction">LD BC,263</td>
-<td class="comment-1" rowspan="2">Call <a href="62506.html#62509">JumpTable_SetPrintPosition</a> at column 7 row 1.</td>
+<td class="comment-1" rowspan="2">Call <a href="62509.html">JumpTable_SetPrintPosition</a> at column 7 row 1.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60672"></span>60672</td>
-<td class="instruction">CALL <a href="62506.html#62509">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="62509.html">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="60675"></span>
+<div class="comments">
+<div class="paragraph">
+Print the four combination digits.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60675"></span>60675</td>
 <td class="instruction">LD BC,1024</td>
-<td class="comment-1" rowspan="2">Point <span class="register">HL</span> at <a href="25793.html">CollectionSlots</a> and set <span class="register">B</span>=4.</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=1024.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60678"></span>60678</td>
 <td class="instruction">LD HL,25793</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="25793.html">CollectionSlots</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Print_Inventory_Target</td>
@@ -117,12 +128,13 @@ Prints the four <a href="25793.html">CollectionSlots</a> digits and flashes them
 <td class="asm-label">Print_Inventory_Continue</td>
 <td class="address-2"><span id="60687"></span>60687</td>
 <td class="instruction">ADD A,48</td>
-<td class="comment-1" rowspan="2">Convert the digit into ASCII and call <a href="62506.html#62518">JumpTable_PrintCharacter</a>.</td>
+<td class="comment-1" rowspan="1">Convert the digit into ASCII.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60689"></span>60689</td>
-<td class="instruction">CALL <a href="62506.html#62518">JumpTable_PrintCharacter</a></td>
+<td class="instruction">CALL <a href="62518.html">JumpTable_PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62518.html">JumpTable_PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -170,7 +182,7 @@ Flash the four cells when every digit is 9.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60702"></span>60702</td>
-<td class="instruction">CALL <a href="62506.html#62524">JumpTable_ConvertCoordinate</a></td>
+<td class="instruction">CALL <a href="62524.html">JumpTable_ConvertCoordinate</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

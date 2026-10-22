@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at FA9E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="FA6A.html">FA6A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#fa9e">Map</a></td>
+<td class="next">
+Next: <a href="FAFE.html">FAFE</a>
+</td>
+</tr>
+</table>
+<div class="description">FA9E: Fill Tiles</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="F451.html">JumpTable_FillTiles</a> and <a href="F6E1.html">Move_Entity</a>.
+</div>
+<div class="paragraph">
+Fills a rectangle of tiles from the room buffers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Fill_Tiles</td>
+<td class="address-2"><span id="fa9e"></span>FA9E</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="4">Stash <span class="register">AF</span>, <span class="register">BC</span>, <span class="register">DE</span> and <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa9f"></span>FA9F</td>
+<td class="instruction">PUSH BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faa0"></span>FAA0</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faa1"></span>FAA1</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faa2"></span>FAA2</td>
+<td class="instruction">LD HL,($5C36)</td>
+<td class="comment-1" rowspan="4">Switch *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a> to *<a href="640E.html">Pointer_ActiveFont</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faa5"></span>FAA5</td>
+<td class="instruction">PUSH HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faa6"></span>FAA6</td>
+<td class="instruction">LD HL,($640E)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faa9"></span>FAA9</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="faac"></span>
+<div class="comments">
+<div class="paragraph">
+Clip the fill rectangle.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faac"></span>FAAC</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="2">Store the width in *<a href="6416.html">Print_Width</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faad"></span>FAAD</td>
+<td class="instruction">LD ($6416),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fab0"></span>FAB0</td>
+<td class="instruction">CALL <a href="FA6A.html">Next_PrintCell</a></td>
+<td class="comment-1" rowspan="1">Call <a href="FA6A.html">Next_PrintCell</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fab3"></span>FAB3</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="5">Jump to <a href="FA9E.html#faf5">Fill_Tiles_Skip</a> if the clipped size is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fab4"></span>FAB4</td>
+<td class="instruction">CP E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fab5"></span>FAB5</td>
+<td class="instruction">JP Z,<a href="FA9E.html#faf5">Fill_Tiles_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fab8"></span>FAB8</td>
+<td class="instruction">CP D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fab9"></span>FAB9</td>
+<td class="instruction">JP Z,<a href="FA9E.html#faf5">Fill_Tiles_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fabc"></span>FABC</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="2">Store the starting column in *<a href="6414.html">6415</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fabd"></span>FABD</td>
+<td class="instruction">LD ($6415),A</td>
+</tr>
+<tr>
+<td class="asm-label">Fill_Tiles_Target</td>
+<td class="address-2"><span id="fac0"></span>FAC0</td>
+<td class="instruction">LD A,($6416)</td>
+<td class="comment-1" rowspan="2"><span class="register">E</span>=*<a href="6416.html">Print_Width</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fac3"></span>FAC3</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fac4"></span>FAC4</td>
+<td class="instruction">LD A,($6415)</td>
+<td class="comment-1" rowspan="2"><span class="register">C</span>=*<a href="6414.html">6415</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fac7"></span>FAC7</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fac8"></span>FAC8</td>
+<td class="instruction">CALL <a href="F5C4.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F5C4.html">Set_PrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Fill_Tiles_Continue</td>
+<td class="address-2"><span id="facb"></span>FACB</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="7">Advance *<a href="6412.html">Print_BufferOffset</a> and point <span class="register">HL</span> at that <a href="5DCE.html">Buffer_RoomTiles</a> tile.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="facc"></span>FACC</td>
+<td class="instruction">LD HL,($6412)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="facf"></span>FACF</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fad0"></span>FAD0</td>
+<td class="instruction">LD ($6412),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fad3"></span>FAD3</td>
+<td class="instruction">LD BC,$5DCD</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fad6"></span>FAD6</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fad7"></span>FAD7</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fad8"></span>FAD8</td>
+<td class="instruction">CALL <a href="F60A.html">Print_Character</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F60A.html">Print_Character</a> with the stored tile.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fadb"></span>FADB</td>
+<td class="instruction">LD BC,$0320</td>
+<td class="comment-1" rowspan="7">Copy the matching <a href="60EE.html">Buffer_RoomAttributes</a> attribute to the screen.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fade"></span>FADE</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fadf"></span>FADF</td>
+<td class="instruction">LD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fae0"></span>FAE0</td>
+<td class="instruction">LD BC,$57FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fae3"></span>FAE3</td>
+<td class="instruction">LD HL,($6412)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fae6"></span>FAE6</td>
+<td class="instruction">ADD HL,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fae7"></span>FAE7</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fae8"></span>FAE8</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="4">Move left one column and loop back to <a href="FA9E.html#facb">Fill_Tiles_Continue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fae9"></span>FAE9</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faea"></span>FAEA</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faeb"></span>FAEB</td>
+<td class="instruction">JR NZ,<a href="FA9E.html#facb">Fill_Tiles_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faed"></span>FAED</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="1">Decrease the remaining height.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faee"></span>FAEE</td>
+<td class="instruction">JR Z,<a href="FA9E.html#faf5">Fill_Tiles_Skip</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="FA9E.html#faf5">Fill_Tiles_Skip</a> if it is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faf0"></span>FAF0</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="2">Copy <span class="register">DE</span> to <span class="register">DE</span> (using the stack).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faf1"></span>FAF1</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faf2"></span>FAF2</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Move up one row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faf3"></span>FAF3</td>
+<td class="instruction">JR <a href="FA9E.html#fac0">Fill_Tiles_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="FA9E.html#fac0">Fill_Tiles_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Fill_Tiles_Skip</td>
+<td class="address-2"><span id="faf5"></span>FAF5</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faf6"></span>FAF6</td>
+<td class="instruction">LD ($5C36),HL</td>
+<td class="comment-1" rowspan="1">Write it back to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="faf9"></span>FAF9</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="4">Restore the stashed registers from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fafa"></span>FAFA</td>
+<td class="instruction">POP DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fafb"></span>FAFB</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fafc"></span>FAFC</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fafd"></span>FAFD</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="FA6A.html">FA6A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#fa9e">Map</a></td>
+<td class="next">
+Next: <a href="FAFE.html">FAFE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/64158.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F6AA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F662.html">F662</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f6aa">Map</a></td>
+<td class="next">
+Next: <a href="F6C6.html">F6C6</a>
+</td>
+</tr>
+</table>
+<div class="description">F6AA: Convert Coordinate</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="F43C.html">JumpTable_ConvertCoordinate</a>, <a href="F662.html">Print_Clipped</a> and <a href="FB2F.html">Draw_Actor</a>.
+</div>
+<div class="paragraph">
+Converts a column/row pair into an offset.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Convert_Coordinate</td>
+<td class="address-2"><span id="f6aa"></span>F6AA</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Clear <span class="register">A</span>, <span class="register">D</span> and <span class="register">L</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6ab"></span>F6AB</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6ac"></span>F6AC</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6ad"></span>F6AD</td>
+<td class="instruction">LD A,$18</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=18-<span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6af"></span>F6AF</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6b0"></span>F6B0</td>
+<td class="instruction">SRL A</td>
+<td class="comment-1" rowspan="7">Multiply the row by 20 into <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6b2"></span>F6B2</td>
+<td class="instruction">RR L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6b4"></span>F6B4</td>
+<td class="instruction">SRL A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6b6"></span>F6B6</td>
+<td class="instruction">RR L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6b8"></span>F6B8</td>
+<td class="instruction">SRL A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6ba"></span>F6BA</td>
+<td class="instruction">RR L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6bc"></span>F6BC</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6bd"></span>F6BD</td>
+<td class="instruction">LD A,$21</td>
+<td class="comment-1" rowspan="3"><span class="register">E</span>=21-<span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6bf"></span>F6BF</td>
+<td class="instruction">SUB C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6c0"></span>F6C0</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6c1"></span>F6C1</td>
+<td class="instruction">ADD HL,DE</td>
+<td class="comment-1" rowspan="2">Add the column and write *<a href="6412.html">Print_BufferOffset</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6c2"></span>F6C2</td>
+<td class="instruction">LD ($6412),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6c5"></span>F6C5</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/asm/A86E.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F662.html">F662</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f6aa">Map</a></td>
+<td class="next">
+Next: <a href="F6C6.html">F6C6</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/63146.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

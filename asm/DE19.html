@@ -105,12 +105,12 @@ Prints the four <a href="64C1.html">CollectionSlots</a> digits on room 00.
 <td class="asm-label"></td>
 <td class="address-1"><span id="de2e"></span>DE2E</td>
 <td class="instruction">LD BC,$1413</td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at column 14 row 13.</td>
+<td class="comment-1" rowspan="1">Call <a href="F42D.html">JumpTable_SetPrintPosition</a> at column 14 row 13.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="de31"></span>DE31</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
 <td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="64C1.html">CollectionSlots</a>.</td>
 </tr>
 <tr>
@@ -139,7 +139,7 @@ Prints the four <a href="64C1.html">CollectionSlots</a> digits on room 00.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="de3c"></span>DE3C</td>
-<td class="instruction">CALL <a href="F42A.html#f436">JumpTable_PrintCharacter</a></td>
+<td class="instruction">CALL <a href="F436.html">JumpTable_PrintCharacter</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -216,7 +216,7 @@ Probe the three tiles above the player for a solid.
 <td class="asm-label"></td>
 <td class="address-1"><span id="de4f"></span>DE4F</td>
 <td class="instruction">LD ($DE83),A</td>
-<td class="comment-1" rowspan="10">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> for the cell above the player.</td>
+<td class="comment-1" rowspan="10">Call <a href="F42D.html">JumpTable_SetPrintPosition</a> for the cell above the player.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -266,7 +266,7 @@ Probe the three tiles above the player for a solid.
 <tr>
 <td class="asm-label">Probe_Ceiling_Ready</td>
 <td class="address-2"><span id="de63"></span>DE63</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
 <td class="comment-1" rowspan="4">Point <span class="register">HL</span> at that <a href="5DCE.html">Buffer_RoomTiles</a> tile and <span class="register">DE</span> at <a href="643A.html">Player_Mask</a>.</td>
 </tr>
 <tr>
@@ -342,12 +342,13 @@ Probe the three tiles above the player for a solid.
 <td class="asm-label"></td>
 <td class="address-1"><span id="de80"></span>DE80</td>
 <td class="instruction">LD (IX+$09),$00</td>
-<td class="comment-1" rowspan="2">Clear (IX+09) and return.</td>
+<td class="comment-1" rowspan="1">Write 00 to *<span class="register">IX</span>+09.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="de84"></span>DE84</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">Probe_Ceiling_Next</td>
@@ -649,7 +650,7 @@ Build the player's shifted collision mask.
 <td class="asm-label"></td>
 <td class="address-1"><span id="dee7"></span>DEE7</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="4">Clear *<a href="6448.html">Player_Footprint</a> and return if none is set.</td>
+<td class="comment-1" rowspan="3">Write 0000 to *<a href="6448.html">Player_Footprint</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -665,6 +666,7 @@ Build the player's shifted collision mask.
 <td class="asm-label"></td>
 <td class="address-1"><span id="deee"></span>DEEE</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">Build_PlayerMask_Width</td>
@@ -886,12 +888,12 @@ Lose a life and restart the room.
 <td class="asm-label"></td>
 <td class="address-1"><span id="df40"></span>DF40</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D5AC.html#d738">Change_Room</a> with <span class="register">A</span>=00.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D738.html">Change_Room</a> with <span class="register">A</span>=00.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="df41"></span>DF41</td>
-<td class="instruction">JP <a href="D5AC.html#d738">Change_Room</a></td>
+<td class="instruction">JP <a href="D738.html">Change_Room</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -921,12 +923,13 @@ Walk left, or start a left-facing walk.
 <td class="asm-label"></td>
 <td class="address-1"><span id="df4a"></span>DF4A</td>
 <td class="instruction">SET 7,(IX+$07)</td>
-<td class="comment-1" rowspan="2">Face left and set frame 60.</td>
+<td class="comment-1" rowspan="1">Face left.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="df4e"></span>DF4E</td>
 <td class="instruction">LD (IX+$06),$60</td>
+<td class="comment-1" rowspan="1">Set frame 60.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1015,12 +1018,13 @@ Walk right, or start a right-facing walk.
 <td class="asm-label"></td>
 <td class="address-1"><span id="df6f"></span>DF6F</td>
 <td class="instruction">LD (IX+$06),$60</td>
-<td class="comment-1" rowspan="2">Face right and set frame 60.</td>
+<td class="comment-1" rowspan="1">Set frame 60.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="df73"></span>DF73</td>
 <td class="instruction">RES 7,(IX+$07)</td>
+<td class="comment-1" rowspan="1">Face right.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1213,7 +1217,7 @@ Fire / use the furniture in front of the player.
 <td class="asm-label">Player_Action_Use</td>
 <td class="address-2"><span id="dfb8"></span>DFB8</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="8">Jump to <a href="D5AC.html#d738">Change_Room</a> with the furniture event ID.</td>
+<td class="comment-1" rowspan="8">Jump to <a href="D738.html">Change_Room</a> with the furniture event ID.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1248,7 +1252,7 @@ Fire / use the furniture in front of the player.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dfbf"></span>DFBF</td>
-<td class="instruction">JP <a href="D5AC.html#d738">Change_Room</a></td>
+<td class="instruction">JP <a href="D738.html">Change_Room</a></td>
 </tr>
 <tr>
 <td class="asm-label">Player_Action_Next</td>
@@ -1449,7 +1453,7 @@ Fire / use the furniture in front of the player.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e003"></span>E003</td>
 <td class="instruction">LD HL,$0001</td>
-<td class="comment-1" rowspan="3">Write 0001 to *<a href="E82A.html">Table_RoomPause</a> and jump to <a href="E9FF.html">Dispatch_Events</a>.</td>
+<td class="comment-1" rowspan="2">Write 0001 to *<a href="E82A.html">Table_RoomPause</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1460,6 +1464,7 @@ Fire / use the furniture in front of the player.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e009"></span>E009</td>
 <td class="instruction">JP <a href="E9FF.html">Dispatch_Events</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E9FF.html">Dispatch_Events</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Player_Action_DoorNext</td>
@@ -1660,7 +1665,7 @@ Climb down a ladder from *<a href="6428.html">ReferenceLadders</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e053"></span>E053</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-1" rowspan="4">Write the remaining fine-X as the horizontal delta and return.</td>
+<td class="comment-1" rowspan="3">Write the remaining fine-X as the horizontal delta.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1676,12 +1681,13 @@ Climb down a ladder from *<a href="6428.html">ReferenceLadders</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e05b"></span>E05B</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">Player_ClimbDown_Offset</td>
 <td class="address-2"><span id="e05c"></span>E05C</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="4">Write the opposite climb delta and return.</td>
+<td class="comment-1" rowspan="3">Write the opposite climb delta.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1697,6 +1703,7 @@ Climb down a ladder from *<a href="6428.html">ReferenceLadders</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e064"></span>E064</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">Player_ClimbDown_Next</td>
@@ -1928,7 +1935,7 @@ Climb up a ladder, or start a jump.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e0b7"></span>E0B7</td>
 <td class="instruction">LD A,$07</td>
-<td class="comment-1" rowspan="4">Write the remaining fine-X as the horizontal delta and return.</td>
+<td class="comment-1" rowspan="3">Write the remaining fine-X as the horizontal delta.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1944,12 +1951,13 @@ Climb up a ladder, or start a jump.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e0bf"></span>E0BF</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">Player_ClimbUp_Offset</td>
 <td class="address-2"><span id="e0c0"></span>E0C0</td>
 <td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="4">Write the opposite climb delta and return.</td>
+<td class="comment-1" rowspan="3">Write the opposite climb delta.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1965,6 +1973,7 @@ Climb up a ladder, or start a jump.
 <td class="asm-label"></td>
 <td class="address-1"><span id="e0c8"></span>E0C8</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">Player_ClimbUp_Next</td>
@@ -2372,41 +2381,66 @@ Flash and drop the player after a hit. <audio controls="" src="../audio/bonus.wa
 <td class="instruction">CALL <a href="E46C.html#e501">Sound_Pickup</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="e16a"></span>
+<div class="comments">
+<div class="paragraph">
+Advance, store and erase the falling player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Player_Hit_Fall</td>
 <td class="address-2"><span id="e16a"></span>E16A</td>
 <td class="instruction">LD (IX+$09),$FF</td>
-<td class="comment-1" rowspan="4">Advance, store and erase the falling player.</td>
+<td class="comment-1" rowspan="1">Write FF as the vertical delta.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e16e"></span>E16E</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e171"></span>E171</td>
 <td class="instruction">CALL <a href="F424.html">JumpTable_StorePosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F424.html">JumpTable_StorePosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e174"></span>E174</td>
-<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
+<td class="instruction">CALL <a href="F442.html">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F442.html">JumpTable_MoveEntity</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e177"></span>
+<div class="comments">
+<div class="paragraph">
+Clip the draw against *<a href="644A.html">HitCeilingRow</a>.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e177"></span>E177</td>
 <td class="instruction">LD A,($641A)</td>
-<td class="comment-1" rowspan="6">Clip the draw against *<a href="644A.html">HitCeilingRow</a> and call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="6419.html#641a">ClipWindow_MaximumRow</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e17a"></span>E17A</td>
 <td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash it on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e17b"></span>E17B</td>
 <td class="instruction">LD A,($644A)</td>
+<td class="comment-1" rowspan="2">Write *<a href="644A.html">HitCeilingRow</a> to *<a href="6419.html#641a">ClipWindow_MaximumRow</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2416,23 +2450,26 @@ Flash and drop the player after a hit. <audio controls="" src="../audio/bonus.wa
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e181"></span>E181</td>
-<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+<td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e184"></span>E184</td>
 <td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore *<a href="6419.html#641a">ClipWindow_MaximumRow</a> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e185"></span>E185</td>
 <td class="instruction">LD ($641A),A</td>
-<td class="comment-1" rowspan="5">Decrease *<a href="6435.html">Player_HitTimer</a> and jump to <a href="DE19.html#df22">Lose_Life</a> when it hits zero.</td>
+<td class="comment-1" rowspan="1">Write it back to *<a href="6419.html#641a">ClipWindow_MaximumRow</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e188"></span>E188</td>
 <td class="instruction">LD A,($6435)</td>
+<td class="comment-1" rowspan="2">Decrease *<a href="6435.html">Player_HitTimer</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -2443,11 +2480,13 @@ Flash and drop the player after a hit. <audio controls="" src="../audio/bonus.wa
 <td class="asm-label"></td>
 <td class="address-1"><span id="e18c"></span>E18C</td>
 <td class="instruction">JP Z,<a href="DE19.html#df22">Lose_Life</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DE19.html#df22">Lose_Life</a> if it is now zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e18f"></span>E18F</td>
 <td class="instruction">LD ($6435),A</td>
+<td class="comment-1" rowspan="1">Write the new count back.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

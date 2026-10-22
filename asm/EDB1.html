@@ -39,7 +39,7 @@ Next: <a href="EDD9.html">EDD9</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routines at <a href="EA02.html">Unpack_Rooms</a> and <a href="EDD9.html">Handler_Events</a>.
+Used by the routines at <a href="EA02.html">Unpack_Rooms</a> and <a href="EFE6.html">Event_DrawHeader</a>.
 </div>
 </div>
 </td>
@@ -65,12 +65,13 @@ Used by the routines at <a href="EA02.html">Unpack_Rooms</a> and <a href="EDD9.h
 <td class="asm-label"></td>
 <td class="address-1"><span id="edb9"></span>EDB9</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="2">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at that column and row.</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=the column.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="edba"></span>EDBA</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42D.html">JumpTable_SetPrintPosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -103,13 +104,14 @@ Used by the routines at <a href="EA02.html">Unpack_Rooms</a> and <a href="EDD9.h
 <tr>
 <td class="asm-label">Draw_HeaderFurniture_Continue</td>
 <td class="address-2"><span id="edcc"></span>EDCC</td>
-<td class="instruction">CALL <a href="F42A.html#f436">JumpTable_PrintCharacter</a></td>
-<td class="comment-1" rowspan="2">Call <a href="F42A.html#f436">JumpTable_PrintCharacter</a> and <a href="F42A.html#f43f">JumpTable_WriteTile</a>.</td>
+<td class="instruction">CALL <a href="F436.html">JumpTable_PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F436.html">JumpTable_PrintCharacter</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="edcf"></span>EDCF</td>
-<td class="instruction">CALL <a href="F42A.html#f43f">JumpTable_WriteTile</a></td>
+<td class="instruction">CALL <a href="F43F.html">JumpTable_WriteTile</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F43F.html">JumpTable_WriteTile</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

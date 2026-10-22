@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62603</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62566.html">62566</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62603">Map</a></td>
+<td class="next">
+Next: <a href="62632.html">62632</a>
+</td>
+</tr>
+</table>
+<div class="description">62603: Draw Box</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62563.html">JumpTable_DrawBox</a>.
+</div>
+<div class="paragraph">
+Draws a box of character 200.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Box</td>
+<td class="address-2"><span id="62603"></span>62603</td>
+<td class="instruction">CALL <a href="64106.html">Next_PrintCell</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64106.html">Next_PrintCell</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62606"></span>62606</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Return if the width is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62607"></span>62607</td>
+<td class="instruction">CP E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62608"></span>62608</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62609"></span>62609</td>
+<td class="instruction">CP D</td>
+<td class="comment-1" rowspan="2">Return if the height is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62610"></span>62610</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Box_Target</td>
+<td class="address-2"><span id="62611"></span>62611</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the print position on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62612"></span>62612</td>
+<td class="instruction">CALL <a href="62916.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62916.html">Set_PrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62615"></span>62615</td>
+<td class="instruction">LD B,E</td>
+<td class="comment-1" rowspan="1">Copy the remaining width into <span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Box_Target2</td>
+<td class="address-2"><span id="62616"></span>62616</td>
+<td class="instruction">LD A,200</td>
+<td class="comment-1" rowspan="2">Print a 200 tile.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62618"></span>62618</td>
+<td class="instruction">CALL <a href="62986.html">Print_Character</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62621"></span>62621</td>
+<td class="instruction">CALL <a href="63174.html">Write_Tile</a></td>
+<td class="comment-1" rowspan="1">Call <a href="63174.html">Write_Tile</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62624"></span>62624</td>
+<td class="instruction">DJNZ <a href="62603.html#62616">Draw_Box_Target2</a></td>
+<td class="comment-1" rowspan="1">Decrease the width and loop back to <a href="62603.html#62616">Draw_Box_Target2</a> until this row is drawn.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62626"></span>62626</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the print position from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62627"></span>62627</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="2">Return if every row is drawn.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62628"></span>62628</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62629"></span>62629</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Move up one row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62630"></span>62630</td>
+<td class="instruction">JR <a href="62603.html#62611">Draw_Box_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62603.html#62611">Draw_Box_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62566.html">62566</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62603">Map</a></td>
+<td class="next">
+Next: <a href="62632.html">62632</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F48B.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

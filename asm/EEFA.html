@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at EEFA</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EEE5.html">EEE5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#eefa">Map</a></td>
+<td class="next">
+Next: <a href="EF3A.html">EF3A</a>
+</td>
+</tr>
+</table>
+<div class="description">EEFA: Reveal Header</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 06: reveal the room-header item.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealHeader</td>
+<td class="address-2"><span id="eefa"></span>EEFA</td>
+<td class="instruction">LD IX,($641E)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="641E.html">Pointer_RoomHeader</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="eefe"></span>EEFE</td>
+<td class="instruction">BIT 7,(IX+$00)</td>
+<td class="comment-1" rowspan="2">Return if this header item is already visible.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef02"></span>EF02</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef03"></span>EF03</td>
+<td class="instruction">LD BC,$2020</td>
+<td class="comment-1" rowspan="2">Write 2020 to *<a href="6472.html">SoundFlags</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef06"></span>EF06</td>
+<td class="instruction">LD ($6472),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef0a"></span>EF0A</td>
+<td class="instruction">RES 7,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Clear bit 7 of the header record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef0e"></span>EF0E</td>
+<td class="instruction">LD C,(IX+$00)</td>
+<td class="comment-1" rowspan="6">Fetch the column, row, width and colour.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef11"></span>EF11</td>
+<td class="instruction">LD B,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef14"></span>EF14</td>
+<td class="instruction">LD E,(IX+$04)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef17"></span>EF17</td>
+<td class="instruction">LD D,$01</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef19"></span>EF19</td>
+<td class="instruction">LD L,(IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef1c"></span>EF1C</td>
+<td class="instruction">LD A,(IX+$03)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef1f"></span>EF1F</td>
+<td class="instruction">LD IX,$648B</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="648B.html">CarriedObject</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef23"></span>EF23</td>
+<td class="instruction">CALL <a href="F457.html">JumpTable_SpawnEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F457.html">JumpTable_SpawnEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef26"></span>EF26</td>
+<td class="instruction">CALL <a href="F333.html">Copy_ActorDestination</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F333.html">Copy_ActorDestination</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef29"></span>EF29</td>
+<td class="instruction">LD (IX+$08),$01</td>
+<td class="comment-1" rowspan="1">Write 01 as the horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef2d"></span>EF2D</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="4">Subtract the width from the column and store it.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef30"></span>EF30</td>
+<td class="instruction">SUB (IX+$04)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef33"></span>EF33</td>
+<td class="instruction">LD (IX+$00),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef36"></span>EF36</td>
+<td class="instruction">LD (IX+$13),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef39"></span>EF39</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EEE5.html">EEE5</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#eefa">Map</a></td>
+<td class="next">
+Next: <a href="EF3A.html">EF3A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/61178.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

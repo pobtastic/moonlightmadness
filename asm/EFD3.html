@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at EFD3</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EF8A.html">EF8A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#efd3">Map</a></td>
+<td class="next">
+Next: <a href="EFE6.html">EFE6</a>
+</td>
+</tr>
+</table>
+<div class="description">EFD3: Swap Keys</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 0E: swap the left/right keys.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_SwapKeys</td>
+<td class="address-2"><span id="efd3"></span>EFD3</td>
+<td class="instruction">LD BC,($647F)</td>
+<td class="comment-1" rowspan="4">Swap *<a href="647F.html">UserDefinedKeys</a> with *<a href="647F.html#6480">UserDefinedKey_Right</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="efd7"></span>EFD7</td>
+<td class="instruction">LD H,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="efd8"></span>EFD8</td>
+<td class="instruction">LD L,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="efd9"></span>EFD9</td>
+<td class="instruction">LD ($647F),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="efdc"></span>EFDC</td>
+<td class="instruction">LD BC,($6486)</td>
+<td class="comment-1" rowspan="4">Swap the two bytes at *<a href="6486.html">KempstonMasks</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="efe0"></span>EFE0</td>
+<td class="instruction">LD H,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="efe1"></span>EFE1</td>
+<td class="instruction">LD L,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="efe2"></span>EFE2</td>
+<td class="instruction">LD ($6486),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="efe5"></span>EFE5</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EF8A.html">EF8A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#efd3">Map</a></td>
+<td class="next">
+Next: <a href="EFE6.html">EFE6</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/61395.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F1D4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F1C4.html">F1C4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f1d4">Map</a></td>
+<td class="next">
+Next: <a href="F1EE.html">F1EE</a>
+</td>
+</tr>
+</table>
+<div class="description">F1D4: Reveal Next Pair</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 0C: reveal the next decoration and mover.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealNextPair</td>
+<td class="address-2"><span id="f1d4"></span>F1D4</td>
+<td class="instruction">LD IX,($642E)</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>=*<a href="642E.html">ReferenceDecorations</a>+0006.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f1d8"></span>F1D8</td>
+<td class="instruction">LD BC,$0006</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f1db"></span>F1DB</td>
+<td class="instruction">ADD IX,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f1dd"></span>F1DD</td>
+<td class="instruction">CALL <a href="F193.html">Reveal_Decoration</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F193.html">Reveal_Decoration</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f1e0"></span>F1E0</td>
+<td class="instruction">LD IX,($642A)</td>
+<td class="comment-1" rowspan="4">Clear bit 7 of *<a href="642A.html">ReferenceMovingObjects</a>+0013.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f1e4"></span>F1E4</td>
+<td class="instruction">LD BC,$0013</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f1e7"></span>F1E7</td>
+<td class="instruction">ADD IX,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f1e9"></span>F1E9</td>
+<td class="instruction">RES 7,(IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f1ed"></span>F1ED</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F1C4.html">F1C4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f1d4">Map</a></td>
+<td class="next">
+Next: <a href="F1EE.html">F1EE</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/61908.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61322</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61276.html">61276</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61322">Map</a></td>
+<td class="next">
+Next: <a href="61395.html">61395</a>
+</td>
+</tr>
+</table>
+<div class="description">61322: Start Actor</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 8: start an actor walking.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartActor</td>
+<td class="address-2"><span id="61322"></span>61322</td>
+<td class="instruction">LD IX,(25648)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25648.html">ReferenceActors</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartActor_Target</td>
+<td class="address-2"><span id="61326"></span>61326</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="3">Return if the terminator 255 is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61329"></span>61329</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61331"></span>61331</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61332"></span>61332</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61322.html#61388">Event_StartActor_Continue</a> if this actor is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61334"></span>61334</td>
+<td class="instruction">JR NZ,<a href="61322.html#61388">Event_StartActor_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61336"></span>61336</td>
+<td class="instruction">LD A,(IX+8)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61322.html#61388">Event_StartActor_Continue</a> if the actor already has a delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61339"></span>61339</td>
+<td class="instruction">OR (IX+9)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61342"></span>61342</td>
+<td class="instruction">JR NZ,<a href="61322.html#61388">Event_StartActor_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61344"></span>61344</td>
+<td class="instruction">LD A,(IX+5)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61322.html#61367">Event_StartActor_Skip</a> if there is no horizontal destination.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61347"></span>61347</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61348"></span>61348</td>
+<td class="instruction">JR Z,<a href="61322.html#61367">Event_StartActor_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61350"></span>61350</td>
+<td class="instruction">CP (IX+0)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61322.html#61361">Event_StartActor_Branch</a> if the actor is left of the destination.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61353"></span>61353</td>
+<td class="instruction">JR NC,<a href="61322.html#61361">Event_StartActor_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61355"></span>61355</td>
+<td class="instruction">LD (IX+8),254</td>
+<td class="comment-1" rowspan="1">Write 254 as the horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61359"></span>61359</td>
+<td class="instruction">JR <a href="61322.html#61388">Event_StartActor_Continue</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61322.html#61388">Event_StartActor_Continue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartActor_Branch</td>
+<td class="address-2"><span id="61361"></span>61361</td>
+<td class="instruction">LD (IX+8),2</td>
+<td class="comment-1" rowspan="1">Write 2 as the horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61365"></span>61365</td>
+<td class="instruction">JR <a href="61322.html#61388">Event_StartActor_Continue</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61322.html#61388">Event_StartActor_Continue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartActor_Skip</td>
+<td class="address-2"><span id="61367"></span>61367</td>
+<td class="instruction">LD A,(IX+6)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61322.html#61388">Event_StartActor_Continue</a> if there is no vertical destination.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61370"></span>61370</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61371"></span>61371</td>
+<td class="instruction">JR Z,<a href="61322.html#61388">Event_StartActor_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61373"></span>61373</td>
+<td class="instruction">CP (IX+1)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61322.html#61384">Event_StartActor_Branch2</a> if the actor is above the destination.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61376"></span>61376</td>
+<td class="instruction">JR NC,<a href="61322.html#61384">Event_StartActor_Branch2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61378"></span>61378</td>
+<td class="instruction">LD (IX+9),254</td>
+<td class="comment-1" rowspan="1">Write 254 as the vertical delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61382"></span>61382</td>
+<td class="instruction">JR <a href="61322.html#61388">Event_StartActor_Continue</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61322.html#61388">Event_StartActor_Continue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartActor_Branch2</td>
+<td class="address-2"><span id="61384"></span>61384</td>
+<td class="instruction">LD (IX+9),2</td>
+<td class="comment-1" rowspan="1">Write 2 as the vertical delta.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartActor_Continue</td>
+<td class="address-2"><span id="61388"></span>61388</td>
+<td class="instruction">LD DE,13</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0013.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61391"></span>61391</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61393"></span>61393</td>
+<td class="instruction">JR <a href="61322.html#61326">Event_StartActor_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61322.html#61326">Event_StartActor_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61276.html">61276</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61322">Map</a></td>
+<td class="next">
+Next: <a href="61395.html">61395</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/EF8A.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

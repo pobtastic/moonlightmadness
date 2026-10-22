@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 64303</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="64254.html">64254</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#64303">Map</a></td>
+<td class="next">
+Next: <a href="64400.html">64400</a>
+</td>
+</tr>
+</table>
+<div class="description">64303: Draw Actor</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62554.html">JumpTable_DrawActor</a>.
+</div>
+<div class="paragraph">
+Draws the actor pointed to by <span class="register">IX</span>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Actor data</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Actor</td>
+<td class="address-2"><span id="64303"></span>64303</td>
+<td class="instruction">LD A,255</td>
+<td class="comment-1" rowspan="2">Write 255 to the mask at <a href="64400.html#64452">64453</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64305"></span>64305</td>
+<td class="instruction">LD (64453),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64308"></span>64308</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="4">Fetch the column, row and width; height 1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64311"></span>64311</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64314"></span>64314</td>
+<td class="instruction">LD E,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64317"></span>64317</td>
+<td class="instruction">LD D,1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64319"></span>64319</td>
+<td class="instruction">LD A,(IX+2)</td>
+<td class="comment-1" rowspan="4">Increase the width when the fine-X is not 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64322"></span>64322</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64324"></span>64324</td>
+<td class="instruction">JR Z,<a href="64303.html#64327">Draw_Actor_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64326"></span>64326</td>
+<td class="instruction">INC E</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Actor_Skip</td>
+<td class="address-2"><span id="64327"></span>64327</td>
+<td class="instruction">LD A,(IX+3)</td>
+<td class="comment-1" rowspan="4">Increase the height when the fine-Y is below 3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64330"></span>64330</td>
+<td class="instruction">CP 3</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64332"></span>64332</td>
+<td class="instruction">JR NC,<a href="64303.html#64335">Draw_Actor_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64334"></span>64334</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Actor_Branch</td>
+<td class="address-2"><span id="64335"></span>64335</td>
+<td class="instruction">CALL <a href="64106.html">Next_PrintCell</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64106.html">Next_PrintCell</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64338"></span>64338</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="5">Jump to <a href="64303.html#64360">Draw_Actor_Skip2</a> if the clipped size is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64339"></span>64339</td>
+<td class="instruction">CP E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64340"></span>64340</td>
+<td class="instruction">JR Z,<a href="64303.html#64360">Draw_Actor_Skip2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64342"></span>64342</td>
+<td class="instruction">CP D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64343"></span>64343</td>
+<td class="instruction">JR Z,<a href="64303.html#64360">Draw_Actor_Skip2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64345"></span>64345</td>
+<td class="instruction">PUSH DE</td>
+<td class="comment-1" rowspan="7">Call <a href="64090.html">Fill_Attributes</a> with the actor colour at that attribute cell.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64346"></span>64346</td>
+<td class="instruction">CALL <a href="63146.html">Convert_Coordinate</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64349"></span>64349</td>
+<td class="instruction">LD DE,22528</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64352"></span>64352</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64353"></span>64353</td>
+<td class="instruction">LD A,(IX+7)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64356"></span>64356</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64357"></span>64357</td>
+<td class="instruction">CALL <a href="64090.html">Fill_Attributes</a></td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Actor_Skip2</td>
+<td class="address-2"><span id="64360"></span>64360</td>
+<td class="instruction">LD HL,25664</td>
+<td class="comment-1" rowspan="6">Fill <a href="25664.html">Actor_MaskBuffer</a> with 255 for the actor width.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64363"></span>64363</td>
+<td class="instruction">LD DE,25665</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64366"></span>64366</td>
+<td class="instruction">LD (HL),255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64368"></span>64368</td>
+<td class="instruction">LD C,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64371"></span>64371</td>
+<td class="instruction">LD B,0</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64373"></span>64373</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64375"></span>64375</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="4">Write 0 after the mask and load the fine-X.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64376"></span>64376</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64377"></span>64377</td>
+<td class="instruction">LD B,(IX+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64380"></span>64380</td>
+<td class="instruction">INC B</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Actor_Target</td>
+<td class="address-2"><span id="64381"></span>64381</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="3">Build a left-hand mask of (fine-X+1) bits.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64382"></span>64382</td>
+<td class="instruction">RLA</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64383"></span>64383</td>
+<td class="instruction">DJNZ <a href="64303.html#64381">Draw_Actor_Target</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="64385"></span>
+<div class="comments">
+<div class="paragraph">
+Write the mask to both ends of <a href="25664.html">Actor_MaskBuffer</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64385"></span>64385</td>
+<td class="instruction">LD DE,25664</td>
+<td class="comment-1" rowspan="2">Write the mask to *<a href="25664.html">Actor_MaskBuffer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64388"></span>64388</td>
+<td class="instruction">LD (DE),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64389"></span>64389</td>
+<td class="instruction">LD L,(IX+4)</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at the other end of <a href="25664.html">Actor_MaskBuffer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64392"></span>64392</td>
+<td class="instruction">LD H,0</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64394"></span>64394</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64395"></span>64395</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert the mask.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64397"></span>64397</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write it.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64398"></span>64398</td>
+<td class="instruction">JR <a href="64400.html#64404">Update_Actor_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="64400.html#64404">Update_Actor_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="64254.html">64254</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#64303">Map</a></td>
+<td class="next">
+Next: <a href="64400.html">64400</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/FB2F.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

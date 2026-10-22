@@ -44,26 +44,31 @@ Next: <a href="E802.html">E802</a>
 <tr>
 <td class="asm-label">Messaging_LoadGame</td>
 <td class="address-1"><span id="e7e4"></span>E7E4</td>
-<td class="instruction">DEFB $DE,$1D,$03,$D8,$39,$50,$52,$45</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $DE,$1D,$03</td>
+<td class="comment-1" rowspan="1">PRINT AT: 1D, 03.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e7ec"></span>E7EC</td>
-<td class="instruction">DEFB $53,$53,$20,$59,$20,$54,$4F,$20</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e7e7"></span>E7E7</td>
+<td class="instruction">DEFB $D8,$39</td>
+<td class="comment-1" rowspan="1">INK:
+BLUE,
+PAPER:
+WHITE
+
+.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e7f4"></span>E7F4</td>
-<td class="instruction">DEFB $4C,$4F,$41,$44,$20,$4F,$4C,$44</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e7e9"></span>E7E9</td>
+<td class="instruction">DEFM "PRESS Y TO LOAD OLD GAME"</td>
+<td class="comment-1" rowspan="1">"PRESS Y TO LOAD OLD GAME".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e7fc"></span>E7FC</td>
-<td class="instruction">DEFB $20,$47,$41,$4D,$45,$FF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e801"></span>E801</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">Terminator.</td>
 </tr>
 </table>
 <table class="asm-navigation">

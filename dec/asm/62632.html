@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62632</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62603.html">62603</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62632">Map</a></td>
+<td class="next">
+Next: <a href="62654.html">62654</a>
+</td>
+</tr>
+</table>
+<div class="description">62632: Draw Status Icons</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62503.html">JumpTable_DrawStatus</a>.
+</div>
+<div class="paragraph">
+Draws one life icon for each remaining life, then a blank.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons</td>
+<td class="address-2"><span id="62632"></span>62632</td>
+<td class="instruction">CALL <a href="62916.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62916.html">Set_PrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62635"></span>62635</td>
+<td class="instruction">LD A,(25780)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="62632.html#62649">Draw_StatusIcons_Skip</a> if *<a href="25780.html">Player_Lives</a> is the last life.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62638"></span>62638</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62639"></span>62639</td>
+<td class="instruction">JR Z,<a href="62632.html#62649">Draw_StatusIcons_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62641"></span>62641</td>
+<td class="instruction">LD B,A</td>
+<td class="comment-1" rowspan="2">Set the remaining-life count and the 227 icon.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62642"></span>62642</td>
+<td class="instruction">LD A,227</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Target</td>
+<td class="address-2"><span id="62644"></span>62644</td>
+<td class="instruction">CALL <a href="62986.html">Print_Character</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62986.html">Print_Character</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62647"></span>62647</td>
+<td class="instruction">DJNZ <a href="62632.html#62644">Draw_StatusIcons_Target</a></td>
+<td class="comment-1" rowspan="1">Decrease the life count and loop back to <a href="62632.html#62644">Draw_StatusIcons_Target</a> until all lives are drawn.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Skip</td>
+<td class="address-2"><span id="62649"></span>62649</td>
+<td class="instruction">LD A,200</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=200.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62651"></span>62651</td>
+<td class="instruction">JP <a href="62986.html">Print_Character</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62986.html">Print_Character</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/dec/asm/57444.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62603.html">62603</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62632">Map</a></td>
+<td class="next">
+Next: <a href="62654.html">62654</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F4A8.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

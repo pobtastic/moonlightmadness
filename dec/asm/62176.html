@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62176</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62130.html">62130</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62176">Map</a></td>
+<td class="next">
+Next: <a href="62237.html">62237</a>
+</td>
+</tr>
+</table>
+<div class="description">62176: Reveal Door</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 18: reveal the first door.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealDoor</td>
+<td class="address-2"><span id="62176"></span>62176</td>
+<td class="instruction">LD IX,(25634)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25634.html">ReferenceDoors</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="62180"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="62237.html">Event_RevealNextDoor</a> and <a href="62248.html">Event_RevealThirdDoor</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealDoor_Body</td>
+<td class="address-2"><span id="62180"></span>62180</td>
+<td class="instruction">BIT 7,(IX+0)</td>
+<td class="comment-1" rowspan="2">Return if this door is already visible.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62184"></span>62184</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62185"></span>62185</td>
+<td class="instruction">RES 7,(IX+0)</td>
+<td class="comment-1" rowspan="1">Clear bit 7 of the door record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62189"></span>62189</td>
+<td class="instruction">HALT</td>
+<td class="comment-1" rowspan="1">Halt.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62190"></span>62190</td>
+<td class="instruction">LD BC,4102</td>
+<td class="comment-1" rowspan="2">Write 4102 to *<a href="25714.html">SoundFlags</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62193"></span>62193</td>
+<td class="instruction">LD (25714),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62197"></span>62197</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="5">Fetch the column, row and colour; glyph 132.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62200"></span>62200</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62203"></span>62203</td>
+<td class="instruction">LD L,(IX+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62206"></span>62206</td>
+<td class="instruction">LD A,132</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62208"></span>62208</td>
+<td class="instruction">LD DE,514</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62211"></span>62211</td>
+<td class="instruction">LD IX,25739</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="25739.html">CarriedObject</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62215"></span>62215</td>
+<td class="instruction">CALL <a href="62551.html">JumpTable_SpawnEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62551.html">JumpTable_SpawnEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62218"></span>62218</td>
+<td class="instruction">CALL <a href="62259.html">Copy_ActorDestination</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62259.html">Copy_ActorDestination</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62221"></span>62221</td>
+<td class="instruction">LD A,(IX+1)</td>
+<td class="comment-1" rowspan="6">Store the drop row two cells below the door.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62224"></span>62224</td>
+<td class="instruction">LD (IX+16),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62227"></span>62227</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62228"></span>62228</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62229"></span>62229</td>
+<td class="instruction">LD (IX+1),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62232"></span>62232</td>
+<td class="instruction">LD (IX+9),255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62236"></span>62236</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62130.html">62130</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62176">Map</a></td>
+<td class="next">
+Next: <a href="62237.html">62237</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F2E0.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -156,20 +156,32 @@ Builds <a href="64C5.html">Table_RoomData</a> and copies each packed room into <
 <td class="instruction">LD ($647D),A</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ea37"></span>
+<div class="comments">
+<div class="paragraph">
+Point at the packed rooms and the unpack buffers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ea37"></span>EA37</td>
 <td class="instruction">LD HL,$BC11</td>
-<td class="comment-1" rowspan="3"><span class="register">HL</span>=<a href="BC11.html">Data_Rooms</a>, <span class="register">IX</span>=<a href="64C5.html">Table_RoomData</a>, <span class="register">DE</span>=<a href="64F7.html">Buffer_UnpackedRooms</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=<a href="BC11.html">Data_Rooms</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ea3a"></span>EA3A</td>
 <td class="instruction">LD IX,$64C5</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="64C5.html">Table_RoomData</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ea3e"></span>EA3E</td>
 <td class="instruction">LD DE,$64F7</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="64F7.html">Buffer_UnpackedRooms</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -350,7 +362,7 @@ Builds <a href="64C5.html">Table_RoomData</a> and copies each packed room into <
 <td class="asm-label"></td>
 <td class="address-1"><span id="ea91"></span>EA91</td>
 <td class="instruction">LD (IX+$00),E</td>
-<td class="comment-1" rowspan="4">Store the final pointer and jump to <a href="EA02.html#eaa6">Load_Room</a>.</td>
+<td class="comment-1" rowspan="2">Store the final pointer.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -361,11 +373,13 @@ Builds <a href="64C5.html">Table_RoomData</a> and copies each packed room into <
 <td class="asm-label"></td>
 <td class="address-1"><span id="ea97"></span>EA97</td>
 <td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=00.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ea98"></span>EA98</td>
 <td class="instruction">JR <a href="EA02.html#eaa6">Load_Room</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#eaa6">Load_Room</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Copy_TerminatedField</td>
@@ -400,25 +414,38 @@ Builds <a href="64C5.html">Table_RoomData</a> and copies each packed room into <
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="eaa0"></span>
+<div class="comments">
+<div class="paragraph">
+Copy the remaining bytes of this field.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eaa0"></span>EAA0</td>
 <td class="instruction">PUSH BC</td>
-<td class="comment-1" rowspan="4">Copy the remaining <span class="register">BC</span> bytes and jump to <a href="EA02.html#ea9a">Copy_TerminatedField</a>.</td>
+<td class="comment-1" rowspan="1">Stash the count on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eaa1"></span>EAA1</td>
 <td class="instruction">LDIR</td>
+<td class="comment-1" rowspan="1">Copy the remaining <span class="register">BC</span> bytes.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eaa3"></span>EAA3</td>
 <td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the count from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eaa4"></span>EAA4</td>
 <td class="instruction">JR <a href="EA02.html#ea9a">Copy_TerminatedField</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#ea9a">Copy_TerminatedField</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -652,7 +679,7 @@ Refresh the working copy when this room is not already current.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eae5"></span>EAE5</td>
 <td class="instruction">POP IX</td>
-<td class="comment-1" rowspan="1">Restore the room pointer into <span class="register">IX</span>.</td>
+<td class="comment-1" rowspan="1">Restore the room pointer from the stack into <span class="register">IX</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -789,7 +816,7 @@ Draw each visible header-furniture record.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb1b"></span>EB1B</td>
 <td class="instruction">LD BC,$0006</td>
-<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0006 and jump to <a href="EA02.html#eb0f">Load_Room_Header</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0006.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -800,6 +827,7 @@ Draw each visible header-furniture record.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb20"></span>EB20</td>
 <td class="instruction">JR <a href="EA02.html#eb0f">Load_Room_Header</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#eb0f">Load_Room_Header</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -859,7 +887,7 @@ Draw each visible furniture record into *<a href="6420.html">ReferenceFurniture<
 <td class="asm-label">Load_Room_Furniture_Continue</td>
 <td class="address-2"><span id="eb36"></span>EB36</td>
 <td class="instruction">LD DE,$0005</td>
-<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0005 and jump to <a href="EA02.html#eb28">Load_Room_Furniture_Target</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0005.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -870,6 +898,7 @@ Draw each visible furniture record into *<a href="6420.html">ReferenceFurniture<
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb3b"></span>EB3B</td>
 <td class="instruction">JR <a href="EA02.html#eb28">Load_Room_Furniture_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#eb28">Load_Room_Furniture_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -929,7 +958,7 @@ Draw each visible door record into *<a href="6422.html">ReferenceDoors</a>.
 <td class="asm-label">Load_Room_Doors_Continue</td>
 <td class="address-2"><span id="eb51"></span>EB51</td>
 <td class="instruction">LD DE,$0005</td>
-<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0005 and jump to <a href="EA02.html#eb43">Load_Room_Doors_Target</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0005.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -940,6 +969,7 @@ Draw each visible door record into *<a href="6422.html">ReferenceDoors</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb56"></span>EB56</td>
 <td class="instruction">JR <a href="EA02.html#eb43">Load_Room_Doors_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#eb43">Load_Room_Doors_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -982,7 +1012,7 @@ Skip each collectible record into *<a href="6424.html">ReferenceCollectibles</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb65"></span>EB65</td>
 <td class="instruction">LD DE,$0003</td>
-<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0003 and jump to <a href="EA02.html#eb5e">Load_Room_Collectibles_Target</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0003.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -993,6 +1023,7 @@ Skip each collectible record into *<a href="6424.html">ReferenceCollectibles</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb6a"></span>EB6A</td>
 <td class="instruction">JR <a href="EA02.html#eb5e">Load_Room_Collectibles_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#eb5e">Load_Room_Collectibles_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1046,7 +1077,7 @@ Draw each visible inventory item into *<a href="6426.html">ReferenceInventoryIte
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb7d"></span>EB7D</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="3">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at the item's column and row.</td>
+<td class="comment-1" rowspan="3">Call <a href="F42D.html">JumpTable_SetPrintPosition</a> at the item's column and row.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1056,7 +1087,7 @@ Draw each visible inventory item into *<a href="6426.html">ReferenceInventoryIte
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb81"></span>EB81</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1073,7 +1104,7 @@ Draw each visible inventory item into *<a href="6426.html">ReferenceInventoryIte
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb89"></span>EB89</td>
 <td class="instruction">LD A,$80</td>
-<td class="comment-1" rowspan="3">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> with glyph 80 and size 02 by 02.</td>
+<td class="comment-1" rowspan="3">Call <a href="F445.html">JumpTable_PrintSprite</a> with glyph 80 and size 02 by 02.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1083,13 +1114,13 @@ Draw each visible inventory item into *<a href="6426.html">ReferenceInventoryIte
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb8e"></span>EB8E</td>
-<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+<td class="instruction">CALL <a href="F445.html">JumpTable_PrintSprite</a></td>
 </tr>
 <tr>
 <td class="asm-label">Load_Room_Inventory_Continue</td>
 <td class="address-2"><span id="eb91"></span>EB91</td>
 <td class="instruction">INC IX</td>
-<td class="comment-1" rowspan="3">Advance <span class="register">IX</span> by two and jump to <a href="EA02.html#eb72">Load_Room_Inventory_Target</a>.</td>
+<td class="comment-1" rowspan="2">Advance <span class="register">IX</span> by two.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1100,6 +1131,7 @@ Draw each visible inventory item into *<a href="6426.html">ReferenceInventoryIte
 <td class="asm-label"></td>
 <td class="address-1"><span id="eb95"></span>EB95</td>
 <td class="instruction">JR <a href="EA02.html#eb72">Load_Room_Inventory_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#eb72">Load_Room_Inventory_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1153,7 +1185,7 @@ Draw each visible ladder into *<a href="6428.html">ReferenceLadders</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eba8"></span>EBA8</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="4">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at the ladder's column and row.</td>
+<td class="comment-1" rowspan="4">Call <a href="F42D.html">JumpTable_SetPrintPosition</a> at the ladder's column and row.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1168,7 +1200,7 @@ Draw each visible ladder into *<a href="6428.html">ReferenceLadders</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebad"></span>EBAD</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1185,7 +1217,7 @@ Draw each visible ladder into *<a href="6428.html">ReferenceLadders</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebb6"></span>EBB6</td>
 <td class="instruction">LD A,$0E</td>
-<td class="comment-1" rowspan="3">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> with glyph 0E and size 01 by 02.</td>
+<td class="comment-1" rowspan="3">Call <a href="F445.html">JumpTable_PrintSprite</a> with glyph 0E and size 01 by 02.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1195,13 +1227,13 @@ Draw each visible ladder into *<a href="6428.html">ReferenceLadders</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebbb"></span>EBBB</td>
-<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+<td class="instruction">CALL <a href="F445.html">JumpTable_PrintSprite</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebbe"></span>EBBE</td>
 <td class="instruction">POP BC</td>
-<td class="comment-1" rowspan="3">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> one row higher.</td>
+<td class="comment-1" rowspan="3">Call <a href="F42D.html">JumpTable_SetPrintPosition</a> one row higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1211,13 +1243,13 @@ Draw each visible ladder into *<a href="6428.html">ReferenceLadders</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebc0"></span>EBC0</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebc3"></span>EBC3</td>
 <td class="instruction">LD A,$DB</td>
-<td class="comment-1" rowspan="3">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> with glyph DB and size 04 by 02.</td>
+<td class="comment-1" rowspan="3">Call <a href="F445.html">JumpTable_PrintSprite</a> with glyph DB and size 04 by 02.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1227,13 +1259,13 @@ Draw each visible ladder into *<a href="6428.html">ReferenceLadders</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebc8"></span>EBC8</td>
-<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+<td class="instruction">CALL <a href="F445.html">JumpTable_PrintSprite</a></td>
 </tr>
 <tr>
 <td class="asm-label">Load_Room_Ladders_Continue</td>
 <td class="address-2"><span id="ebcb"></span>EBCB</td>
 <td class="instruction">INC IX</td>
-<td class="comment-1" rowspan="4">Advance <span class="register">IX</span> by three and jump to <a href="EA02.html#eb9d">Load_Room_Ladders_Target</a>.</td>
+<td class="comment-1" rowspan="3">Advance <span class="register">IX</span> by three.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1249,6 +1281,7 @@ Draw each visible ladder into *<a href="6428.html">ReferenceLadders</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebd1"></span>EBD1</td>
 <td class="instruction">JR <a href="EA02.html#eb9d">Load_Room_Ladders_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#eb9d">Load_Room_Ladders_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1302,7 +1335,7 @@ Draw each visible decoration into *<a href="642E.html">ReferenceDecorations</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebe4"></span>EBE4</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="3">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at the decoration's column and row.</td>
+<td class="comment-1" rowspan="3">Call <a href="F42D.html">JumpTable_SetPrintPosition</a> at the decoration's column and row.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1312,7 +1345,7 @@ Draw each visible decoration into *<a href="642E.html">ReferenceDecorations</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebe8"></span>EBE8</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1329,7 +1362,7 @@ Draw each visible decoration into *<a href="642E.html">ReferenceDecorations</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebf1"></span>EBF1</td>
 <td class="instruction">LD A,(IX+$03)</td>
-<td class="comment-1" rowspan="4">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> with the stored glyph and size.</td>
+<td class="comment-1" rowspan="4">Call <a href="F445.html">JumpTable_PrintSprite</a> with the stored glyph and size.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1344,13 +1377,13 @@ Draw each visible decoration into *<a href="642E.html">ReferenceDecorations</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ebfa"></span>EBFA</td>
-<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+<td class="instruction">CALL <a href="F445.html">JumpTable_PrintSprite</a></td>
 </tr>
 <tr>
 <td class="asm-label">Load_Room_Decorations_Continue</td>
 <td class="address-2"><span id="ebfd"></span>EBFD</td>
 <td class="instruction">LD DE,$0006</td>
-<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0006 and jump to <a href="EA02.html#ebd9">Load_Room_Decorations_Target</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0006.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1361,6 +1394,7 @@ Draw each visible decoration into *<a href="642E.html">ReferenceDecorations</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec02"></span>EC02</td>
 <td class="instruction">JR <a href="EA02.html#ebd9">Load_Room_Decorations_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#ebd9">Load_Room_Decorations_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1413,14 +1447,14 @@ Draw each visible actor into *<a href="6430.html">ReferenceActors</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec15"></span>EC15</td>
-<td class="instruction">CALL <a href="F42A.html#f45a">JumpTable_DrawActor</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f45a">JumpTable_DrawActor</a>.</td>
+<td class="instruction">CALL <a href="F45A.html">JumpTable_DrawActor</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F45A.html">JumpTable_DrawActor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Load_Room_Actors_Continue</td>
 <td class="address-2"><span id="ec18"></span>EC18</td>
 <td class="instruction">LD DE,$000D</td>
-<td class="comment-1" rowspan="3"><span class="register">IX</span>+=000D and jump to <a href="EA02.html#ec0a">Load_Room_Actors_Target</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=000D.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1431,6 +1465,7 @@ Draw each visible actor into *<a href="6430.html">ReferenceActors</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec1d"></span>EC1D</td>
 <td class="instruction">JR <a href="EA02.html#ec0a">Load_Room_Actors_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#ec0a">Load_Room_Actors_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1494,14 +1529,14 @@ Draw each visible enemy into *<a href="6432.html">ReferenceEnemies</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec36"></span>EC36</td>
-<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+<td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Load_Room_Enemies_Continue</td>
 <td class="address-2"><span id="ec39"></span>EC39</td>
 <td class="instruction">LD DE,$000E</td>
-<td class="comment-1" rowspan="3"><span class="register">IX</span>+=000E and jump to <a href="EA02.html#ec2b">Load_Room_Enemies_Target</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=000E.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1512,6 +1547,7 @@ Draw each visible enemy into *<a href="6432.html">ReferenceEnemies</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec3e"></span>EC3E</td>
 <td class="instruction">JR <a href="EA02.html#ec2b">Load_Room_Enemies_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#ec2b">Load_Room_Enemies_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1580,14 +1616,14 @@ Draw each visible moving object into *<a href="642A.html">ReferenceMovingObjects
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec5b"></span>EC5B</td>
-<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+<td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Load_Room_Movers_Continue</td>
 <td class="address-2"><span id="ec5e"></span>EC5E</td>
 <td class="instruction">LD DE,$0013</td>
-<td class="comment-1" rowspan="3"><span class="register">IX</span>+=0013 and jump to <a href="EA02.html#ec46">Load_Room_Movers_Target</a>.</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0013.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1598,6 +1634,7 @@ Draw each visible moving object into *<a href="642A.html">ReferenceMovingObjects
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec63"></span>EC63</td>
 <td class="instruction">JR <a href="EA02.html#ec46">Load_Room_Movers_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="EA02.html#ec46">Load_Room_Movers_Target</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -1624,7 +1661,7 @@ Draw the status bar and reset the per-room flags.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec6a"></span>EC6A</td>
-<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+<td class="instruction">CALL <a href="F43C.html">JumpTable_ConvertCoordinate</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1651,7 +1688,7 @@ Draw the status bar and reset the per-room flags.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec76"></span>EC76</td>
-<td class="instruction">CALL <a href="F42A.html#f454">JumpTable_FillAttributes</a></td>
+<td class="instruction">CALL <a href="F454.html">JumpTable_FillAttributes</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1660,15 +1697,26 @@ Draw the status bar and reset the per-room flags.
 <td class="comment-1" rowspan="1">Call <a href="ECF2.html">Print_Inventory</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ec7c"></span>
+<div class="comments">
+<div class="paragraph">
+Draw the status icons.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec7c"></span>EC7C</td>
 <td class="instruction">LD BC,$011F</td>
-<td class="comment-1" rowspan="4">Write <a href="7C70.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a> and call <a href="F424.html#f427">JumpTable_DrawStatus</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=011F.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec7f"></span>EC7F</td>
 <td class="instruction">LD HL,$7C70</td>
+<td class="comment-1" rowspan="2">Write <a href="7C70.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1678,7 +1726,8 @@ Draw the status bar and reset the per-room flags.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ec85"></span>EC85</td>
-<td class="instruction">CALL <a href="F424.html#f427">JumpTable_DrawStatus</a></td>
+<td class="instruction">CALL <a href="F427.html">JumpTable_DrawStatus</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F427.html">JumpTable_DrawStatus</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

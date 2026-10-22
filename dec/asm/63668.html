@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 63668</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63539.html">63539</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63668">Map</a></td>
+<td class="next">
+Next: <a href="63982.html">63982</a>
+</td>
+</tr>
+</table>
+<div class="description">63668: Draw Entity</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62539.html">JumpTable_DrawEntity</a>.
+</div>
+<div class="paragraph">
+Draws the entity pointed to by <span class="register">IX</span>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Entity data</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity</td>
+<td class="address-2"><span id="63668"></span>63668</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Clear the self-modified OR at <a href="63668.html#63785">Draw_Entity_Merge</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63669"></span>63669</td>
+<td class="instruction">LD (63785),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63672"></span>63672</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="3">Stash *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63673"></span>63673</td>
+<td class="instruction">LD DE,(23606)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63677"></span>63677</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63678"></span>63678</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">Stash <span class="register">IY</span> and <span class="register">IX</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63680"></span>63680</td>
+<td class="instruction">PUSH IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63682"></span>63682</td>
+<td class="instruction">LD A,7</td>
+<td class="comment-1" rowspan="3">Write 7-*<span class="register">IX</span>+2 to the shift count at <a href="63668.html#63766">63767</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63684"></span>63684</td>
+<td class="instruction">SUB (IX+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63687"></span>63687</td>
+<td class="instruction">LD (63767),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63690"></span>63690</td>
+<td class="instruction">LD E,(IX+4)</td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=the sprite width and height.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63693"></span>63693</td>
+<td class="instruction">LD D,(IX+5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63696"></span>63696</td>
+<td class="instruction">LD C,D</td>
+<td class="comment-1" rowspan="8"><span class="register">IY</span>=23742+(height+1)*8.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63697"></span>63697</td>
+<td class="instruction">INC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63698"></span>63698</td>
+<td class="instruction">SLA C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63700"></span>63700</td>
+<td class="instruction">SLA C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63702"></span>63702</td>
+<td class="instruction">SLA C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63704"></span>63704</td>
+<td class="instruction">LD B,0</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63706"></span>63706</td>
+<td class="instruction">LD IY,23742</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63710"></span>63710</td>
+<td class="instruction">ADD IY,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63712"></span>63712</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="5">Write the width*8 to the stride at <a href="63668.html#63797">63798</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63713"></span>63713</td>
+<td class="instruction">SLA A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63715"></span>63715</td>
+<td class="instruction">SLA A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63717"></span>63717</td>
+<td class="instruction">SLA A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63719"></span>63719</td>
+<td class="instruction">LD (63798),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63722"></span>63722</td>
+<td class="instruction">LD A,(IX+7)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63539.html">Advance_Entity_Target</a> if bit 7 of the colour is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63725"></span>63725</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63727"></span>63727</td>
+<td class="instruction">JP NZ,<a href="63539.html">Advance_Entity_Target</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63730"></span>63730</td>
+<td class="instruction">LD (23695),A</td>
+<td class="comment-1" rowspan="1">Write the colour to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63733"></span>63733</td>
+<td class="instruction">LD DE,(23606)</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63737"></span>63737</td>
+<td class="instruction">LD L,(IX+6)</td>
+<td class="comment-1" rowspan="6">Point <span class="register">HL</span> at this frame's source UDGs.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63740"></span>63740</td>
+<td class="instruction">LD H,0</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63742"></span>63742</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63743"></span>63743</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63744"></span>63744</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63745"></span>63745</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63746"></span>63746</td>
+<td class="instruction">LD D,(IX+5)</td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=the sprite width and height.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63749"></span>63749</td>
+<td class="instruction">LD E,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63752"></span>63752</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Copy <span class="register">HL</span> to <span class="register">IX</span> (using the stack).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63753"></span>63753</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63755"></span>63755</td>
+<td class="instruction">LD HL,23742</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=23742.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Continue</td>
+<td class="address-2"><span id="63758"></span>63758</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Stash the source pointer and remaining size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63760"></span>63760</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Continue2</td>
+<td class="address-2"><span id="63761"></span>63761</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Stash the source pointer on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63763"></span>63763</td>
+<td class="instruction">LD B,8</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=8.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Target</td>
+<td class="address-2"><span id="63765"></span>63765</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the row count.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_ShiftCount</td>
+<td class="address-1"><span id="63766"></span>63766</td>
+<td class="instruction">LD B,255</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=the shift count (self-modified).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63768"></span>63768</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63769"></span>63769</td>
+<td class="instruction">CP B</td>
+<td class="comment-1" rowspan="1">Test the shift count.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63770"></span>63770</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=0.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63771"></span>63771</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the next source byte.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63774"></span>63774</td>
+<td class="instruction">JR Z,<a href="63668.html#63782">Draw_Entity_Skip</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="63668.html#63782">Draw_Entity_Skip</a> if the shift count is zero.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Target2</td>
+<td class="address-2"><span id="63776"></span>63776</td>
+<td class="instruction">SRL A</td>
+<td class="comment-1" rowspan="3">Shift one source bit into the overflow byte.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63778"></span>63778</td>
+<td class="instruction">RR C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63780"></span>63780</td>
+<td class="instruction">DJNZ <a href="63668.html#63776">Draw_Entity_Target2</a></td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Skip</td>
+<td class="address-2"><span id="63782"></span>63782</td>
+<td class="instruction">LD (IY+0),C</td>
+<td class="comment-1" rowspan="1">Write the overflow bits to the next column.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Merge</td>
+<td class="address-1"><span id="63785"></span>63785</td>
+<td class="instruction">NOP</td>
+<td class="comment-1" rowspan="1">Self-modified: NOP or OR (HL).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63786"></span>63786</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write the rotated byte.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63787"></span>63787</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Advance the destination and source pointers.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63788"></span>63788</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63790"></span>63790</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63792"></span>63792</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the row count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63793"></span>63793</td>
+<td class="instruction">DJNZ <a href="63668.html#63765">Draw_Entity_Target</a></td>
+<td class="comment-1" rowspan="1">Decrease the count and loop back to <a href="63668.html#63765">Draw_Entity_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63795"></span>63795</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore the source pointer from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Stride</td>
+<td class="address-1"><span id="63797"></span>63797</td>
+<td class="instruction">LD BC,0</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=the stored stride (self-modified).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63800"></span>63800</td>
+<td class="instruction">ADD IX,BC</td>
+<td class="comment-1" rowspan="3">Advance to the next source column and loop back to <a href="63668.html#63761">Draw_Entity_Continue2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63802"></span>63802</td>
+<td class="instruction">DEC D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63803"></span>63803</td>
+<td class="instruction">JR NZ,<a href="63668.html#63761">Draw_Entity_Continue2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63805"></span>63805</td>
+<td class="instruction">LD A,182</td>
+<td class="comment-1" rowspan="2">Write OR (HL) into *<a href="63668.html#63785">Draw_Entity_Merge</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63807"></span>63807</td>
+<td class="instruction">LD (63785),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63810"></span>63810</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63811"></span>63811</td>
+<td class="instruction">LD B,8</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=8.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Target3</td>
+<td class="address-2"><span id="63813"></span>63813</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="5">Clear one overflow byte and loop back to <a href="63668.html#63813">Draw_Entity_Target3</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63814"></span>63814</td>
+<td class="instruction">LD (IY+0),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63817"></span>63817</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63818"></span>63818</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63820"></span>63820</td>
+<td class="instruction">DJNZ <a href="63668.html#63813">Draw_Entity_Target3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63822"></span>63822</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="6">Step to the next source character and loop back to <a href="63668.html#63758">Draw_Entity_Continue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63823"></span>63823</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63825"></span>63825</td>
+<td class="instruction">LD BC,8</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63828"></span>63828</td>
+<td class="instruction">ADD IX,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63830"></span>63830</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63831"></span>63831</td>
+<td class="instruction">JR NZ,<a href="63668.html#63758">Draw_Entity_Continue</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="63833"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="63539.html">Advance_Entity_Target</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Target4</td>
+<td class="address-2"><span id="63833"></span>63833</td>
+<td class="instruction">LD HL,23478</td>
+<td class="comment-1" rowspan="7">Point *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a> at the shifted workspace plus the fine-Y.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63836"></span>63836</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63838"></span>63838</td>
+<td class="instruction">LD E,(IX+3)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63841"></span>63841</td>
+<td class="instruction">INC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63842"></span>63842</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63843"></span>63843</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63844"></span>63844</td>
+<td class="instruction">LD (23606),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63847"></span>63847</td>
+<td class="instruction">LD D,(IX+5)</td>
+<td class="comment-1" rowspan="6">Increase the printed width when the fine-X is not 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63850"></span>63850</td>
+<td class="instruction">LD A,(IX+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63853"></span>63853</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63855"></span>63855</td>
+<td class="instruction">LD E,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63858"></span>63858</td>
+<td class="instruction">JR Z,<a href="63668.html#63861">Draw_Entity_Skip2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63860"></span>63860</td>
+<td class="instruction">INC E</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Skip2</td>
+<td class="address-2"><span id="63861"></span>63861</td>
+<td class="instruction">INC D</td>
+<td class="comment-1" rowspan="3">Store the printed height in *<a href="25620.html">25620</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63862"></span>63862</td>
+<td class="instruction">LD A,D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63863"></span>63863</td>
+<td class="instruction">LD (25620),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63866"></span>63866</td>
+<td class="instruction">LD A,7</td>
+<td class="comment-1" rowspan="4">Decrease the height when the fine-Y is 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63868"></span>63868</td>
+<td class="instruction">CP (IX+3)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63871"></span>63871</td>
+<td class="instruction">JR NZ,<a href="63668.html#63874">Draw_Entity_Continue3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63873"></span>63873</td>
+<td class="instruction">DEC D</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Continue3</td>
+<td class="address-2"><span id="63874"></span>63874</td>
+<td class="instruction">LD B,(IX+1)</td>
+<td class="comment-1" rowspan="4">Call <a href="63668.html#63890">Draw_Entity_Target5</a> at the entity column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63877"></span>63877</td>
+<td class="instruction">LD C,(IX+0)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63880"></span>63880</td>
+<td class="instruction">POP IY</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63882"></span>63882</td>
+<td class="instruction">CALL <a href="63668.html#63890">Draw_Entity_Target5</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63885"></span>63885</td>
+<td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="1">Restore *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63886"></span>63886</td>
+<td class="instruction">LD (23606),HL</td>
+<td class="comment-1" rowspan="1">Write it back to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63889"></span>63889</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="63890"></span>
+<div class="comments">
+<div class="paragraph">
+Print the shifted sprite inside the clip window.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Target5</td>
+<td class="address-2"><span id="63890"></span>63890</td>
+<td class="instruction">LD L,31</td>
+<td class="comment-1" rowspan="3">Write the remaining width into the load at <a href="63668.html#63897">63898</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63892"></span>63892</td>
+<td class="instruction">LD A,E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63893"></span>63893</td>
+<td class="instruction">LD (63898),A</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Target6</td>
+<td class="address-2"><span id="63896"></span>63896</td>
+<td class="instruction">INC L</td>
+<td class="comment-1" rowspan="1">Advance the glyph base.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Width</td>
+<td class="address-1"><span id="63897"></span>63897</td>
+<td class="instruction">LD E,0</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=the remaining width (self-modified).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63899"></span>63899</td>
+<td class="instruction">LD A,(25625)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63668.html#63914">Draw_Entity_Branch</a> if this row is inside *<a href="25625.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63902"></span>63902</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63903"></span>63903</td>
+<td class="instruction">JR NC,<a href="63668.html#63914">Draw_Entity_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Target7</td>
+<td class="address-2"><span id="63905"></span>63905</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="7">Skip down until the row is inside the clip window.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63906"></span>63906</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63907"></span>63907</td>
+<td class="instruction">INC L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63908"></span>63908</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63909"></span>63909</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63910"></span>63910</td>
+<td class="instruction">JR NC,<a href="63668.html#63914">Draw_Entity_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63912"></span>63912</td>
+<td class="instruction">JR <a href="63668.html#63905">Draw_Entity_Target7</a></td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Branch</td>
+<td class="address-2"><span id="63914"></span>63914</td>
+<td class="instruction">LD A,(25628)</td>
+<td class="comment-1" rowspan="3">Return if this column is past *<a href="25625.html#25628">25628</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63917"></span>63917</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63918"></span>63918</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63919"></span>63919</td>
+<td class="instruction">LD A,(25626)</td>
+<td class="comment-1" rowspan="3">Return if this row is below *<a href="25625.html#25626">ClipWindow_MaximumRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63922"></span>63922</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63923"></span>63923</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63924"></span>63924</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="4">Jump to <a href="63668.html#63953">Draw_Entity_Branch3</a> if this column is inside *<a href="25625.html#25627">ClipWindow_MinimumColumn</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63925"></span>63925</td>
+<td class="instruction">LD A,(25627)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63928"></span>63928</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63929"></span>63929</td>
+<td class="instruction">JR NC,<a href="63668.html#63953">Draw_Entity_Branch3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63931"></span>63931</td>
+<td class="instruction">LD H,L</td>
+<td class="comment-1" rowspan="1">Copy the glyph base into <span class="register">H</span>.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Branch2</td>
+<td class="address-2"><span id="63932"></span>63932</td>
+<td class="instruction">DEC E</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63668.html#63976">Draw_Entity_Skip3</a> if the remaining width is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63933"></span>63933</td>
+<td class="instruction">JR Z,<a href="63668.html#63976">Draw_Entity_Skip3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63935"></span>63935</td>
+<td class="instruction">LD A,(25620)</td>
+<td class="comment-1" rowspan="7">Skip left until the column is inside the clip window.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63938"></span>63938</td>
+<td class="instruction">ADD A,H</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63939"></span>63939</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63940"></span>63940</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63941"></span>63941</td>
+<td class="instruction">LD A,(25627)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63944"></span>63944</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63945"></span>63945</td>
+<td class="instruction">JR C,<a href="63668.html#63932">Draw_Entity_Branch2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63947"></span>63947</td>
+<td class="instruction">CALL <a href="62916.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62916.html">Set_PrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63950"></span>63950</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the clipped glyph.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63951"></span>63951</td>
+<td class="instruction">JR <a href="63668.html#63957">Draw_Entity_Continue4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="63668.html#63957">Draw_Entity_Continue4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Branch3</td>
+<td class="address-2"><span id="63953"></span>63953</td>
+<td class="instruction">CALL <a href="62916.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="2">Call <a href="62916.html">Set_PrintPosition</a> with the unclipped glyph.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63956"></span>63956</td>
+<td class="instruction">LD A,L</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Continue4</td>
+<td class="address-2"><span id="63957"></span>63957</td>
+<td class="instruction">CALL <a href="62986.html">Print_Character</a></td>
+<td class="comment-1" rowspan="2">Call <a href="62986.html">Print_Character</a> and keep the glyph in <span class="register">H</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63960"></span>63960</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63961"></span>63961</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="4">Jump to <a href="63668.html#63976">Draw_Entity_Skip3</a> if this column is past *<a href="25625.html#25628">25628</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63962"></span>63962</td>
+<td class="instruction">LD A,(25628)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63965"></span>63965</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63966"></span>63966</td>
+<td class="instruction">JP NC,<a href="63668.html#63976">Draw_Entity_Skip3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63969"></span>63969</td>
+<td class="instruction">LD A,(25620)</td>
+<td class="comment-1" rowspan="4">Advance the glyph and loop back to <a href="63668.html#63957">Draw_Entity_Continue4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63972"></span>63972</td>
+<td class="instruction">ADD A,H</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63973"></span>63973</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63974"></span>63974</td>
+<td class="instruction">JR NZ,<a href="63668.html#63957">Draw_Entity_Continue4</a></td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Entity_Skip3</td>
+<td class="address-2"><span id="63976"></span>63976</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the position from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63977"></span>63977</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="2">Return if the remaining height is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63978"></span>63978</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63979"></span>63979</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Move up one row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63980"></span>63980</td>
+<td class="instruction">JR <a href="63668.html#63896">Draw_Entity_Target6</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="63668.html#63896">Draw_Entity_Target6</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/dec/asm/61143.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63539.html">63539</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63668">Map</a></td>
+<td class="next">
+Next: <a href="63982.html">63982</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F8B4.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -44,20 +44,31 @@ Next: <a href="E762.html">E762</a>
 <tr>
 <td class="asm-label">Messaging_Keyboard</td>
 <td class="address-1"><span id="e750"></span>E750</td>
-<td class="instruction">DEFB $DE,$1B,$0B,$31,$20,$2D,$20,$4B</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $DE,$1B,$0B</td>
+<td class="comment-1" rowspan="1">PRINT AT: 1B, 0B.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e758"></span>E758</td>
-<td class="instruction">DEFB $45,$59,$42,$4F,$41,$52,$44,$D8</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e753"></span>E753</td>
+<td class="instruction">DEFM "1 - KEYBOARD"</td>
+<td class="comment-1" rowspan="1">"1 - KEYBOARD".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e760"></span>E760</td>
-<td class="instruction">DEFB $07,$FF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e75f"></span>E75F</td>
+<td class="instruction">DEFB $D8,$07</td>
+<td class="comment-1" rowspan="1">INK:
+WHITE,
+PAPER:
+BLACK
+
+.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e761"></span>E761</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">Terminator.</td>
 </tr>
 </table>
 <table class="asm-navigation">

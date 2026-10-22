@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at EF5C</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EF3A.html">EF3A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ef5c">Map</a></td>
+<td class="next">
+Next: <a href="EF8A.html">EF8A</a>
+</td>
+</tr>
+</table>
+<div class="description">EF5C: Reveal Triple</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 1C: reveal three decorations and three movers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealTriple</td>
+<td class="address-2"><span id="ef5c"></span>EF5C</td>
+<td class="instruction">LD IX,($642E)</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>=*<a href="642E.html">ReferenceDecorations</a>+0018.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef60"></span>EF60</td>
+<td class="instruction">LD DE,$0018</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef63"></span>EF63</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef65"></span>EF65</td>
+<td class="instruction">LD B,$03</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=03.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ef67"></span>
+<div class="comments">
+<div class="paragraph">
+Reveal three decorations.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealTriple_Target</td>
+<td class="address-2"><span id="ef67"></span>EF67</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the count on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef68"></span>EF68</td>
+<td class="instruction">CALL <a href="F193.html">Reveal_Decoration</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F193.html">Reveal_Decoration</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef6b"></span>EF6B</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef6c"></span>EF6C</td>
+<td class="instruction">LD DE,$0006</td>
+<td class="comment-1" rowspan="2">Advance to the next decoration.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef6f"></span>EF6F</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef71"></span>EF71</td>
+<td class="instruction">DJNZ <a href="EF5C.html#ef67">Event_RevealTriple_Target</a></td>
+<td class="comment-1" rowspan="1">Decrease the count and loop back to <a href="EF5C.html#ef67">Event_RevealTriple_Target</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="ef73"></span>
+<div class="comments">
+<div class="paragraph">
+Reveal three movers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef73"></span>EF73</td>
+<td class="instruction">LD IX,($642A)</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>=*<a href="642A.html">ReferenceMovingObjects</a>+0039.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef77"></span>EF77</td>
+<td class="instruction">LD DE,$0039</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef7a"></span>EF7A</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef7c"></span>EF7C</td>
+<td class="instruction">LD B,$03</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=03.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef7e"></span>EF7E</td>
+<td class="instruction">LD DE,$0013</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0013.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealTriple_Target2</td>
+<td class="address-2"><span id="ef81"></span>EF81</td>
+<td class="instruction">RES 7,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Clear bit 7 of this mover.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef85"></span>EF85</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef87"></span>EF87</td>
+<td class="instruction">DJNZ <a href="EF5C.html#ef81">Event_RevealTriple_Target2</a></td>
+<td class="comment-1" rowspan="1">Decrease the count and loop back to <a href="EF5C.html#ef81">Event_RevealTriple_Target2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef89"></span>EF89</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EF3A.html">EF3A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ef5c">Map</a></td>
+<td class="next">
+Next: <a href="EF8A.html">EF8A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/61276.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

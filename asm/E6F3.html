@@ -39,7 +39,7 @@ Next: <a href="E73C.html">E73C</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Control-byte message printed by <a href="F42A.html#f460">JumpTable_PrintMessage</a>.
+Control-byte message printed by <a href="F460.html">JumpTable_PrintMessage</a>.
 </div>
 </div>
 </td>
@@ -47,62 +47,55 @@ Control-byte message printed by <a href="F42A.html#f460">JumpTable_PrintMessage<
 <tr>
 <td class="asm-label">Messaging_Title</td>
 <td class="address-1"><span id="e6f3"></span>E6F3</td>
-<td class="instruction">DEFB $DE,$1B,$17,$D8,$28,$20,$4D,$4F</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $DE,$1B,$17</td>
+<td class="comment-1" rowspan="1">PRINT AT: 1B, 17.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e6fb"></span>E6FB</td>
-<td class="instruction">DEFB $4F,$4E,$4C,$49,$47,$48,$54,$20</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e6f6"></span>E6F6</td>
+<td class="instruction">DEFB $D8,$28</td>
+<td class="comment-1" rowspan="1">INK:
+BLACK,
+PAPER:
+CYAN
+
+.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e703"></span>E703</td>
-<td class="instruction">DEFB $4D,$41,$44,$4E,$45,$53,$53,$20</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e6f8"></span>E6F8</td>
+<td class="instruction">DEFM " MOONLIGHT MADNESS "</td>
+<td class="comment-1" rowspan="1">" MOONLIGHT MADNESS ".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e70b"></span>E70B</td>
-<td class="instruction">DEFB $DE,$1C,$15,$20,$42,$55,$42,$42</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $DE,$1C,$15</td>
+<td class="comment-1" rowspan="1">PRINT AT: 1C, 15.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e713"></span>E713</td>
-<td class="instruction">DEFB $4C,$45,$20,$42,$55,$53,$20,$53</td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="e71b"></span>E71B</td>
-<td class="instruction">DEFB $4F,$46,$54,$57,$41,$52,$45,$20</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e70e"></span>E70E</td>
+<td class="instruction">DEFM " BUBBLE BUS SOFTWARE "</td>
+<td class="comment-1" rowspan="1">" BUBBLE BUS SOFTWARE ".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e723"></span>E723</td>
-<td class="instruction">DEFB $DE,$1C,$13,$20,$7F,$20,$31,$39</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $DE,$1C,$13</td>
+<td class="comment-1" rowspan="1">PRINT AT: 1C, 13.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e72b"></span>E72B</td>
-<td class="instruction">DEFB $38,$36,$20,$4A,$4F,$48,$4E,$20</td>
-<td class="comment-0" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="e733"></span>E733</td>
-<td class="instruction">DEFB $46,$2E,$43,$41,$49,$4E,$2E,$20</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e726"></span>E726</td>
+<td class="instruction">DEFM " ",$7F," 1986 JOHN F.CAIN. "</td>
+<td class="comment-1" rowspan="1">" © 1986 JOHN F.CAIN. ".</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e73b"></span>E73B</td>
 <td class="instruction">DEFB $FF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="comment-1" rowspan="1">Terminator.</td>
 </tr>
 </table>
 <table class="asm-navigation">

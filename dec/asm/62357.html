@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62357</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62305.html">62305</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62357">Map</a></td>
+<td class="next">
+Next: <a href="62373.html">62373</a>
+</td>
+</tr>
+</table>
+<div class="description">62357: Toggle Tune</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 9: toggle the silent-tune flag.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_ToggleTune</td>
+<td class="address-2"><span id="62357"></span>62357</td>
+<td class="instruction">LD A,(25724)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="25724.html">SkipDelayFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62360"></span>62360</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert every bit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62362"></span>62362</td>
+<td class="instruction">LD (25724),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="25724.html">SkipDelayFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62365"></span>62365</td>
+<td class="instruction">LD BC,9748</td>
+<td class="comment-1" rowspan="2">Write 9748 to *<a href="25759.html">EventTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62368"></span>62368</td>
+<td class="instruction">LD (25759),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62372"></span>62372</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62305.html">62305</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62357">Map</a></td>
+<td class="next">
+Next: <a href="62373.html">62373</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F395.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

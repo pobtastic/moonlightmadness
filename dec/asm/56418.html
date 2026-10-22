@@ -84,7 +84,7 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56433"></span>56433</td>
 <td class="instruction">BIT 7,A</td>
-<td class="comment-1" rowspan="3">Call <a href="56358.html#56403">Pause_LeavingRoom</a> and jump to <a href="56418.html#56557">Handler_Enemies_Next</a> if inactive.</td>
+<td class="comment-1" rowspan="2">Call <a href="56358.html#56403">Pause_LeavingRoom</a> if this enemy is inactive.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -95,6 +95,7 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56438"></span>56438</td>
 <td class="instruction">JP NZ,<a href="56418.html#56557">Handler_Enemies_Next</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="56418.html#56557">Handler_Enemies_Next</a> if it is inactive.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -113,10 +114,20 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="instruction">JR NC,<a href="56418.html#56466">Handler_Enemies_Probe</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="56448"></span>
+<div class="comments">
+<div class="paragraph">
+Wrap the walking-enemy frame.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56448"></span>56448</td>
 <td class="instruction">ADD A,6</td>
-<td class="comment-1" rowspan="3"><span class="register">C</span>=the sprite ID+6 and <span class="register">B</span>=36.</td>
+<td class="comment-1" rowspan="2"><span class="register">C</span>=the sprite ID+6.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -127,6 +138,7 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56451"></span>56451</td>
 <td class="instruction">LD B,36</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=36.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_Enemies_BelowPlayer</td>
@@ -225,15 +237,26 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="instruction">INC C</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="56490"></span>
+<div class="comments">
+<div class="paragraph">
+Reverse if that <a href="24014.html">Buffer_RoomTiles</a> tile is solid.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56490"></span>56490</td>
-<td class="instruction">CALL <a href="62506.html#62509">JumpTable_SetPrintPosition</a></td>
-<td class="comment-1" rowspan="8">Call <a href="62506.html#62509">JumpTable_SetPrintPosition</a> and reverse if that <a href="24014.html">Buffer_RoomTiles</a> tile is solid.</td>
+<td class="instruction">CALL <a href="62509.html">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62509.html">JumpTable_SetPrintPosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56493"></span>56493</td>
 <td class="instruction">LD HL,(25618)</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at that <a href="24014.html">Buffer_RoomTiles</a> tile.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -249,6 +272,7 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56500"></span>56500</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Call <a href="56358.html#56375">Reverse_Direction</a> if the tile is solid.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -264,6 +288,7 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56506"></span>56506</td>
 <td class="instruction">JR <a href="56418.html#56542">Handler_Enemies_Update</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="56418.html#56542">Handler_Enemies_Update</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_Enemies_ProbeLeft</td>
@@ -297,10 +322,20 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="instruction">JR NC,<a href="56418.html#56542">Handler_Enemies_Update</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="56522"></span>
+<div class="comments">
+<div class="paragraph">
+Probe the cell to the left.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56522"></span>56522</td>
 <td class="instruction">SUB (IX+4)</td>
-<td class="comment-1" rowspan="9">Call <a href="62506.html#62509">JumpTable_SetPrintPosition</a> to the left and reverse if that tile is solid.</td>
+<td class="comment-1" rowspan="2"><span class="register">C</span>=the column minus the width.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -310,12 +345,14 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56526"></span>56526</td>
-<td class="instruction">CALL <a href="62506.html#62509">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="62509.html">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62509.html">JumpTable_SetPrintPosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56529"></span>56529</td>
 <td class="instruction">LD HL,(25618)</td>
+<td class="comment-1" rowspan="3">Point <span class="register">HL</span> at that <a href="24014.html">Buffer_RoomTiles</a> tile.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -331,6 +368,7 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56536"></span>56536</td>
 <td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="3">Call <a href="56358.html#56375">Reverse_Direction</a> if the tile is solid.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -345,8 +383,8 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <tr>
 <td class="asm-label">Handler_Enemies_Update</td>
 <td class="address-2"><span id="56542"></span>56542</td>
-<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62536">JumpTable_AdvanceEntity</a>.</td>
+<td class="instruction">CALL <a href="62536.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62536.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -357,20 +395,20 @@ Animates the 14-byte records at *<a href="25650.html">ReferenceEnemies</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56548"></span>56548</td>
-<td class="instruction">CALL <a href="62506.html#62530">JumpTable_MoveEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62530">JumpTable_MoveEntity</a>.</td>
+<td class="instruction">CALL <a href="62530.html">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62530.html">JumpTable_MoveEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56551"></span>56551</td>
-<td class="instruction">CALL <a href="62506.html#62539">JumpTable_DrawEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62539">JumpTable_DrawEntity</a>.</td>
+<td class="instruction">CALL <a href="62539.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62539.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56554"></span>56554</td>
-<td class="instruction">CALL <a href="62506.html#62542">JumpTable_EraseEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62542">JumpTable_EraseEntity</a>.</td>
+<td class="instruction">CALL <a href="62542.html">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62542.html">JumpTable_EraseEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_Enemies_Next</td>
@@ -427,18 +465,18 @@ Move to the next room (wrapping from 22 to 0).
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56572"></span>56572</td>
-<td class="instruction">JP NZ,<a href="54700.html#55096">Change_Room</a></td>
+<td class="instruction">JP NZ,<a href="55096.html">Change_Room</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56575"></span>56575</td>
 <td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="54700.html#55096">Change_Room</a>.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="55096.html">Change_Room</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56576"></span>56576</td>
-<td class="instruction">JP <a href="54700.html#55096">Change_Room</a></td>
+<td class="instruction">JP <a href="55096.html">Change_Room</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -478,7 +516,7 @@ Move to the previous room (wrapping from 0 to 22).
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56586"></span>56586</td>
-<td class="instruction">JP NZ,<a href="54700.html#55096">Change_Room</a></td>
+<td class="instruction">JP NZ,<a href="55096.html">Change_Room</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -488,8 +526,8 @@ Move to the previous room (wrapping from 0 to 22).
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56591"></span>56591</td>
-<td class="instruction">JP <a href="54700.html#55096">Change_Room</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="54700.html#55096">Change_Room</a>.</td>
+<td class="instruction">JP <a href="55096.html">Change_Room</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55096.html">Change_Room</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -590,7 +628,7 @@ Save the game to tape.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56623"></span>56623</td>
 <td class="instruction">LD A,(25762)</td>
-<td class="comment-1" rowspan="3">Set bit 7 of *<a href="25762.html">CurrentRoom</a> and jump to <a href="54700.html#55096">Change_Room</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 7 of *<a href="25762.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -600,7 +638,8 @@ Save the game to tape.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56628"></span>56628</td>
-<td class="instruction">JP <a href="54700.html#55096">Change_Room</a></td>
+<td class="instruction">JP <a href="55096.html">Change_Room</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55096.html">Change_Room</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -635,18 +674,18 @@ Load a saved game from tape.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56640"></span>56640</td>
-<td class="instruction">CALL <a href="62506.html#62560">JumpTable_PrintMessage</a></td>
+<td class="instruction">CALL <a href="62560.html">JumpTable_PrintMessage</a></td>
 </tr>
 <tr>
 <td class="asm-label">Tape_Load_Wait</td>
 <td class="address-2"><span id="56643"></span>56643</td>
 <td class="instruction">LD BC,10000</td>
-<td class="comment-1" rowspan="2">Call <a href="62506.html#62512">JumpTable_Delay</a> with a pause of 10000.</td>
+<td class="comment-1" rowspan="2">Call <a href="62512.html">JumpTable_Delay</a> with a pause of 10000.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56646"></span>56646</td>
-<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -724,7 +763,7 @@ Load a saved game from tape.
 <td class="asm-label">Tape_Load_Resume</td>
 <td class="address-2"><span id="56676"></span>56676</td>
 <td class="instruction">LD A,(25762)</td>
-<td class="comment-1" rowspan="3">Set bit 7 of *<a href="25762.html">CurrentRoom</a> and jump to <a href="54700.html#55096">Change_Room</a>.</td>
+<td class="comment-1" rowspan="2">Set bit 7 of *<a href="25762.html">CurrentRoom</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -734,7 +773,8 @@ Load a saved game from tape.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56681"></span>56681</td>
-<td class="instruction">JP <a href="54700.html#55096">Change_Room</a></td>
+<td class="instruction">JP <a href="55096.html">Change_Room</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55096.html">Change_Room</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -837,12 +877,12 @@ Wait for any key.
 <td class="asm-label">Wait_Keypress</td>
 <td class="address-2"><span id="56708"></span>56708</td>
 <td class="instruction">LD BC,10000</td>
-<td class="comment-1" rowspan="2">Call <a href="62506.html#62512">JumpTable_Delay</a> with a pause of 10000.</td>
+<td class="comment-1" rowspan="2">Call <a href="62512.html">JumpTable_Delay</a> with a pause of 10000.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56711"></span>56711</td>
-<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62259</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62248.html">62248</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62259">Map</a></td>
+<td class="next">
+Next: <a href="62288.html">62288</a>
+</td>
+</tr>
+</table>
+<div class="description">62259: Copy Destination</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="61178.html">Event_RevealHeader</a>, <a href="61668.html">Event_RevealFurniture</a>, <a href="61733.html">Event_RevealLadder</a> and <a href="62176.html">Event_RevealDoor</a>.
+</div>
+<div class="paragraph">
+Copies the carried-object destination into the working slot.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Copy_ActorDestination</td>
+<td class="address-2"><span id="62259"></span>62259</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="4">Copy the column and row into *<span class="register">IX</span>+14 and *<span class="register">IX</span>+15.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62262"></span>62262</td>
+<td class="instruction">LD (IX+14),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62265"></span>62265</td>
+<td class="instruction">LD A,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62268"></span>62268</td>
+<td class="instruction">LD (IX+15),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62271"></span>62271</td>
+<td class="instruction">LD (IX+16),24</td>
+<td class="comment-1" rowspan="4">Write the default clip window 24/2/33/ 2.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62275"></span>62275</td>
+<td class="instruction">LD (IX+17),2</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62279"></span>62279</td>
+<td class="instruction">LD (IX+18),33</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62283"></span>62283</td>
+<td class="instruction">LD (IX+19),2</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62287"></span>62287</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62248.html">62248</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62259">Map</a></td>
+<td class="next">
+Next: <a href="62288.html">62288</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F333.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

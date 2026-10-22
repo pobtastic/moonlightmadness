@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 63201</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63174.html">63174</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63201">Map</a></td>
+<td class="next">
+Next: <a href="63402.html">63402</a>
+</td>
+</tr>
+</table>
+<div class="description">63201: Move Entity</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62530.html">JumpTable_MoveEntity</a>.
+</div>
+<div class="paragraph">
+Moves an entity and erases the vacated cells.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity</td>
+<td class="address-2"><span id="63201"></span>63201</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="25661.html">25661</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63202"></span>63202</td>
+<td class="instruction">LD (25661),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63205"></span>63205</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63201.html#63223">Move_Entity_Skip</a> if the column matches *<span class="register">IX</span>+10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63206"></span>63206</td>
+<td class="instruction">SUB (IX+10)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63209"></span>63209</td>
+<td class="instruction">JR Z,<a href="63201.html#63223">Move_Entity_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63211"></span>63211</td>
+<td class="instruction">CP 128</td>
+<td class="comment-1" rowspan="4">Call <a href="63201.html#63260">Move_Entity_Target</a> when the column moved left.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63213"></span>63213</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63214"></span>63214</td>
+<td class="instruction">CALL NC,<a href="63201.html#63260">Move_Entity_Target</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63217"></span>63217</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63218"></span>63218</td>
+<td class="instruction">CALL C,<a href="63201.html#63292">Move_Entity_Target2</a></td>
+<td class="comment-1" rowspan="2">Call <a href="63201.html#63292">Move_Entity_Target2</a> when the column moved right and jump to <a href="63201.html#63234">Move_Entity_Skip2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63221"></span>63221</td>
+<td class="instruction">JR <a href="63201.html#63234">Move_Entity_Skip2</a></td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip</td>
+<td class="address-2"><span id="63223"></span>63223</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63201.html#63234">Move_Entity_Skip2</a> if the fine-X matches *<span class="register">IX</span>+12.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63224"></span>63224</td>
+<td class="instruction">CP (IX+12)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63227"></span>63227</td>
+<td class="instruction">JR Z,<a href="63201.html#63234">Move_Entity_Skip2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63229"></span>63229</td>
+<td class="instruction">CP 7</td>
+<td class="comment-1" rowspan="2">Call <a href="63201.html#63292">Move_Entity_Target2</a> when the fine-X wrapped to 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63231"></span>63231</td>
+<td class="instruction">CALL Z,<a href="63201.html#63292">Move_Entity_Target2</a></td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip2</td>
+<td class="address-2"><span id="63234"></span>63234</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63201.html#63250">Move_Entity_Skip3</a> if the row matches *<span class="register">IX</span>+11.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63235"></span>63235</td>
+<td class="instruction">SUB (IX+11)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63238"></span>63238</td>
+<td class="instruction">JR Z,<a href="63201.html#63250">Move_Entity_Skip3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63240"></span>63240</td>
+<td class="instruction">CP 128</td>
+<td class="comment-1" rowspan="4">Call <a href="63201.html#63368">Move_Entity_Target3</a> when the row moved up.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63242"></span>63242</td>
+<td class="instruction">PUSH AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63243"></span>63243</td>
+<td class="instruction">CALL NC,<a href="63201.html#63368">Move_Entity_Target3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63246"></span>63246</td>
+<td class="instruction">POP AF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63247"></span>63247</td>
+<td class="instruction">JR C,<a href="63201.html#63329">Move_Entity_Branch</a></td>
+<td class="comment-1" rowspan="2">Jump to <a href="63201.html#63329">Move_Entity_Branch</a> if the row moved down, else return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63249"></span>63249</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip3</td>
+<td class="address-2"><span id="63250"></span>63250</td>
+<td class="instruction">LD A,D</td>
+<td class="comment-1" rowspan="3">Return if the fine-Y matches *<span class="register">IX</span>+13.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63251"></span>63251</td>
+<td class="instruction">CP (IX+13)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63254"></span>63254</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63255"></span>63255</td>
+<td class="instruction">CP 7</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63201.html#63329">Move_Entity_Branch</a> when the fine-Y wrapped to 7 else return.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63257"></span>63257</td>
+<td class="instruction">JR Z,<a href="63201.html#63329">Move_Entity_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63259"></span>63259</td>
+<td class="instruction">RET</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="63260"></span>
+<div class="comments">
+<div class="paragraph">
+Erase the left-hand column that has just been vacated.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Target</td>
+<td class="address-2"><span id="63260"></span>63260</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="2">Stash the new position and size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63261"></span>63261</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63262"></span>63262</td>
+<td class="instruction">LD A,255</td>
+<td class="comment-1" rowspan="2">Write 255 to *<a href="25661.html">25661</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63264"></span>63264</td>
+<td class="instruction">LD (25661),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63267"></span>63267</td>
+<td class="instruction">LD C,(IX+10)</td>
+<td class="comment-1" rowspan="4">Fill a one-column strip at the old column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63270"></span>63270</td>
+<td class="instruction">LD B,(IX+11)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63273"></span>63273</td>
+<td class="instruction">LD D,(IX+5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63276"></span>63276</td>
+<td class="instruction">LD E,1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63278"></span>63278</td>
+<td class="instruction">LD A,(IX+13)</td>
+<td class="comment-1" rowspan="4">Increase the height when the old fine-Y is not 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63281"></span>63281</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63283"></span>63283</td>
+<td class="instruction">JR Z,<a href="63201.html#63286">Move_Entity_Skip4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63285"></span>63285</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip4</td>
+<td class="address-2"><span id="63286"></span>63286</td>
+<td class="instruction">CALL <a href="64158.html">Fill_Tiles</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64158.html">Fill_Tiles</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63289"></span>63289</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore the registers from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63290"></span>63290</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63291"></span>63291</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="63292"></span>
+<div class="comments">
+<div class="paragraph">
+Erase the right-hand column that has just been vacated.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Target2</td>
+<td class="address-2"><span id="63292"></span>63292</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="2">Write 1 to *<a href="25661.html">25661</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63294"></span>63294</td>
+<td class="instruction">LD (25661),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63297"></span>63297</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="2">Stash the new position and size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63298"></span>63298</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63299"></span>63299</td>
+<td class="instruction">LD A,(IX+10)</td>
+<td class="comment-1" rowspan="7">Fill a one-column strip at the old right-hand edge.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63302"></span>63302</td>
+<td class="instruction">LD C,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63305"></span>63305</td>
+<td class="instruction">SUB C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63306"></span>63306</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63307"></span>63307</td>
+<td class="instruction">LD B,(IX+11)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63310"></span>63310</td>
+<td class="instruction">LD D,(IX+5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63313"></span>63313</td>
+<td class="instruction">LD E,1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63315"></span>63315</td>
+<td class="instruction">LD A,(IX+13)</td>
+<td class="comment-1" rowspan="4">Increase the height when the old fine-Y is not 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63318"></span>63318</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63320"></span>63320</td>
+<td class="instruction">JR Z,<a href="63201.html#63323">Move_Entity_Skip5</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63322"></span>63322</td>
+<td class="instruction">INC D</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip5</td>
+<td class="address-2"><span id="63323"></span>63323</td>
+<td class="instruction">CALL <a href="64158.html">Fill_Tiles</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64158.html">Fill_Tiles</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63326"></span>63326</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore the registers from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63327"></span>63327</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63328"></span>63328</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="63329"></span>
+<div class="comments">
+<div class="paragraph">
+Erase the bottom row that has just been vacated.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Branch</td>
+<td class="address-2"><span id="63329"></span>63329</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="2">Stash the new position and size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63330"></span>63330</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63331"></span>63331</td>
+<td class="instruction">LD A,(IX+11)</td>
+<td class="comment-1" rowspan="7">Fill a one-row strip at the old bottom edge.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63334"></span>63334</td>
+<td class="instruction">LD D,(IX+5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63337"></span>63337</td>
+<td class="instruction">SUB D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63338"></span>63338</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63339"></span>63339</td>
+<td class="instruction">LD E,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63342"></span>63342</td>
+<td class="instruction">LD C,(IX+10)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63345"></span>63345</td>
+<td class="instruction">LD D,1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63347"></span>63347</td>
+<td class="instruction">LD A,(IX+2)</td>
+<td class="comment-1" rowspan="4">Increase the width when the fine-X is not 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63350"></span>63350</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63352"></span>63352</td>
+<td class="instruction">JR Z,<a href="63201.html#63355">Move_Entity_Skip6</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63354"></span>63354</td>
+<td class="instruction">INC E</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip6</td>
+<td class="address-2"><span id="63355"></span>63355</td>
+<td class="instruction">LD A,(25661)</td>
+<td class="comment-1" rowspan="4">Increase the width again when *<a href="25661.html">25661</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63358"></span>63358</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63359"></span>63359</td>
+<td class="instruction">JR Z,<a href="63201.html#63362">Move_Entity_Skip7</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63361"></span>63361</td>
+<td class="instruction">INC E</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip7</td>
+<td class="address-2"><span id="63362"></span>63362</td>
+<td class="instruction">CALL <a href="64158.html">Fill_Tiles</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64158.html">Fill_Tiles</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63365"></span>63365</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore the registers from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63366"></span>63366</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63367"></span>63367</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="63368"></span>
+<div class="comments">
+<div class="paragraph">
+Erase the top row that has just been vacated.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Target3</td>
+<td class="address-2"><span id="63368"></span>63368</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="2">Stash the new position and size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63369"></span>63369</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63370"></span>63370</td>
+<td class="instruction">LD C,(IX+10)</td>
+<td class="comment-1" rowspan="4">Fill a one-row strip at the old column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63373"></span>63373</td>
+<td class="instruction">LD B,(IX+11)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63376"></span>63376</td>
+<td class="instruction">LD D,1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63378"></span>63378</td>
+<td class="instruction">LD E,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63381"></span>63381</td>
+<td class="instruction">LD A,(IX+12)</td>
+<td class="comment-1" rowspan="4">Increase the width when the old fine-X is not 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63384"></span>63384</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63386"></span>63386</td>
+<td class="instruction">JR Z,<a href="63201.html#63389">Move_Entity_Skip8</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63388"></span>63388</td>
+<td class="instruction">INC E</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip8</td>
+<td class="address-2"><span id="63389"></span>63389</td>
+<td class="instruction">LD A,(25661)</td>
+<td class="comment-1" rowspan="4">Increase the width again when *<a href="25661.html">25661</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63392"></span>63392</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63393"></span>63393</td>
+<td class="instruction">JR Z,<a href="63201.html#63396">Move_Entity_Skip9</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63395"></span>63395</td>
+<td class="instruction">INC E</td>
+</tr>
+<tr>
+<td class="asm-label">Move_Entity_Skip9</td>
+<td class="address-2"><span id="63396"></span>63396</td>
+<td class="instruction">CALL <a href="64158.html">Fill_Tiles</a></td>
+<td class="comment-1" rowspan="1">Call <a href="64158.html">Fill_Tiles</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63399"></span>63399</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="2">Restore the registers from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63400"></span>63400</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63401"></span>63401</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63174.html">63174</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63201">Map</a></td>
+<td class="next">
+Next: <a href="63402.html">63402</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F6E1.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

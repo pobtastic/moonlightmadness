@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F361</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F350.html">F350</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f361">Map</a></td>
+<td class="next">
+Next: <a href="F395.html">F395</a>
+</td>
+</tr>
+</table>
+<div class="description">F361: Reveal All Decorations</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 1D: reveal every decoration.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealAllDecorations</td>
+<td class="address-2"><span id="f361"></span>F361</td>
+<td class="instruction">LD IX,($642E)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="642E.html">ReferenceDecorations</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealAllDecorations_Target</td>
+<td class="address-2"><span id="f365"></span>F365</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Return if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f368"></span>F368</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f36a"></span>F36A</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f36b"></span>F36B</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F361.html#f38e">Event_RevealAllDecorations_Skip</a> if this decoration is already visible.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f36d"></span>F36D</td>
+<td class="instruction">JR Z,<a href="F361.html#f38e">Event_RevealAllDecorations_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f36f"></span>F36F</td>
+<td class="instruction">RES 7,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Clear bit 7 of the decoration record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f373"></span>F373</td>
+<td class="instruction">LD C,(IX+$00)</td>
+<td class="comment-1" rowspan="2"><span class="register">BC</span>=the column and row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f376"></span>F376</td>
+<td class="instruction">LD B,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f379"></span>F379</td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42D.html">JumpTable_SetPrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f37c"></span>F37C</td>
+<td class="instruction">LD A,(IX+$02)</td>
+<td class="comment-1" rowspan="2">Write the decoration colour to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f37f"></span>F37F</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f382"></span>F382</td>
+<td class="instruction">LD A,(IX+$03)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the stored glyph.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f385"></span>F385</td>
+<td class="instruction">LD E,(IX+$04)</td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=the stored size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f388"></span>F388</td>
+<td class="instruction">LD D,(IX+$05)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f38b"></span>F38B</td>
+<td class="instruction">CALL <a href="F445.html">JumpTable_PrintSprite</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F445.html">JumpTable_PrintSprite</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealAllDecorations_Skip</td>
+<td class="address-2"><span id="f38e"></span>F38E</td>
+<td class="instruction">LD DE,$0006</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0006.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f391"></span>F391</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f393"></span>F393</td>
+<td class="instruction">JR <a href="F361.html#f365">Event_RevealAllDecorations_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F361.html#f365">Event_RevealAllDecorations_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F350.html">F350</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f361">Map</a></td>
+<td class="next">
+Next: <a href="F395.html">F395</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/62305.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

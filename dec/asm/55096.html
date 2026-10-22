@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 55096</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55088.html">55088</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55096">Map</a></td>
+<td class="next">
+Next: <a href="55141.html">55141</a>
+</td>
+</tr>
+</table>
+<div class="description">55096: Change Room</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="55141.html">Game_Loop</a>, <a href="56418.html">Handler_Enemies</a> and <a href="56857.html">Handler_Combination</a>.
+</div>
+<div class="paragraph">
+Loads the room in <span class="register">A</span>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Change_Room</td>
+<td class="address-2"><span id="55096"></span>55096</td>
+<td class="instruction">CALL <a href="59900.html">Initialise_Rooms</a></td>
+<td class="comment-1" rowspan="1">Call <a href="59900.html">Initialise_Rooms</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55099"></span>55099</td>
+<td class="instruction">CALL <a href="55734.html#55829">Print_CollectionBar</a></td>
+<td class="comment-1" rowspan="1">Call <a href="55734.html#55829">Print_CollectionBar</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55102"></span>55102</td>
+<td class="instruction">LD BC,150</td>
+<td class="comment-1" rowspan="2">Write 150 to *<a href="25712.html">PauseTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55105"></span>55105</td>
+<td class="instruction">LD (25712),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55109"></span>55109</td>
+<td class="instruction">LD A,255</td>
+<td class="comment-1" rowspan="2">Write 255 to *<a href="55871.html#56003">Pendulum_Position</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55111"></span>55111</td>
+<td class="instruction">LD (56003),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55114"></span>55114</td>
+<td class="instruction">LD A,(25725)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55141.html">Game_Loop</a> if *<a href="25725.html">GameCompleteFlag</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55117"></span>55117</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55118"></span>55118</td>
+<td class="instruction">JR Z,<a href="55141.html">Game_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55120"></span>55120</td>
+<td class="instruction">LD A,(25762)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55141.html">Game_Loop</a> if *<a href="25762.html">CurrentRoom</a> is not zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55123"></span>55123</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55124"></span>55124</td>
+<td class="instruction">JR NZ,<a href="55141.html">Game_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55126"></span>55126</td>
+<td class="instruction">LD A,29</td>
+<td class="comment-1" rowspan="2">Call <a href="59903.html">Dispatch_Events</a> with event 29.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55128"></span>55128</td>
+<td class="instruction">CALL <a href="59903.html">Dispatch_Events</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55131"></span>55131</td>
+<td class="instruction">LD HL,(25634)</td>
+<td class="comment-1" rowspan="2">Write 18 to the door pointed to by *<a href="25634.html">ReferenceDoors</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55134"></span>55134</td>
+<td class="instruction">LD (HL),18</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55136"></span>55136</td>
+<td class="instruction">LD A,1</td>
+<td class="comment-1" rowspan="2">Write 1 to *<a href="25780.html">Player_Lives</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55138"></span>55138</td>
+<td class="instruction">LD (25780),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+Continue on to <a href="55141.html">Game_Loop</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55088.html">55088</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55096">Map</a></td>
+<td class="next">
+Next: <a href="55141.html">55141</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/D738.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

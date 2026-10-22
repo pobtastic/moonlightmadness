@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61584</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61565.html">61565</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61584">Map</a></td>
+<td class="next">
+Next: <a href="61620.html">61620</a>
+</td>
+</tr>
+</table>
+<div class="description">61584: Hide Header Item</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="61565.html">Event_HideHeaderPair</a>, <a href="61620.html">Event_HideHeaderFourth</a> and <a href="61632.html">Event_RevealHeaderTriple</a>.
+</div>
+<div class="paragraph">
+Hides one header item by overprinting 200.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Hide_HeaderItem</td>
+<td class="address-2"><span id="61584"></span>61584</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the header record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61587"></span>61587</td>
+<td class="instruction">AND %01111111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61589"></span>61589</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=the column.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61590"></span>61590</td>
+<td class="instruction">SET 7,(IX+0)</td>
+<td class="comment-1" rowspan="1">Set bit 7 of the header record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61594"></span>61594</td>
+<td class="instruction">LD B,(IX+1)</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=the row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61597"></span>61597</td>
+<td class="instruction">CALL <a href="62509.html">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62509.html">JumpTable_SetPrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61600"></span>61600</td>
+<td class="instruction">LD B,(IX+5)</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=the remaining height.</td>
+</tr>
+<tr>
+<td class="asm-label">Hide_HeaderItem_Target</td>
+<td class="address-2"><span id="61603"></span>61603</td>
+<td class="instruction">LD C,(IX+4)</td>
+<td class="comment-1" rowspan="1"><span class="register">C</span>=the remaining width.</td>
+</tr>
+<tr>
+<td class="asm-label">Hide_HeaderItem_Continue</td>
+<td class="address-2"><span id="61606"></span>61606</td>
+<td class="instruction">LD A,200</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=200.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61608"></span>61608</td>
+<td class="instruction">CALL <a href="62518.html">JumpTable_PrintCharacter</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62518.html">JumpTable_PrintCharacter</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61611"></span>61611</td>
+<td class="instruction">CALL <a href="62527.html">JumpTable_WriteTile</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62527.html">JumpTable_WriteTile</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61614"></span>61614</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="2">Decrease the width and loop back to <a href="61584.html#61606">Hide_HeaderItem_Continue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61615"></span>61615</td>
+<td class="instruction">JR NZ,<a href="61584.html#61606">Hide_HeaderItem_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61617"></span>61617</td>
+<td class="instruction">DJNZ <a href="61584.html#61603">Hide_HeaderItem_Target</a></td>
+<td class="comment-1" rowspan="1">Decrease the height and loop back to <a href="61584.html#61603">Hide_HeaderItem_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61619"></span>61619</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61565.html">61565</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61584">Map</a></td>
+<td class="next">
+Next: <a href="61620.html">61620</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F090.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

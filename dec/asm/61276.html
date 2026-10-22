@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61276</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61242.html">61242</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61276">Map</a></td>
+<td class="next">
+Next: <a href="61322.html">61322</a>
+</td>
+</tr>
+</table>
+<div class="description">61276: Reveal Triple</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 28: reveal three decorations and three movers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealTriple</td>
+<td class="address-2"><span id="61276"></span>61276</td>
+<td class="instruction">LD IX,(25646)</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>=*<a href="25646.html">ReferenceDecorations</a>+0024.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61280"></span>61280</td>
+<td class="instruction">LD DE,24</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61283"></span>61283</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61285"></span>61285</td>
+<td class="instruction">LD B,3</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=3.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61287"></span>
+<div class="comments">
+<div class="paragraph">
+Reveal three decorations.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealTriple_Target</td>
+<td class="address-2"><span id="61287"></span>61287</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the count on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61288"></span>61288</td>
+<td class="instruction">CALL <a href="61843.html">Reveal_Decoration</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61843.html">Reveal_Decoration</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61291"></span>61291</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61292"></span>61292</td>
+<td class="instruction">LD DE,6</td>
+<td class="comment-1" rowspan="2">Advance to the next decoration.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61295"></span>61295</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61297"></span>61297</td>
+<td class="instruction">DJNZ <a href="61276.html#61287">Event_RevealTriple_Target</a></td>
+<td class="comment-1" rowspan="1">Decrease the count and loop back to <a href="61276.html#61287">Event_RevealTriple_Target</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61299"></span>
+<div class="comments">
+<div class="paragraph">
+Reveal three movers.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61299"></span>61299</td>
+<td class="instruction">LD IX,(25642)</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>=*<a href="25642.html">ReferenceMovingObjects</a>+0057.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61303"></span>61303</td>
+<td class="instruction">LD DE,57</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61306"></span>61306</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61308"></span>61308</td>
+<td class="instruction">LD B,3</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61310"></span>61310</td>
+<td class="instruction">LD DE,19</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0019.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealTriple_Target2</td>
+<td class="address-2"><span id="61313"></span>61313</td>
+<td class="instruction">RES 7,(IX+0)</td>
+<td class="comment-1" rowspan="1">Clear bit 7 of this mover.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61317"></span>61317</td>
+<td class="instruction">ADD IX,DE</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>+=<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61319"></span>61319</td>
+<td class="instruction">DJNZ <a href="61276.html#61313">Event_RevealTriple_Target2</a></td>
+<td class="comment-1" rowspan="1">Decrease the count and loop back to <a href="61276.html#61313">Event_RevealTriple_Target2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61321"></span>61321</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61242.html">61242</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61276">Map</a></td>
+<td class="next">
+Next: <a href="61322.html">61322</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/EF5C.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62916</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62826.html">62826</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62916">Map</a></td>
+<td class="next">
+Next: <a href="62956.html">62956</a>
+</td>
+</tr>
+</table>
+<div class="description">62916: Set Print Position</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="62509.html">JumpTable_SetPrintPosition</a>, <a href="62603.html">Draw_Box</a>, <a href="62632.html">Draw_StatusIcons</a>, <a href="62704.html">Draw_StatusIcons_Branch</a>, <a href="62788.html">Print_Message</a>, <a href="63402.html">Print_Sprite</a>, <a href="63668.html">Draw_Entity</a> and <a href="64158.html">Fill_Tiles</a>.
+</div>
+<div class="paragraph">
+Sets the print position from <span class="register">BC</span>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Set_PrintPosition</td>
+<td class="address-2"><span id="62916"></span>62916</td>
+<td class="instruction">LD (23688),BC</td>
+<td class="comment-1" rowspan="1">Write <span class="register">BC</span> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23688.html">S_POSN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62920"></span>62920</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Switch to the shadow registers.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62921"></span>62921</td>
+<td class="instruction">LD BC,(23688)</td>
+<td class="comment-1" rowspan="5">Fetch the stored position and clear <span class="register">A</span>, <span class="register">D</span> and <span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62925"></span>62925</td>
+<td class="instruction">LD E,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62926"></span>62926</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62927"></span>62927</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62928"></span>62928</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62929"></span>62929</td>
+<td class="instruction">LD HL,65282</td>
+<td class="comment-1" rowspan="3">Look up the line address from the table at 65282.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62932"></span>62932</td>
+<td class="instruction">SLA E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62934"></span>62934</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62935"></span>62935</td>
+<td class="instruction">LD E,(HL)</td>
+<td class="comment-1" rowspan="6">Subtract the column and write *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23684.html">DF_CC</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62936"></span>62936</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62937"></span>62937</td>
+<td class="instruction">LD D,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62938"></span>62938</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62939"></span>62939</td>
+<td class="instruction">SBC HL,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62941"></span>62941</td>
+<td class="instruction">LD (23684),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62944"></span>62944</td>
+<td class="instruction">LD A,H</td>
+<td class="comment-1" rowspan="4">Rotate the high byte into an attribute offset.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62945"></span>62945</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62946"></span>62946</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62947"></span>62947</td>
+<td class="instruction">RRCA</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62948"></span>62948</td>
+<td class="instruction">AND %00000011</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-1.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62950"></span>62950</td>
+<td class="instruction">LD H,A</td>
+<td class="comment-1" rowspan="2">Write the offset to *<a href="25618.html">Print_BufferOffset</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62951"></span>62951</td>
+<td class="instruction">LD (25618),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62954"></span>62954</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Switch back.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62955"></span>62955</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62826.html">62826</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62916">Map</a></td>
+<td class="next">
+Next: <a href="62956.html">62956</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F5C4.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

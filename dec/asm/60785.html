@@ -56,26 +56,38 @@ Used by the routine at <a href="59906.html">Unpack_Rooms</a>.
 <td class="instruction">LD DE,770</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="60791"></span>
+<div class="comments">
+<div class="paragraph">
+Use sprite 96.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60791"></span>60791</td>
 <td class="instruction">LD A,96</td>
-<td class="comment-1" rowspan="2">Use sprite 96 and colour CYAN (BRIGHT).</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=96.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60793"></span>60793</td>
 <td class="instruction">LD L,69</td>
+<td class="comment-1" rowspan="1"><span class="register">L</span>=CYAN (BRIGHT).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60795"></span>60795</td>
 <td class="instruction">LD IX,25764</td>
-<td class="comment-1" rowspan="2">Point <span class="register">IX</span> at <a href="25764.html">Player</a> and jump to <a href="62506.html#62551">JumpTable_SpawnEntity</a>.</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="25764.html">Player</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60799"></span>60799</td>
-<td class="instruction">JP <a href="62506.html#62551">JumpTable_SpawnEntity</a></td>
+<td class="instruction">JP <a href="62551.html">JumpTable_SpawnEntity</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62551.html">JumpTable_SpawnEntity</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

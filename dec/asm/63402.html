@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 63402</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63201.html">63201</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63402">Map</a></td>
+<td class="next">
+Next: <a href="63492.html">63492</a>
+</td>
+</tr>
+</table>
+<div class="description">63402: Print Sprite</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62533.html">JumpTable_PrintSprite</a>.
+</div>
+<div class="paragraph">
+Prints a sprite of width <span class="register">E</span> and height <span class="register">D</span>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Sprite ID</td>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Vertical co-ordinate</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Horizontal co-ordinate</td>
+</tr>
+<tr>
+<td class="register">D</td>
+<td class="register-desc">Height (in character blocks)</td>
+</tr>
+<tr>
+<td class="register">E</td>
+<td class="register-desc">Width (in character blocks)</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Sprite</td>
+<td class="address-2"><span id="63402"></span>63402</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="2">Keep the sprite ID minus one in <span class="register">L</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63403"></span>63403</td>
+<td class="instruction">DEC L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63404"></span>63404</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="2">Store the width in *<a href="25622.html">Print_Width</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63405"></span>63405</td>
+<td class="instruction">LD (25622),A</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Sprite_Target</td>
+<td class="address-2"><span id="63408"></span>63408</td>
+<td class="instruction">LD A,(25622)</td>
+<td class="comment-1" rowspan="2">Reload the remaining width from *<a href="25622.html">Print_Width</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63411"></span>63411</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63412"></span>63412</td>
+<td class="instruction">LD A,(25625)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="63402.html#63432">Print_Sprite_Branch</a> if this row is inside *<a href="25625.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63415"></span>63415</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63416"></span>63416</td>
+<td class="instruction">JR NC,<a href="63402.html#63432">Print_Sprite_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Sprite_Continue</td>
+<td class="address-2"><span id="63418"></span>63418</td>
+<td class="instruction">LD A,(25622)</td>
+<td class="comment-1" rowspan="9">Skip down until the row is inside the clip window.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63421"></span>63421</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63422"></span>63422</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63423"></span>63423</td>
+<td class="instruction">DEC D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63424"></span>63424</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63425"></span>63425</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63426"></span>63426</td>
+<td class="instruction">LD A,(25625)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63429"></span>63429</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63430"></span>63430</td>
+<td class="instruction">JR NZ,<a href="63402.html#63418">Print_Sprite_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Sprite_Branch</td>
+<td class="address-2"><span id="63432"></span>63432</td>
+<td class="instruction">LD A,(25626)</td>
+<td class="comment-1" rowspan="3">Return if this row is below *<a href="25625.html#25626">ClipWindow_MaximumRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63435"></span>63435</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63436"></span>63436</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63437"></span>63437</td>
+<td class="instruction">LD A,(25628)</td>
+<td class="comment-1" rowspan="3">Return if this column is past *<a href="25625.html#25628">25628</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63440"></span>63440</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63441"></span>63441</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63442"></span>63442</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="4">Jump to <a href="63402.html#63457">Print_Sprite_Branch3</a> if this column is inside *<a href="25625.html#25627">ClipWindow_MinimumColumn</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63443"></span>63443</td>
+<td class="instruction">LD A,(25627)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63446"></span>63446</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63447"></span>63447</td>
+<td class="instruction">JR NC,<a href="63402.html#63457">Print_Sprite_Branch3</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Sprite_Branch2</td>
+<td class="address-2"><span id="63449"></span>63449</td>
+<td class="instruction">INC L</td>
+<td class="comment-1" rowspan="6">Skip left until the column is inside the clip window.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63450"></span>63450</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63451"></span>63451</td>
+<td class="instruction">JR Z,<a href="63402.html#63478">Print_Sprite_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63453"></span>63453</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63454"></span>63454</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63455"></span>63455</td>
+<td class="instruction">JR C,<a href="63402.html#63449">Print_Sprite_Branch2</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Sprite_Branch3</td>
+<td class="address-2"><span id="63457"></span>63457</td>
+<td class="instruction">CALL <a href="62916.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62916.html">Set_PrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63460"></span>63460</td>
+<td class="instruction">INC L</td>
+<td class="comment-1" rowspan="3">Call <a href="62986.html">Print_Character</a> with the next glyph.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63461"></span>63461</td>
+<td class="instruction">LD A,L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63462"></span>63462</td>
+<td class="instruction">CALL <a href="62986.html">Print_Character</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63465"></span>63465</td>
+<td class="instruction">CALL <a href="63174.html">Write_Tile</a></td>
+<td class="comment-1" rowspan="1">Call <a href="63174.html">Write_Tile</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63468"></span>63468</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="6">Move left one column and loop back to <a href="63402.html#63457">Print_Sprite_Branch3</a> until the row is done.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63469"></span>63469</td>
+<td class="instruction">LD A,(25628)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63472"></span>63472</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63473"></span>63473</td>
+<td class="instruction">JR NC,<a href="63402.html#63484">Print_Sprite_Branch4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63475"></span>63475</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63476"></span>63476</td>
+<td class="instruction">JR NZ,<a href="63402.html#63457">Print_Sprite_Branch3</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Sprite_Skip</td>
+<td class="address-2"><span id="63478"></span>63478</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the position from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63479"></span>63479</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="2">Return if the remaining height is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63480"></span>63480</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63481"></span>63481</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Move up one row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63482"></span>63482</td>
+<td class="instruction">JR <a href="63402.html#63408">Print_Sprite_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="63402.html#63408">Print_Sprite_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Sprite_Branch4</td>
+<td class="address-2"><span id="63484"></span>63484</td>
+<td class="instruction">DEC E</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63402.html#63478">Print_Sprite_Skip</a> if the remaining width is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63485"></span>63485</td>
+<td class="instruction">JR Z,<a href="63402.html#63478">Print_Sprite_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63487"></span>63487</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="3">Advance the glyph past the clipped cells.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63488"></span>63488</td>
+<td class="instruction">ADD A,E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63489"></span>63489</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63490"></span>63490</td>
+<td class="instruction">JR <a href="63402.html#63478">Print_Sprite_Skip</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="63402.html#63478">Print_Sprite_Skip</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/dec/asm/60051.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63201.html">63201</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63402">Map</a></td>
+<td class="next">
+Next: <a href="63492.html">63492</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F7AA.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

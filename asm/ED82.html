@@ -45,10 +45,20 @@ Used by the routine at <a href="EA02.html">Unpack_Rooms</a>.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ed82"></span>
+<div class="comments">
+<div class="paragraph">
+Call <a href="F42D.html">JumpTable_SetPrintPosition</a> at the furniture column and row.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Draw_FurnitureItem</td>
 <td class="address-2"><span id="ed82"></span>ED82</td>
 <td class="instruction">LD C,(IX+$00)</td>
-<td class="comment-1" rowspan="3">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at the furniture column and row.</td>
+<td class="comment-1" rowspan="2"><span class="register">BC</span>=the furniture column and row.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -58,7 +68,8 @@ Used by the routine at <a href="EA02.html">Unpack_Rooms</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ed88"></span>ED88</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42D.html">JumpTable_SetPrintPosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -72,20 +83,32 @@ Used by the routine at <a href="EA02.html">Unpack_Rooms</a>.
 <td class="instruction">LD ($5C8F),A</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ed91"></span>
+<div class="comments">
+<div class="paragraph">
+Use the stored glyph.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ed91"></span>ED91</td>
 <td class="instruction">LD A,(IX+$03)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="F42A.html#f445">JumpTable_PrintSprite</a> with the stored glyph and size 04 by 03.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the stored glyph.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ed94"></span>ED94</td>
 <td class="instruction">LD DE,$0403</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=0403.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ed97"></span>ED97</td>
-<td class="instruction">JP <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+<td class="instruction">JP <a href="F445.html">JumpTable_PrintSprite</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F445.html">JumpTable_PrintSprite</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

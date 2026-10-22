@@ -131,24 +131,24 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="da66"></span>DA66</td>
 <td class="instruction">LD ($641B),HL</td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da69"></span>DA69</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
 <td class="comment-1" rowspan="1">Call <a href="F424.html">JumpTable_StorePosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da6c"></span>DA6C</td>
 <td class="instruction">CALL <a href="F424.html">JumpTable_StorePosition</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da6f"></span>DA6F</td>
-<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+<td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
 <td class="comment-1" rowspan="3">Restore the clip window from the stack.</td>
 </tr>
 <tr>
@@ -232,7 +232,7 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="da92"></span>DA92</td>
 <td class="instruction">LD C,(IX+$00)</td>
-<td class="comment-1" rowspan="5">Call <a href="F42A.html#f445">JumpTable_PrintSprite</a> to stamp the object into the room.</td>
+<td class="comment-1" rowspan="5">Call <a href="F445.html">JumpTable_PrintSprite</a> to stamp the object into the room.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -257,7 +257,7 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="daa1"></span>DAA1</td>
-<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+<td class="instruction">CALL <a href="F445.html">JumpTable_PrintSprite</a></td>
 <td class="comment-1" rowspan="2">Set bit 7 (no longer carried).</td>
 </tr>
 <tr>
@@ -300,13 +300,13 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dab6"></span>DAB6</td>
-<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+<td class="instruction">CALL <a href="F43C.html">JumpTable_ConvertCoordinate</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dab9"></span>DAB9</td>
 <td class="instruction">LD DE,$5DCE</td>
-<td class="comment-1" rowspan="6">Write 0E/0F into that tile and return.</td>
+<td class="comment-1" rowspan="5">Write 0E/0F into that tile.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -332,6 +332,7 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="dac2"></span>DAC2</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">Pendulum_Position</td>

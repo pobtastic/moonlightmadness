@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61796</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61733.html">61733</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61796">Map</a></td>
+<td class="next">
+Next: <a href="61832.html">61832</a>
+</td>
+</tr>
+</table>
+<div class="description">61796: Show Enemy</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="60889.html">Handler_Events</a>, <a href="61138.html">Event_HideEnemies</a> and <a href="61157.html">Event_RevealDecorations</a>.
+</div>
+<div class="paragraph">
+Event 24: show the first hidden enemy.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_ShowEnemy</td>
+<td class="address-2"><span id="61796"></span>61796</td>
+<td class="instruction">LD IX,(25650)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25650.html">ReferenceEnemies</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_ShowEnemy_Target</td>
+<td class="address-2"><span id="61800"></span>61800</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="3">Return if the terminator 255 is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61803"></span>61803</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61805"></span>61805</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61806"></span>61806</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="61796.html#61825">Event_ShowEnemy_Skip</a> if this enemy is already visible.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61808"></span>61808</td>
+<td class="instruction">JR Z,<a href="61796.html#61825">Event_ShowEnemy_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61810"></span>61810</td>
+<td class="instruction">AND %01111111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61812"></span>61812</td>
+<td class="instruction">LD (IX+0),A</td>
+<td class="comment-1" rowspan="1">Write the visible ID.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61815"></span>61815</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="3"><span class="register">BC</span>=the column and row; size 3 by 2.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61816"></span>61816</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61819"></span>61819</td>
+<td class="instruction">LD DE,770</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61822"></span>61822</td>
+<td class="instruction">CALL <a href="62563.html">JumpTable_DrawBox</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62563.html">JumpTable_DrawBox</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_ShowEnemy_Skip</td>
+<td class="address-2"><span id="61825"></span>61825</td>
+<td class="instruction">LD DE,14</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0014.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61828"></span>61828</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61830"></span>61830</td>
+<td class="instruction">JR <a href="61796.html#61800">Event_ShowEnemy_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61796.html#61800">Event_ShowEnemy_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61733.html">61733</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61796">Map</a></td>
+<td class="next">
+Next: <a href="61832.html">61832</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F164.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

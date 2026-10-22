@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 63492</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63402.html">63402</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63492">Map</a></td>
+<td class="next">
+Next: <a href="63539.html">63539</a>
+</td>
+</tr>
+</table>
+<div class="description">63492: Advance Entity</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62536.html">JumpTable_AdvanceEntity</a>.
+</div>
+<div class="paragraph">
+Advances an entity by its stored deltas.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Entity data</td>
+</tr>
+</table>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">Updated row</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Updated column</td>
+</tr>
+<tr>
+<td class="register">D</td>
+<td class="register-desc">Updated fine-Y</td>
+</tr>
+<tr>
+<td class="register">E</td>
+<td class="register-desc">Updated fine-X</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity</td>
+<td class="address-2"><span id="63492"></span>63492</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="2"><span class="register">C</span>=the column and <span class="register">B</span>=the row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63495"></span>63495</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63498"></span>63498</td>
+<td class="instruction">LD A,(IX+8)</td>
+<td class="comment-1" rowspan="2">Add *<span class="register">IX</span>+8 to the fine-X.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63501"></span>63501</td>
+<td class="instruction">ADD A,(IX+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63504"></span>63504</td>
+<td class="instruction">CP 8</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63492.html#63517">Advance_Entity_Branch2</a> if the fine-X is still in range.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63506"></span>63506</td>
+<td class="instruction">JR C,<a href="63492.html#63517">Advance_Entity_Branch2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63508"></span>63508</td>
+<td class="instruction">CP 128</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63492.html#63514">Advance_Entity_Branch</a> if the entity moved left.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63510"></span>63510</td>
+<td class="instruction">JR NC,<a href="63492.html#63514">Advance_Entity_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63512"></span>63512</td>
+<td class="instruction">INC C</td>
+<td class="comment-1" rowspan="2">Step the column two right, then...</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63513"></span>63513</td>
+<td class="instruction">INC C</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Branch</td>
+<td class="address-2"><span id="63514"></span>63514</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="1">...one left.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63515"></span>63515</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Branch2</td>
+<td class="address-2"><span id="63517"></span>63517</td>
+<td class="instruction">LD E,A</td>
+<td class="comment-1" rowspan="1">Store the fine-X.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63518"></span>63518</td>
+<td class="instruction">LD A,(IX+9)</td>
+<td class="comment-1" rowspan="2">Add *<span class="register">IX</span>+9 to the fine-Y.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63521"></span>63521</td>
+<td class="instruction">ADD A,(IX+3)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63524"></span>63524</td>
+<td class="instruction">CP 8</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63492.html#63537">Advance_Entity_Branch4</a> if the fine-Y is still in range.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63526"></span>63526</td>
+<td class="instruction">JR C,<a href="63492.html#63537">Advance_Entity_Branch4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63528"></span>63528</td>
+<td class="instruction">CP 128</td>
+<td class="comment-1" rowspan="2">Jump to <a href="63492.html#63534">Advance_Entity_Branch3</a> if the entity moved up.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63530"></span>63530</td>
+<td class="instruction">JR NC,<a href="63492.html#63534">Advance_Entity_Branch3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63532"></span>63532</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="2">Step the row two down, then...</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63533"></span>63533</td>
+<td class="instruction">INC B</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Branch3</td>
+<td class="address-2"><span id="63534"></span>63534</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">...one up.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63535"></span>63535</td>
+<td class="instruction">AND %00000111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Branch4</td>
+<td class="address-2"><span id="63537"></span>63537</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1">Store the fine-Y.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63538"></span>63538</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/dec/asm/61094.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63402.html">63402</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63492">Map</a></td>
+<td class="next">
+Next: <a href="63539.html">63539</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F804.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

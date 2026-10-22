@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="62506.html">62506</a>
+Prev: <a href="62704.html">62704</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#62788">Map</a></td>
 <td class="next">
@@ -39,7 +39,7 @@ Next: <a href="62826.html">62826</a>
 <td class="routine-comment" colspan="5">
 <div class="details">
 <div class="paragraph">
-Used by the routine at <a href="62506.html">JumpTable_InitialiseDisplay</a>.
+Used by the routine at <a href="62560.html">JumpTable_PrintMessage</a>.
 </div>
 <div class="paragraph">
 Prints a control-byte string: bytes below 200 are characters, 216 sets <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>, other values set the print position, and 255 terminates.
@@ -138,36 +138,38 @@ Else this is a print-position pair.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="62806"></span>62806</td>
-<td class="instruction">CALL <a href="62826.html#62916">Set_PrintPosition</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62826.html#62916">Set_PrintPosition</a>.</td>
+<td class="instruction">CALL <a href="62916.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62916.html">Set_PrintPosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="62809"></span>62809</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="2">Advance the message pointer and jump to <a href="62788.html">Print_Message</a>.</td>
+<td class="comment-1" rowspan="1">Advance the message pointer.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="62810"></span>62810</td>
 <td class="instruction">JR <a href="62788.html#62788">Print_Message</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62788.html">Print_Message</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Print_Message_Branch</td>
 <td class="address-2"><span id="62812"></span>62812</td>
-<td class="instruction">CALL <a href="62826.html#62986">Print_Character</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62826.html#62986">Print_Character</a>.</td>
+<td class="instruction">CALL <a href="62986.html">Print_Character</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62986.html">Print_Character</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="62815"></span>62815</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="2">Advance the message pointer and jump to <a href="62788.html">Print_Message</a>.</td>
+<td class="comment-1" rowspan="1">Advance the message pointer.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="62816"></span>62816</td>
 <td class="instruction">JR <a href="62788.html#62788">Print_Message</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62788.html">Print_Message</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Print_Message_Skip</td>
@@ -190,18 +192,19 @@ Else this is a print-position pair.
 <td class="asm-label"></td>
 <td class="address-1"><span id="62823"></span>62823</td>
 <td class="instruction">INC HL</td>
-<td class="comment-1" rowspan="2">Advance the message pointer and jump to <a href="62788.html">Print_Message</a>.</td>
+<td class="comment-1" rowspan="1">Advance the message pointer.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="62824"></span>62824</td>
 <td class="instruction">JR <a href="62788.html#62788">Print_Message</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62788.html">Print_Message</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="62506.html">62506</a>
+Prev: <a href="62704.html">62704</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#62788">Map</a></td>
 <td class="next">

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 64400</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="64303.html">64303</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#64400">Map</a></td>
+<td class="next">
+Next: <a href="64466.html">64466</a>
+</td>
+</tr>
+</table>
+<div class="description">64400: Update Actor</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62557.html">JumpTable_UpdateActor</a>.
+</div>
+<div class="paragraph">
+Stamps the actor mask onto the display file.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Actor data</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor</td>
+<td class="address-2"><span id="64400"></span>64400</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to the mask at <a href="64400.html#64452">64453</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64401"></span>64401</td>
+<td class="instruction">LD (64453),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="64404"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="64303.html">Draw_Actor</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Target</td>
+<td class="address-2"><span id="64404"></span>64404</td>
+<td class="instruction">LD A,33</td>
+<td class="comment-1" rowspan="13">Convert the actor column and row into a pixel address.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64406"></span>64406</td>
+<td class="instruction">SUB (IX+0)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64409"></span>64409</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64410"></span>64410</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64411"></span>64411</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64412"></span>64412</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64413"></span>64413</td>
+<td class="instruction">LD A,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64416"></span>64416</td>
+<td class="instruction">SUB 3</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64418"></span>64418</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64419"></span>64419</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64420"></span>64420</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64421"></span>64421</td>
+<td class="instruction">ADD A,(IX+3)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64424"></span>64424</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64425"></span>64425</td>
+<td class="instruction">LD E,4</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=4.</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Continue</td>
+<td class="address-2"><span id="64427"></span>64427</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="5">Jump to <a href="64400.html#64459">Update_Actor_Branch</a> if this pixel row is off-screen.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64428"></span>64428</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64429"></span>64429</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64430"></span>64430</td>
+<td class="instruction">CP 176</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64432"></span>64432</td>
+<td class="instruction">JR NC,<a href="64400.html#64459">Update_Actor_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64434"></span>64434</td>
+<td class="instruction">CALL 8874</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/8874.html">PIXEL_ADD</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64437"></span>64437</td>
+<td class="instruction">LD B,(IX+4)</td>
+<td class="comment-1" rowspan="5">Increase the copy width when the fine-X is not 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64440"></span>64440</td>
+<td class="instruction">LD A,(IX+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64443"></span>64443</td>
+<td class="instruction">CP 7</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64445"></span>64445</td>
+<td class="instruction">JR Z,<a href="64400.html#64448">Update_Actor_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64447"></span>64447</td>
+<td class="instruction">INC B</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Skip</td>
+<td class="address-2"><span id="64448"></span>64448</td>
+<td class="instruction">LD DE,25664</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="25664.html">Actor_MaskBuffer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Target2</td>
+<td class="address-2"><span id="64451"></span>64451</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Mask</td>
+<td class="address-1"><span id="64452"></span>64452</td>
+<td class="instruction">AND 255</td>
+<td class="comment-1" rowspan="1">Merge the mask (self-modified AND).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64454"></span>64454</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="4">Write the byte and loop back to <a href="64400.html#64451">Update_Actor_Target2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64455"></span>64455</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64456"></span>64456</td>
+<td class="instruction">INC DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64457"></span>64457</td>
+<td class="instruction">DJNZ <a href="64400.html#64451">Update_Actor_Target2</a></td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Branch</td>
+<td class="address-2"><span id="64459"></span>64459</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="6">Move up one pixel row and loop back to <a href="64400.html#64427">Update_Actor_Continue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64460"></span>64460</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64461"></span>64461</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64462"></span>64462</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64463"></span>64463</td>
+<td class="instruction">JR NZ,<a href="64400.html#64427">Update_Actor_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="64465"></span>64465</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="64303.html">64303</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#64400">Map</a></td>
+<td class="next">
+Next: <a href="64466.html">64466</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/FB90.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

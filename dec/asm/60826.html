@@ -45,10 +45,20 @@ Used by the routine at <a href="59906.html">Unpack_Rooms</a>.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="60826"></span>
+<div class="comments">
+<div class="paragraph">
+Call <a href="62509.html">JumpTable_SetPrintPosition</a> at the door column and row.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Draw_Door</td>
 <td class="address-2"><span id="60826"></span>60826</td>
 <td class="instruction">LD C,(IX+0)</td>
-<td class="comment-1" rowspan="3">Call <a href="62506.html#62509">JumpTable_SetPrintPosition</a> at the door column and row.</td>
+<td class="comment-1" rowspan="2"><span class="register">BC</span>=the door column and row.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -58,7 +68,8 @@ Used by the routine at <a href="59906.html">Unpack_Rooms</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60832"></span>60832</td>
-<td class="instruction">CALL <a href="62506.html#62509">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="62509.html">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62509.html">JumpTable_SetPrintPosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -72,20 +83,32 @@ Used by the routine at <a href="59906.html">Unpack_Rooms</a>.
 <td class="instruction">LD (23695),A</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="60841"></span>
+<div class="comments">
+<div class="paragraph">
+Use glyph 132.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60841"></span>60841</td>
 <td class="instruction">LD A,132</td>
-<td class="comment-1" rowspan="3">Jump to <a href="62506.html#62533">JumpTable_PrintSprite</a> with glyph 132 and size 2 by 2.</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=132.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60843"></span>60843</td>
 <td class="instruction">LD DE,514</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=514.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="60846"></span>60846</td>
-<td class="instruction">JP <a href="62506.html#62533">JumpTable_PrintSprite</a></td>
+<td class="instruction">JP <a href="62533.html">JumpTable_PrintSprite</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62533.html">JumpTable_PrintSprite</a>.</td>
 </tr>
 </table>
 <table class="asm-navigation">

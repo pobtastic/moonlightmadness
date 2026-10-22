@@ -153,8 +153,8 @@ Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55495"></span>55495</td>
-<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62536">JumpTable_AdvanceEntity</a>.</td>
+<td class="instruction">CALL <a href="62536.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62536.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -181,7 +181,7 @@ Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55505"></span>55505</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="55444.html#55529">Handler_MovingObjects_Update</a> if they differ.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55444.html#55529">Handler_MovingObjects_Update</a> if they differ.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_MovingObjects_LimitHit</td>
@@ -192,18 +192,28 @@ Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55509"></span>55509</td>
 <td class="instruction">JR NZ,<a href="55444.html#55529">Handler_MovingObjects_Update</a></td>
-<td class="comment-1" rowspan="1">Call <a href="56358.html#56375">Reverse_Direction</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="55511"></span>
+<div class="comments">
+<div class="paragraph">
+Reverse at the stored limit.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55511"></span>55511</td>
 <td class="instruction">CALL <a href="56358.html#56375">Reverse_Direction</a></td>
-<td class="comment-1" rowspan="6">Swap the two limit bytes and call <a href="62506.html#62536">JumpTable_AdvanceEntity</a> again.</td>
+<td class="comment-1" rowspan="1">Call <a href="56358.html#56375">Reverse_Direction</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55514"></span>55514</td>
 <td class="instruction">LD A,(IX+14)</td>
+<td class="comment-1" rowspan="4">Swap the two limit bytes.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -223,7 +233,8 @@ Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55526"></span>55526</td>
-<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
+<td class="instruction">CALL <a href="62536.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62536.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_MovingObjects_Update</td>
@@ -234,20 +245,20 @@ Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55532"></span>55532</td>
-<td class="instruction">CALL <a href="62506.html#62530">JumpTable_MoveEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62530">JumpTable_MoveEntity</a>.</td>
+<td class="instruction">CALL <a href="62530.html">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62530.html">JumpTable_MoveEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55535"></span>55535</td>
-<td class="instruction">CALL <a href="62506.html#62539">JumpTable_DrawEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62539">JumpTable_DrawEntity</a>.</td>
+<td class="instruction">CALL <a href="62539.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62539.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55538"></span>55538</td>
-<td class="instruction">CALL <a href="62506.html#62542">JumpTable_EraseEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62542">JumpTable_EraseEntity</a>.</td>
+<td class="instruction">CALL <a href="62542.html">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62542.html">JumpTable_EraseEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_MovingObjects_Next</td>

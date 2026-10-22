@@ -44,20 +44,31 @@ Next: <a href="E750.html">E750</a>
 <tr>
 <td class="asm-label">Messaging_Menu</td>
 <td class="address-1"><span id="e73c"></span>E73C</td>
-<td class="instruction">DEFB $DE,$1B,$0D,$D8,$07,$30,$20,$2D</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="instruction">DEFB $DE,$1B,$0D</td>
+<td class="comment-1" rowspan="1">PRINT AT: 1B, 0D.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e744"></span>E744</td>
-<td class="instruction">DEFB $20,$53,$54,$41,$52,$54,$20,$47</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e73f"></span>E73F</td>
+<td class="instruction">DEFB $D8,$07</td>
+<td class="comment-1" rowspan="1">INK:
+WHITE,
+PAPER:
+BLACK
+
+.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
-<td class="address-1"><span id="e74c"></span>E74C</td>
-<td class="instruction">DEFB $41,$4D,$45,$FF</td>
-<td class="comment-0" rowspan="1"></td>
+<td class="address-1"><span id="e741"></span>E741</td>
+<td class="instruction">DEFM "0 - START GAME"</td>
+<td class="comment-1" rowspan="1">"0 - START GAME".</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="e74f"></span>E74F</td>
+<td class="instruction">DEFB $FF</td>
+<td class="comment-1" rowspan="1">Terminator.</td>
 </tr>
 </table>
 <table class="asm-navigation">

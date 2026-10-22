@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F48B</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F466.html">F466</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f48b">Map</a></td>
+<td class="next">
+Next: <a href="F4A8.html">F4A8</a>
+</td>
+</tr>
+</table>
+<div class="description">F48B: Draw Box</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="F463.html">JumpTable_DrawBox</a>.
+</div>
+<div class="paragraph">
+Draws a box of character C8.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Box</td>
+<td class="address-2"><span id="f48b"></span>F48B</td>
+<td class="instruction">CALL <a href="FA6A.html">Next_PrintCell</a></td>
+<td class="comment-1" rowspan="1">Call <a href="FA6A.html">Next_PrintCell</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f48e"></span>F48E</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Return if the width is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f48f"></span>F48F</td>
+<td class="instruction">CP E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f490"></span>F490</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f491"></span>F491</td>
+<td class="instruction">CP D</td>
+<td class="comment-1" rowspan="2">Return if the height is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f492"></span>F492</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Box_Target</td>
+<td class="address-2"><span id="f493"></span>F493</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the print position on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f494"></span>F494</td>
+<td class="instruction">CALL <a href="F5C4.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F5C4.html">Set_PrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f497"></span>F497</td>
+<td class="instruction">LD B,E</td>
+<td class="comment-1" rowspan="1">Copy the remaining width into <span class="register">B</span>.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Box_Target2</td>
+<td class="address-2"><span id="f498"></span>F498</td>
+<td class="instruction">LD A,$C8</td>
+<td class="comment-1" rowspan="2">Print a C8 tile.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f49a"></span>F49A</td>
+<td class="instruction">CALL <a href="F60A.html">Print_Character</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f49d"></span>F49D</td>
+<td class="instruction">CALL <a href="F6C6.html">Write_Tile</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F6C6.html">Write_Tile</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f4a0"></span>F4A0</td>
+<td class="instruction">DJNZ <a href="F48B.html#f498">Draw_Box_Target2</a></td>
+<td class="comment-1" rowspan="1">Decrease the width and loop back to <a href="F48B.html#f498">Draw_Box_Target2</a> until this row is drawn.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f4a2"></span>F4A2</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the print position from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f4a3"></span>F4A3</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="2">Return if every row is drawn.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f4a4"></span>F4A4</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f4a5"></span>F4A5</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Move up one row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f4a6"></span>F4A6</td>
+<td class="instruction">JR <a href="F48B.html#f493">Draw_Box_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F48B.html#f493">Draw_Box_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F466.html">F466</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f48b">Map</a></td>
+<td class="next">
+Next: <a href="F4A8.html">F4A8</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/62603.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

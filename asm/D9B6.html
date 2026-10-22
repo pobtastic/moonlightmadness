@@ -111,8 +111,8 @@ Two bats in room 07 stored at <a href="644D.html">SpecialActor</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d9cf"></span>D9CF</td>
-<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
-<td class="comment-1" rowspan="3">Jump to <a href="D9B6.html#da07">Handler_RoomSeven_Next</a> if <a href="F42A.html#f433">JumpTable_GetRandomNumber</a> is BE or higher.</td>
+<td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="3">Jump to <a href="D9B6.html#da07">Handler_RoomSeven_Next</a> if <a href="F433.html">JumpTable_GetRandomNumber</a> is BE or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -163,7 +163,7 @@ Two bats in room 07 stored at <a href="644D.html">SpecialActor</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d9e4"></span>D9E4</td>
-<td class="instruction">CALL <a href="F42A.html#f457">JumpTable_SpawnEntity</a></td>
+<td class="instruction">CALL <a href="F457.html">JumpTable_SpawnEntity</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -201,8 +201,8 @@ Two bats in room 07 stored at <a href="644D.html">SpecialActor</a>.
 <tr>
 <td class="asm-label">Handler_RoomSeven_Draw</td>
 <td class="address-2"><span id="d9f8"></span>D9F8</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -213,20 +213,20 @@ Two bats in room 07 stored at <a href="644D.html">SpecialActor</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d9fe"></span>D9FE</td>
-<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f442">JumpTable_MoveEntity</a>.</td>
+<td class="instruction">CALL <a href="F442.html">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F442.html">JumpTable_MoveEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da01"></span>DA01</td>
-<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+<td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da04"></span>DA04</td>
-<td class="instruction">CALL <a href="F42A.html#f44e">JumpTable_EraseEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44e">JumpTable_EraseEntity</a>.</td>
+<td class="instruction">CALL <a href="F44E.html">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44E.html">JumpTable_EraseEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_RoomSeven_Next</td>
@@ -273,7 +273,7 @@ Two bats in room 07 stored at <a href="644D.html">SpecialActor</a>.
 <span id="da15"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="D5AC.html">Initialise_Game</a> and <a href="DBC9.html">Handler_InventoryItems</a>.
+This entry point is used by the routines at <a href="D738.html">Change_Room</a> and <a href="DBC9.html">Handler_InventoryItems</a>.
 </div>
 <div class="paragraph">
 Draw the collected-item icons along the top of the screen.
@@ -296,12 +296,12 @@ Draw the collected-item icons along the top of the screen.
 <td class="asm-label"></td>
 <td class="address-1"><span id="da1b"></span>DA1B</td>
 <td class="instruction">LD BC,$0119</td>
-<td class="comment-1" rowspan="2">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a> at column 01 row 19.</td>
+<td class="comment-1" rowspan="2">Call <a href="F42D.html">JumpTable_SetPrintPosition</a> at column 01 row 19.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da1e"></span>DA1E</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -354,7 +354,7 @@ Draw the collected-item icons along the top of the screen.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da35"></span>DA35</td>
-<td class="instruction">CALL <a href="F42A.html#f436">JumpTable_PrintCharacter</a></td>
+<td class="instruction">CALL <a href="F436.html">JumpTable_PrintCharacter</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>

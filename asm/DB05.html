@@ -89,7 +89,7 @@ Rooms 09-0B share a swinging pendulum.
 <td class="asm-label"></td>
 <td class="address-1"><span id="db12"></span>DB12</td>
 <td class="instruction">LD A,($64A4)</td>
-<td class="comment-1" rowspan="3"><span class="register">A</span>=*<a href="64A4.html">Player</a>-04 and <span class="register">B</span>=E0.</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=*<a href="64A4.html">Player</a>-04.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -100,6 +100,7 @@ Rooms 09-0B share a swinging pendulum.
 <td class="asm-label"></td>
 <td class="address-1"><span id="db17"></span>DB17</td>
 <td class="instruction">LD B,$E0</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=E0.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_PendulumRooms_NextRoom</td>
@@ -186,7 +187,7 @@ Draw one pendulum pair.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="db31"></span>DB31</td>
-<td class="instruction">CALL <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+<td class="instruction">CALL <a href="F445.html">JumpTable_PrintSprite</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -197,7 +198,7 @@ Draw one pendulum pair.
 <td class="asm-label"></td>
 <td class="address-1"><span id="db35"></span>DB35</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="4">Jump to <a href="F42A.html#f445">JumpTable_PrintSprite</a> for the second bob at 1210.</td>
+<td class="comment-1" rowspan="4">Jump to <a href="F445.html">JumpTable_PrintSprite</a> for the second bob at 1210.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -212,7 +213,7 @@ Draw one pendulum pair.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="db3c"></span>DB3C</td>
-<td class="instruction">JP <a href="F42A.html#f445">JumpTable_PrintSprite</a></td>
+<td class="instruction">JP <a href="F445.html">JumpTable_PrintSprite</a></td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -555,7 +556,7 @@ Test the player against one actor pointed to by <span class="register">IY</span>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dbaf"></span>DBAF</td>
 <td class="instruction">LD A,(IY+$08)</td>
-<td class="comment-1" rowspan="3">Store the actor state in *<a href="64A4.html#64ac">Player_StoredState</a> and write 03.</td>
+<td class="comment-1" rowspan="2">Store the actor state in *<a href="64A4.html#64ac">Player_StoredState</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -566,6 +567,7 @@ Test the player against one actor pointed to by <span class="register">IY</span>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dbb5"></span>DBB5</td>
 <td class="instruction">LD A,$03</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=03.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

@@ -153,8 +153,8 @@ Animates the 13-byte records at *<a href="642A.html">ReferenceMovingObjects</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8c7"></span>D8C7</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -181,7 +181,7 @@ Animates the 13-byte records at *<a href="642A.html">ReferenceMovingObjects</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8d1"></span>D8D1</td>
 <td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D894.html#d8e9">Handler_MovingObjects_Update</a> if they differ.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D894.html#d8e9">Handler_MovingObjects_Update</a> if they differ.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_MovingObjects_LimitHit</td>
@@ -192,18 +192,28 @@ Animates the 13-byte records at *<a href="642A.html">ReferenceMovingObjects</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8d5"></span>D8D5</td>
 <td class="instruction">JR NZ,<a href="D894.html#d8e9">Handler_MovingObjects_Update</a></td>
-<td class="comment-1" rowspan="1">Call <a href="DC26.html#dc37">Reverse_Direction</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d8d7"></span>
+<div class="comments">
+<div class="paragraph">
+Reverse at the stored limit.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8d7"></span>D8D7</td>
 <td class="instruction">CALL <a href="DC26.html#dc37">Reverse_Direction</a></td>
-<td class="comment-1" rowspan="6">Swap the two limit bytes and call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a> again.</td>
+<td class="comment-1" rowspan="1">Call <a href="DC26.html#dc37">Reverse_Direction</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8da"></span>D8DA</td>
 <td class="instruction">LD A,(IX+$0E)</td>
+<td class="comment-1" rowspan="4">Swap the two limit bytes.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -223,7 +233,8 @@ Animates the 13-byte records at *<a href="642A.html">ReferenceMovingObjects</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8e6"></span>D8E6</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_MovingObjects_Update</td>
@@ -234,20 +245,20 @@ Animates the 13-byte records at *<a href="642A.html">ReferenceMovingObjects</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8ec"></span>D8EC</td>
-<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f442">JumpTable_MoveEntity</a>.</td>
+<td class="instruction">CALL <a href="F442.html">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F442.html">JumpTable_MoveEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8ef"></span>D8EF</td>
-<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+<td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d8f2"></span>D8F2</td>
-<td class="instruction">CALL <a href="F42A.html#f44e">JumpTable_EraseEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44e">JumpTable_EraseEntity</a>.</td>
+<td class="instruction">CALL <a href="F44E.html">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44E.html">JumpTable_EraseEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_MovingObjects_Next</td>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61414</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61395.html">61395</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61414">Map</a></td>
+<td class="next">
+Next: <a href="61429.html">61429</a>
+</td>
+</tr>
+</table>
+<div class="description">61414: Draw Header</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="60889.html">Handler_Events</a> and <a href="61440.html">Event_DrawHeaderPair</a>.
+</div>
+<div class="paragraph">
+Event 0: draw the first header item.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_DrawHeader</td>
+<td class="address-2"><span id="61414"></span>61414</td>
+<td class="instruction">LD IX,(25630)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25630.html">Pointer_RoomHeader</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="61418"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routines at <a href="61429.html">Event_DrawHeaderNext</a>, <a href="61446.html">Event_DrawHeaderFourth</a> and <a href="61632.html">Event_RevealHeaderTriple</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_DrawHeader_Body</td>
+<td class="address-2"><span id="61418"></span>61418</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the header record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61421"></span>61421</td>
+<td class="instruction">AND %01111111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61423"></span>61423</td>
+<td class="instruction">LD (IX+0),A</td>
+<td class="comment-1" rowspan="1">Write it back.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61426"></span>61426</td>
+<td class="instruction">JP <a href="60849.html">Draw_HeaderFurniture</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="60849.html">Draw_HeaderFurniture</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61395.html">61395</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61414">Map</a></td>
+<td class="next">
+Next: <a href="61429.html">61429</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/EFE6.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

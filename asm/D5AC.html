@@ -29,7 +29,7 @@ Prev: <a href="D4C1.html">D4C1</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#d5ac">Map</a></td>
 <td class="next">
-Next: <a href="D765.html">D765</a>
+Next: <a href="D730.html">D730</a>
 </td>
 </tr>
 </table>
@@ -320,7 +320,7 @@ Install IM 02. Every interrupt vector in the FD page holds FE so the CPU jumps t
 <td class="asm-label"></td>
 <td class="address-1"><span id="d615"></span>D615</td>
 <td class="instruction">LD A,($646F)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="D5AC.html#d730">Start_Game</a> if *<a href="646F.html">GameActiveFlag</a> is set (start a game).</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D730.html">Start_Game</a> if *<a href="646F.html">GameActiveFlag</a> is set (start a game).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -330,7 +330,7 @@ Install IM 02. Every interrupt vector in the FD page holds FE so the CPU jumps t
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d619"></span>D619</td>
-<td class="instruction">JP NZ,<a href="D5AC.html#d730">Start_Game</a></td>
+<td class="instruction">JP NZ,<a href="D730.html">Start_Game</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -388,7 +388,7 @@ Print the introduction menu.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d62e"></span>D62E</td>
-<td class="instruction">CALL <a href="F42A.html#f460">JumpTable_PrintMessage</a></td>
+<td class="instruction">CALL <a href="F460.html">JumpTable_PrintMessage</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -399,7 +399,7 @@ Print the introduction menu.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d634"></span>D634</td>
-<td class="instruction">CALL <a href="F42A.html#f460">JumpTable_PrintMessage</a></td>
+<td class="instruction">CALL <a href="F460.html">JumpTable_PrintMessage</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -436,7 +436,7 @@ Print the introduction menu.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d645"></span>D645</td>
-<td class="instruction">CALL <a href="F42A.html#f460">JumpTable_PrintMessage</a></td>
+<td class="instruction">CALL <a href="F460.html">JumpTable_PrintMessage</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -473,7 +473,7 @@ Print the introduction menu.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d656"></span>D656</td>
-<td class="instruction">CALL <a href="F42A.html#f460">JumpTable_PrintMessage</a></td>
+<td class="instruction">CALL <a href="F460.html">JumpTable_PrintMessage</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -523,12 +523,12 @@ Wait for a Kempston menu choice.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d666"></span>D666</td>
 <td class="instruction">CP $10</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D5AC.html#d730">Start_Game</a> if fire was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D730.html">Start_Game</a> if fire was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d668"></span>D668</td>
-<td class="instruction">JP Z,<a href="D5AC.html#d730">Start_Game</a></td>
+<td class="instruction">JP Z,<a href="D730.html">Start_Game</a></td>
 </tr>
 <tr>
 <td class="asm-label">Menu_Kempston_Next</td>
@@ -571,12 +571,12 @@ Keyboard menu. Codes are from <a rel="noopener nofollow" href="https://skoolkit.
 <td class="asm-label">Menu_Keyboard_Loop</td>
 <td class="address-2"><span id="d673"></span>D673</td>
 <td class="instruction">LD B,$03</td>
-<td class="comment-1" rowspan="2">Call <a href="F42A.html#f430">JumpTable_Delay</a> with a pause of 03.</td>
+<td class="comment-1" rowspan="2">Call <a href="F430.html">JumpTable_Delay</a> with a pause of 03.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d675"></span>D675</td>
-<td class="instruction">CALL <a href="F42A.html#f430">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="F430.html">JumpTable_Delay</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -594,12 +594,12 @@ Keyboard menu. Codes are from <a rel="noopener nofollow" href="https://skoolkit.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d67c"></span>D67C</td>
 <td class="instruction">CP $23</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D5AC.html#d730">Start_Game</a> if "0" was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D730.html">Start_Game</a> if "0" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d67e"></span>D67E</td>
-<td class="instruction">JP Z,<a href="D5AC.html#d730">Start_Game</a></td>
+<td class="instruction">JP Z,<a href="D730.html">Start_Game</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -659,7 +659,7 @@ Define the five user keys.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d695"></span>D695</td>
-<td class="instruction">CALL <a href="F42A.html#f460">JumpTable_PrintMessage</a></td>
+<td class="instruction">CALL <a href="F460.html">JumpTable_PrintMessage</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -670,7 +670,7 @@ Define the five user keys.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d69b"></span>D69B</td>
-<td class="instruction">CALL <a href="F42A.html#f460">JumpTable_PrintMessage</a></td>
+<td class="instruction">CALL <a href="F460.html">JumpTable_PrintMessage</a></td>
 </tr>
 <tr>
 <td class="asm-label">DefineKeys_Restart</td>
@@ -729,8 +729,8 @@ Define the five user keys.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d6af"></span>D6AF</td>
-<td class="instruction">CALL <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f42d">JumpTable_SetPrintPosition</a>.</td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F42D.html">JumpTable_SetPrintPosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -824,7 +824,7 @@ Define the five user keys.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d6cf"></span>D6CF</td>
-<td class="instruction">CALL <a href="F42A.html#f436">JumpTable_PrintCharacter</a></td>
+<td class="instruction">CALL <a href="F436.html">JumpTable_PrintCharacter</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -868,12 +868,12 @@ Define the five user keys.
 <td class="asm-label">DefineKeys_Read</td>
 <td class="address-2"><span id="d6de"></span>D6DE</td>
 <td class="instruction">LD BC,$4E20</td>
-<td class="comment-1" rowspan="2">Call <a href="F42A.html#f430">JumpTable_Delay</a> with a pause of 4E20.</td>
+<td class="comment-1" rowspan="2">Call <a href="F430.html">JumpTable_Delay</a> with a pause of 4E20.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d6e1"></span>D6E1</td>
-<td class="instruction">CALL <a href="F42A.html#f430">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="F430.html">JumpTable_Delay</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1106,142 +1106,6 @@ Reject a set that contains any duplicate key.
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="d730"></span>
-<div class="comments">
-<div class="paragraph">
-Start a new game from room 00.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Start_Game</td>
-<td class="address-2"><span id="d730"></span>D730</td>
-<td class="instruction">LD HL,$03E8</td>
-<td class="comment-1" rowspan="2">Write 03E8 to *<a href="E82A.html">Table_RoomPause</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d733"></span>D733</td>
-<td class="instruction">LD ($E82A),HL</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d736"></span>D736</td>
-<td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=FF.</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="d738"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routines at <a href="D765.html">Game_Loop</a>, <a href="DC62.html">Handler_Enemies</a> and <a href="DE19.html">Handler_Combination</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Change_Room</td>
-<td class="address-2"><span id="d738"></span>D738</td>
-<td class="instruction">CALL <a href="E9FC.html">Initialise_Rooms</a></td>
-<td class="comment-1" rowspan="1">Call <a href="E9FC.html">Initialise_Rooms</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d73b"></span>D73B</td>
-<td class="instruction">CALL <a href="D9B6.html#da15">Print_CollectionBar</a></td>
-<td class="comment-1" rowspan="1">Call <a href="D9B6.html#da15">Print_CollectionBar</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d73e"></span>D73E</td>
-<td class="instruction">LD BC,$0096</td>
-<td class="comment-1" rowspan="2">Write 96 to *<a href="6470.html">PauseTimer</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d741"></span>D741</td>
-<td class="instruction">LD ($6470),BC</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d745"></span>D745</td>
-<td class="instruction">LD A,$FF</td>
-<td class="comment-1" rowspan="2">Write FF to *<a href="DA3F.html#dac3">Pendulum_Position</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d747"></span>D747</td>
-<td class="instruction">LD ($DAC3),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d74a"></span>D74A</td>
-<td class="instruction">LD A,($647D)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="D765.html">Game_Loop</a> if *<a href="647D.html">GameCompleteFlag</a> is zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d74d"></span>D74D</td>
-<td class="instruction">OR A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d74e"></span>D74E</td>
-<td class="instruction">JR Z,<a href="D765.html">Game_Loop</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d750"></span>D750</td>
-<td class="instruction">LD A,($64A2)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="D765.html">Game_Loop</a> if *<a href="64A2.html">CurrentRoom</a> is not zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d753"></span>D753</td>
-<td class="instruction">OR A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d754"></span>D754</td>
-<td class="instruction">JR NZ,<a href="D765.html">Game_Loop</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d756"></span>D756</td>
-<td class="instruction">LD A,$1D</td>
-<td class="comment-1" rowspan="2">Call <a href="E9FF.html">Dispatch_Events</a> with event 1D.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d758"></span>D758</td>
-<td class="instruction">CALL <a href="E9FF.html">Dispatch_Events</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d75b"></span>D75B</td>
-<td class="instruction">LD HL,($6422)</td>
-<td class="comment-1" rowspan="2">Write 12 to the door pointed to by *<a href="6422.html">ReferenceDoors</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d75e"></span>D75E</td>
-<td class="instruction">LD (HL),$12</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d760"></span>D760</td>
-<td class="instruction">LD A,$01</td>
-<td class="comment-1" rowspan="2">Write 01 to *<a href="64B4.html">Player_Lives</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d762"></span>D762</td>
-<td class="instruction">LD ($64B4),A</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
 <div class="comments">
 <div class="paragraph">
 View the equivalent code in <a href="/booty/asm/CD14.html">Booty</a>.
@@ -1257,7 +1121,7 @@ Prev: <a href="D4C1.html">D4C1</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#d5ac">Map</a></td>
 <td class="next">
-Next: <a href="D765.html">D765</a>
+Next: <a href="D730.html">D730</a>
 </td>
 </tr>
 </table>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F395</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F361.html">F361</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f395">Map</a></td>
+<td class="next">
+Next: <a href="F3A5.html">F3A5</a>
+</td>
+</tr>
+</table>
+<div class="description">F395: Toggle Tune</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 09: toggle the silent-tune flag.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_ToggleTune</td>
+<td class="address-2"><span id="f395"></span>F395</td>
+<td class="instruction">LD A,($647C)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<a href="647C.html">SkipDelayFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f398"></span>F398</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert every bit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f39a"></span>F39A</td>
+<td class="instruction">LD ($647C),A</td>
+<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="647C.html">SkipDelayFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f39d"></span>F39D</td>
+<td class="instruction">LD BC,$2614</td>
+<td class="comment-1" rowspan="2">Write 2614 to *<a href="649F.html">EventTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f3a0"></span>F3A0</td>
+<td class="instruction">LD ($649F),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f3a4"></span>F3A4</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F361.html">F361</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f395">Map</a></td>
+<td class="next">
+Next: <a href="F3A5.html">F3A5</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/62357.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

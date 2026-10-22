@@ -148,7 +148,7 @@ Special actor for room 16.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d933"></span>D933</td>
 <td class="instruction">CP $0F</td>
-<td class="comment-1" rowspan="3">Return to <a href="D904.html#d9ae">Handler_RoomSixteen_Done</a> unless <a href="F42A.html#f433">JumpTable_GetRandomNumber</a> is less than DC.</td>
+<td class="comment-1" rowspan="3">Return to <a href="D904.html#d9ae">Handler_RoomSixteen_Done</a> unless <a href="F433.html">JumpTable_GetRandomNumber</a> is less than DC.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -158,13 +158,13 @@ Special actor for room 16.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d937"></span>D937</td>
-<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
+<td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d93a"></span>D93A</td>
 <td class="instruction">CP $DC</td>
-<td class="comment-1" rowspan="4">Call <a href="F42A.html#f457">JumpTable_SpawnEntity</a> with sprite E6.</td>
+<td class="comment-1" rowspan="4">Call <a href="F457.html">JumpTable_SpawnEntity</a> with sprite E6.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -185,17 +185,17 @@ Special actor for room 16.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d942"></span>D942</td>
 <td class="instruction">LD DE,$0101</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D904.html#d95d">Handler_RoomSixteen_Right</a> if <a href="F42A.html#f433">JumpTable_GetRandomNumber</a> is 80 or higher.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D904.html#d95d">Handler_RoomSixteen_Right</a> if <a href="F433.html">JumpTable_GetRandomNumber</a> is 80 or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d945"></span>D945</td>
-<td class="instruction">CALL <a href="F42A.html#f457">JumpTable_SpawnEntity</a></td>
+<td class="instruction">CALL <a href="F457.html">JumpTable_SpawnEntity</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d948"></span>D948</td>
-<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
+<td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
 <td class="comment-1" rowspan="5">Write the left-moving frame into the actor.</td>
 </tr>
 <tr>
@@ -246,20 +246,32 @@ Special actor for room 16.
 <td class="instruction">LD (IX+$08),$05</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d969"></span>
+<div class="comments">
+<div class="paragraph">
+Play a short beep.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_RoomSixteen_Sound</td>
 <td class="address-2"><span id="d969"></span>D969</td>
 <td class="instruction">LD B,$FF</td>
-<td class="comment-1" rowspan="3">Call <a href="E46C.html#e4b1">Play_Click</a> with <span class="register">B</span>=FF and <span class="register">D</span>=32.</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=FF.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d96b"></span>D96B</td>
 <td class="instruction">LD D,$32</td>
+<td class="comment-1" rowspan="1"><span class="register">D</span>=32.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d96d"></span>D96D</td>
 <td class="instruction">CALL <a href="E46C.html#e4b1">Play_Click</a></td>
+<td class="comment-1" rowspan="1">Call <a href="E46C.html#e4b1">Play_Click</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -291,8 +303,8 @@ Special actor for room 16.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d97b"></span>D97B</td>
-<td class="instruction">CALL <a href="F42A.html#f433">JumpTable_GetRandomNumber</a></td>
-<td class="comment-1" rowspan="3">Jump to <a href="D904.html#d98c">Handler_RoomSixteen_RowHigh</a> if <a href="F42A.html#f433">JumpTable_GetRandomNumber</a> is 80 or higher.</td>
+<td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="3">Jump to <a href="D904.html#d98c">Handler_RoomSixteen_RowHigh</a> if <a href="F433.html">JumpTable_GetRandomNumber</a> is 80 or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -335,8 +347,8 @@ Special actor for room 16.
 <tr>
 <td class="asm-label">Handler_RoomSixteen_Draw</td>
 <td class="address-2"><span id="d994"></span>D994</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -347,20 +359,20 @@ Special actor for room 16.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d99a"></span>D99A</td>
-<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f442">JumpTable_MoveEntity</a>.</td>
+<td class="instruction">CALL <a href="F442.html">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F442.html">JumpTable_MoveEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d99d"></span>D99D</td>
-<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44b">JumpTable_DrawEntity</a>.</td>
+<td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d9a0"></span>D9A0</td>
-<td class="instruction">CALL <a href="F42A.html#f44e">JumpTable_EraseEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f44e">JumpTable_EraseEntity</a>.</td>
+<td class="instruction">CALL <a href="F44E.html">JumpTable_EraseEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44E.html">JumpTable_EraseEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>

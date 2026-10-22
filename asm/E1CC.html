@@ -99,7 +99,7 @@ Moves, collides and draws the player entity at <a href="64A4.html">Player</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e1e0"></span>E1E0</td>
-<td class="instruction">CALL NZ,<a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+<td class="instruction">CALL NZ,<a href="F44B.html">JumpTable_DrawEntity</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -552,8 +552,8 @@ This entry point is used by the routine at <a href="DE19.html">Handler_Combinati
 <tr>
 <td class="asm-label">Handler_Player_Draw</td>
 <td class="address-2"><span id="e292"></span>E292</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -701,7 +701,7 @@ Probe the tiles above while the player is jumping.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e2c6"></span>E2C6</td>
-<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+<td class="instruction">CALL <a href="F43C.html">JumpTable_ConvertCoordinate</a></td>
 <td class="comment-1" rowspan="5">Convert that cell into a <a href="5DCE.html">Buffer_RoomTiles</a> pointer.</td>
 </tr>
 <tr>
@@ -791,8 +791,8 @@ Probe the tiles to the right while moving right.
 <tr>
 <td class="asm-label">Handler_Player_Horizontal</td>
 <td class="address-2"><span id="e2e2"></span>E2E2</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -855,7 +855,7 @@ Probe the tiles to the right while moving right.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e2fa"></span>E2FA</td>
-<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+<td class="instruction">CALL <a href="F43C.html">JumpTable_ConvertCoordinate</a></td>
 <td class="comment-1" rowspan="6">Convert that cell into a <a href="5DCE.html">Buffer_RoomTiles</a> pointer.</td>
 </tr>
 <tr>
@@ -1023,7 +1023,7 @@ Probe the tiles to the left while moving left.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e332"></span>E332</td>
-<td class="instruction">CALL <a href="F42A.html#f43c">JumpTable_ConvertCoordinate</a></td>
+<td class="instruction">CALL <a href="F43C.html">JumpTable_ConvertCoordinate</a></td>
 <td class="comment-1" rowspan="6">Convert that cell into a <a href="5DCE.html">Buffer_RoomTiles</a> pointer.</td>
 </tr>
 <tr>
@@ -1134,8 +1134,8 @@ This entry point is used by the routines at <a href="D7FF.html">Handler_Housekee
 <tr>
 <td class="asm-label">Handler_Player_Commit</td>
 <td class="address-2"><span id="e358"></span>E358</td>
-<td class="instruction">CALL <a href="F42A.html#f448">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F42A.html#f448">JumpTable_AdvanceEntity</a>.</td>
+<td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1195,26 +1195,38 @@ This entry point is used by the routines at <a href="D7FF.html">Handler_Housekee
 <td class="instruction">LD (IX+$09),$FC</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="e373"></span>
+<div class="comments">
+<div class="paragraph">
+Store, move and draw the player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_Player_Paint</td>
 <td class="address-2"><span id="e373"></span>E373</td>
 <td class="instruction">CALL <a href="F424.html">JumpTable_StorePosition</a></td>
-<td class="comment-1" rowspan="3">Store, move and draw the player.</td>
+<td class="comment-1" rowspan="1">Call <a href="F424.html">JumpTable_StorePosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e376"></span>E376</td>
-<td class="instruction">CALL <a href="F42A.html#f442">JumpTable_MoveEntity</a></td>
+<td class="instruction">CALL <a href="F442.html">JumpTable_MoveEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F442.html">JumpTable_MoveEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e379"></span>E379</td>
-<td class="instruction">CALL <a href="F42A.html#f44b">JumpTable_DrawEntity</a></td>
+<td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e37c"></span>E37C</td>
 <td class="instruction">LD A,($6434)</td>
-<td class="comment-1" rowspan="5">Draw a collided actor through <a href="F42A.html#f45a">JumpTable_DrawActor</a>.</td>
+<td class="comment-1" rowspan="5">Draw a collided actor through <a href="F45A.html">JumpTable_DrawActor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1234,7 +1246,7 @@ This entry point is used by the routines at <a href="D7FF.html">Handler_Housekee
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e387"></span>E387</td>
-<td class="instruction">CALL <a href="F42A.html#f45a">JumpTable_DrawActor</a></td>
+<td class="instruction">CALL <a href="F45A.html">JumpTable_DrawActor</a></td>
 </tr>
 <tr>
 <td class="asm-label">Handler_Player_Reset</td>

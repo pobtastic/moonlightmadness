@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at EF3A</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EEFA.html">EEFA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ef3a">Map</a></td>
+<td class="next">
+Next: <a href="EF5C.html">EF5C</a>
+</td>
+</tr>
+</table>
+<div class="description">EF3A: Reveal Pair</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 1A: reveal two decorations and a mover.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealPair</td>
+<td class="address-2"><span id="ef3a"></span>EF3A</td>
+<td class="instruction">LD IX,($642E)</td>
+<td class="comment-1" rowspan="3"><span class="register">IX</span>=*<a href="642E.html">ReferenceDecorations</a>+000C.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef3e"></span>EF3E</td>
+<td class="instruction">LD DE,$000C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef41"></span>EF41</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef43"></span>EF43</td>
+<td class="instruction">CALL <a href="F193.html">Reveal_Decoration</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F193.html">Reveal_Decoration</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef46"></span>EF46</td>
+<td class="instruction">LD DE,$0006</td>
+<td class="comment-1" rowspan="2">Advance one decoration.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef49"></span>EF49</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef4b"></span>EF4B</td>
+<td class="instruction">CALL <a href="F193.html">Reveal_Decoration</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F193.html">Reveal_Decoration</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef4e"></span>EF4E</td>
+<td class="instruction">LD IX,($642A)</td>
+<td class="comment-1" rowspan="4">Clear bit 7 of *<a href="642A.html">ReferenceMovingObjects</a>+0026.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef52"></span>EF52</td>
+<td class="instruction">LD DE,$0026</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef55"></span>EF55</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef57"></span>EF57</td>
+<td class="instruction">RES 7,(IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="ef5b"></span>EF5B</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="EEFA.html">EEFA</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#ef3a">Map</a></td>
+<td class="next">
+Next: <a href="EF5C.html">EF5C</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/61242.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

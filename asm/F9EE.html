@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F9EE</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F8B4.html">F8B4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f9ee">Map</a></td>
+<td class="next">
+Next: <a href="FA5A.html">FA5A</a>
+</td>
+</tr>
+</table>
+<div class="description">F9EE: Erase Entity</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="F44E.html">JumpTable_EraseEntity</a>.
+</div>
+<div class="paragraph">
+Tests whether the entity overlaps the player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Erase_Entity</td>
+<td class="address-2"><span id="f9ee"></span>F9EE</td>
+<td class="instruction">LD A,($6411)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="6411.html">RestartRoomFlag</a> is already set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f9f1"></span>F9F1</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f9f2"></span>F9F2</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f9f3"></span>F9F3</td>
+<td class="instruction">LD C,(IX+$00)</td>
+<td class="comment-1" rowspan="4">Fetch the column, row, width and height.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f9f6"></span>F9F6</td>
+<td class="instruction">LD B,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f9f9"></span>F9F9</td>
+<td class="instruction">LD E,(IX+$04)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f9fc"></span>F9FC</td>
+<td class="instruction">LD D,(IX+$05)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f9ff"></span>F9FF</td>
+<td class="instruction">CALL <a href="FA6A.html">Next_PrintCell</a></td>
+<td class="comment-1" rowspan="1">Call <a href="FA6A.html">Next_PrintCell</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa02"></span>FA02</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="5">Return if the clipped width or height is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa03"></span>FA03</td>
+<td class="instruction">CP E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa04"></span>FA04</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa05"></span>FA05</td>
+<td class="instruction">CP D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa06"></span>FA06</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa07"></span>FA07</td>
+<td class="instruction">LD L,E</td>
+<td class="comment-1" rowspan="8">Write the width*08+10 into the compare at <a href="F9EE.html#fa34">FA35</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa08"></span>FA08</td>
+<td class="instruction">LD H,D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa09"></span>FA09</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa0a"></span>FA0A</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa0b"></span>FA0B</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa0c"></span>FA0C</td>
+<td class="instruction">LD A,$10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa0e"></span>FA0E</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa0f"></span>FA0F</td>
+<td class="instruction">LD ($FA35),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa12"></span>FA12</td>
+<td class="instruction">LD A,$18</td>
+<td class="comment-1" rowspan="3">Write the height*08+18 into the compare at <a href="F9EE.html#fa4e">FA4F</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa14"></span>FA14</td>
+<td class="instruction">ADD A,H</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa15"></span>FA15</td>
+<td class="instruction">LD ($FA4F),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa18"></span>FA18</td>
+<td class="instruction">PUSH IY</td>
+<td class="comment-1" rowspan="2">Point <span class="register">IY</span> at the player at <a href="64A4.html">Player</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa1a"></span>FA1A</td>
+<td class="instruction">LD IY,$64A4</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa1e"></span>FA1E</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="15">Jump to <a href="F9EE.html#fa57">Erase_Entity_Branch</a> unless the entity overlaps the player horizontally.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa1f"></span>FA1F</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa20"></span>FA20</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa21"></span>FA21</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa22"></span>FA22</td>
+<td class="instruction">ADD A,(IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa25"></span>FA25</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa26"></span>FA26</td>
+<td class="instruction">LD A,(IY+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa29"></span>FA29</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa2a"></span>FA2A</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa2b"></span>FA2B</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa2c"></span>FA2C</td>
+<td class="instruction">ADD A,(IY+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa2f"></span>FA2F</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa30"></span>FA30</td>
+<td class="instruction">SBC A,$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa32"></span>FA32</td>
+<td class="instruction">ADD A,L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa33"></span>FA33</td>
+<td class="instruction">SUB C</td>
+</tr>
+<tr>
+<td class="asm-label">Erase_Entity_WidthCompare</td>
+<td class="address-1"><span id="fa34"></span>FA34</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="2">Compare against the stored width and jump to <a href="F9EE.html#fa57">Erase_Entity_Branch</a> if there is no overlap.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa36"></span>FA36</td>
+<td class="instruction">JR NC,<a href="F9EE.html#fa57">Erase_Entity_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa38"></span>FA38</td>
+<td class="instruction">LD A,B</td>
+<td class="comment-1" rowspan="15">Jump to <a href="F9EE.html#fa57">Erase_Entity_Branch</a> unless the entity overlaps the player vertically.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa39"></span>FA39</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa3a"></span>FA3A</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa3b"></span>FA3B</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa3c"></span>FA3C</td>
+<td class="instruction">ADD A,(IX+$03)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa3f"></span>FA3F</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa40"></span>FA40</td>
+<td class="instruction">LD A,(IY+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa43"></span>FA43</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa44"></span>FA44</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa45"></span>FA45</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa46"></span>FA46</td>
+<td class="instruction">ADD A,(IY+$03)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa49"></span>FA49</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa4a"></span>FA4A</td>
+<td class="instruction">SBC A,$00</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa4c"></span>FA4C</td>
+<td class="instruction">ADD A,H</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa4d"></span>FA4D</td>
+<td class="instruction">SUB C</td>
+</tr>
+<tr>
+<td class="asm-label">Erase_Entity_HeightCompare</td>
+<td class="address-1"><span id="fa4e"></span>FA4E</td>
+<td class="instruction">CP $00</td>
+<td class="comment-1" rowspan="2">Compare against the stored height and jump to <a href="F9EE.html#fa57">Erase_Entity_Branch</a> if there is no overlap.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa50"></span>FA50</td>
+<td class="instruction">JR NC,<a href="F9EE.html#fa57">Erase_Entity_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa52"></span>FA52</td>
+<td class="instruction">LD A,$01</td>
+<td class="comment-1" rowspan="2">Write 01 to *<a href="6411.html">RestartRoomFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa54"></span>FA54</td>
+<td class="instruction">LD ($6411),A</td>
+</tr>
+<tr>
+<td class="asm-label">Erase_Entity_Branch</td>
+<td class="address-2"><span id="fa57"></span>FA57</td>
+<td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">IY</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fa59"></span>FA59</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F8B4.html">F8B4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f9ee">Map</a></td>
+<td class="next">
+Next: <a href="FA5A.html">FA5A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/63982.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

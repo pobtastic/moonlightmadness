@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61632</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61620.html">61620</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61632">Map</a></td>
+<td class="next">
+Next: <a href="61668.html">61668</a>
+</td>
+</tr>
+</table>
+<div class="description">61632: Reveal Header Triple</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 7: reveal three header items.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealHeaderTriple</td>
+<td class="address-2"><span id="61632"></span>61632</td>
+<td class="instruction">LD BC,9748</td>
+<td class="comment-1" rowspan="2">Write 9748 to *<a href="25759.html">EventTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61635"></span>61635</td>
+<td class="instruction">LD (25759),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61639"></span>61639</td>
+<td class="instruction">LD B,3</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=3.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61641"></span>61641</td>
+<td class="instruction">LD IX,(25630)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25630.html">Pointer_RoomHeader</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealHeaderTriple_Target</td>
+<td class="address-2"><span id="61645"></span>61645</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the count on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61646"></span>61646</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the header record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61649"></span>61649</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="1">Test bit 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61651"></span>61651</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash the flags on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61652"></span>61652</td>
+<td class="instruction">CALL NZ,<a href="61414.html#61418">Event_DrawHeader_Body</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61414.html#61418">Event_DrawHeader_Body</a> if the item is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61655"></span>61655</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore the flags from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61656"></span>61656</td>
+<td class="instruction">CALL Z,<a href="61584.html">Hide_HeaderItem</a></td>
+<td class="comment-1" rowspan="1">Call <a href="61584.html">Hide_HeaderItem</a> if the item is visible.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61659"></span>61659</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61660"></span>61660</td>
+<td class="instruction">LD DE,6</td>
+<td class="comment-1" rowspan="2">Advance to the next header record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61663"></span>61663</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61665"></span>61665</td>
+<td class="instruction">DJNZ <a href="61632.html#61645">Event_RevealHeaderTriple_Target</a></td>
+<td class="comment-1" rowspan="1">Decrease the count and loop back to <a href="61632.html#61645">Event_RevealHeaderTriple_Target</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61667"></span>61667</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61620.html">61620</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61632">Map</a></td>
+<td class="next">
+Next: <a href="61668.html">61668</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F0C0.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

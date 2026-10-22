@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F256</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F253.html">F253</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f256">Map</a></td>
+<td class="next">
+Next: <a href="F26A.html">F26A</a>
+</td>
+</tr>
+</table>
+<div class="description">F256: Bump Digit</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="F244.html">Event_DigitThree</a>, <a href="F249.html">Event_DigitFour</a> and <a href="F24E.html">Event_DigitTwo</a>.
+</div>
+<div class="paragraph">
+Increases *(<span class="register">HL</span>) and wraps at 0A.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_BumpDigit</td>
+<td class="address-2"><span id="f256"></span>F256</td>
+<td class="instruction">LD BC,$2614</td>
+<td class="comment-1" rowspan="2">Write 2614 to *<a href="649F.html">EventTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f259"></span>F259</td>
+<td class="instruction">LD ($649F),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f25d"></span>F25D</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="2">Increase <span class="register">A</span> from *(<span class="register">HL</span>).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f25e"></span>F25E</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f25f"></span>F25F</td>
+<td class="instruction">CP $0A</td>
+<td class="comment-1" rowspan="1">Compare it with 0A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f261"></span>F261</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write it back.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f262"></span>F262</td>
+<td class="instruction">JP NZ,<a href="ECF2.html">Print_Inventory</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="ECF2.html">Print_Inventory</a> if it did not wrap.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f265"></span>F265</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f266"></span>F266</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f267"></span>F267</td>
+<td class="instruction">JP <a href="ECF2.html">Print_Inventory</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="ECF2.html">Print_Inventory</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F253.html">F253</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f256">Map</a></td>
+<td class="next">
+Next: <a href="F26A.html">F26A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/62038.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

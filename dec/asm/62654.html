@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62654</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62632.html">62632</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62654">Map</a></td>
+<td class="next">
+Next: <a href="62704.html">62704</a>
+</td>
+</tr>
+</table>
+<div class="description">62654: Add Score</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Adds *<a href="25623.html">TemporaryPair</a> into the score digits at <a href="25781.html">25786</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Target2</td>
+<td class="address-2"><span id="62654"></span>62654</td>
+<td class="instruction">LD A,(25623)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="25623.html">TemporaryPair</a> is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62657"></span>62657</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62658"></span>62658</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62659"></span>62659</td>
+<td class="instruction">LD BC,(25623)</td>
+<td class="comment-1" rowspan="11">Point at the digit that matches the place value.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62663"></span>62663</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62664"></span>62664</td>
+<td class="instruction">LD D,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62665"></span>62665</td>
+<td class="instruction">LD E,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62666"></span>62666</td>
+<td class="instruction">LD HL,25791</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62669"></span>62669</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62671"></span>62671</td>
+<td class="instruction">LD DE,25786</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62674"></span>62674</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62675"></span>62675</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62676"></span>62676</td>
+<td class="instruction">SBC HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62678"></span>62678</td>
+<td class="instruction">EX DE,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62679"></span>62679</td>
+<td class="instruction">JR NC,<a href="62704.html">Draw_StatusIcons_Branch</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62704.html">Draw_StatusIcons_Branch</a> if that digit is already in range.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62681"></span>62681</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="5">Add the low byte into the digit, wrapping at 10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62682"></span>62682</td>
+<td class="instruction">ADD A,(HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62683"></span>62683</td>
+<td class="instruction">CP 10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62685"></span>62685</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62686"></span>62686</td>
+<td class="instruction">JR C,<a href="62704.html">Draw_StatusIcons_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62688"></span>62688</td>
+<td class="instruction">SUB 10</td>
+<td class="comment-1" rowspan="6">Carry into the next place.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62690"></span>62690</td>
+<td class="instruction">LD (HL),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62691"></span>62691</td>
+<td class="instruction">LD BC,(25623)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62695"></span>62695</td>
+<td class="instruction">LD C,1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62697"></span>62697</td>
+<td class="instruction">INC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62698"></span>62698</td>
+<td class="instruction">LD (25623),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62702"></span>62702</td>
+<td class="instruction">JR <a href="62654.html#62654">Draw_StatusIcons_Target2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62654.html">Draw_StatusIcons_Target2</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62632.html">62632</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62654">Map</a></td>
+<td class="next">
+Next: <a href="62704.html">62704</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F4BE.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

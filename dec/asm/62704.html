@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 62704</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62654.html">62654</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62704">Map</a></td>
+<td class="next">
+Next: <a href="62788.html">62788</a>
+</td>
+</tr>
+</table>
+<div class="description">62704: Print Score</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="62654.html">Draw_StatusIcons_Target2</a>.
+</div>
+<div class="paragraph">
+Prints the score digits and copies a new high score when the stored score is lower.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Branch</td>
+<td class="address-2"><span id="62704"></span>62704</td>
+<td class="instruction">LD DE,0</td>
+<td class="comment-1" rowspan="2">Write 0000 to *<a href="25623.html">TemporaryPair</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62707"></span>62707</td>
+<td class="instruction">LD (25623),DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62711"></span>62711</td>
+<td class="instruction">LD HL,15360</td>
+<td class="comment-1" rowspan="2">Write 15360 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62714"></span>62714</td>
+<td class="instruction">LD (23606),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62717"></span>62717</td>
+<td class="instruction">LD A,7</td>
+<td class="comment-1" rowspan="2">Write WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62719"></span>62719</td>
+<td class="instruction">LD (23695),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62722"></span>62722</td>
+<td class="instruction">LD BC,1051</td>
+<td class="comment-1" rowspan="3">Print the five digits at <a href="25781.html">25787</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62725"></span>62725</td>
+<td class="instruction">LD HL,25787</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62728"></span>62728</td>
+<td class="instruction">CALL <a href="62704.html#62773">Draw_StatusIcons_Target5</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62731"></span>62731</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="3">Compare those digits with <a href="25781.html">25781</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62733"></span>62733</td>
+<td class="instruction">LD HL,25787</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62736"></span>62736</td>
+<td class="instruction">LD DE,25781</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Target3</td>
+<td class="address-2"><span id="62739"></span>62739</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="62704.html#62747">Draw_StatusIcons_Skip2</a> if this pair matches.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62740"></span>62740</td>
+<td class="instruction">CP (HL)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62741"></span>62741</td>
+<td class="instruction">JR Z,<a href="62704.html#62747">Draw_StatusIcons_Skip2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62743"></span>62743</td>
+<td class="instruction">JR C,<a href="62704.html#62760">Draw_StatusIcons_Branch2</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62704.html#62760">Draw_StatusIcons_Branch2</a> if the stored score is lower.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62745"></span>62745</td>
+<td class="instruction">JR <a href="62704.html#62751">Draw_StatusIcons_Target4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62704.html#62751">Draw_StatusIcons_Target4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Skip2</td>
+<td class="address-2"><span id="62747"></span>62747</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Advance both pointers and loop back to <a href="62704.html#62739">Draw_StatusIcons_Target3</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62748"></span>62748</td>
+<td class="instruction">INC DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62749"></span>62749</td>
+<td class="instruction">DJNZ <a href="62704.html#62739">Draw_StatusIcons_Target3</a></td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Target4</td>
+<td class="address-2"><span id="62751"></span>62751</td>
+<td class="instruction">LD BC,1040</td>
+<td class="comment-1" rowspan="3">Print the five digits at <a href="25781.html">25781</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62754"></span>62754</td>
+<td class="instruction">LD HL,25781</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62757"></span>62757</td>
+<td class="instruction">JP <a href="62704.html#62773">Draw_StatusIcons_Target5</a></td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Branch2</td>
+<td class="address-2"><span id="62760"></span>62760</td>
+<td class="instruction">LD DE,25781</td>
+<td class="comment-1" rowspan="4">Copy the new score over the stored score.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62763"></span>62763</td>
+<td class="instruction">LD HL,25787</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62766"></span>62766</td>
+<td class="instruction">LD BC,5</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62769"></span>62769</td>
+<td class="instruction">LDIR</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62771"></span>62771</td>
+<td class="instruction">JR <a href="62704.html#62751">Draw_StatusIcons_Target4</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="62704.html#62751">Draw_StatusIcons_Target4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Target5</td>
+<td class="address-2"><span id="62773"></span>62773</td>
+<td class="instruction">CALL <a href="62916.html">Set_PrintPosition</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62916.html">Set_PrintPosition</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62776"></span>62776</td>
+<td class="instruction">LD B,5</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=5.</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_StatusIcons_Target6</td>
+<td class="address-2"><span id="62778"></span>62778</td>
+<td class="instruction">LD A,(HL)</td>
+<td class="comment-1" rowspan="2">Convert the digit into a character.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62779"></span>62779</td>
+<td class="instruction">ADD A,10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62781"></span>62781</td>
+<td class="instruction">CALL <a href="62986.html">Print_Character</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62986.html">Print_Character</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62784"></span>62784</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="2">Advance the digit pointer and loop back to <a href="62704.html#62778">Draw_StatusIcons_Target6</a> until all five digits are printed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62785"></span>62785</td>
+<td class="instruction">DJNZ <a href="62704.html#62778">Draw_StatusIcons_Target6</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="62787"></span>62787</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="62654.html">62654</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#62704">Map</a></td>
+<td class="next">
+Next: <a href="62788.html">62788</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F4F0.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

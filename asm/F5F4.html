@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F5F4</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F5EC.html">F5EC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f5f4">Map</a></td>
+<td class="next">
+Next: <a href="F60A.html">F60A</a>
+</td>
+</tr>
+</table>
+<div class="description">F5F4: Get Random Number</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="F433.html">JumpTable_GetRandomNumber</a>.
+</div>
+<div class="paragraph">
+(((<span class="register">B</span> + <span class="register">C</span>) % 0100 + AB) % 0100) * 0100 + (<span class="register">C</span> + CD) % 0100
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">The random number</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Get_RandomNumber</td>
+<td class="address-2"><span id="f5f4"></span>F5F4</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">BC</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f5f5"></span>F5F5</td>
+<td class="instruction">LD BC,($64B2)</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=*<a href="64B2.html">RandomNumberSeed</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f5f9"></span>F5F9</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="3"><span class="register">B</span>=<span class="register">B</span>+<span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f5fa"></span>F5FA</td>
+<td class="instruction">ADD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f5fb"></span>F5FB</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f5fc"></span>F5FC</td>
+<td class="instruction">LD A,$CD</td>
+<td class="comment-1" rowspan="3"><span class="register">C</span>=CD+<span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f5fe"></span>F5FE</td>
+<td class="instruction">ADD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f5ff"></span>F5FF</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f600"></span>F600</td>
+<td class="instruction">LD A,$AB</td>
+<td class="comment-1" rowspan="3"><span class="register">B</span>+=AB.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f602"></span>F602</td>
+<td class="instruction">ADC A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f603"></span>F603</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f604"></span>F604</td>
+<td class="instruction">LD ($64B2),BC</td>
+<td class="comment-1" rowspan="1">Write the updated <span class="register">BC</span> to *<a href="64B2.html">RandomNumberSeed</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f608"></span>F608</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f609"></span>F609</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+View the equivalent code in <a href="/booty/asm/E349.html">Booty</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F5EC.html">F5EC</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f5f4">Map</a></td>
+<td class="next">
+Next: <a href="F60A.html">F60A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/62964.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

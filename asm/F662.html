@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F662</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F60A.html">F60A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f662">Map</a></td>
+<td class="next">
+Next: <a href="F6AA.html">F6AA</a>
+</td>
+</tr>
+</table>
+<div class="description">F662: Print Clipped</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="F439.html">JumpTable_PrintClipped</a>.
+</div>
+<div class="paragraph">
+Prints a clipped rectangular run of characters.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Clipped</td>
+<td class="address-2"><span id="f662"></span>F662</td>
+<td class="instruction">LD L,A</td>
+<td class="comment-1" rowspan="1">Keep the tile ID in <span class="register">L</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f663"></span>F663</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="2">Store the width in *<a href="6416.html">Print_Width</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f664"></span>F664</td>
+<td class="instruction">LD ($6416),A</td>
+</tr>
+<tr>
+<td class="asm-label">Print_Clipped_Target</td>
+<td class="address-2"><span id="f667"></span>F667</td>
+<td class="instruction">LD A,($6416)</td>
+<td class="comment-1" rowspan="2">Reload the remaining width from *<a href="6416.html">Print_Width</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f66a"></span>F66A</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f66b"></span>F66B</td>
+<td class="instruction">LD A,($6419)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="F662.html#f677">Print_Clipped_Branch</a> if this row is inside *<a href="6419.html">ClipWindow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f66e"></span>F66E</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f66f"></span>F66F</td>
+<td class="instruction">JR NC,<a href="F662.html#f677">Print_Clipped_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Clipped_Continue</td>
+<td class="address-2"><span id="f671"></span>F671</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="5">Skip down until the row is inside the clip window.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f672"></span>F672</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f673"></span>F673</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f674"></span>F674</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f675"></span>F675</td>
+<td class="instruction">JR NZ,<a href="F662.html#f671">Print_Clipped_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Clipped_Branch</td>
+<td class="address-2"><span id="f677"></span>F677</td>
+<td class="instruction">LD A,($641A)</td>
+<td class="comment-1" rowspan="3">Return if this row is below *<a href="6419.html#641a">ClipWindow_MaximumRow</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f67a"></span>F67A</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f67b"></span>F67B</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f67c"></span>F67C</td>
+<td class="instruction">LD A,($641C)</td>
+<td class="comment-1" rowspan="3">Return if this column is past *<a href="6419.html#641c">641C</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f67f"></span>F67F</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f680"></span>F680</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f681"></span>F681</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the position on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f682"></span>F682</td>
+<td class="instruction">LD A,($641B)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="F662.html#f68f">Print_Clipped_Branch3</a> if this column is inside *<a href="6419.html#641b">ClipWindow_MinimumColumn</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f685"></span>F685</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f686"></span>F686</td>
+<td class="instruction">JR NC,<a href="F662.html#f68f">Print_Clipped_Branch3</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Clipped_Branch2</td>
+<td class="address-2"><span id="f688"></span>F688</td>
+<td class="instruction">DEC E</td>
+<td class="comment-1" rowspan="5">Skip left until the column is inside the clip window.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f689"></span>F689</td>
+<td class="instruction">JR Z,<a href="F662.html#f6a4">Print_Clipped_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f68b"></span>F68B</td>
+<td class="instruction">DEC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f68c"></span>F68C</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f68d"></span>F68D</td>
+<td class="instruction">JR C,<a href="F662.html#f688">Print_Clipped_Branch2</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Clipped_Branch3</td>
+<td class="address-2"><span id="f68f"></span>F68F</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="3">Copy <span class="register">BC</span> to the shadow registers (using the stack).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f690"></span>F690</td>
+<td class="instruction">EXX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f691"></span>F691</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f692"></span>F692</td>
+<td class="instruction">CALL <a href="F6AA.html">Convert_Coordinate</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F6AA.html">Convert_Coordinate</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f695"></span>F695</td>
+<td class="instruction">EXX</td>
+<td class="comment-1" rowspan="1">Switch back.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f696"></span>F696</td>
+<td class="instruction">LD A,L</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=the tile ID.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f697"></span>F697</td>
+<td class="instruction">CALL <a href="F6C6.html">Write_Tile</a></td>
+<td class="comment-1" rowspan="1">Call <a href="F6C6.html">Write_Tile</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f69a"></span>F69A</td>
+<td class="instruction">DEC C</td>
+<td class="comment-1" rowspan="6">Move left one column and loop back to <a href="F662.html#f68f">Print_Clipped_Branch3</a> until the row is done.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f69b"></span>F69B</td>
+<td class="instruction">LD A,($641C)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f69e"></span>F69E</td>
+<td class="instruction">CP C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f69f"></span>F69F</td>
+<td class="instruction">JR NC,<a href="F662.html#f6a4">Print_Clipped_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6a1"></span>F6A1</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6a2"></span>F6A2</td>
+<td class="instruction">JR NZ,<a href="F662.html#f68f">Print_Clipped_Branch3</a></td>
+</tr>
+<tr>
+<td class="asm-label">Print_Clipped_Skip</td>
+<td class="address-2"><span id="f6a4"></span>F6A4</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the position from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6a5"></span>F6A5</td>
+<td class="instruction">DEC D</td>
+<td class="comment-1" rowspan="2">Return if the remaining height is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6a6"></span>F6A6</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6a7"></span>F6A7</td>
+<td class="instruction">DEC B</td>
+<td class="comment-1" rowspan="1">Move up one row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f6a8"></span>F6A8</td>
+<td class="instruction">JR <a href="F662.html#f667">Print_Clipped_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F662.html#f667">Print_Clipped_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F60A.html">F60A</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f662">Map</a></td>
+<td class="next">
+Next: <a href="F6AA.html">F6AA</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/63074.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

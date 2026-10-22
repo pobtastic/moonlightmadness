@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61934</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61908.html">61908</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61934">Map</a></td>
+<td class="next">
+Next: <a href="61975.html">61975</a>
+</td>
+</tr>
+</table>
+<div class="description">61934: Reveal Three Decorations</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 30: reveal three decorations.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealThreeDecorations</td>
+<td class="address-2"><span id="61934"></span>61934</td>
+<td class="instruction">LD IX,(25646)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25646.html">ReferenceDecorations</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61938"></span>61938</td>
+<td class="instruction">LD B,3</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=3.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealThreeDecorations_Target</td>
+<td class="address-2"><span id="61940"></span>61940</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the count on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61941"></span>61941</td>
+<td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="61934.html#61967">Event_RevealThreeDecorations_Continue</a> if this decoration is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61944"></span>61944</td>
+<td class="instruction">BIT 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61946"></span>61946</td>
+<td class="instruction">JR NZ,<a href="61934.html#61967">Event_RevealThreeDecorations_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61948"></span>61948</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="4">Fetch the column, row and size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61951"></span>61951</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61954"></span>61954</td>
+<td class="instruction">LD E,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61957"></span>61957</td>
+<td class="instruction">LD D,(IX+5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61960"></span>61960</td>
+<td class="instruction">CALL <a href="62563.html">JumpTable_DrawBox</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62563.html">JumpTable_DrawBox</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61963"></span>61963</td>
+<td class="instruction">SET 7,(IX+0)</td>
+<td class="comment-1" rowspan="1">Set bit 7 of the decoration record.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealThreeDecorations_Continue</td>
+<td class="address-2"><span id="61967"></span>61967</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61968"></span>61968</td>
+<td class="instruction">LD DE,6</td>
+<td class="comment-1" rowspan="2">Advance to the next decoration.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61971"></span>61971</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61973"></span>61973</td>
+<td class="instruction">DJNZ <a href="61934.html#61940">Event_RevealThreeDecorations_Target</a></td>
+<td class="comment-1" rowspan="1">Decrease the count and loop back to <a href="61934.html#61940">Event_RevealThreeDecorations_Target</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="comments">
+<div class="paragraph">
+Continue on to <a href="61975.html">Event_ShowMovers</a>.
+</div>
+</div>
+</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61908.html">61908</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61934">Map</a></td>
+<td class="next">
+Next: <a href="61975.html">61975</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F1EE.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

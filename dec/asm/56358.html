@@ -113,7 +113,7 @@ Reverse an object's horizontal/vertical direction.
 <td class="asm-label">Reverse_Direction</td>
 <td class="address-2"><span id="56375"></span>56375</td>
 <td class="instruction">LD A,(IX+9)</td>
-<td class="comment-1" rowspan="5">Negate (IX+9) and (IX+8).</td>
+<td class="comment-1" rowspan="5">Negate *<span class="register">IX</span>+9 and *<span class="register">IX</span>+8.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -150,7 +150,7 @@ Reverse an object's horizontal/vertical direction.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56390"></span>56390</td>
 <td class="instruction">LD (IX+8),A</td>
-<td class="comment-1" rowspan="3">Toggle bit 7 of (IX+7).</td>
+<td class="comment-1" rowspan="3">Toggle bit 7 of *<span class="register">IX</span>+7.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -217,23 +217,24 @@ Pause when leaving a non-zero room.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56410"></span>56410</td>
 <td class="instruction">LD BC,1000</td>
-<td class="comment-1" rowspan="2">Call <a href="62506.html#62512">JumpTable_Delay</a> with a pause of 1000.</td>
+<td class="comment-1" rowspan="2">Call <a href="62512.html">JumpTable_Delay</a> with a pause of 1000.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56413"></span>56413</td>
-<td class="instruction">CALL <a href="62506.html#62512">JumpTable_Delay</a></td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
 </tr>
 <tr>
 <td class="asm-label">Pause_LeavingRoom_Done</td>
 <td class="address-2"><span id="56416"></span>56416</td>
 <td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="2">Restore <span class="register">AF</span> from the stack and return.</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56417"></span>56417</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

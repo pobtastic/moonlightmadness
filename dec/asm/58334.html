@@ -87,15 +87,26 @@ Animates the 13-byte records at *<a href="25648.html">ReferenceActors</a>.
 <td class="instruction">JR NZ,<a href="58334.html#58398">Handler_Actors_Next</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="58350"></span>
+<div class="comments">
+<div class="paragraph">
+Test this actor against the player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58350"></span>58350</td>
 <td class="instruction">PUSH IY</td>
-<td class="comment-1" rowspan="5">Copy <span class="register">IX</span> to <span class="register">IY</span> (using the stack) and test the player.</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">IY</span> on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58352"></span>58352</td>
 <td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Copy <span class="register">IX</span> to <span class="register">IY</span> (using the stack).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -106,23 +117,25 @@ Animates the 13-byte records at *<a href="25648.html">ReferenceActors</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="58356"></span>58356</td>
 <td class="instruction">CALL <a href="56069.html#56127">Test_ActorCollision</a></td>
+<td class="comment-1" rowspan="1">Call <a href="56069.html#56127">Test_ActorCollision</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58359"></span>58359</td>
 <td class="instruction">POP IY</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">IY</span> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58361"></span>58361</td>
-<td class="instruction">CALL <a href="62506.html#62557">JumpTable_UpdateActor</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62506.html#62557">JumpTable_UpdateActor</a>.</td>
+<td class="instruction">CALL <a href="62557.html">JumpTable_UpdateActor</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62557.html">JumpTable_UpdateActor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58364"></span>58364</td>
 <td class="instruction">BIT 7,(IX+7)</td>
-<td class="comment-1" rowspan="5">Restore the stored row when bit 7 of (IX+7) is set.</td>
+<td class="comment-1" rowspan="5">Restore the stored row when bit 7 of *<span class="register">IX</span>+7 is set.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -145,15 +158,26 @@ Animates the 13-byte records at *<a href="25648.html">ReferenceActors</a>.
 <td class="instruction">LD (IX+1),A</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="58380"></span>
+<div class="comments">
+<div class="paragraph">
+Store the new position.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_Actors_Commit</td>
 <td class="address-2"><span id="58380"></span>58380</td>
-<td class="instruction">CALL <a href="62506.html#62536">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="6">Store the new position and call <a href="62506.html#62554">JumpTable_DrawActor</a>.</td>
+<td class="instruction">CALL <a href="62536.html">JumpTable_AdvanceEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62536.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58383"></span>58383</td>
 <td class="instruction">LD (IX+0),C</td>
+<td class="comment-1" rowspan="4">Store the new column, row, fine-X and fine-Y.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -173,7 +197,8 @@ Animates the 13-byte records at *<a href="25648.html">ReferenceActors</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58395"></span>58395</td>
-<td class="instruction">CALL <a href="62506.html#62554">JumpTable_DrawActor</a></td>
+<td class="instruction">CALL <a href="62554.html">JumpTable_DrawActor</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62554.html">JumpTable_DrawActor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_Actors_Next</td>
@@ -223,12 +248,13 @@ Lock or reverse an actor after a collision.
 <td class="asm-label"></td>
 <td class="address-1"><span id="58411"></span>58411</td>
 <td class="instruction">CALL <a href="58334.html#58433">Actor_SwapDestination</a></td>
-<td class="comment-1" rowspan="5">Clear the actor deltas and return.</td>
+<td class="comment-1" rowspan="1">Call <a href="58334.html#58433">Actor_SwapDestination</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58414"></span>58414</td>
 <td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Write 0 to both actor deltas.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -244,17 +270,19 @@ Lock or reverse an actor after a collision.
 <td class="asm-label"></td>
 <td class="address-1"><span id="58421"></span>58421</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="asm-label">Actor_Lock</td>
 <td class="address-2"><span id="58422"></span>58422</td>
 <td class="instruction">SET 7,(IY+7)</td>
-<td class="comment-1" rowspan="2">Set bit 7 of (IY+7) and return.</td>
+<td class="comment-1" rowspan="1">Set bit 7 of *<span class="register">IY</span>+7.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58426"></span>58426</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -270,7 +298,7 @@ This entry point is used by the routine at <a href="56069.html">Handler_Pendulum
 <td class="asm-label">Actor_Reverse</td>
 <td class="address-2"><span id="58427"></span>58427</td>
 <td class="instruction">LD A,(IY+12)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="58334.html#58406">Actor_AfterCollision</a> if (IY+12) is set.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="58334.html#58406">Actor_AfterCollision</a> if *<span class="register">IY</span>+12 is set.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -286,7 +314,7 @@ This entry point is used by the routine at <a href="56069.html">Handler_Pendulum
 <td class="asm-label">Actor_SwapDestination</td>
 <td class="address-2"><span id="58433"></span>58433</td>
 <td class="instruction">LD A,(IY+5)</td>
-<td class="comment-1" rowspan="4">Swap (IY+5) with (IY+10).</td>
+<td class="comment-1" rowspan="4">Swap *<span class="register">IY</span>+5 with *<span class="register">IY</span>+10.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -307,7 +335,7 @@ This entry point is used by the routine at <a href="56069.html">Handler_Pendulum
 <td class="asm-label"></td>
 <td class="address-1"><span id="58445"></span>58445</td>
 <td class="instruction">LD A,(IY+6)</td>
-<td class="comment-1" rowspan="4">Swap (IY+6) with (IY+11).</td>
+<td class="comment-1" rowspan="4">Swap *<span class="register">IY</span>+6 with *<span class="register">IY</span>+11.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -328,7 +356,7 @@ This entry point is used by the routine at <a href="56069.html">Handler_Pendulum
 <td class="asm-label"></td>
 <td class="address-1"><span id="58457"></span>58457</td>
 <td class="instruction">LD A,(IY+8)</td>
-<td class="comment-1" rowspan="2"><span class="register">A</span>=(IY+8)-1.</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=*<span class="register">IY</span>+8-1.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -351,7 +379,7 @@ This entry point is used by the routine at <a href="56069.html">Handler_Pendulum
 <td class="asm-label"></td>
 <td class="address-1"><span id="58466"></span>58466</td>
 <td class="instruction">LD A,(IY+9)</td>
-<td class="comment-1" rowspan="2"><span class="register">A</span>=(IY+9)-1.</td>
+<td class="comment-1" rowspan="2"><span class="register">A</span>=*<span class="register">IY</span>+9-1.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -368,12 +396,13 @@ This entry point is used by the routine at <a href="56069.html">Handler_Pendulum
 <td class="asm-label"></td>
 <td class="address-1"><span id="58472"></span>58472</td>
 <td class="instruction">LD (IY+9),A</td>
-<td class="comment-1" rowspan="2">Write the new vertical delta and return.</td>
+<td class="comment-1" rowspan="1">Write the new vertical delta.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58475"></span>58475</td>
 <td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">

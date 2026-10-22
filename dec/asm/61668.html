@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61668</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61632.html">61632</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61668">Map</a></td>
+<td class="next">
+Next: <a href="61733.html">61733</a>
+</td>
+</tr>
+</table>
+<div class="description">61668: Reveal Furniture</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 25: reveal the first furniture item.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_RevealFurniture</td>
+<td class="address-2"><span id="61668"></span>61668</td>
+<td class="instruction">LD IX,(25632)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25632.html">ReferenceFurniture</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61672"></span>61672</td>
+<td class="instruction">BIT 7,(IX+0)</td>
+<td class="comment-1" rowspan="2">Return if this furniture item is already visible.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61676"></span>61676</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61677"></span>61677</td>
+<td class="instruction">RES 7,(IX+0)</td>
+<td class="comment-1" rowspan="1">Clear bit 7 of the furniture record.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61681"></span>61681</td>
+<td class="instruction">LD BC,7688</td>
+<td class="comment-1" rowspan="2">Write 7688 to *<a href="25714.html">SoundFlags</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61684"></span>61684</td>
+<td class="instruction">LD (25714),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61688"></span>61688</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="6">Fetch the column, row, colour and glyph.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61691"></span>61691</td>
+<td class="instruction">LD B,(IX+1)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61694"></span>61694</td>
+<td class="instruction">LD L,(IX+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61697"></span>61697</td>
+<td class="instruction">LD A,(IX+3)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61700"></span>61700</td>
+<td class="instruction">LD E,3</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61702"></span>61702</td>
+<td class="instruction">LD D,4</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61704"></span>61704</td>
+<td class="instruction">LD IX,25739</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="25739.html">CarriedObject</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61708"></span>61708</td>
+<td class="instruction">CALL <a href="62551.html">JumpTable_SpawnEntity</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62551.html">JumpTable_SpawnEntity</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61711"></span>61711</td>
+<td class="instruction">CALL <a href="62259.html">Copy_ActorDestination</a></td>
+<td class="comment-1" rowspan="1">Call <a href="62259.html">Copy_ActorDestination</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61714"></span>61714</td>
+<td class="instruction">LD A,(IX+1)</td>
+<td class="comment-1" rowspan="6">Store the drop row four cells above the furniture.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61717"></span>61717</td>
+<td class="instruction">LD (IX+15),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61720"></span>61720</td>
+<td class="instruction">SUB 4</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61722"></span>61722</td>
+<td class="instruction">LD (IX+1),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61725"></span>61725</td>
+<td class="instruction">LD (IX+17),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61728"></span>61728</td>
+<td class="instruction">LD (IX+9),1</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61732"></span>61732</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61632.html">61632</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61668">Map</a></td>
+<td class="next">
+Next: <a href="61733.html">61733</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F0E4.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 63539</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63492.html">63492</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63539">Map</a></td>
+<td class="next">
+Next: <a href="63668.html">63668</a>
+</td>
+</tr>
+</table>
+<div class="description">63539: Shift Sprite Left</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="63668.html">Draw_Entity</a>.
+</div>
+<div class="paragraph">
+Draws a left-facing entity by shifting each tile left.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Target</td>
+<td class="address-2"><span id="63539"></span>63539</td>
+<td class="instruction">AND %01111111</td>
+<td class="comment-1" rowspan="1">Keep only bits 0-6.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63541"></span>63541</td>
+<td class="instruction">LD (23695),A</td>
+<td class="comment-1" rowspan="1">Write the colour to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63544"></span>63544</td>
+<td class="instruction">LD A,(63767)</td>
+<td class="comment-1" rowspan="3">Add 8 to the shift count at <a href="63668.html#63766">63767</a> and write it to <a href="63539.html#63599">63600</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63547"></span>63547</td>
+<td class="instruction">ADD A,8</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63549"></span>63549</td>
+<td class="instruction">LD (63600),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63552"></span>63552</td>
+<td class="instruction">LD DE,(23606)</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=*<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63556"></span>63556</td>
+<td class="instruction">LD HL,(63798)</td>
+<td class="comment-1" rowspan="2">Copy the stored stride from <a href="63668.html#63797">63798</a> into the add at <a href="63539.html#63629">63630</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63559"></span>63559</td>
+<td class="instruction">LD (63630),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63562"></span>63562</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="3">Clear the self-modified OR at <a href="63539.html#63617">Advance_Entity_Merge</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63563"></span>63563</td>
+<td class="instruction">LD H,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63564"></span>63564</td>
+<td class="instruction">LD (63617),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63567"></span>63567</td>
+<td class="instruction">LD A,(IX+6)</td>
+<td class="comment-1" rowspan="8">Point <span class="register">HL</span> at the last source tile of this frame.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63570"></span>63570</td>
+<td class="instruction">ADD A,(IX+4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63573"></span>63573</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63574"></span>63574</td>
+<td class="instruction">LD L,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63575"></span>63575</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63576"></span>63576</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63577"></span>63577</td>
+<td class="instruction">ADD HL,HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63578"></span>63578</td>
+<td class="instruction">ADD HL,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63579"></span>63579</td>
+<td class="instruction">LD E,(IX+4)</td>
+<td class="comment-1" rowspan="2"><span class="register">DE</span>=the sprite width and height.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63582"></span>63582</td>
+<td class="instruction">LD D,(IX+5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63585"></span>63585</td>
+<td class="instruction">PUSH HL</td>
+<td class="comment-1" rowspan="2">Copy <span class="register">HL</span> to <span class="register">IX</span> (using the stack).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63586"></span>63586</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63588"></span>63588</td>
+<td class="instruction">LD HL,23742</td>
+<td class="comment-1" rowspan="1"><span class="register">HL</span>=23742.</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Continue</td>
+<td class="address-2"><span id="63591"></span>63591</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="2">Stash the source pointer and remaining size.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63593"></span>63593</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Continue2</td>
+<td class="address-2"><span id="63594"></span>63594</td>
+<td class="instruction">PUSH IX</td>
+<td class="comment-1" rowspan="1">Stash the source pointer on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63596"></span>63596</td>
+<td class="instruction">LD B,8</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=8.</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Target2</td>
+<td class="address-2"><span id="63598"></span>63598</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="1">Stash the row count.</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_ShiftCount</td>
+<td class="address-1"><span id="63599"></span>63599</td>
+<td class="instruction">LD B,255</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=the shift count (self-modified).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63601"></span>63601</td>
+<td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="3">Load the next source byte.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63604"></span>63604</td>
+<td class="instruction">XOR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63605"></span>63605</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Target3</td>
+<td class="address-2"><span id="63606"></span>63606</td>
+<td class="instruction">SLA C</td>
+<td class="comment-1" rowspan="4">Shift one source bit into the overflow bytes.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63608"></span>63608</td>
+<td class="instruction">RR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63610"></span>63610</td>
+<td class="instruction">RR E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63612"></span>63612</td>
+<td class="instruction">DJNZ <a href="63539.html#63606">Advance_Entity_Target3</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63614"></span>63614</td>
+<td class="instruction">LD (IY+0),E</td>
+<td class="comment-1" rowspan="1">Write the overflow bits to the next column.</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Merge</td>
+<td class="address-1"><span id="63617"></span>63617</td>
+<td class="instruction">NOP</td>
+<td class="comment-1" rowspan="1">Self-modified: NOP or OR (HL).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63618"></span>63618</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="1">Write the rotated byte.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63619"></span>63619</td>
+<td class="instruction">INC HL</td>
+<td class="comment-1" rowspan="3">Advance the destination and source pointers.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63620"></span>63620</td>
+<td class="instruction">INC IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63622"></span>63622</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63624"></span>63624</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore the row count from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63625"></span>63625</td>
+<td class="instruction">DJNZ <a href="63539.html#63598">Advance_Entity_Target2</a></td>
+<td class="comment-1" rowspan="1">Decrease the count and loop back to <a href="63539.html#63598">Advance_Entity_Target2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63627"></span>63627</td>
+<td class="instruction">POP IX</td>
+<td class="comment-1" rowspan="1">Restore the source pointer from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Stride</td>
+<td class="address-1"><span id="63629"></span>63629</td>
+<td class="instruction">LD BC,0</td>
+<td class="comment-1" rowspan="1"><span class="register">BC</span>=the stored stride (self-modified).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63632"></span>63632</td>
+<td class="instruction">ADD IX,BC</td>
+<td class="comment-1" rowspan="3">Advance to the next source column and loop back to <a href="63539.html#63594">Advance_Entity_Continue2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63634"></span>63634</td>
+<td class="instruction">DEC D</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63635"></span>63635</td>
+<td class="instruction">JR NZ,<a href="63539.html#63594">Advance_Entity_Continue2</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63637"></span>63637</td>
+<td class="instruction">LD A,182</td>
+<td class="comment-1" rowspan="2">Write OR (HL) into *<a href="63539.html#63617">Advance_Entity_Merge</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63639"></span>63639</td>
+<td class="instruction">LD (63617),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63642"></span>63642</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=0.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63643"></span>63643</td>
+<td class="instruction">LD B,8</td>
+<td class="comment-1" rowspan="1"><span class="register">B</span>=8.</td>
+</tr>
+<tr>
+<td class="asm-label">Advance_Entity_Target4</td>
+<td class="address-2"><span id="63645"></span>63645</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="5">Clear one overflow byte and loop back to <a href="63539.html#63645">Advance_Entity_Target4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63646"></span>63646</td>
+<td class="instruction">LD (IY+0),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63649"></span>63649</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63650"></span>63650</td>
+<td class="instruction">INC IY</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63652"></span>63652</td>
+<td class="instruction">DJNZ <a href="63539.html#63645">Advance_Entity_Target4</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63654"></span>63654</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="7">Step back one source character and loop back to <a href="63539.html#63591">Advance_Entity_Continue</a>, then jump to <a href="63668.html#63833">Draw_Entity_Target4</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63655"></span>63655</td>
+<td class="instruction">POP IX</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63657"></span>63657</td>
+<td class="instruction">LD BC,65528</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63660"></span>63660</td>
+<td class="instruction">ADD IX,BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63662"></span>63662</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63663"></span>63663</td>
+<td class="instruction">JR NZ,<a href="63539.html#63591">Advance_Entity_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="63665"></span>63665</td>
+<td class="instruction">JP <a href="63668.html#63833">Draw_Entity_Target4</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="63492.html">63492</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#63539">Map</a></td>
+<td class="next">
+Next: <a href="63668.html">63668</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F833.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

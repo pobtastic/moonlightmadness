@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at F03E</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F011.html">F011</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f03e">Map</a></td>
+<td class="next">
+Next: <a href="F06A.html">F06A</a>
+</td>
+</tr>
+</table>
+<div class="description">F03E: Start Enemy</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="EDD9.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 05: start the first enemy.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartEnemy</td>
+<td class="address-2"><span id="f03e"></span>F03E</td>
+<td class="instruction">LD BC,$2614</td>
+<td class="comment-1" rowspan="2">Write 2614 to *<a href="649F.html">EventTimer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f041"></span>F041</td>
+<td class="instruction">LD ($649F),BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f045"></span>F045</td>
+<td class="instruction">LD IX,($6432)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="6432.html">ReferenceEnemies</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartEnemy_Target</td>
+<td class="address-2"><span id="f049"></span>F049</td>
+<td class="instruction">LD A,(IX+$00)</td>
+<td class="comment-1" rowspan="3">Return if the terminator FF is reached.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f04c"></span>F04C</td>
+<td class="instruction">INC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f04d"></span>F04D</td>
+<td class="instruction">RET Z</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f04e"></span>F04E</td>
+<td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F03E.html#f063">Event_StartEnemy_Continue</a> if this enemy is hidden.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f050"></span>F050</td>
+<td class="instruction">JR NZ,<a href="F03E.html#f063">Event_StartEnemy_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f052"></span>F052</td>
+<td class="instruction">LD A,(IX+$08)</td>
+<td class="comment-1" rowspan="2">Negate the horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f055"></span>F055</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f056"></span>F056</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert the subtracted byte.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f058"></span>F058</td>
+<td class="instruction">LD (IX+$08),A</td>
+<td class="comment-1" rowspan="1">Write the new horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f05b"></span>F05B</td>
+<td class="instruction">LD A,(IX+$07)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">IX</span>+07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f05e"></span>F05E</td>
+<td class="instruction">XOR %10000000</td>
+<td class="comment-1" rowspan="1">Toggle bit 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f060"></span>F060</td>
+<td class="instruction">LD (IX+$07),A</td>
+<td class="comment-1" rowspan="1">Write the facing flag back.</td>
+</tr>
+<tr>
+<td class="asm-label">Event_StartEnemy_Continue</td>
+<td class="address-2"><span id="f063"></span>F063</td>
+<td class="instruction">LD DE,$000E</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=000E.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f066"></span>F066</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="f068"></span>F068</td>
+<td class="instruction">JR <a href="F03E.html#f049">Event_StartEnemy_Target</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="F03E.html#f049">Event_StartEnemy_Target</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="F011.html">F011</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#f03e">Map</a></td>
+<td class="next">
+Next: <a href="F06A.html">F06A</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/61502.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

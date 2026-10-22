@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at FB90</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="FB2F.html">FB2F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#fb90">Map</a></td>
+<td class="next">
+Next: <a href="FBD2.html">FBD2</a>
+</td>
+</tr>
+</table>
+<div class="description">FB90: Update Actor</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="F45D.html">JumpTable_UpdateActor</a>.
+</div>
+<div class="paragraph">
+Stamps the actor mask onto the display file.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Actor data</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor</td>
+<td class="address-2"><span id="fb90"></span>FB90</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 00 to the mask at <a href="FB90.html#fbc4">FBC5</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb91"></span>FB91</td>
+<td class="instruction">LD ($FBC5),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="fb94"></span>
+<div class="comments">
+<div class="paragraph">
+This entry point is used by the routine at <a href="FB2F.html">Draw_Actor</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Target</td>
+<td class="address-2"><span id="fb94"></span>FB94</td>
+<td class="instruction">LD A,$21</td>
+<td class="comment-1" rowspan="13">Convert the actor column and row into a pixel address.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb96"></span>FB96</td>
+<td class="instruction">SUB (IX+$00)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb99"></span>FB99</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb9a"></span>FB9A</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb9b"></span>FB9B</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb9c"></span>FB9C</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fb9d"></span>FB9D</td>
+<td class="instruction">LD A,(IX+$01)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fba0"></span>FBA0</td>
+<td class="instruction">SUB $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fba2"></span>FBA2</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fba3"></span>FBA3</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fba4"></span>FBA4</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fba5"></span>FBA5</td>
+<td class="instruction">ADD A,(IX+$03)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fba8"></span>FBA8</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fba9"></span>FBA9</td>
+<td class="instruction">LD E,$04</td>
+<td class="comment-1" rowspan="1"><span class="register">E</span>=04.</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Continue</td>
+<td class="address-2"><span id="fbab"></span>FBAB</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="5">Jump to <a href="FB90.html#fbcb">Update_Actor_Branch</a> if this pixel row is off-screen.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbac"></span>FBAC</td>
+<td class="instruction">PUSH DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbad"></span>FBAD</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbae"></span>FBAE</td>
+<td class="instruction">CP $B0</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbb0"></span>FBB0</td>
+<td class="instruction">JR NC,<a href="FB90.html#fbcb">Update_Actor_Branch</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbb2"></span>FBB2</td>
+<td class="instruction">CALL $22AA</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/22AA.html">PIXEL_ADD</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbb5"></span>FBB5</td>
+<td class="instruction">LD B,(IX+$04)</td>
+<td class="comment-1" rowspan="5">Increase the copy width when the fine-X is not 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbb8"></span>FBB8</td>
+<td class="instruction">LD A,(IX+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbbb"></span>FBBB</td>
+<td class="instruction">CP $07</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbbd"></span>FBBD</td>
+<td class="instruction">JR Z,<a href="FB90.html#fbc0">Update_Actor_Skip</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbbf"></span>FBBF</td>
+<td class="instruction">INC B</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Skip</td>
+<td class="address-2"><span id="fbc0"></span>FBC0</td>
+<td class="instruction">LD DE,$6440</td>
+<td class="comment-1" rowspan="1"><span class="register">DE</span>=<a href="6440.html">Actor_MaskBuffer</a>.</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Target2</td>
+<td class="address-2"><span id="fbc3"></span>FBC3</td>
+<td class="instruction">LD A,(DE)</td>
+<td class="comment-1" rowspan="1"><span class="register">A</span>=*<span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Mask</td>
+<td class="address-1"><span id="fbc4"></span>FBC4</td>
+<td class="instruction">AND $FF</td>
+<td class="comment-1" rowspan="1">Merge the mask (self-modified AND).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbc6"></span>FBC6</td>
+<td class="instruction">LD (HL),A</td>
+<td class="comment-1" rowspan="4">Write the byte and loop back to <a href="FB90.html#fbc3">Update_Actor_Target2</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbc7"></span>FBC7</td>
+<td class="instruction">INC HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbc8"></span>FBC8</td>
+<td class="instruction">INC DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbc9"></span>FBC9</td>
+<td class="instruction">DJNZ <a href="FB90.html#fbc3">Update_Actor_Target2</a></td>
+</tr>
+<tr>
+<td class="asm-label">Update_Actor_Branch</td>
+<td class="address-2"><span id="fbcb"></span>FBCB</td>
+<td class="instruction">POP DE</td>
+<td class="comment-1" rowspan="6">Move up one pixel row and loop back to <a href="FB90.html#fbab">Update_Actor_Continue</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbcc"></span>FBCC</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbcd"></span>FBCD</td>
+<td class="instruction">DEC B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbce"></span>FBCE</td>
+<td class="instruction">DEC E</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbcf"></span>FBCF</td>
+<td class="instruction">JR NZ,<a href="FB90.html#fbab">Update_Actor_Continue</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="fbd1"></span>FBD1</td>
+<td class="instruction">RET</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="FB2F.html">FB2F</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#fb90">Map</a></td>
+<td class="next">
+Next: <a href="FBD2.html">FBD2</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/64400.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

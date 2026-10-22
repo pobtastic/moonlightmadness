@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 61620</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61584.html">61584</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61620">Map</a></td>
+<td class="next">
+Next: <a href="61632.html">61632</a>
+</td>
+</tr>
+</table>
+<div class="description">61620: Hide Fourth Header</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="60889.html">Handler_Events</a>.
+</div>
+<div class="paragraph">
+Event 40: hide the fourth header item.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Event_HideHeaderFourth</td>
+<td class="address-2"><span id="61620"></span>61620</td>
+<td class="instruction">LD IX,(25630)</td>
+<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25630.html">Pointer_RoomHeader</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61624"></span>61624</td>
+<td class="instruction">LD DE,18</td>
+<td class="comment-1" rowspan="2"><span class="register">IX</span>+=0018.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61627"></span>61627</td>
+<td class="instruction">ADD IX,DE</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="61629"></span>61629</td>
+<td class="instruction">JP <a href="61584.html">Hide_HeaderItem</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="61584.html">Hide_HeaderItem</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="61584.html">61584</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#61620">Map</a></td>
+<td class="next">
+Next: <a href="61632.html">61632</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/F0B4.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>
