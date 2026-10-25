@@ -1,3 +1,5 @@
+; Copyright 2026 Paul Maddern (paul@arcadegeek.co.uk)
+
 ;
 ; SkoolKit ref file for Moonlight Madness
 ;
@@ -14,7 +16,7 @@ GameDir=moonlightmadness
 [Game]
 Game=Moonlight Madness
 Logo=#SCR$02,$09,$11,$0A,$04,$4000,$5800(/images/logo)
-Copyright=&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.
+Copyright=&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.
 Repository=https://github.com/pobtastic/moonlightmadness/
 LinkInternalOperands=1
 AddressAnchor={address#IF({base}==16)(:04x)}

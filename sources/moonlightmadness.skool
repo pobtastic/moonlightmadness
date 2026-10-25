@@ -4,6 +4,8 @@
 @expand=#DEF(#POKE()(anchor,text) #LINK(Pokes#$anchor)($text))
 @expand=#DEF(#ANIMATE(delay,count=$50)(name=$a)#FRAMES#(($name-1,$delay;#FOR$02,$count||x|$name-x|;||))($name-animation))
 @expand=#DEF(#INK(id)#LET(bright=$id&$40)#LET(flash=$id&$80)#LET(ink=$id&$07)#IF({ink}>=$00)(#MAP({ink})(UNKNOWN,0:BLACK,1:BLUE,2:RED,3:MAGENTA,4:GREEN,5:CYAN,6:YELLOW,7:WHITE))#IF({bright}>$00)( (BRIGHT))#IF({flash}>$00)( (FLASH: ON)))
+@expand=#DEF(#SPRITE(id,attr=$47,base=$9070)(fname)#UDG($base+$08*($id-$01),attr=$attr,scale=$04)($fname))
+@expand=#DEF(#GLYPH(id,attr=$47,base=$7C70)(fname)#UDG($base+$08*$id,attr=$attr,scale=$04)($fname))
 @expand=#IF({asm})(#DEF(#BOOTY(addr)(link=Booty)$link))
 @expand=#IF({asm}==0)(#DEF1(#BOOTY(addr)#HTML(<a href="/booty/#IF({{mode[base]}}==16)(,dec/)asm/#IF({{mode[base]}}==16)(#EVAL({addr},16,4),#EVAL({addr})).html">Booty</a>)))
 @set-handle-unsupported-macros=1
@@ -546,7 +548,7 @@ g$6424 DEFW $0000
 
 ; Reference: Inventory Items
 ;
-; Two-byte #N$FF-terminated records. See #R$DBC9.
+; Two-byte #N$FF-terminated key records. See #R$DBC9.
 @label=ReferenceInventoryItems
 g$6426 DEFW $0000
 
@@ -635,7 +637,7 @@ g$644B DEFW $0000
 
 ; Special Actor
 ;
-; Used by the room-#N$07 bats and the room-#N$16 special.
+; Used by the room-#N$07 balls and the room-#N$16 special.
 @label=SpecialActor
 g$644D DEFB $00,$00,$00,$00,$00,$00,$00,$00
  $6455 DEFB $00,$00,$00,$00,$00,$00
@@ -699,8 +701,8 @@ g$647C DEFB $00
 
 ; Game Complete Flag
 ;
-; Set to #N$FF by #R$D7FF when all four collection slots hold
-; #N$09.
+; Set to #N$FF by #R$D7FF when the combination is complete
+; (every #R$64C1 digit is #N$09).
 @label=GameCompleteFlag
 g$647D DEFB $00
 
@@ -765,8 +767,10 @@ g$649F DEFB $00
 @label=PendingEvent
 g$64A0 DEFB $00
 
-; Collected Count
-@label=CollectedCount
+; Collected Keys
+;
+; Number of keys collected. #R$DA15 highlights this slot.
+@label=CollectedKeys
 g$64A1 DEFB $00
 
 ; Current Room
@@ -787,13 +791,19 @@ g$64A3 DEFB $00
 g$64A4 DEFB $00             ; Column
 @label=Player_Row
  $64A5 DEFB $00             ; Row
- $64A6 DEFB $00,$00,$00,$00
+@label=Player_FineX
+ $64A6 DEFB $00             ; Fine-X
+@label=Player_FineY
+ $64A7 DEFB $00             ; Fine-Y
+ $64A8 DEFB $00,$00
 @label=Player_SpriteFrame
  $64AA DEFB $00             ; Sprite frame
 @label=Player_Facing
  $64AB DEFB $00             ; Facing / state
-@label=Player_StoredState
- $64AC DEFB $00,$00
+@label=Player_HorizontalDelta
+ $64AC DEFB $00             ; Horizontal delta
+@label=Player_VerticalDelta
+ $64AD DEFB $00             ; Vertical delta
  $64AE DEFB $00,$00,$00,$00
 ; View the equivalent code in #BOOTY$F231.
 
@@ -815,8 +825,8 @@ u$64B5 DEFB $00,$00,$00,$00,$00,$00,$00,$00
 
 ; Collection Slots
 ;
-; Four digits shown on room #N$00. #N$09 in every slot sets
-; #R$647D.
+; Four combination digits shown on room #N$00. #N$09 in
+; every slot is the completed combination and sets #R$647D.
 @label=CollectionSlots
 g$64C1 DEFB $00
 @label=CollectionSlot_Two
@@ -5297,7 +5307,7 @@ c$D5AC DI            ; Disable interrupts.
  $D5CF LD A,R        ; {Keep bit 7 of the refresh register set.
  $D5D1 SET 7,A       ;
  $D5D3 LD R,A        ; }
-; This entry point is used by the routines at #R$D765, #R$DC62 and #R$DE19.
+; This entry point is used by the routines at #R$D765, #R$DD37 and #R$DE19.
 ; .
 ; Reset the introduction / demo state.
 @label=Reset_Introduction
@@ -5340,7 +5350,7 @@ c$D5AC DI            ; Disable interrupts.
  $D625 LD ($5C36),HL ; }
 @label=Draw_Menu
 *$D628 CALL $E3B3    ; Call #R$E3B3.
-; This entry point is used by the routine at #R$D877.
+; This entry point is used by the routine at #R$D889.
 ; .
 ; Print the introduction menu.
 @label=Print_Menu
@@ -5504,7 +5514,8 @@ c$D730 LD HL,$03E8   ; {Write #N$03E8 to *#R$E82A.
 
 ; Change Room
 ;
-; Used by the routines at #R$D765, #R$DC62 and #R$DE19.
+; Used by the routines at #R$D765, #R$DCF5, #R$DD03, #R$DD22, #R$DD37 and
+; #R$DE19.
 ; .
 ; Loads the room in #REGa.
 @label=Change_Room
@@ -5558,12 +5569,13 @@ c$D765 LD A,($646F)  ; {Jump to #R$D7A2 if *#R$646F is zero.
  $D78D DEC A         ;
  $D78E JP Z,$D5D5    ; }
  $D791 LD ($D888),A  ; Write the decreased count back to *#R$D888.
- $D794 CALL $F433    ; Call #R$F433.
- $D797 AND %00001111 ; Keep only bits 0-3.
- $D799 LD E,A        ; Copy that room nibble into #REGe.
- $D79A CALL $F433    ; Call #R$F433.
- $D79D AND %00000111 ; Keep only bits 0-2.
- $D79F ADD A,E       ; Add the two nibbles together.
+; Pick a random room between #N$00-#N$16 and jump to #R$D738.
+ $D794 CALL $F433    ; {Generate a random number between #N$00-#N$0F in #REGe.
+ $D797 AND %00001111 ;
+ $D799 LD E,A        ; }
+ $D79A CALL $F433    ; {Generate a random number between #N$00-#N$07 and add it
+ $D79D AND %00000111 ; to #REGe.
+ $D79F ADD A,E       ; }
  $D7A0 JR $D738      ; Jump to #R$D738.
 
 ; Dispatch Handlers
@@ -5612,6 +5624,7 @@ c$D7D2 LD IX,($6424) ; #REGix=*#R$6424.
  $D7F0 LD A,(IX+$02) ; {Set bit 7 of the record.
  $D7F3 SET 7,A       ; }
  $D7F5 JP $E9FF      ; Jump to #R$E9FF.
+; Advance to the next collectible record.
 @label=Handler_Collectibles_Next
 *$D7F8 LD DE,$0003   ; {#REGix+=#N($0003,$04,$04).
  $D7FB ADD IX,DE     ; }
@@ -5621,82 +5634,115 @@ c$D7D2 LD IX,($6424) ; #REGix=*#R$6424.
 ;
 ; Used by the routine at #R$D7A2.
 ; .
-; Marks the game complete when all four #R$64C1 slots are
-; #N$09, then ticks #R$6489.
+; Marks the game complete when the combination is #N$09 in
+; every #R$64C1 slot, then ticks #R$6489.
 @label=Handler_Housekeeping
-c$D7FF LD HL,$64C1   ; {Test the four collection slots for #N$09.
- $D802 LD B,$04      ;
+c$D7FF LD HL,$64C1   ; {Test whether the combination is complete (every digit
+ $D802 LD B,$04      ; is #N$09).
  $D804 LD A,$09      ; }
+; Compare each combination digit with #N$09.
 @label=Handler_Housekeeping_SlotLoop
-*$D806 CP (HL)       ; {Jump to #R$D818 if any slot differs.
- $D807 JR NZ,$D818   ;
- $D809 INC HL        ; }
- $D80A DJNZ $D806    ; {Jump to #R$D818 unless *#R$64A1 is #N$10.
- $D80C LD A,($64A1)  ;
- $D80F CP $10        ; }
- $D811 JR NZ,$D818   ; {Write #N$FF to *#R$647D.
- $D813 LD A,$FF      ;
+*$D806 CP (HL)       ; {Jump to #R$D818 if this slot differs.
+ $D807 JR NZ,$D818   ; }
+ $D809 INC HL        ; Advance to the next slot.
+ $D80A DJNZ $D806    ; Decrease the slot count and loop back to #R$D806.
+ $D80C LD A,($64A1)  ; {Jump to #R$D818 unless *#R$64A1 is #N$10.
+ $D80F CP $10        ;
+ $D811 JR NZ,$D818   ; }
+ $D813 LD A,$FF      ; {Write #N$FF to *#R$647D.
  $D815 LD ($647D),A  ; }
+; Tick the action timer.
 @label=Handler_Housekeeping_Timer
 *$D818 LD A,($6489)  ; {Return if *#R$6489 is zero.
- $D81B OR A          ; }
- $D81C RET Z         ; {Decrease *#R$6489 by one.
- $D81D DEC A         ;
+ $D81B OR A          ;
+ $D81C RET Z         ; }
+ $D81D DEC A         ; {Decrease *#R$6489 by one.
  $D81E LD ($6489),A  ; }
- $D821 OR A          ; Return if the timer is still running.
- $D822 RET NZ        ; {Jump to #R$DF22.
- $D823 JP $DF22      ; }
-; This entry point is used by the routines at #R$D5AC and #R$D765.
+ $D821 OR A          ; {Return if the timer is still running.
+ $D822 RET NZ        ; }
+ $D823 JP $DF22      ; Jump to #R$DF22.
+
+; Read Kempston
+;
+; Used by the routines at #R$D5AC, #R$D765, #R$D82D and #R$D864.
 ; .
-; Read the Kempston port twice and return if the two reads
-; match (the port is stable).
+; Reads the Kempston port twice and returns with the Z
+; flag set if the two reads match.
+;
+; O:A Kempston port value
+; O:F Z flag set if the two reads match
 @label=Read_Kempston
-*$D826 IN A,($1F)    ; {Read from the Kempston joystick port twice.
+c$D826 IN A,($1F)    ; {Read from the Kempston joystick port twice.
  $D828 LD E,A        ;
  $D829 IN A,($1F)    ; }
- $D82B CP E          ; Return if the two reads differ.
+ $D82B CP E          ; Set the Z flag if the two reads match.
  $D82C RET           ; Return.
-; This entry point is used by the routine at #R$E1CC.
+
+; Handler: Kempston
+;
+; Used by the routine at #R$E1CC.
 ; .
-; Demo / Kempston movement for the player.
+; Reads Kempston and walks, climbs, jumps or fires.
+;
+; .
+;
+; Fetch the left/right Kempston masks.
 @label=Controls_Kempston
-*$D82D LD HL,($6486) ; #REGhl=*#R$6486.
+c$D82D LD HL,($6486) ; Fetch the left mask into #REGl and the right mask into
+                     ; #REGh.
+; Walk left.
  $D830 CALL $D826    ; {Call #R$DF44 if left matches the stored mask.
  $D833 JR NZ,$D839   ;
  $D835 CP L          ;
  $D836 CALL Z,$DF44  ; }
+; Walk right.
 @label=Controls_Kempston_Right
 *$D839 CALL $D826    ; {Call #R$DF69 if right matches the stored mask.
  $D83C JR NZ,$D842   ;
  $D83E CP H          ;
  $D83F CALL Z,$DF69  ; }
+; Climb up, or start a jump.
 @label=Controls_Kempston_Up
 *$D842 CALL $D826    ; {Call #R$E06A if up (bit 3) is pressed.
  $D845 JR NZ,$D84C   ;
  $D847 CP $08        ;
  $D849 CALL Z,$E06A  ; }
+; Climb down.
 @label=Controls_Kempston_Down
 *$D84C CALL $D826    ; {Call #R$E013 if down (bit 2) is pressed.
  $D84F JR NZ,$D856   ;
  $D851 CP $04        ;
  $D853 CALL Z,$E013  ; }
+; Fire / use the furniture.
 @label=Controls_Kempston_Action
-*$D856 CALL $D826    ; Jump to #R$E28C if the port is unstable.
- $D859 JP NZ,$E28C   ; {Call #R$DF8E if fire (bit 4) is pressed.
- $D85C CP $10        ; }
- $D85E CALL Z,$DF8E  ; {Jump to #R$E28C.
- $D861 JP $E28C      ; }
-; This entry point is used by the routine at #R$DE19.
+*$D856 CALL $D826    ; {Call #R$DF8E if fire (bit 4) is pressed.
+ $D859 JP NZ,$E28C   ;
+ $D85C CP $10        ;
+ $D85E CALL Z,$DF8E  ; }
+; Resolve the player movement.
+ $D861 JP $E28C      ; Jump to #R$E28C.
+
+; Handler: Kempston Climb
+;
+; Used by the routine at #R$DE19.
 ; .
-; Kempston climbing controls.
+; Reads Kempston while climbing and jumps to the matching
+; climb routine.
+;
+; .
+;
+; Bail out if the port is unstable.
 @label=Controls_Kempston_Climb
-*$D864 CALL $D826    ; Jump to #R$E358 if the port is unstable.
- $D867 JP NZ,$E358   ; {Jump to #R$E145 if up is pressed.
- $D86A CP $08        ; }
- $D86C JP Z,$E145    ; {Jump to #R$E130 if down is pressed.
- $D86F CP $04        ; }
- $D871 JP Z,$E130    ; Jump to #R$E358.
- $D874 JP $E358      ;
+c$D864 CALL $D826    ; Call #R$D826.
+ $D867 JP NZ,$E358   ; Jump to #R$E358 if the port is unstable.
+; Climb up.
+ $D86A CP $08        ; {Jump to #R$E145 if up (bit 3) is pressed.
+ $D86C JP Z,$E145    ; }
+; Climb down.
+ $D86F CP $04        ; {Jump to #R$E130 if down (bit 2) is pressed.
+ $D871 JP Z,$E130    ; }
+; Hold the current climb if neither direction is pressed.
+ $D874 JP $E358      ; Jump to #R$E358.
 
 ; Handler: Room Pause
 ;
@@ -5713,18 +5759,33 @@ c$D877 LD DE,($64A2) ; {#REGbc=*#R$E82A+(*#R$64A2)*#N$02.
  $D883 INC HL        ;
  $D884 LD B,(HL)     ; }
  $D885 JP $F430      ; Jump to #R$F430.
+
+; Demo Room Count
+;
+; Remaining demo rooms before returning to the menu.
 @label=Demo_RoomCount
- $D888 DEFB $00      ; Remaining demo rooms before returning to the menu.
-; This entry point is used by the routine at #R$D5AC.
+g$D888 DEFB $00
+
+; Select Control Method
+;
+; Used by the routine at #R$D5AC.
 ; .
-; Select keyboard (A=#N$00) or Kempston (A=#N$FF).
+; Selects keyboard (#N$00) or Kempston (#N$FF) and returns
+; to the menu.
+;
+; .
+;
+; Select keyboard.
 @label=Select_Keyboard
-*$D889 XOR A         ; {#REGa=#N$00.
+c$D889 XOR A         ; {Set keyboard (#N$00) and jump to #R$D88E.
  $D88A JR $D88E      ; }
 ; This entry point is used by the routine at #R$D5AC.
+; .
+; Select Kempston.
 @label=Select_Kempston
-*$D88C XOR A         ; {#REGa=#N$FF.
+*$D88C XOR A         ; {Set Kempston (#N$FF).
  $D88D DEC A         ; }
+; Write the control method and return to the menu.
 @label=Select_ControlMethod
 *$D88E LD ($647E),A  ; Write #REGa to *#R$647E.
  $D891 JP $D62B      ; Jump to #R$D62B.
@@ -5734,8 +5795,13 @@ c$D877 LD DE,($64A2) ; {#REGbc=*#R$E82A+(*#R$64A2)*#N$02.
 ; Used by the routine at #R$D7A2.
 ; .
 ; Animates the #N$13-byte records at *#R$642A.
+;
+; .
+;
+; Walk the moving-object list.
 @label=Handler_MovingObjects
-c$D894 LD IX,($642A)  ; #REGix=*#R$642A.
+c$D894 LD IX,($642A)  ; Point #REGix at the moving-object list.
+; Skip inactive objects and expired timers.
 @label=Handler_MovingObjects_Loop
 *$D898 LD A,(IX+$00)  ; {Jump to #R$D8FC if the terminator #N$FF is reached.
  $D89B CP $FF         ; }
@@ -5747,6 +5813,7 @@ c$D894 LD IX,($642A)  ; #REGix=*#R$642A.
  $D8A7 JR NZ,$D8AF    ; }
  $D8A9 SET 7,(IX+$00) ; {Jump to #R$D8F5.
  $D8AD JR $D8F5       ; }
+; Set the font and clip window.
 @label=Handler_MovingObjects_Draw
 *$D8AF LD HL,$7C70    ; {Use #R$7C70, or #R$9070 when the stored font ID
  $D8B2 CP (IX+$12)    ; differs.
@@ -5758,6 +5825,7 @@ c$D894 LD IX,($642A)  ; #REGix=*#R$642A.
  $D8C0 LD B,(IX+$11)  ;
  $D8C3 LD ($6419),BC  ; }
  $D8C7 CALL $F448     ; Call #R$F448.
+; Test the moving edge against the stored limit.
  $D8CA LD A,(IX+$09)  ; {Compare the moving edge against the stored limit.
  $D8CD OR A           ;
  $D8CE LD A,B         ;
@@ -5773,15 +5841,18 @@ c$D894 LD IX,($642A)  ; #REGix=*#R$642A.
  $D8E0 LD (IX+$0F),A  ;
  $D8E3 LD (IX+$0E),B  ; }
  $D8E6 CALL $F448     ; Call #R$F448.
+; Store, move, draw and erase the object.
 @label=Handler_MovingObjects_Update
 *$D8E9 CALL $F424     ; Call #R$F424.
  $D8EC CALL $F442     ; Call #R$F442.
  $D8EF CALL $F44B     ; Call #R$F44B.
  $D8F2 CALL $F44E     ; Call #R$F44E.
+; Advance to the next moving object.
 @label=Handler_MovingObjects_Next
 *$D8F5 LD DE,$0013    ; {#REGix+=#N($0013,$04,$04).
  $D8F8 ADD IX,DE      ; }
  $D8FA JR $D898       ; Jump to #R$D898.
+; Restore the default clip window.
 @label=Handler_MovingObjects_Done
 *$D8FC LD BC,$0218    ; {Write #N$0218 to *#R$6419.
  $D8FF LD ($6419),BC  ; }
@@ -5792,58 +5863,74 @@ c$D894 LD IX,($642A)  ; #REGix=*#R$642A.
 ; Used by the routine at #R$D7A2.
 ; .
 ; Special actor for room #N$16.
+;
+; .
+;
+; Return unless this is room #N$16.
 @label=Handler_RoomSixteen
 c$D904 LD A,($64A2)    ; {Return if *#R$64A2 is not #N$16.
- $D907 CP $16          ; }
- $D909 RET NZ          ; {#REGix=#R$644D.
- $D90A LD IX,$644D     ; }
+ $D907 CP $16          ;
+ $D909 RET NZ          ; }
+; Point at the special actor and set the clip window.
+ $D90A LD IX,$644D     ; Point #REGix at #R$644D.
  $D90E LD BC,$051D     ; {Write #N$051D to *#R$641B.
  $D911 LD ($641B),BC   ; }
- $D915 BIT 7,(IX+$00)  ; Jump to #R$D994 if the actor is already active.
- $D919 JR Z,$D994      ; {Jump to #R$D92B if the player row is #N$07, #N$14 or
- $D91B LD A,($64A5)    ; #N$11.
- $D91E CP $07          ;
- $D920 JR Z,$D92B      ; }
- $D922 CP $14          ; {Jump to #R$D9AE.
+; Draw the actor if it is already active.
+ $D915 BIT 7,(IX+$00)  ; {Jump to #R$D994 if the actor is already active.
+ $D919 JR Z,$D994      ; }
+; Only spawn when the player is on a trigger row.
+ $D91B LD A,($64A5)    ; {Jump to #R$D92B if the player row is #N($07), #N$14 or
+ $D91E CP $07          ; #N($11), otherwise jump to #R$D9AE.
+ $D920 JR Z,$D92B      ;
+ $D922 CP $14          ;
  $D924 JR Z,$D92B      ;
  $D926 CP $11          ;
  $D928 JP NZ,$D9AE     ; }
+; Only spawn when the player is in the trigger columns.
 @label=Handler_RoomSixteen_Column
 *$D92B LD A,($64A4)    ; {Jump to #R$D9AE unless the player column is
  $D92E CP $17          ; #N$0F-#N$16.
- $D930 JP NC,$D9AE     ; }
- $D933 CP $0F          ; {Return to #R$D9AE unless #R$F433 is less than #N$DC.
- $D935 JR C,$D9AE      ;
- $D937 CALL $F433      ; }
- $D93A CP $DC          ; {Call #R$F457 with sprite #N$E6.
- $D93C JR NC,$D9AE     ;
- $D93E LD A,$E6        ;
- $D940 LD L,$47        ; }
- $D942 LD DE,$0101     ; {Jump to #R$D95D if #R$F433 is #N$80 or higher.
+ $D930 JP NC,$D9AE     ;
+ $D933 CP $0F          ;
+ $D935 JR C,$D9AE      ; }
+; Spawn on a random roll.
+ $D937 CALL $F433      ; {Jump to #R$D9AE if the random number is #N$DC or
+ $D93A CP $DC          ; higher.
+ $D93C JR NC,$D9AE     ; }
+; #UDGTABLE
+; { #SPRITE$E6,$47(sprite-e6) }
+; UDGTABLE#
+ $D93E LD A,$E6        ; {Spawn the actor with sprite #N($E6), colour #INK$47
+ $D940 LD L,$47        ; and size #N$01 by #N$01.
+ $D942 LD DE,$0101     ;
  $D945 CALL $F457      ; }
- $D948 CALL $F433      ; {Write the left-moving frame into the actor.
- $D94B CP $80          ;
- $D94D JR NC,$D95D     ;
- $D94F LD (IX+$00),$1E ;
- $D953 LD (IX+$0A),$1E ; }
- $D957 LD (IX+$08),$FB ; {Jump to #R$D969.
- $D95B JR $D969        ; }
+; Choose left or right movement.
+ $D948 CALL $F433      ; {Jump to #R$D95D if the random number is #N$80 or
+ $D94B CP $80          ; higher.
+ $D94D JR NC,$D95D     ; }
+ $D94F LD (IX+$00),$1E ; {Start at column #N$1E and write #N$FB as the
+ $D953 LD (IX+$0A),$1E ; horizontal delta.
+ $D957 LD (IX+$08),$FB ; }
+ $D95B JR $D969        ; Jump to #R$D969.
+; Start on the left and move right.
 @label=Handler_RoomSixteen_Right
-*$D95D LD (IX+$00),$05 ; {Write the right-moving frame into the actor.
- $D961 LD (IX+$0A),$05 ;
+*$D95D LD (IX+$00),$05 ; {Start at column #N$05 and write #N$05 as the
+ $D961 LD (IX+$0A),$05 ; horizontal delta.
  $D965 LD (IX+$08),$05 ; }
-; Play a short beep.
+; Sound the actor appearing.
+; #HTML(#AUDIO0(noise.wav)(#INCLUDE(Noise)))
 @label=Handler_RoomSixteen_Sound
-*$D969 LD B,$FF        ; #REGb=#N$FF.
- $D96B LD D,$32        ; #REGd=#N$32.
- $D96D CALL $E4B1      ; Call #R$E4B1.
+*$D969 LD B,$FF        ; {Call #R$E4B1 with mask #N$FF and #N$32 iterations.
+ $D96B LD D,$32        ;
+ $D96D CALL $E4B1      ; }
+; Choose the actor row.
  $D970 LD A,($64A5)    ; {Jump to #R$D982 if the player row is #N$14.
  $D973 CP $14          ;
  $D975 JR Z,$D982      ; }
  $D977 CP $11          ; {Jump to #R$D98C if the player row is #N$11.
  $D979 JR Z,$D98C      ; }
- $D97B CALL $F433      ; {Jump to #R$D98C if #R$F433 is #N$80 or higher.
- $D97E CP $80          ;
+ $D97B CALL $F433      ; {Jump to #R$D98C if the random number is #N$80 or
+ $D97E CP $80          ; higher.
  $D980 JR NC,$D98C     ; }
 @label=Handler_RoomSixteen_RowLow
 *$D982 LD (IX+$01),$13 ; {Write row #N$13 into the actor.
@@ -5852,16 +5939,19 @@ c$D904 LD A,($64A2)    ; {Return if *#R$64A2 is not #N$16.
 @label=Handler_RoomSixteen_RowHigh
 *$D98C LD (IX+$01),$10 ; {Write row #N$10 into the actor.
  $D990 LD (IX+$0B),$10 ; }
+; Store, move, draw and erase the actor.
 @label=Handler_RoomSixteen_Draw
 *$D994 CALL $F448      ; Call #R$F448.
  $D997 CALL $F424      ; Call #R$F424.
  $D99A CALL $F442      ; Call #R$F442.
  $D99D CALL $F44B      ; Call #R$F44B.
  $D9A0 CALL $F44E      ; Call #R$F44E.
+; Hide the actor once it has left the room.
  $D9A3 LD A,(IX+$00)   ; {Deactivate the actor once column #N$23 is passed.
  $D9A6 CP $23          ;
  $D9A8 JR C,$D9AE      ;
  $D9AA LD (IX+$00),$80 ; }
+; Restore the clip window.
 @label=Handler_RoomSixteen_Done
 *$D9AE LD BC,$0121     ; {Write #N$0121 to *#R$641B.
  $D9B1 LD ($641B),BC   ; }
@@ -5871,347 +5961,472 @@ c$D904 LD A,($64A2)    ; {Return if *#R$64A2 is not #N$16.
 ;
 ; Used by the routine at #R$D7A2.
 ; .
-; Two bats in room #N$07, stored at #R$644D.
+; Two balls in room #N$07, stored at #R$644D.
+;
+; .
+;
+; Return unless this is room #N$07.
 @label=Handler_RoomSeven
-c$D9B6 LD IX,$644D     ; #REGix=#R$644D.
+c$D9B6 LD IX,$644D     ; Point #REGix at #R$644D.
  $D9BA LD A,($64A2)    ; {Return if *#R$64A2 is not #N$07.
- $D9BD CP $07          ; }
- $D9BF RET NZ          ; {Write #N$0E to *#R$641A.
- $D9C0 LD A,$0E        ;
+ $D9BD CP $07          ;
+ $D9BF RET NZ          ; }
+; Clip drawing to a maximum row of #N$0E.
+ $D9C0 LD A,$0E        ; {Write #N$0E to *#R$641A.
  $D9C2 LD ($641A),A    ; }
- $D9C5 LD B,$02        ; #REGb=#N$02.
+ $D9C5 LD B,$02        ; Set the ball count to #N$02.
+; Process each ball.
 @label=Handler_RoomSeven_Loop
-*$D9C7 PUSH BC         ; Stash the bat count on the stack.
- $D9C8 LD A,(IX+$00)   ; {Jump to #R$D9EB if this bat is already active.
+*$D9C7 PUSH BC         ; Stash the ball count on the stack.
+; Draw the ball if it is already active.
+ $D9C8 LD A,(IX+$00)   ; {Jump to #R$D9EB if this ball is already active.
  $D9CB BIT 7,A         ;
  $D9CD JR Z,$D9EB      ; }
- $D9CF CALL $F433      ; {Jump to #R$DA07 if #R$F433 is #N$BE or higher.
- $D9D2 CP $BE          ;
+; Spawn on a random roll.
+ $D9CF CALL $F433      ; {Jump to #R$DA07 if the random number is #N$BE or
+ $D9D2 CP $BE          ; higher.
  $D9D4 JR NC,$DA07     ; }
- $D9D6 AND $0F         ; {Spawn the bat with sprite #N$E7.
- $D9D8 ADD A,$09       ;
- $D9DA LD C,A          ;
+; #UDGTABLE
+; { #SPRITE$E7,$46(sprite-e7) }
+; UDGTABLE#
+ $D9D6 AND %00001111   ; Keep only bits 0-3.
+ $D9D8 ADD A,$09       ; {Spawn the ball at row #N$19, column #N$09-#N$18,
+ $D9DA LD C,A          ; sprite #N($E7), colour #INK$46 and size #N$01 by #N$01.
  $D9DB LD B,$19        ;
  $D9DD LD DE,$0101     ;
  $D9E0 LD L,$46        ;
  $D9E2 LD A,$E7        ;
  $D9E4 CALL $F457      ; }
- $D9E7 LD (IX+$09),$FA ; Write #N$FA to the bat timer.
+ $D9E7 LD (IX+$09),$FA ; Write #N$FA as the vertical delta.
+; Hide the ball once it has reached row #N$0C.
 @label=Handler_RoomSeven_Move
-*$D9EB LD A,(IX+$01)   ; {Deactivate the bat if it has reached row #N$0C.
+*$D9EB LD A,(IX+$01)   ; {Deactivate the ball if it has reached row #N$0C.
  $D9EE CP $0C          ;
  $D9F0 JR NZ,$D9F8     ;
  $D9F2 SET 7,(IX+$00)  ; }
  $D9F6 JR $DA07        ; Jump to #R$DA07.
+; Store, move, draw and erase the ball.
 @label=Handler_RoomSeven_Draw
 *$D9F8 CALL $F448      ; Call #R$F448.
  $D9FB CALL $F424      ; Call #R$F424.
  $D9FE CALL $F442      ; Call #R$F442.
  $DA01 CALL $F44B      ; Call #R$F44B.
  $DA04 CALL $F44E      ; Call #R$F44E.
+; Step to the next ball.
 @label=Handler_RoomSeven_Next
-*$DA07 POP BC          ; Restore the bat count from the stack.
+*$DA07 POP BC          ; Restore the ball count from the stack.
  $DA08 LD DE,$000E     ; {#REGix+=#N($000E,$04,$04).
  $DA0B ADD IX,DE       ; }
- $DA0D DJNZ $D9C7      ; Decrease the bat count and loop back to #R$D9C7.
+ $DA0D DJNZ $D9C7      ; Decrease the ball count and loop back to #R$D9C7.
+; Reset the clip maximum row.
  $DA0F LD A,$02        ; {Write #N$02 to *#R$641A.
  $DA11 LD ($641A),A    ; }
  $DA14 RET             ; Return.
-; This entry point is used by the routines at #R$D738 and #R$DBC9.
+
+; Print Key Bar
+;
+; Used by the routines at #R$D738 and #R$DBC9.
 ; .
-; Draw the collected-item icons along the top of the screen.
-@label=Print_CollectionBar
-*$DA15 LD HL,$7C70     ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
- $DA18 LD ($5C36),HL   ; }
- $DA1B LD BC,$0119     ; {Call #R$F42D at column #N$01, row #N$19.
- $DA1E CALL $F42D      ; }
- $DA21 LD B,$00        ; {Write #INK$07 to *#SKOOLKID$5C8F(ATTR_T).
- $DA23 LD A,$07        ;
- $DA25 LD ($5C8F),A    ; }
-@label=Print_CollectionBar_Loop
-*$DA28 LD A,($64A1)    ; {Highlight the current icon in #INK$38.
- $DA2B CP B            ;
- $DA2C JR NZ,$DA33     ;
- $DA2E LD A,$38        ;
- $DA30 LD ($5C8F),A    ; }
-@label=Print_CollectionBar_Glyph
-*$DA33 LD A,$E4        ; {Print glyph #N$E4.
- $DA35 CALL $F436      ; }
- $DA38 INC B           ; {Jump to #R$DA28 until #N$10 icons are printed.
- $DA39 LD A,B          ;
- $DA3A CP $10          ; }
- $DA3C JR NZ,$DA28     ; {Return.
- $DA3E RET             ; }
+; Draws the #N$10 collected-key icons along the bottom
+; of the screen.
+;
+; .
+;
+; Set the icon font and print position.
+@label=Print_KeyBar
+c$DA15 LD HL,$7C70   ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
+ $DA18 LD ($5C36),HL ; }
+ $DA1B LD BC,$0119   ; {Call #R$F42D at column #N$19, row #N$01 (the
+ $DA1E CALL $F42D    ; bottom line).}
+; Start the key loop.
+ $DA21 LD B,$00      ; Start at key #N$00.
+ $DA23 LD A,$07      ; {Write #INK$07 to *#SKOOLKID$5C8F(ATTR_T).
+ $DA25 LD ($5C8F),A  ; }
+; Skip the highlight unless this key matches *#R$64A1.
+@label=Print_KeyBar_Loop
+*$DA28 LD A,($64A1)  ; {Jump to #R$DA33 unless this key matches *#R$64A1.
+ $DA2B CP B          ;
+ $DA2C JR NZ,$DA33   ; }
+; Highlight this key.
+ $DA2E LD A,$38      ; {Write #INK$38 to *#SKOOLKID$5C8F(ATTR_T).
+ $DA30 LD ($5C8F),A  ; }
+; #UDGTABLE
+; { #GLYPH$E4,$07(glyph-e4) }
+; UDGTABLE#
+@label=Print_KeyBar_Glyph
+*$DA33 LD A,$E4      ; {Print key glyph #N$E4.
+ $DA35 CALL $F436    ; }
+ $DA38 INC B         ; {Jump to #R$DA28 until #N$10 keys are printed.
+ $DA39 LD A,B        ;
+ $DA3A CP $10        ;
+ $DA3C JR NZ,$DA28   ; }
+ $DA3E RET           ; Return.
 
 ; Handler: Carried Object
 ;
 ; Used by the routine at #R$D7A2.
 ; .
 ; Draws #R$648B and drops it when it lines up with a slot.
+;
+; .
+;
+; Point at the carried object.
 @label=Handler_CarriedObject
 c$DA3F LD HL,$7C70    ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
  $DA42 LD ($5C36),HL  ; }
- $DA45 LD IX,$648B    ; #REGix=#R$648B.
- $DA49 LD A,(IX+$00)  ; {Return if bit 7 is set (nothing carried).
- $DA4C BIT 7,A        ; }
- $DA4E RET NZ         ; {Stash the current clip window on the stack.
- $DA4F LD HL,($6419)  ;
+ $DA45 LD IX,$648B    ; Point #REGix at #R$648B.
+; Return unless something is being carried.
+ $DA49 LD A,(IX+$00)  ; {Return if nothing is being carried.
+ $DA4C BIT 7,A        ;
+ $DA4E RET NZ         ; }
+; Stash the clip window and use the object's.
+ $DA4F LD HL,($6419)  ; {Stash the current clip window on the stack.
  $DA52 PUSH HL        ;
- $DA53 LD HL,($641B)  ; }
- $DA56 PUSH HL        ; {Use the object's own clip window.
- $DA57 LD L,(IX+$10)  ;
+ $DA53 LD HL,($641B)  ;
+ $DA56 PUSH HL        ; }
+ $DA57 LD L,(IX+$10)  ; {Write the object's clip window to *#R$6419.
  $DA5A LD H,(IX+$11)  ;
  $DA5D LD ($6419),HL  ;
  $DA60 LD L,(IX+$12)  ;
- $DA63 LD H,(IX+$13)  ; }
- $DA66 LD ($641B),HL  ; Call #R$F448.
- $DA69 CALL $F448     ; Call #R$F424.
- $DA6C CALL $F424     ; Call #R$F44B.
- $DA6F CALL $F44B     ; {Restore the clip window from the stack.
- $DA72 POP HL         ;
- $DA73 LD ($641B),HL  ; }
- $DA76 POP HL         ; {Return unless the object is at the drop cell.
- $DA77 LD ($6419),HL  ;
- $DA7A LD A,$07       ;
+ $DA63 LD H,(IX+$13)  ;
+ $DA66 LD ($641B),HL  ; }
+; Store and draw the object.
+ $DA69 CALL $F448     ; Call #R$F448.
+ $DA6C CALL $F424     ; Call #R$F424.
+ $DA6F CALL $F44B     ; Call #R$F44B.
+; Restore the clip window.
+ $DA72 POP HL         ; {Restore the clip window from the stack.
+ $DA73 LD ($641B),HL  ;
+ $DA76 POP HL         ;
+ $DA77 LD ($6419),HL  ; }
+; Only drop when the object is cell-aligned.
+ $DA7A LD A,$07       ; {Return unless both fine offsets are #N$07.
  $DA7C CP (IX+$03)    ;
  $DA7F RET NZ         ;
  $DA80 CP (IX+$02)    ;
  $DA83 RET NZ         ; }
- $DA84 LD A,(IX+$00)  ; {Return unless it matches the stored drop mark.
- $DA87 CP (IX+$0E)    ;
+; Only drop on the stored drop cell.
+ $DA84 LD A,(IX+$00)  ; {Return unless the column and row match the
+ $DA87 CP (IX+$0E)    ; stored drop cell.
  $DA8A RET NZ         ;
  $DA8B LD A,(IX+$01)  ;
  $DA8E CP (IX+$0F)    ;
  $DA91 RET NZ         ; }
- $DA92 LD C,(IX+$00)  ; {Call #R$F445 to stamp the object into the room.
- $DA95 LD B,(IX+$01)  ;
+; Stamp the object into the room.
+ $DA92 LD C,(IX+$00)  ; {Call #R$F445 with the object's cell, size and
+ $DA95 LD B,(IX+$01)  ; sprite ID.
  $DA98 LD E,(IX+$04)  ;
  $DA9B LD D,(IX+$05)  ;
- $DA9E LD A,(IX+$06)  ; }
- $DAA1 CALL $F445     ; {Set bit 7 (no longer carried).
- $DAA4 SET 7,(IX+$00) ; }
- $DAA8 LD A,(IX+$06)  ; {Return unless the object ID is #N$D9.
+ $DA9E LD A,(IX+$06)  ;
+ $DAA1 CALL $F445     ; }
+; Mark it as no longer carried.
+ $DAA4 SET 7,(IX+$00) ; Set bit 7 of *#REGix+#N$00.
+; Only the #R$F125 object writes a window into the room.
+; #UDGTABLE { #GLYPH$D9(object-d9) } UDGTABLE#
+ $DAA8 LD A,(IX+$06)  ; {Skip the window write unless this is #N$D9.
  $DAAB CP $D9         ;
  $DAAD RET NZ         ; }
  $DAAE LD C,(IX+$00)  ; {Convert the drop cell into a #R$5DCE offset.
  $DAB1 LD B,(IX+$01)  ;
  $DAB4 RES 7,C        ;
  $DAB6 CALL $F43C     ; }
- $DAB9 LD DE,$5DCE    ; {Write #N$0E/#N$0F into that tile.
+; Write a 2-wide window into those tiles.
+; #UDGTABLE
+; { #GLYPH$0E,$47,$8470(window-0e) | #GLYPH$0F,$47,$8470(window-0f) }
+; UDGTABLE#
+ $DAB9 LD DE,$5DCE    ; {Write #N$0E and #N$0F into those tiles.
  $DABC ADD HL,DE      ;
  $DABD LD (HL),$0E    ;
  $DABF INC HL         ;
  $DAC0 LD (HL),$0F    ; }
  $DAC2 RET            ; Return.
+
+; Pendulum Position
+;
+; Pendulum sprite ID for rooms #N$0A and #N$0B. #N$FF
+; resets at #R$DAC5.
 @label=Pendulum_Position
- $DAC3 DEFB $00       ;
+g$DAC3 DEFB $00
+
+; Pendulum Delta
+;
+; Added to #R$DAC3 each step. Negated at each end-stop.
 @label=Pendulum_Delta
- $DAC4 DEFB $00       ;
-; This entry point is used by the routine at #R$DB05.
+g$DAC4 DEFB $00
+
+; Animate Pendulum
+;
+; Used by the routine at #R$DB05.
 ; .
-; Animate the pendulum in rooms #N$09-#N$0B.
+; Steps the pendulum sprite IDs for rooms #N$0A and
+; #N$0B.
+;
+; .
+;
+; Reset after a room change.
 @label=Handler_Pendulum
-*$DAC5 LD A,($DAC3)   ; {Reset the pendulum to #N$D8 / #N$02 if it holds #N$FF.
- $DAC8 CP $FF         ;
- $DACA JR NZ,$DAD6    ;
- $DACC LD A,$D8       ;
- $DACE LD ($DAC3),A   ;
- $DAD1 LD A,$02       ;
- $DAD3 LD ($DAC4),A   ; }
+c$DAC5 LD A,($DAC3)  ; {Jump to #R$DAD6 unless the position is #N$FF.
+ $DAC8 CP $FF        ;
+ $DACA JR NZ,$DAD6   ; }
+ $DACC LD A,$D8      ; {Write #N$D8 to *#R$DAC3 and #N$02 to *#R$DAC4.
+ $DACE LD ($DAC3),A  ;
+ $DAD1 LD A,$02      ;
+ $DAD3 LD ($DAC4),A  ; }
+; Advance the position.
 @label=Handler_Pendulum_Step
-*$DAD6 LD A,($DAC3)   ; {Add the delta to the position.
- $DAD9 LD C,A         ;
- $DADA LD A,($DAC4)   ;
- $DADD ADD A,C        ;
- $DADE LD ($DAC3),A   ; }
- $DAE1 LD C,A         ; {Jump to #R$DAFA at either end-stop.
- $DAE2 LD B,A         ;
- $DAE3 CP $D6         ;
- $DAE5 JR Z,$DAFA     ;
- $DAE7 CP $E2         ; }
- $DAE9 JR Z,$DAFA     ; {Jump to #R$DB24 if the room is #N$0A.
- $DAEB LD A,($64A2)   ; }
- $DAEE CP $0A         ; {Mirror the position for the other rooms.
- $DAF0 JR Z,$DB24     ;
- $DAF2 LD A,$DC       ;
- $DAF4 SUB B          ;
- $DAF5 ADD A,$DC      ; }
- $DAF7 LD B,A         ; {Jump to #R$DB24.
- $DAF8 JR $DB24       ; }
+*$DAD6 LD A,($DAC3)  ; {Add *#R$DAC4 to *#R$DAC3.
+ $DAD9 LD C,A        ;
+ $DADA LD A,($DAC4)  ;
+ $DADD ADD A,C       ;
+ $DADE LD ($DAC3),A  ; }
+; Keep the new position as both sprite IDs.
+ $DAE1 LD C,A        ; {Copy the position into #REGb and #REGc.
+ $DAE2 LD B,A        ; }
+; Bounce at the end-stops.
+ $DAE3 CP $D6        ; {Jump to #R$DAFA if the position is #N$D6 or
+ $DAE5 JR Z,$DAFA    ; #N$E2.
+ $DAE7 CP $E2        ;
+ $DAE9 JR Z,$DAFA    ; }
+; Use the same frame for both sprites in room #N$0A.
+ $DAEB LD A,($64A2)  ; {Jump to #R$DB24 if the room is #N$0A.
+ $DAEE CP $0A        ;
+ $DAF0 JR Z,$DB24    ; }
+; Mirror the first sprite in room #N$0B.
+ $DAF2 LD A,$DC      ; {Mirror the first sprite around #N$DC.
+ $DAF4 SUB B         ;
+ $DAF5 ADD A,$DC     ;
+ $DAF7 LD B,A        ; }
+ $DAF8 JR $DB24      ; Jump to #R$DB24.
+; Negate the delta and apply it again.
 @label=Handler_Pendulum_Bounce
-*$DAFA LD A,($DAC4)   ; {Negate *#R$DAC4.
- $DAFD DEC A          ;
- $DAFE XOR $FF        ;
- $DB00 LD ($DAC4),A   ; }
- $DB03 JR $DAD6       ; Jump to #R$DAD6.
+*$DAFA LD A,($DAC4)  ; {Decrease the delta by one.
+ $DAFD DEC A         ; }
+ $DAFE XOR %11111111 ; Invert every bit.
+ $DB00 LD ($DAC4),A  ; Write the negated delta to *#R$DAC4.
+ $DB03 JR $DAD6      ; Jump to #R$DAD6.
 
 ; Handler: Pendulum
 ;
 ; Used by the routine at #R$D7A2.
 ; .
-; Rooms #N$09-#N$0B share a swinging pendulum.
+; Room #N$09 chooses a frame from the player column.
+; Rooms #N$0A and #N$0B animate at #R$DAC5.
+;
+; .
+;
+; Return unless this is a pendulum room.
 @label=Handler_PendulumRooms
-c$DB05 LD A,($64A2)   ; {Return if *#R$64A2 is #N$0C or higher.
- $DB08 CP $0C         ; }
- $DB0A RET NC         ; {Return if *#R$64A2 is lower than #N$09.
- $DB0B CP $09         ;
- $DB0D RET C          ; }
- $DB0E CP $0A         ; {Jump to #R$DAC5 if the room is #N$0A or #N$0B.
- $DB10 JR NC,$DAC5    ; }
- $DB12 LD A,($64A4)   ; {#REGa=*#R$64A4-#N$04.
- $DB15 SUB $04        ; }
- $DB17 LD B,$E0       ; #REGb=#N$E0.
-@label=Handler_PendulumRooms_NextRoom
-*$DB19 SUB $06        ; {Subtract #N$06 until #REGa is negative, decreasing
- $DB1B BIT 7,A        ; #REGb by two each pass.
- $DB1D JR NZ,$DB23    ;
- $DB1F DEC B          ;
- $DB20 DEC B          ;
- $DB21 JR $DB19       ; }
+c$DB05 LD A,($64A2)  ; {Return if the room is #N$0C or higher.
+ $DB08 CP $0C        ;
+ $DB0A RET NC        ; }
+ $DB0B CP $09        ; {Return if the room is lower than #N$09.
+ $DB0D RET C         ; }
+; Animate rooms #N$0A and #N$0B.
+ $DB0E CP $0A        ; {Jump to #R$DAC5 if the room is #N$0A or #N$0B.
+ $DB10 JR NC,$DAC5   ; }
+; Choose a frame from the player column.
+ $DB12 LD A,($64A4)  ; {Start from the player column minus #N$04.
+ $DB15 SUB $04       ; }
+; #UDGTABLE
+; { #GLYPH$E0,$47,$9070(pendulum-e0)
+; | #GLYPH$E1,$47,$9070(pendulum-e1) }
+; UDGTABLE#
+ $DB17 LD B,$E0      ; Set the sprite ID to #N$E0.
+; Step the sprite ID back for each six columns.
+@label=Handler_Pendulum_FrameLoop
+*$DB19 SUB $06       ; {Subtract #N$06 until #REGa is negative, decreasing
+ $DB1B BIT 7,A       ; the sprite ID by two each pass.
+ $DB1D JR NZ,$DB23   ;
+ $DB1F DEC B         ;
+ $DB20 DEC B         ;
+ $DB21 JR $DB19      ; }
+; Use the same frame for both sprites.
 @label=Handler_Pendulum_DrawPair
-*$DB23 LD C,B         ; #REGc=#REGb.
-; This entry point is used by the routine at #R$DA3F.
+*$DB23 LD C,B        ; Copy the sprite ID into #REGc.
+; Continue on to #R$DB24.
+
+; Draw Pendulum
+;
+; Used by the routine at #R$DAC5.
 ; .
-; Draw one pendulum pair.
+; Draws the two pendulum sprites.
+;
+; B First sprite ID
+; C Second sprite ID
+;
+; Draw the pair.
 @label=Draw_Pendulum
-*$DB24 LD A,$47       ; {Write #INK$47 to *#SKOOLKID$5C8F(ATTR_T).
- $DB26 LD ($5C8F),A   ; }
- $DB29 PUSH BC        ; {Draw the first bob at #N$12,#N$14.
- $DB2A LD A,B         ;
- $DB2B LD BC,$1214    ;
- $DB2E LD DE,$0102    ;
- $DB31 CALL $F445     ;
- $DB34 POP BC         ; }
- $DB35 LD A,C         ; {Jump to #R$F445 for the second bob at #N$12,#N$10.
- $DB36 LD BC,$1210    ;
- $DB39 LD DE,$0102    ;
- $DB3C JP $F445       ; }
-; This entry point is used by the routines at #R$E1CC and #R$E3DE.
+c$DB24 LD A,$47      ; {Write #INK$47 to *#SKOOLKID$5C8F(ATTR_T).
+ $DB26 LD ($5C8F),A  ; }
+ $DB29 PUSH BC       ; {Draw the first sprite at row #N$12, column #N$14.
+ $DB2A LD A,B        ;
+ $DB2B LD BC,$1214   ;
+ $DB2E LD DE,$0102   ;
+ $DB31 CALL $F445    ;
+ $DB34 POP BC        ; }
+ $DB35 LD A,C        ; {Jump to #R$F445 for the second sprite at row
+ $DB36 LD BC,$1210   ; #N$12, column #N$10.
+ $DB39 LD DE,$0102   ;
+ $DB3C JP $F445      ; }
+
+; Test Actor Collision
+;
+; Used by the routines at #R$E1CC and #R$E3DE.
 ; .
-; Test the player against one actor pointed to by #REGiy.
+; Reverses the actor at a destination. On a player hit,
+; copies the actor deltas onto #R$64A4.
+;
+; IY Actor record
+;
+; Reverse at the destination when cell-aligned.
 @label=Test_ActorCollision
-*$DB3F LD A,(IY+$08)  ; {Jump to #R$DB57 if the actor is moving vertically.
+c$DB3F LD A,(IY+$08)  ; {Jump to #R$DB57 if the horizontal delta is set.
  $DB42 OR A           ;
  $DB43 JR NZ,$DB57    ; }
- $DB45 LD A,$07       ; {Call #R$E43B if the actor lines up horizontally.
+; Test the destination row.
+ $DB45 LD A,$07       ; {Jump to #R$DB67 unless the fine-Y is #N$07.
  $DB47 CP (IY+$03)    ;
- $DB4A JR NZ,$DB67    ;
- $DB4C LD A,(IY+$01)  ;
- $DB4F CP (IY+$06)    ; }
- $DB52 CALL Z,$E43B   ; {Jump to #R$DB67.
- $DB55 JR $DB67       ; }
-@label=Test_ActorCollision_Vertical
-*$DB57 LD A,$07       ; {Call #R$E43B if the actor lines up vertically.
+ $DB4A JR NZ,$DB67    ; }
+ $DB4C LD A,(IY+$01)  ; {Call #R$E43B if the row matches the destination.
+ $DB4F CP (IY+$06)    ;
+ $DB52 CALL Z,$E43B   ; }
+ $DB55 JR $DB67       ; Jump to #R$DB67.
+; Test the destination column.
+@label=Test_ActorCollision_Column
+*$DB57 LD A,$07       ; {Jump to #R$DB67 unless the fine-X is #N$07.
  $DB59 CP (IY+$02)    ;
- $DB5C JR NZ,$DB67    ;
- $DB5E LD A,(IY+$00)  ;
- $DB61 CP (IY+$05)    ;
+ $DB5C JR NZ,$DB67    ; }
+ $DB5E LD A,(IY+$00)  ; {Call #R$E43B if the column matches the
+ $DB61 CP (IY+$05)    ; destination.
  $DB64 CALL Z,$E43B   ; }
+; Skip the hit test while jumping or falling.
 @label=Test_ActorCollision_Bounds
 *$DB67 LD A,($6410)   ; {Return if *#R$6410 is set.
  $DB6A OR A           ;
  $DB6B RET NZ         ; }
+; Require a close vertical overlap.
  $DB6C LD A,(IY+$01)  ; {Convert the actor row and fine-Y into a pixel row.
  $DB6F ADD A,A        ;
  $DB70 ADD A,A        ;
  $DB71 ADD A,A        ;
  $DB72 ADD A,(IY+$03) ;
  $DB75 LD C,A         ; }
- $DB76 LD A,($64A7)   ; {Convert the player row the same way and return
- $DB79 LD B,A         ; unless the difference is less than #N$04.
+; Convert the player row the same way.
+ $DB76 LD A,($64A7)   ; {Convert the player row and fine-Y into a pixel row.
+ $DB79 LD B,A         ;
  $DB7A LD A,($64A5)   ;
  $DB7D SUB $03        ;
  $DB7F ADD A,A        ;
  $DB80 ADD A,A        ;
  $DB81 ADD A,A        ;
- $DB82 ADD A,B        ;
- $DB83 SUB C          ;
+ $DB82 ADD A,B        ; }
+ $DB83 SUB C          ; {Return unless the difference is less than #N$04.
  $DB84 CP $04         ;
  $DB86 RET NC         ; }
- $DB87 LD D,A         ; {Convert the actor column and fine-X into a pixel
- $DB88 LD A,(IY+$00)  ; column.
- $DB8B DEC A          ;
+; Keep the gap and convert the actor column.
+ $DB87 LD D,A         ; Keep the vertical gap in #REGd.
+ $DB88 LD A,(IY+$00)  ; {Convert the actor column and fine-X into a pixel
+ $DB8B DEC A          ; column.
  $DB8C DEC A          ;
  $DB8D ADD A,A        ;
  $DB8E ADD A,A        ;
  $DB8F ADD A,A        ;
  $DB90 ADD A,(IY+$02) ;
  $DB93 LD B,A         ; }
- $DB94 LD A,($6449)   ; {Compare the player footprint at #R$6448 and return
- $DB97 LD C,A         ; unless the ranges overlap.
- $DB98 LD A,(IY+$04)  ;
- $DB9B ADD A,A        ;
+; Build the overlap limit.
+ $DB94 LD A,($6449)   ; {Copy the footprint offset into #REGc.
+ $DB97 LD C,A         ; }
+ $DB98 LD A,(IY+$04)  ; {Write the actor pixel width plus that offset into
+ $DB9B ADD A,A        ; *#R$DB3F(#N$DBAD).
  $DB9C ADD A,A        ;
  $DB9D ADD A,A        ;
  $DB9E ADD A,C        ;
  $DB9F DEC A          ;
- $DBA0 LD ($DBAD),A   ;
- $DBA3 SUB C          ;
+ $DBA0 LD ($DBAD),A   ; }
+; Test the player width against the actor column.
+ $DBA3 SUB C          ; {Restore the actor pixel width in #REGc.
  $DBA4 LD C,A         ;
- $DBA5 INC C          ;
- $DBA6 LD A,($6448)   ;
+ $DBA5 INC C          ; }
+ $DBA6 LD A,($6448)   ; {Return unless the ranges overlap.
  $DBA9 ADD A,C        ;
  $DBAA SUB B          ;
  $DBAB DEC A          ;
  $DBAC CP $C8         ;
  $DBAE RET NC         ; }
- $DBAF LD A,(IY+$08)  ; {Store the actor state in *#R$64AC.
+; Copy the actor movement onto the player.
+ $DBAF LD A,(IY+$08)  ; {Write the horizontal delta to *#R$64AC.
  $DBB2 LD ($64AC),A   ; }
- $DBB5 LD A,$03       ; #REGa=#N$03.
- $DBB7 LD ($6434),A   ; {Write the actor pointer to *#R$644B.
- $DBBA LD A,(IY+$09)  ;
+ $DBB5 LD A,$03       ; {Write #N$03 to *#R$6434.
+ $DBB7 LD ($6434),A   ; }
+; Adjust the vertical delta by the gap.
+ $DBBA LD A,(IY+$09)  ; {Jump to #R$DBC1 if the vertical delta is zero.
  $DBBD OR A           ;
- $DBBE JR Z,$DBC1     ;
- $DBC0 SUB D          ; }
-@label=Handler_PendulumRooms_StoreActor
-*$DBC1 LD ($64AD),A   ; {Write the actor pointer to *#R$644B.
- $DBC4 LD ($644B),IY  ;
- $DBC8 RET            ; }
+ $DBBE JR Z,$DBC1     ; }
+ $DBC0 SUB D          ; Subtract the vertical gap.
+; Store the vertical delta and the actor.
+@label=Test_ActorCollision_Store
+*$DBC1 LD ($64AD),A   ; Write the vertical delta to *#R$64AD.
+ $DBC4 LD ($644B),IY  ; Write the actor pointer to *#R$644B.
+ $DBC8 RET            ; Return.
 
 ; Handler: Inventory Items
 ;
 ; Used by the routine at #R$D7A2.
 ; .
-; Picks up a two-byte record when the player stands on it.
+; Picks up the first matching 2-wide key and redraws
+; #R$DA15.
+;
+; .
+;
+; Point at the inventory list.
 @label=Handler_InventoryItems
 c$DBC9 LD HL,$7C70   ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
  $DBCC LD ($5C36),HL ; }
- $DBCF LD IX,($6426) ; #REGix=*#R$6426.
- $DBD3 LD A,($64A4)  ; #REGc=*#R$64A4.
- $DBD6 LD C,A        ; Copy the player column into #REGc.
+ $DBCF LD IX,($6426) ; Point #REGix at *#R$6426.
+ $DBD3 LD A,($64A4)  ; {Copy the player column into #REGc.
+ $DBD6 LD C,A        ; }
+; Walk each key record.
 @label=Handler_InventoryItems_Loop
 *$DBD7 LD A,(IX+$00) ; {Return if the terminator #N$FF is reached.
- $DBDA CP $FF        ; }
- $DBDC RET Z         ; {Jump to #R$DC20 if this item is already taken.
- $DBDD BIT 7,A       ; }
- $DBDF JR NZ,$DC20   ; {Jump to #R$DC20 unless the player column matches.
- $DBE1 CP C          ;
- $DBE2 JR Z,$DBE8    ;
- $DBE4 INC A         ;
- $DBE5 CP C          ; }
- $DBE6 JR NZ,$DC20   ;
+ $DBDA CP $FF        ;
+ $DBDC RET Z         ; }
+ $DBDD BIT 7,A       ; {Jump to #R$DC20 if this item is already taken.
+ $DBDF JR NZ,$DC20   ; }
+; Accept this column or the next.
+ $DBE1 CP C          ; {Jump to #R$DBE8 if the column matches.
+ $DBE2 JR Z,$DBE8    ; }
+ $DBE4 INC A         ; {Jump to #R$DC20 unless the next column matches.
+ $DBE5 CP C          ;
+ $DBE6 JR NZ,$DC20   ; }
+; Require the same row.
 @label=Handler_InventoryItems_Row
 *$DBE8 LD A,($64A5)  ; {Jump to #R$DC20 unless the player row matches.
- $DBEB CP (IX+$01)   ; }
- $DBEE JR NZ,$DC20   ; {Clear a #N$02 by #N$02 hole in the tile buffer.
- $DBF0 LD C,(IX+$00) ;
+ $DBEB CP (IX+$01)   ;
+ $DBEE JR NZ,$DC20   ; }
+; Punch a hole in the room tiles.
+ $DBF0 LD C,(IX+$00) ; {Convert the item cell into a #R$5DCE offset.
  $DBF3 LD B,(IX+$01) ;
  $DBF6 CALL $F43C    ; }
- $DBF9 LD DE,$5DCE   ; {Mark the record collected.
+ $DBF9 LD DE,$5DCE   ; {Fill a #N$02 by #N$02 hole with #N$C8.
  $DBFC ADD HL,DE     ;
  $DBFD LD BC,$0202   ;
- $DC00 LD A,$C8      ; }
- $DC02 CALL $F454    ; {Increase *#R$64A1 by one.
- $DC05 LD A,(IX+$00) ;
- $DC08 OR $80        ; }
- $DC0A LD (IX+$00),A ; {Call #R$E501 (pickup sound).
- $DC0D LD A,($64A1)  ;
+ $DC00 LD A,$C8      ;
+ $DC02 CALL $F454    ; }
+; Hide the record.
+ $DC05 LD A,(IX+$00) ; Reload the item column.
+ $DC08 OR %10000000  ; Set bit 7.
+ $DC0A LD (IX+$00),A ; Write the hidden record.
+; Count the key.
+ $DC0D LD A,($64A1)  ; {Increase *#R$64A1 by one.
  $DC10 INC A         ;
  $DC11 LD ($64A1),A  ; }
- $DC14 LD BC,$0032   ; {Jump to #R$DA15.
- $DC17 LD DE,$0019   ;
- $DC1A CALL $E501    ;
- $DC1D JP $DA15      ; }
+; Play the pickup sound and redraw the key bar.
+; #HTML(#AUDIO0(pickup.wav)(#INCLUDE(Pickup)))
+ $DC14 LD BC,$0032   ; {Call #R$E501 with delay #N$32 and #N$19
+ $DC17 LD DE,$0019   ; iterations.
+ $DC1A CALL $E501    ; }
+ $DC1D JP $DA15      ; Jump to #R$DA15.
+; Step to the next record.
 @label=Handler_InventoryItems_Next
 *$DC20 INC IX        ; {Increase #REGix by two.
  $DC22 INC IX        ; }
@@ -6222,41 +6437,64 @@ c$DBC9 LD HL,$7C70   ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
 ; Used by the routines at #R$D7A2 and #R$DE19.
 ; .
 ; Counts *#R$649F down and fires *#R$64A0 through #R$E9FF.
+;
+; .
+;
+; Return unless a timer is running.
 @label=Handler_EventTimer
 c$DC26 LD A,($649F)  ; {Return if *#R$649F is zero.
- $DC29 OR A          ; }
- $DC2A RET Z         ; {Decrease *#R$649F by one.
- $DC2B DEC A         ;
+ $DC29 OR A          ;
+ $DC2A RET Z         ; }
+; Count down and fire when it hits zero.
+ $DC2B DEC A         ; {Decrease *#R$649F by one.
  $DC2C LD ($649F),A  ; }
- $DC2F OR A          ; Return if the timer is still running.
- $DC30 RET NZ        ; {Jump to #R$E9FF with *#R$64A0.
- $DC31 LD A,($64A0)  ;
+ $DC2F OR A          ; {Return if the timer is still running.
+ $DC30 RET NZ        ; }
+ $DC31 LD A,($64A0)  ; {Jump to #R$E9FF with *#R$64A0.
  $DC34 JP $E9FF      ; }
-; This entry point is used by the routines at #R$D894 and #R$DC62.
+
+; Reverse Direction
+;
+; Used by the routines at #R$D894 and #R$DC62.
 ; .
-; Reverse an object's horizontal/vertical direction.
+; Negates both deltas and flips facing when the
+; horizontal delta is non-zero.
+;
+; IX Entity record
+;
+; Negate the vertical delta.
 @label=Reverse_Direction
-*$DC37 LD A,(IX+$09) ; {Negate *#REGix+#N$09 and *#REGix+#N$08.
- $DC3A DEC A         ;
- $DC3B XOR $FF       ;
- $DC3D LD (IX+$09),A ;
- $DC40 LD A,(IX+$08) ; }
- $DC43 DEC A         ; {Return if the vertical delta is now zero.
- $DC44 XOR $FF       ; }
- $DC46 LD (IX+$08),A ; {Toggle bit 7 of *#REGix+#N$07.
- $DC49 RET Z         ;
- $DC4A LD A,$80      ; }
- $DC4C XOR (IX+$07)  ; {Return.
- $DC4F LD (IX+$07),A ;
- $DC52 RET           ; }
-; This entry point is used by the routine at #R$DC62.
+c$DC37 LD A,(IX+$09) ; {Fetch the vertical delta and decrease it by one.
+ $DC3A DEC A         ; }
+ $DC3B XOR %11111111 ; Invert every bit.
+ $DC3D LD (IX+$09),A ; Write the negated vertical delta.
+; Negate the horizontal delta.
+ $DC40 LD A,(IX+$08) ; {Fetch the horizontal delta and decrease it by one.
+ $DC43 DEC A         ; }
+ $DC44 XOR %11111111 ; Invert every bit.
+ $DC46 LD (IX+$08),A ; Write the negated horizontal delta.
+ $DC49 RET Z         ; Return if it is now zero.
+; Flip the facing bit.
+ $DC4A LD A,$80      ; {Toggle bit 7 of *#REGix+#N$07.
+ $DC4C XOR (IX+$07)  ;
+ $DC4F LD (IX+$07),A ; }
+ $DC52 RET           ; Return.
+
+; Pause Leaving Room
+;
+; Used by the routine at #R$DC62.
 ; .
-; Pause when leaving a non-zero room.
+; Delays when leaving a non-zero room.
+;
+; .
+;
+; Skip the pause in room #N$00.
 @label=Pause_LeavingRoom
-*$DC53 PUSH AF       ; Stash #REGaf on the stack.
- $DC54 LD A,($64A2)  ; {Jump to #R$DC60 if *#R$64A2 is zero.
+c$DC53 PUSH AF       ; Stash #REGaf on the stack.
+ $DC54 LD A,($64A2)  ; {Jump to #R$DC60 if the room is zero.
  $DC57 OR A          ;
  $DC58 JR Z,$DC60    ; }
+; Wait, then restore.
  $DC5A LD BC,$03E8   ; {Call #R$F430 with a pause of #N$03E8.
  $DC5D CALL $F430    ; }
 @label=Pause_LeavingRoom_Done
@@ -6268,47 +6506,55 @@ c$DC26 LD A,($649F)  ; {Return if *#R$649F is zero.
 ; Used by the routine at #R$D7A2.
 ; .
 ; Animates the #N$0E-byte records at *#R$6432.
+;
+; .
+;
+; Point at the enemy list.
 @label=Handler_Enemies
 c$DC62 LD HL,$9070    ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
  $DC65 LD ($5C36),HL  ; }
- $DC68 LD IX,($6432)  ; #REGix=*#R$6432.
+ $DC68 LD IX,($6432)  ; Point #REGix at *#R$6432.
+; Walk each enemy record.
 @label=Handler_Enemies_Loop
 *$DC6C LD A,(IX+$00)  ; {Return if the terminator #N$FF is reached.
  $DC6F INC A          ;
  $DC70 RET Z          ; }
- $DC71 BIT 7,A        ; {Call #R$DC53 if this enemy is inactive.
- $DC73 CALL NZ,$DC53  ; }
- $DC76 JP NZ,$DCED    ; Jump to #R$DCED if it is inactive.
+ $DC71 BIT 7,A        ; {Pause and skip this enemy if it is inactive.
+ $DC73 CALL NZ,$DC53  ;
+ $DC76 JP NZ,$DCED    ; }
+; Skip the walk-frame wrap for high sprite IDs.
  $DC79 LD A,(IX+$06)  ; {Jump to #R$DC92 if the sprite ID is #N$E2 or higher.
  $DC7C CP $E2         ;
  $DC7E JR NC,$DC92    ; }
-; Wrap the walking-enemy frame.
- $DC80 ADD A,$06      ; {#REGc=the sprite ID+#N$06.
- $DC82 LD C,A         ; }
- $DC83 LD B,$24       ; #REGb=#N$24.
-@label=Handler_Enemies_BelowPlayer
+; Advance the walking frame.
+ $DC80 ADD A,$06      ; {Add #N$06 to the sprite ID and set the wrap to #N$24.
+ $DC82 LD C,A         ;
+ $DC83 LD B,$24       ; }
+@label=Handler_Enemies_WrapLoop
 *$DC85 SUB B          ; {Subtract #N$24 until the frame is in range.
  $DC86 JR Z,$DC8C     ;
  $DC88 JR C,$DC8F     ;
  $DC8A JR $DC85       ; }
-@label=Handler_Enemies_AbovePlayer
-*$DC8C LD A,C         ; {#REGc=#REGc-#N$24.
+; Wrap an exact multiple of #N$24.
+@label=Handler_Enemies_WrapExact
+*$DC8C LD A,C         ; {Subtract one more span of #N$24.
  $DC8D SUB B          ;
  $DC8E LD C,A         ; }
 @label=Handler_Enemies_CommitFrame
 *$DC8F LD (IX+$06),C  ; Write the wrapped sprite ID.
+; Only probe when the enemy is cell-aligned.
 @label=Handler_Enemies_Probe
 *$DC92 LD A,(IX+$02)  ; {Jump to #R$DCDE unless the fine-X is #N$07.
  $DC95 CP $07         ;
  $DC97 JR NZ,$DCDE    ; }
  $DC99 BIT 7,(IX+$07) ; {Jump to #R$DCBC if the enemy is facing left.
  $DC9D JR Z,$DCBC     ; }
- $DC9F LD C,(IX+$00)  ; {Probe the cell above and to the right.
+; Probe the cell ahead on the right.
+ $DC9F LD C,(IX+$00)  ; {Set the probe to the top row, one column right.
  $DCA2 LD A,(IX+$01)  ;
  $DCA5 SUB (IX+$05)   ;
  $DCA8 LD B,A         ;
  $DCA9 INC C          ; }
-; Reverse if that #R$5DCE tile is solid.
  $DCAA CALL $F42D     ; Call #R$F42D.
  $DCAD LD HL,($6412)  ; {Point #REGhl at that #R$5DCE tile.
  $DCB0 LD DE,$5DCE    ;
@@ -6317,15 +6563,15 @@ c$DC62 LD HL,$9070    ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
  $DCB5 CP $10         ;
  $DCB7 CALL NC,$DC37  ; }
  $DCBA JR $DCDE       ; Jump to #R$DCDE.
+; Probe ahead on the left.
 @label=Handler_Enemies_ProbeLeft
-*$DCBC LD A,(IX+$01)  ; {Jump to #R$DCDE if the enemy is past column #N$23.
+*$DCBC LD A,(IX+$01)  ; {Set the probe row to the top of the enemy.
  $DCBF SUB (IX+$05)   ;
- $DCC2 LD B,A         ;
- $DCC3 LD A,(IX+$00)  ;
+ $DCC2 LD B,A         ; }
+ $DCC3 LD A,(IX+$00)  ; {Jump to #R$DCDE if the column is #N$23 or higher.
  $DCC6 CP $23         ;
  $DCC8 JR NC,$DCDE    ; }
-; Probe the cell to the left.
- $DCCA SUB (IX+$04)   ; {#REGc=the column minus the width.
+ $DCCA SUB (IX+$04)   ; {Set the probe column to the left of the enemy.
  $DCCD LD C,A         ; }
  $DCCE CALL $F42D     ; Call #R$F42D.
  $DCD1 LD HL,($6412)  ; {Point #REGhl at that #R$5DCE tile.
@@ -6334,131 +6580,206 @@ c$DC62 LD HL,$9070    ; {Write #R$9070 to *#SKOOLKID$5C36(CHARS).
  $DCD8 LD A,(HL)      ; {Call #R$DC37 if the tile is solid.
  $DCD9 CP $10         ;
  $DCDB CALL NC,$DC37  ; }
+; Store, move, draw and erase the enemy.
 @label=Handler_Enemies_Update
 *$DCDE CALL $F448     ; Call #R$F448.
  $DCE1 CALL $F424     ; Call #R$F424.
  $DCE4 CALL $F442     ; Call #R$F442.
  $DCE7 CALL $F44B     ; Call #R$F44B.
  $DCEA CALL $F44E     ; Call #R$F44E.
+; Step to the next record.
 @label=Handler_Enemies_Next
 *$DCED LD DE,$000E    ; {#REGix+=#N($000E,$04,$04).
  $DCF0 ADD IX,DE      ; }
  $DCF2 JP $DC6C       ; Jump to #R$DC6C.
-; This entry point is used by the routine at #R$DD97.
-; .
-; Move to the next room (wrapping from #N$16 to #N$00).
-@label=Cheat_NextRoom
-*$DCF5 POP BC         ; Restore #REGbc from the stack.
- $DCF6 LD A,($64A2)   ; {#REGa=*#R$64A2+1, or #N$00 after room #N$16.
- $DCF9 INC A          ;
- $DCFA CP $17         ;
- $DCFC JP NZ,$D738    ; }
- $DCFF XOR A          ; {Jump to #R$D738.
- $DD00 JP $D738       ; }
-; This entry point is used by the routine at #R$DD97.
-; .
-; Move to the previous room (wrapping from #N$00 to #N$16).
-@label=Cheat_PreviousRoom
-*$DD03 POP BC         ; Restore #REGbc from the stack.
- $DD04 LD A,($64A2)   ; {#REGa=*#R$64A2-1, or #N$16 before room #N$00.
- $DD07 DEC A          ;
- $DD08 CP $FF         ;
- $DD0A JP NZ,$D738    ;
- $DD0D LD A,$16       ; }
- $DD0F JP $D738       ; Jump to #R$D738.
-; Point #REGix at #R$647C and set #REGde to the number of
-; bytes through to #N$7C67.
-@label=Tape_BlockRange
-*$DD12 LD IX,$647C    ; {#REGde=#N$7C67-#R$647C.
- $DD16 LD DE,$647C    ;
- $DD19 LD HL,$7C67    ; }
- $DD1C XOR A          ; {#REGa=#N$FF.
- $DD1D SBC HL,DE      ; }
- $DD1F EX DE,HL       ; {Return.
- $DD20 DEC A          ;
- $DD21 RET            ; }
-; This entry point is used by the routine at #R$DD97.
-; .
-; Save the game to tape.
-@label=Tape_Save
-*$DD22 CALL $DD6C     ; {Write the checksum from #R$DD6C to *#R$6488.
- $DD25 LD ($6488),A   ; }
- $DD28 POP BC         ; Restore #REGbc from the stack.
- $DD29 CALL $DD12     ; Call #R$DD12.
- $DD2C CALL $04C2     ; Call #SKOOLKID$04C2(SA_BYTES).
- $DD2F LD A,($64A2)   ; {Set bit 7 of *#R$64A2.
- $DD32 SET 7,A        ; }
- $DD34 JP $D738       ; Jump to #R$D738.
-; This entry point is used by the routine at #R$DD97.
-; .
-; Load a saved game from tape.
-@label=Tape_Load
-*$DD37 LD HL,$3C00    ; {Write #N$3C00 to *#SKOOLKID$5C36(CHARS).
- $DD3A LD ($5C36),HL  ; }
- $DD3D LD HL,$E7E4    ; {Print the messaging at #R$E7E4.
- $DD40 CALL $F460     ; }
-@label=Tape_Load_Wait
-*$DD43 LD BC,$2710    ; {Call #R$F430 with a pause of #N$2710.
- $DD46 CALL $F430     ; }
- $DD49 CALL $028E     ; Call #SKOOLKID$028E(KEY_SCAN).
- $DD4C LD A,E         ; {Jump to #R$DD43 if no key is pressed.
- $DD4D CP $FF         ;
- $DD4F JR Z,$DD43     ; }
- $DD51 CP $02         ; {Jump to #R$DD64 unless "2" was pressed.
- $DD53 JR NZ,$DD64    ; }
- $DD55 POP BC         ; Restore #REGbc from the stack.
- $DD56 CALL $DD12     ; Call #R$DD12.
- $DD59 SCF            ; {Call #SKOOLKID$0556(LD_BYTES) with carry set.
- $DD5A CALL $0556     ; }
- $DD5D CALL $DD6C     ; {Jump to #R$D5D5 if the checksum does not match.
- $DD60 CP L           ;
- $DD61 JP NZ,$D5D5    ; }
-@label=Tape_Load_Resume
-*$DD64 LD A,($64A2)   ; {Set bit 7 of *#R$64A2.
- $DD67 SET 7,A        ; }
- $DD69 JP $D738       ; Jump to #R$D738.
-; Add every byte from #R$647C through the tape block.
-@label=Tape_Checksum
-*$DD6C CALL $DD12     ; Call #R$DD12.
- $DD6F XOR A          ; {#REGa=#N$00 and clear *#R$6488.
- $DD70 LD HL,($6488)  ;
- $DD73 LD ($6488),A   ;
- $DD76 LD H,A         ; }
-@label=Tape_Checksum_Loop
-*$DD77 ADD A,(IX+$00) ; {Add *(#REGix) into #REGa until #REGde is zero.
- $DD7A LD H,A         ;
- $DD7B INC IX         ;
- $DD7D DEC DE         ;
- $DD7E LD A,E         ;
- $DD7F OR D           ;
- $DD80 LD A,H         ;
- $DD81 JR NZ,$DD77    ; }
- $DD83 RET            ; Return.
-; This entry point is used by the routine at #R$DD97.
-; .
-; Wait for any key.
-@label=Wait_Keypress
-*$DD84 LD BC,$2710    ; {Call #R$F430 with a pause of #N$2710.
- $DD87 CALL $F430     ; }
- $DD8A CALL $028E     ; Call #SKOOLKID$028E(KEY_SCAN).
- $DD8D LD A,E         ; {Jump to #R$DD84 if no key is pressed.
- $DD8E INC A          ;
- $DD8F JR Z,$DD84     ; }
- $DD91 RET            ; Return.
-; This entry point is used by the routine at #R$DD97.
-; .
-; Fire event #N$09 (suicide / restart).
-@label=Cheat_LoseLife
-*$DD92 LD A,$09       ; {Jump to #R$E9FF with event #N$09.
- $DD94 JP $E9FF       ; }
 ; View the equivalent code in #BOOTY$E22D.
+
+; Cheat: Next Room
+;
+; Used by the routine at #R$DD97.
+; .
+; Wraps from room #N$16 back to #N$00.
+;
+; .
+;
+; Drop the stacked return and step the room.
+@label=Cheat_NextRoom
+c$DCF5 POP BC        ; Restore #REGbc from the stack.
+ $DCF6 LD A,($64A2)  ; {Jump to #R$D738 with the next room, unless this
+ $DCF9 INC A         ; was room #N$16.
+ $DCFA CP $17        ;
+ $DCFC JP NZ,$D738   ; }
+ $DCFF XOR A         ; {Jump to #R$D738 with room #N$00.
+ $DD00 JP $D738      ; }
+
+; Cheat: Previous Room
+;
+; Used by the routine at #R$DD97.
+; .
+; Wraps from room #N$00 back to #N$16.
+;
+; .
+;
+; Drop the stacked return and step the room.
+@label=Cheat_PreviousRoom
+c$DD03 POP BC        ; Restore #REGbc from the stack.
+ $DD04 LD A,($64A2)  ; {Jump to #R$D738 with the previous room, unless
+ $DD07 DEC A         ; this was room #N$00.
+ $DD08 CP $FF        ;
+ $DD0A JP NZ,$D738   ; }
+ $DD0D LD A,$16      ; {Jump to #R$D738 with room #N$16.
+ $DD0F JP $D738      ; }
+
+; Prepare Tape Block
+;
+; Used by the routines at #R$DD22, #R$DD37 and #R$DD6C.
+; .
+; Sets #REGix to #R$647C, #REGde to the length
+; and #REGa to #N$FF.
+;
+; O:IX Start of the tape block
+; O:DE Length of the tape block
+; O:A Data block flag (#N$FF)
+;
+; Point at the start and the exclusive end.
+@label=Tape_BlockRange
+c$DD12 LD IX,$647C   ; Point #REGix at #R$647C.
+ $DD16 LD DE,$647C   ; Point #REGde at #R$647C.
+ $DD19 LD HL,$7C67   ; Point #REGhl at #N$7C67.
+; Make the length.
+ $DD1C XOR A         ; Clear #REGa and the carry flag.
+ $DD1D SBC HL,DE     ; Subtract #REGde from #REGhl.
+; Set the data-block flag.
+ $DD1F EX DE,HL      ; Put the length in #REGde.
+ $DD20 DEC A         ; Set #REGa to #N$FF.
+; Return.
+ $DD21 RET           ; Return.
+
+; Save Game
+;
+; Used by the routine at #R$DD97.
+; .
+; Writes the checksum and saves #R$647C to tape.
+;
+; .
+;
+; Store the checksum, then save the block.
+@label=Tape_Save
+c$DD22 CALL $DD6C    ; {Write the checksum from #R$DD6C to *#R$6488.
+ $DD25 LD ($6488),A  ; }
+ $DD28 POP BC        ; Restore #REGbc from the stack.
+ $DD29 CALL $DD12    ; Call #R$DD12.
+ $DD2C CALL $04C2    ; Call #SKOOLKID$04C2(SA_BYTES).
+; Reload the room with bit 7 set.
+ $DD2F LD A,($64A2)  ; {Set bit 7 of the room ID.
+ $DD32 SET 7,A       ; }
+ $DD34 JP $D738      ; Jump to #R$D738.
+
+; Load Game
+;
+; Used by the routine at #R$DD97.
+; .
+; Prints #R$E7E4, waits for "2", then loads the tape
+; block.
+;
+; .
+;
+; Use the ROM font and print the load message.
+@label=Tape_Load
+c$DD37 LD HL,$3C00   ; {Write #N$3C00 to *#SKOOLKID$5C36(CHARS).
+ $DD3A LD ($5C36),HL ; }
+ $DD3D LD HL,$E7E4   ; {Print the messaging at #R$E7E4.
+ $DD40 CALL $F460    ; }
+; Wait until a key is pressed.
+@label=Tape_Load_Wait
+*$DD43 LD BC,$2710   ; {Call #R$F430 with a pause of #N$2710.
+ $DD46 CALL $F430    ; }
+ $DD49 CALL $028E    ; Call #SKOOLKID$028E(KEY_SCAN).
+ $DD4C LD A,E        ; {Jump to #R$DD43 if no key is pressed.
+ $DD4D CP $FF        ;
+ $DD4F JR Z,$DD43    ; }
+; Load only if "2" was pressed.
+ $DD51 CP $02        ; {Jump to #R$DD64 unless "2" was pressed.
+ $DD53 JR NZ,$DD64   ; }
+ $DD55 POP BC        ; Restore #REGbc from the stack.
+ $DD56 CALL $DD12    ; Call #R$DD12.
+ $DD59 SCF           ; {Call #SKOOLKID$0556(LD_BYTES) with carry set.
+ $DD5A CALL $0556    ; }
+ $DD5D CALL $DD6C    ; {Jump to #R$D5D5 if the checksum does not match.
+ $DD60 CP L          ;
+ $DD61 JP NZ,$D5D5   ; }
+; Reload the room with bit 7 set.
+@label=Tape_Load_Resume
+*$DD64 LD A,($64A2)  ; {Set bit 7 of the room ID.
+ $DD67 SET 7,A       ; }
+ $DD69 JP $D738      ; Jump to #R$D738.
+
+; Checksum Tape
+;
+; Used by the routines at #R$DD22 and #R$DD37.
+; .
+; Adds every byte in the tape block after
+; writing #N$00 to *#R$6488. #REGl keeps the previous
+; checksum for the load compare.
+;
+; O:A The checksum
+; O:L The previous *#R$6488
+;
+; Point at the tape block.
+@label=Tape_Checksum
+c$DD6C CALL $DD12     ; Call #R$DD12.
+; Keep the previous checksum and clear the stored
+; one.
+ $DD6F XOR A          ; Clear the sum.
+ $DD70 LD HL,($6488)  ; Copy *#R$6488 into #REGl.
+ $DD73 LD ($6488),A   ; Write #N$00 to *#R$6488.
+ $DD76 LD H,A         ; Clear #REGh.
+; Add each byte into the running total.
+@label=Tape_Checksum_Loop
+*$DD77 ADD A,(IX+$00) ; {Add *(#REGix) into #REGa and keep the sum in
+ $DD7A LD H,A         ; #REGh.}
+ $DD7B INC IX         ; {Move to the next byte.
+ $DD7D DEC DE         ; }
+ $DD7E LD A,E         ; {Test whether #REGde is zero.
+ $DD7F OR D           ; }
+ $DD80 LD A,H         ; Restore the sum.
+ $DD81 JR NZ,$DD77    ; Jump to #R$DD77 if #REGde is not zero.
+; Return.
+ $DD83 RET            ; Return.
+
+; Wait Keypress
+;
+; Used by the routine at #R$DD97.
+; .
+; Pauses, then returns when any key is pressed.
+;
+; .
+;
+; Delay, then scan.
+@label=Wait_Keypress
+c$DD84 LD BC,$2710   ; {Call #R$F430 with a pause of #N$2710.
+ $DD87 CALL $F430    ; }
+ $DD8A CALL $028E    ; Call #SKOOLKID$028E(KEY_SCAN).
+ $DD8D LD A,E        ; {Jump to #R$DD84 if no key is pressed.
+ $DD8E INC A         ;
+ $DD8F JR Z,$DD84    ; }
+ $DD91 RET           ; Return.
+
+; Toggle Tune
+;
+; Used by the routine at #R$DD97.
+; .
+; Fires event #N$09, which inverts *#R$647C.
+@label=Toggle_Tune
+c$DD92 LD A,$09      ; {Jump to #R$E9FF with event #N$09.
+ $DD94 JP $E9FF      ; }
 
 ; Handler: Keyboard
 ;
 ; Used by the routine at #R$D7A2.
 ; .
-; In-game keypresses: save, load, pause, and the hidden room
-; cheats when *#N$FFFF is #N$0A.
+; In-game keypresses: save, load, pause, toggle
+; tune, and the hidden room cheats when *#N$FFFF is #N$0A.
 @label=Handler_Keyboard
 c$DD97 CALL $028E    ; Call #SKOOLKID$028E(KEY_SCAN).
  $DD9A LD A,E        ; #REGa=the keypress.
@@ -6709,7 +7030,7 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $DF3D LD ($64B4),A    ; Decrease *#R$64B4 by one.
  $DF40 XOR A           ; {Jump to #R$D738 with #REGa=#N$00.
  $DF41 JP $D738        ; }
-; This entry point is used by the routines at #R$D7FF and #R$E1CC.
+; This entry point is used by the routines at #R$D82D and #R$E1CC.
 ; .
 ; Walk left, or start a left-facing walk.
 @label=Player_MoveLeft
@@ -6730,7 +7051,7 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $DF63 ADD A,$02       ;
  $DF65 LD (IX+$08),A   ; }
  $DF68 RET             ; Return.
-; This entry point is used by the routines at #R$D7FF and #R$E1CC.
+; This entry point is used by the routines at #R$D82D and #R$E1CC.
 ; .
 ; Walk right, or start a right-facing walk.
 @label=Player_MoveRight
@@ -6751,7 +7072,7 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $DF88 SUB $02         ;
  $DF8A LD (IX+$08),A   ; }
  $DF8D RET             ; Return.
-; This entry point is used by the routines at #R$D7FF and #R$E1CC.
+; This entry point is used by the routines at #R$D82D and #R$E1CC.
 ; .
 ; Fire / use the furniture in front of the player.
 @label=Player_Action
@@ -6838,7 +7159,7 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $E00F ADD HL,DE       ; }
  $E010 JR $DFD0        ; Jump to #R$DFD0.
  $E012 RET             ; Return.
-; This entry point is used by the routines at #R$D7FF and #R$E1CC.
+; This entry point is used by the routines at #R$D82D and #R$E1CC.
 ; .
 ; Climb down a ladder from *#R$6428.
 @label=Player_ClimbDown
@@ -6888,7 +7209,7 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $E066 INC HL          ;
  $E067 INC HL          ; }
  $E068 JR $E01C        ; Jump to #R$E01C.
-; This entry point is used by the routines at #R$D7FF and #R$E1CC.
+; This entry point is used by the routines at #R$D82D and #R$E1CC.
 ; .
 ; Climb up a ladder, or start a jump.
 @label=Player_ClimbUp
@@ -6992,7 +7313,7 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
  $E12B INC HL          ; {Jump to #R$E358 unless the down key matches.
  $E12C CP (HL)         ;
  $E12D JP NZ,$E358     ; }
-; This entry point is used by the routine at #R$D7FF.
+; This entry point is used by the routine at #R$D864.
 ; .
 ; Animate climbing down.
 @label=Player_ClimbDown_Anim
@@ -7005,7 +7326,7 @@ c$DE19 LD A,($647D)    ; {Return if *#R$647D is set.
 *$E13B LD (IX+$06),A   ; {Store the frame, write #N$FE as the vertical delta
  $E13E LD (IX+$09),$FE ; and jump to #R$E358.
  $E142 JP $E358        ; }
-; This entry point is used by the routine at #R$D7FF.
+; This entry point is used by the routine at #R$D864.
 ; .
 ; Animate climbing up.
 @label=Player_ClimbUp_Anim
@@ -7179,7 +7500,7 @@ c$E1CC LD A,($646F)    ; {Return if *#R$646F is set (demo / intro).
  $E285 LD HL,$6483     ; {Call #R$DF8E if the action key matches.
  $E288 CP (HL)         ;
  $E289 CALL Z,$DF8E    ; }
-; This entry point is used by the routine at #R$D7FF.
+; This entry point is used by the routine at #R$D82D.
 @label=Handler_Player_Resolve
 *$E28C LD A,($648A)    ; {Fall through to #R$E292 when *#R$648A is set.
  $E28F OR A            ;
@@ -7301,7 +7622,7 @@ c$E1CC LD A,($646F)    ; {Return if *#R$646F is set (demo / intro).
 @label=Handler_Player_ProbeLeftNext
 *$E355 ADD HL,DE       ; {Step down one row and loop back to #R$E33E.
  $E356 DJNZ $E33E      ; }
-; This entry point is used by the routines at #R$D7FF and #R$DE19.
+; This entry point is used by the routines at #R$D864 and #R$DE19.
 @label=Handler_Player_Commit
 *$E358 CALL $F448      ; Call #R$F448.
  $E35B LD A,C          ; {Jump to #R$E398 if the new column is off-screen.
@@ -7325,17 +7646,19 @@ c$E1CC LD A,($646F)    ; {Return if *#R$646F is set (demo / intro).
  $E381 JR NZ,$E38A     ;
  $E383 LD IX,($644B)   ;
  $E387 CALL $F45A      ; }
+; Reset after drawing.
 @label=Handler_Player_Reset
-*$E38A LD IX,$64A4     ; {Clear movement when the player is not jumping.
- $E38E XOR A           ;
- $E38F LD ($6434),A    ;
- $E392 LD A,($6410)    ;
+*$E38A LD IX,$64A4     ; Point #REGix at #R$64A4.
+ $E38E XOR A           ; {Write #N$00 to *#R$6434.
+ $E38F LD ($6434),A    ; }
+ $E392 LD A,($6410)    ; {Jump to #R$E3A4 if *#R$6410 is set.
  $E395 OR A            ;
- $E396 JR NZ,$E3A4     ;
+ $E396 JR NZ,$E3A4     ; }
+; Clear the jump timer and both deltas.
 @label=Handler_Player_ClearDeltas
-*$E398 XOR A           ;
- $E399 LD ($6410),A    ;
- $E39C LD (IX+$08),$00 ;
+*$E398 XOR A           ; {Write #N$00 to *#R$6410.
+ $E399 LD ($6410),A    ; }
+ $E39C LD (IX+$08),$00 ; {Write #N$00 to both movement deltas.
  $E3A0 LD (IX+$09),$00 ; }
 @label=Handler_Player_Floor
 *$E3A4 LD A,(IX+$01)   ; {Jump to #R$DEFB when standing on the floor.
@@ -7429,7 +7752,7 @@ c$E3DE CALL $DE96     ; Call #R$DE96.
 @label=Actor_Lock
 *$E436 SET 7,(IY+$07) ; Set bit 7 of *#REGiy+#N$07.
  $E43A RET            ; Return.
-; This entry point is used by the routine at #R$DB05.
+; This entry point is used by the routine at #R$DB3F.
 @label=Actor_Reverse
 *$E43B LD A,(IY+$0C)  ; {Jump to #R$E426 if *#REGiy+#N$0C is set.
  $E43E OR A           ;
@@ -7473,12 +7796,15 @@ c$E46C PUSH AF       ; {Stash #REGaf, #REGbc, #REGde, #REGhl and #REGix.
  $E480 JR NZ,$E49B   ; }
  $E482 XOR A         ; {Write #N$00 to *#R$646E.
  $E483 LD ($646E),A  ; }
+; #HTML(#AUDIO0(score.wav)(#INCLUDE(Score)))
  $E486 LD A,($6472)  ; {Call #R$E4D3 if bit 4 of *#R$6472 is set.
  $E489 BIT 4,A       ;
  $E48B CALL NZ,$E4D3 ; }
+; #HTML(#AUDIO0(beep.wav)(#INCLUDE(Beep)))
  $E48E LD A,($6473)  ; {Jump to #R$E4A3 if *#R$6473 is set.
  $E491 OR A          ;
  $E492 JP NZ,$E4A3   ; }
+; #HTML(#AUDIO0(theme-tune.wav)(#INCLUDE(ThemeTune)))
  $E495 LD BC,$1106   ; {Call #R$E666 with note length #N$1106.
  $E498 CALL $E666    ; }
 @label=Handler_Interrupts_Done
@@ -7499,9 +7825,9 @@ c$E46C PUSH AF       ; {Stash #REGaf, #REGbc, #REGde, #REGhl and #REGix.
  $E4AE JP $E49B      ; Jump to #R$E49B.
 ; This entry point is used by the routine at #R$D904.
 ; .
-; Click the speaker #REGd times using a random delay.
-; #HTML(#AUDIO0(click.wav)(#INCLUDE(Click)))
-@label=Play_Click
+; Toggle the speaker #REGd times using a random delay.
+; #HTML(#AUDIO0(noise.wav)(#INCLUDE(Noise)))
+@label=Play_Noise
 *$E4B1 CALL $E4C1    ; {Toggle bit 4 of the speaker for #REGd iterations.
  $E4B4 OUT ($FE),A   ;
  $E4B6 CALL $E4C1    ;
@@ -7510,18 +7836,18 @@ c$E46C PUSH AF       ; {Stash #REGaf, #REGbc, #REGde, #REGhl and #REGix.
  $E4BD DEC D         ;
  $E4BE JR NZ,$E4B1   ;
  $E4C0 RET           ; }
-@label=Play_Click_Delay
+@label=Play_Noise_Delay
 *$E4C1 PUSH BC       ; {Delay by a random count masked with #REGb.
  $E4C2 CALL $F433    ;
  $E4C5 AND B         ;
  $E4C6 LD B,A        ;
  $E4C7 OR A          ;
  $E4C8 JR Z,$E4CE    ;
-@label=Play_Click_Wait
+@label=Play_Noise_Wait
 *$E4CA NOP           ;
  $E4CB NOP           ;
  $E4CC DJNZ $E4CA    ; }
-@label=Play_Click_Done
+@label=Play_Noise_Done
 *$E4CE POP BC        ; {#REGa=*#R$641D.
  $E4CF LD A,($641D)  ; }
  $E4D2 RET           ; Return.
@@ -7582,6 +7908,10 @@ c$E46C PUSH AF       ; {Stash #REGaf, #REGbc, #REGde, #REGhl and #REGix.
 ; .
 ; Animates the bats and moon on the introduction screen until a key is
 ; pressed or *#R$6470 reaches zero.
+;
+; .
+;
+; #HTML(#AUDIO0(theme-tune.wav)(#INCLUDE(ThemeTune)))
 @label=Animate_Introduction
 c$E51D LD BC,$0A14                          ; {Call #R$E666 with note length
  $E520 CALL $E666                           ; #N$0A14.}
@@ -8059,7 +8389,7 @@ c$E9FC JP $EA02      ; Jump to #R$EA02.
 
 ; Dispatch Events
 ;
-; Used by the routines at #R$D738, #R$D7D2, #R$DC26, #R$DC62 and #R$DE19.
+; Used by the routines at #R$D738, #R$D7D2, #R$DC26, #R$DD92 and #R$DE19.
 ; .
 ; Jumps to #R$EDD9 with the event ID in #REGa.
 @label=Dispatch_Events
@@ -8259,7 +8589,7 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EB65 LD DE,$0003   ; {#REGix+=#N($0003,$04,$04).
  $EB68 ADD IX,DE     ; }
  $EB6A JR $EB5E      ; Jump to #R$EB5E.
-; Draw each visible inventory item into *#R$6426.
+; Draw each visible key into *#R$6426.
 @label=Load_Room_Inventory
 *$EB6C INC IX        ; {Write #REGix to *#R$6426.
  $EB6E LD ($6426),IX ; }
@@ -8274,8 +8604,8 @@ c$EA02 CP $1E        ; {Return if #REGa is #N$1E.
  $EB81 CALL $F42D    ; }
  $EB84 LD A,$07      ; {Write #INK$07 to *#SKOOLKID$5C8F(ATTR_T).
  $EB86 LD ($5C8F),A  ; }
- $EB89 LD A,$80      ; {Call #R$F445 with glyph #N$80 and size #N$02 by
- $EB8B LD DE,$0202   ; #N$02.
+ $EB89 LD A,$80      ; {Call #R$F445 with the key glyph #N$80 and size
+ $EB8B LD DE,$0202   ; #N$02 by #N$02.
  $EB8E CALL $F445    ; }
 @label=Load_Room_Inventory_Continue
 *$EB91 INC IX        ; {Advance #REGix by two.
@@ -8607,121 +8937,134 @@ c$EDB1 LD B,(IX+$01) ; {Fetch the print row and the stored column.
 ;
 ; Used by the routine at #R$E9FF.
 ; .
-; Dispatches the event ID in #REGa. Each ID is a collectible, door or
-; scenery action for the current room.
+; Dispatches the event ID in #REGa to a room
+; action. Bit 7 marks a collectible pickup.
+;
+; A Event ID (bit 7 set for a collectible)
+; IX Player entity (unused)
+;
+; Stash the caller context.
 @label=Handler_Events
 c$EDD9 PUSH IX       ; {Stash #REGix and *#SKOOLKID$5C36(CHARS) on the
  $EDDB LD HL,($5C36) ; stack.
  $EDDE PUSH HL       ; }
  $EDDF LD HL,$EECB   ; {Push #R$EECB as the return address.
  $EDE2 PUSH HL       ; }
+; Use the in-game font.
  $EDE3 LD HL,$7C70   ; {Write #R$7C70 to *#SKOOLKID$5C36(CHARS).
  $EDE6 LD ($5C36),HL ; }
- $EDE9 CP $26        ; {Return if the event is #N$26.
+; Ignore event #N$26.
+ $EDE9 CP $26        ; {Return through #R$EECB if the event is #N$26.
  $EDEB RET Z         ; }
- $EDEC LD L,A        ; {Return if *#R$649F is already running.
- $EDED LD A,($649F)  ;
- $EDF0 OR A          ;
+; Return if a timer is already running.
+ $EDEC LD L,A        ; Copy the event ID into #REGl.
+ $EDED LD A,($649F)  ; {Return through #R$EECB if *#R$649F is already
+ $EDF0 OR A          ; running.
  $EDF1 RET NZ        ; }
+; Collectibles skip the event sound.
  $EDF2 BIT 7,L       ; {Jump to #R$EDFB if this is a collectible event.
  $EDF4 JR NZ,$EDFB   ; }
  $EDF6 LD A,$10      ; {Write #N$10 to *#R$6472.
  $EDF8 LD ($6472),A  ; }
-; Jump to the handler for this event ID.
+; Keep only the event ID.
 @label=Handler_Events_Dispatch
 *$EDFB LD A,L        ; Copy the event ID into #REGa.
  $EDFC AND %01111111 ; Keep only bits 0-6.
- $EDFE OR A          ; {Jump to #R$EFE6 if the event is #N$00.
- $EDFF JP Z,$EFE6    ; }
- $EE02 CP $01        ; {Jump to #R$EFF5 if the event is #N$01.
- $EE04 JP Z,$EFF5    ; }
- $EE07 CP $03        ; {Jump to #R$F000 if the event is #N$03.
- $EE09 JP Z,$F000    ; }
- $EE0C CP $02        ; {Jump to #R$F011 if the event is #N$02.
- $EE0E JP Z,$F011    ; }
- $EE11 CP $04        ; {Jump to #R$F350 if the event is #N$04.
- $EE13 JP Z,$F350    ; }
- $EE16 CP $05        ; {Jump to #R$F03E if the event is #N$05.
- $EE18 JP Z,$F03E    ; }
- $EE1B CP $06        ; {Jump to #R$EEFA if the event is #N$06.
- $EE1D JP Z,$EEFA    ; }
- $EE20 CP $07        ; {Jump to #R$F0C0 if the event is #N$07.
- $EE22 JP Z,$F0C0    ; }
- $EE25 CP $08        ; {Jump to #R$EF8A if the event is #N$08.
- $EE27 JP Z,$EF8A    ; }
- $EE2A CP $09        ; {Jump to #R$F395 if the event is #N$09.
- $EE2C JP Z,$F395    ; }
- $EE2F CP $0A        ; {Jump to #R$F06A if the event is #N$0A.
- $EE31 JP Z,$F06A    ; }
- $EE34 CP $0B        ; {Jump to #R$F1C4 if the event is #N$0B.
- $EE36 JP Z,$F1C4    ; }
- $EE39 CP $0C        ; {Jump to #R$F1D4 if the event is #N$0C.
- $EE3B JP Z,$F1D4    ; }
- $EE3E CP $0D        ; {Jump to #R$F26A if the event is #N$0D.
- $EE40 JP Z,$F26A    ; }
- $EE43 CP $0E        ; {Jump to #R$EFD3 if the event is #N$0E.
- $EE45 JP Z,$EFD3    ; }
- $EE48 CP $0F        ; {Jump to #R$F28F if the event is #N$0F.
- $EE4A JP Z,$F28F    ; }
- $EE4D CP $11        ; {Jump to #R$F22C if the event is #N$11.
- $EE4F JP Z,$F22C    ; }
- $EE52 CP $12        ; {Jump to #R$F2E0 if the event is #N$12.
- $EE54 JP Z,$F2E0    ; }
- $EE57 CP $13        ; {Jump to #R$F31D if the event is #N$13.
- $EE59 JP Z,$F31D    ; }
- $EE5C CP $14        ; {Jump to #R$EEE5 if the event is #N$14.
- $EE5E JP Z,$EEE5    ; }
- $EE61 CP $15        ; {Jump to #R$F328 if the event is #N$15.
- $EE63 JP Z,$F328    ; }
- $EE66 CP $16        ; {Jump to #R$F2B2 if the event is #N$16.
- $EE68 JP Z,$F2B2    ; }
- $EE6B CP $17        ; {Jump to #R$F072 if the event is #N$17.
- $EE6D JP Z,$F072    ; }
- $EE70 CP $18        ; {Jump to #R$F164 if the event is #N$18.
- $EE72 JP Z,$F164    ; }
- $EE75 CP $19        ; {Jump to #R$F0E4 if the event is #N$19.
- $EE77 JP Z,$F0E4    ; }
- $EE7A CP $1A        ; {Jump to #R$EF3A if the event is #N$1A.
- $EE7C JP Z,$EF3A    ; }
- $EE7F CP $1B        ; {Jump to #R$F125 if the event is #N$1B.
- $EE81 JP Z,$F125    ; }
- $EE84 CP $1C        ; {Jump to #R$EF5C if the event is #N$1C.
- $EE86 JP Z,$EF5C    ; }
- $EE89 CP $1D        ; {Jump to #R$F361 if the event is #N$1D.
- $EE8B JP Z,$F361    ; }
- $EE8E CP $1E        ; {Jump to #R$F1EE if the event is #N$1E.
- $EE90 JP Z,$F1EE    ; }
- $EE93 CP $1F        ; {Jump to #R$F217 if the event is #N$1F.
- $EE95 JP Z,$F217    ; }
- $EE98 CP $20        ; {Jump to #R$F249 if the event is #N$20.
- $EE9A JP Z,$F249    ; }
- $EE9D CP $21        ; {Jump to #R$F244 if the event is #N$21.
- $EE9F JP Z,$F244    ; }
- $EEA2 CP $22        ; {Jump to #R$F188 if the event is #N$22.
- $EEA4 JP Z,$F188    ; }
- $EEA7 CP $23        ; {Jump to #R$F24E if the event is #N$23.
- $EEA9 JP Z,$F24E    ; }
- $EEAC CP $24        ; {Jump to #R$F07D if the event is #N$24.
- $EEAE JP Z,$F07D    ; }
- $EEB1 CP $25        ; {Jump to #R$F253 if the event is #N$25.
- $EEB3 JP Z,$F253    ; }
- $EEB6 CP $27        ; {Jump to #R$F006 if the event is #N$27.
- $EEB8 JP Z,$F006    ; }
- $EEBB CP $28        ; {Jump to #R$F0B4 if the event is #N$28.
- $EEBD JP Z,$F0B4    ; }
- $EEC0 CP $29        ; {Jump to #R$F1B6 if the event is #N$29.
- $EEC2 JP Z,$F1B6    ; }
- $EEC5 CP $2A        ; {Jump to #R$EED2 if the event is #N$2A.
- $EEC7 JP Z,$EED2    ; }
+; Jump to the handler for this event ID.
+ $EDFE OR A          ; {Jump to #R$EFE6 if the event is #N$00
+ $EDFF JP Z,$EFE6    ; (draw the first header item).}
+ $EE02 CP $01        ; {Jump to #R$EFF5 if the event is #N$01
+ $EE04 JP Z,$EFF5    ; (draw the next header item).}
+ $EE07 CP $03        ; {Jump to #R$F000 if the event is #N$03
+ $EE09 JP Z,$F000    ; (draw the first two header items).}
+ $EE0C CP $02        ; {Jump to #R$F011 if the event is #N$02
+ $EE0E JP Z,$F011    ; (nudge the first actor).}
+ $EE11 CP $04        ; {Jump to #R$F350 if the event is #N$04
+ $EE13 JP Z,$F350    ; (print the event message).}
+ $EE16 CP $05        ; {Jump to #R$F03E if the event is #N$05
+ $EE18 JP Z,$F03E    ; (start the first enemy).}
+ $EE1B CP $06        ; {Jump to #R$EEFA if the event is #N$06
+ $EE1D JP Z,$EEFA    ; (reveal the room-header item).}
+ $EE20 CP $07        ; {Jump to #R$F0C0 if the event is #N$07
+ $EE22 JP Z,$F0C0    ; (reveal three header items).}
+ $EE25 CP $08        ; {Jump to #R$EF8A if the event is #N$08
+ $EE27 JP Z,$EF8A    ; (start an actor walking).}
+ $EE2A CP $09        ; {Jump to #R$F395 if the event is #N$09
+ $EE2C JP Z,$F395    ; (toggle the silent-tune flag).}
+ $EE2F CP $0A        ; {Jump to #R$F06A if the event is #N$0A
+ $EE31 JP Z,$F06A    ; (start a short event timer).}
+ $EE34 CP $0B        ; {Jump to #R$F1C4 if the event is #N$0B
+ $EE36 JP Z,$F1C4    ; (reveal a decoration and a mover).}
+ $EE39 CP $0C        ; {Jump to #R$F1D4 if the event is #N$0C
+ $EE3B JP Z,$F1D4    ; (reveal the next decoration and mover).}
+ $EE3E CP $0D        ; {Jump to #R$F26A if the event is #N$0D
+ $EE40 JP Z,$F26A    ; (hide a later actor).}
+ $EE43 CP $0E        ; {Jump to #R$EFD3 if the event is #N$0E
+ $EE45 JP Z,$EFD3    ; (swap the left/right keys).}
+ $EE48 CP $0F        ; {Jump to #R$F28F if the event is #N$0F
+ $EE4A JP Z,$F28F    ; (hide the first active actor).}
+ $EE4D CP $11        ; {Jump to #R$F22C if the event is #N$11
+ $EE4F JP Z,$F22C    ; (hide the first furniture item).}
+ $EE52 CP $12        ; {Jump to #R$F2E0 if the event is #N$12
+ $EE54 JP Z,$F2E0    ; (reveal the first door).}
+ $EE57 CP $13        ; {Jump to #R$F31D if the event is #N$13
+ $EE59 JP Z,$F31D    ; (reveal the next door).}
+ $EE5C CP $14        ; {Jump to #R$EEE5 if the event is #N$14
+ $EE5E JP Z,$EEE5    ; (reveal two decorations).}
+ $EE61 CP $15        ; {Jump to #R$F328 if the event is #N$15
+ $EE63 JP Z,$F328    ; (reveal the third door).}
+ $EE66 CP $16        ; {Jump to #R$F2B2 if the event is #N$16
+ $EE68 JP Z,$F2B2    ; (randomise the combination).}
+ $EE6B CP $17        ; {Jump to #R$F072 if the event is #N$17
+ $EE6D JP Z,$F072    ; (draw two header items and start a timer).}
+ $EE70 CP $18        ; {Jump to #R$F164 if the event is #N$18
+ $EE72 JP Z,$F164    ; (show the first hidden enemy).}
+ $EE75 CP $19        ; {Jump to #R$F0E4 if the event is #N$19
+ $EE77 JP Z,$F0E4    ; (reveal the first furniture item).}
+ $EE7A CP $1A        ; {Jump to #R$EF3A if the event is #N$1A
+ $EE7C JP Z,$EF3A    ; (reveal two decorations and a mover).}
+ $EE7F CP $1B        ; {Jump to #R$F125 if the event is #N$1B
+ $EE81 JP Z,$F125    ; (reveal the first ladder).}
+ $EE84 CP $1C        ; {Jump to #R$EF5C if the event is #N$1C
+ $EE86 JP Z,$EF5C    ; (reveal three decorations and three movers).}
+ $EE89 CP $1D        ; {Jump to #R$F361 if the event is #N$1D
+ $EE8B JP Z,$F361    ; (reveal every decoration).}
+ $EE8E CP $1E        ; {Jump to #R$F1EE if the event is #N$1E
+ $EE90 JP Z,$F1EE    ; (reveal three decorations).}
+ $EE93 CP $1F        ; {Jump to #R$F217 if the event is #N$1F
+ $EE95 JP Z,$F217    ; (show every moving object).}
+ $EE98 CP $20        ; {Jump to #R$F249 if the event is #N$20
+ $EE9A JP Z,$F249    ; (increment combination digit 4).}
+ $EE9D CP $21        ; {Jump to #R$F244 if the event is #N$21
+ $EE9F JP Z,$F244    ; (increment combination digit 3).}
+ $EEA2 CP $22        ; {Jump to #R$F188 if the event is #N$22
+ $EEA4 JP Z,$F188    ; (award a combination digit).}
+ $EEA7 CP $23        ; {Jump to #R$F24E if the event is #N$23
+ $EEA9 JP Z,$F24E    ; (increment combination digit 2).}
+ $EEAC CP $24        ; {Jump to #R$F07D if the event is #N$24
+ $EEAE JP Z,$F07D    ; (hide two header items).}
+ $EEB1 CP $25        ; {Jump to #R$F253 if the event is #N$25
+ $EEB3 JP Z,$F253    ; (increment combination digit 1).}
+ $EEB6 CP $27        ; {Jump to #R$F006 if the event is #N$27
+ $EEB8 JP Z,$F006    ; (draw the fourth header item).}
+ $EEBB CP $28        ; {Jump to #R$F0B4 if the event is #N$28
+ $EEBD JP Z,$F0B4    ; (hide the fourth header item).}
+ $EEC0 CP $29        ; {Jump to #R$F1B6 if the event is #N$29
+ $EEC2 JP Z,$F1B6    ; (test the second header item).}
+ $EEC5 CP $2A        ; {Jump to #R$EED2 if the event is #N$2A
+ $EEC7 JP Z,$EED2    ; (hide the first two enemies).}
+; Ignore an unhandled event ID.
 @label=Handler_Events_Done
  $EECA POP HL        ; Drop the unused return address.
+; Restore the font and #REGix.
 @label=Handler_Events_Restore
- $EECB POP HL        ; Restore *#SKOOLKID$5C36(CHARS) from the stack.
- $EECC LD ($5C36),HL ; Write it back to *#SKOOLKID$5C36(CHARS).
+ $EECB POP HL        ; {Restore *#SKOOLKID$5C36(CHARS) from the stack.
+ $EECC LD ($5C36),HL ; }
  $EECF POP IX        ; Restore #REGix from the stack.
+; Return.
  $EED1 RET           ; Return.
 
-; Hide Enemies
+; Event: Hide Enemies
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8734,7 +9077,7 @@ c$EED2 CALL $F006     ; Call #R$F006.
  $EEE0 SET 7,(IX+$0E) ; }
  $EEE4 RET            ; Return.
 
-; Reveal Decorations
+; Event: Reveal Decorations
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8751,7 +9094,7 @@ c$EEE5 LD IX,($642E) ; #REGix=*#R$642E.
  $EEF5 DJNZ $EEEB    ; Decrease the count and loop back to #R$EEEB.
  $EEF7 JP $F164      ; Jump to #R$F164.
 
-; Reveal Header
+; Event: Reveal Header
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8779,7 +9122,7 @@ c$EEFA LD IX,($641E)   ; #REGix=*#R$641E.
  $EF36 LD (IX+$13),A   ; }
  $EF39 RET             ; Return.
 
-; Reveal Pair
+; Event: Reveal Pair
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8798,7 +9141,7 @@ c$EF3A LD IX,($642E)  ; {#REGix=*#R$642E+#N($000C,$04,$04).
  $EF57 RES 7,(IX+$00) ; }
  $EF5B RET            ; Return.
 
-; Reveal Triple
+; Event: Reveal Triple
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8828,7 +9171,7 @@ c$EF5C LD IX,($642E)  ; {#REGix=*#R$642E+#N($0018,$04,$04).
  $EF87 DJNZ $EF81     ; Decrease the count and loop back to #R$EF81.
  $EF89 RET            ; Return.
 
-; Start Actor
+; Event: Start Actor
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8869,7 +9212,7 @@ c$EF8A LD IX,($6430)   ; #REGix=*#R$6430.
  $EFCF ADD IX,DE       ; }
  $EFD1 JR $EF8E        ; Jump to #R$EF8E.
 
-; Swap Keys
+; Event: Swap Keys
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8885,7 +9228,7 @@ c$EFD3 LD BC,($647F) ; {Swap *#R$647F with *#R$6480.
  $EFE2 LD ($6486),HL ; }
  $EFE5 RET           ; Return.
 
-; Draw Header
+; Event: Draw Header
 ;
 ; Used by the routines at #R$EDD9 and #R$F000.
 ; .
@@ -8899,7 +9242,7 @@ c$EFE6 LD IX,($641E) ; #REGix=*#R$641E.
  $EFEF LD (IX+$00),A ; Write it back.
  $EFF2 JP $EDB1      ; Jump to #R$EDB1.
 
-; Draw Next Header
+; Event: Draw Next Header
 ;
 ; Used by the routines at #R$EDD9 and #R$F000.
 ; .
@@ -8910,7 +9253,7 @@ c$EFF5 LD IX,($641E) ; #REGix=*#R$641E.
  $EFFC ADD IX,DE     ; }
  $EFFE JR $EFEA      ; Jump to #R$EFEA.
 
-; Draw Header Pair
+; Event: Draw Header Pair
 ;
 ; Used by the routines at #R$EDD9 and #R$F072.
 ; .
@@ -8919,7 +9262,7 @@ c$EFF5 LD IX,($641E) ; #REGix=*#R$641E.
 c$F000 CALL $EFE6    ; Call #R$EFE6.
  $F003 JP $EFF5      ; Jump to #R$EFF5.
 
-; Draw Fourth Header
+; Event: Draw Fourth Header
 ;
 ; Used by the routines at #R$EDD9 and #R$EED2.
 ; .
@@ -8930,7 +9273,7 @@ c$F006 LD IX,($641E) ; #REGix=*#R$641E.
  $F00D ADD IX,DE     ; }
  $F00F JR $EFEA      ; Jump to #R$EFEA.
 
-; Nudge Actor
+; Event: Nudge Actor
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8959,7 +9302,7 @@ c$F011 LD IX,($6430)   ; #REGix=*#R$6430.
  $F03A ADD IX,DE       ; }
  $F03C JR $F015        ; Jump to #R$F015.
 
-; Start Enemy
+; Event: Start Enemy
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8986,7 +9329,7 @@ c$F03E LD BC,$2614   ; {Write #N$2614 to *#R$649F.
  $F066 ADD IX,DE     ; }
  $F068 JR $F049      ; Jump to #R$F049.
 
-; Start Short Timer
+; Event: Start Short Timer
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -8996,7 +9339,7 @@ c$F06A LD BC,$021C   ; {Write #N$021C to *#R$649F.
  $F06D LD ($649F),BC ; }
  $F071 RET           ; Return.
 
-; Draw Header Timer
+; Event: Draw Header Timer
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9007,7 +9350,7 @@ c$F072 CALL $F000    ; Call #R$F000.
  $F078 LD ($649F),BC ; }
  $F07C RET           ; Return.
 
-; Hide Header Pair
+; Event: Hide Header Pair
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9048,7 +9391,7 @@ c$F090 LD A,(IX+$00)  ; #REGa=the header record.
  $F0B1 DJNZ $F0A3     ; Decrease the height and loop back to #R$F0A3.
  $F0B3 RET            ; Return.
 
-; Hide Fourth Header
+; Event: Hide Fourth Header
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9059,7 +9402,7 @@ c$F0B4 LD IX,($641E) ; #REGix=*#R$641E.
  $F0BB ADD IX,DE     ; }
  $F0BD JP $F090      ; Jump to #R$F090.
 
-; Reveal Header Triple
+; Event: Reveal Header Triple
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9083,7 +9426,7 @@ c$F0C0 LD BC,$2614   ; {Write #N$2614 to *#R$649F.
  $F0E1 DJNZ $F0CD    ; Decrease the count and loop back to #R$F0CD.
  $F0E3 RET           ; Return.
 
-; Reveal Furniture
+; Event: Reveal Furniture
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9112,7 +9455,7 @@ c$F0E4 LD IX,($6420)   ; #REGix=*#R$6420.
  $F120 LD (IX+$09),$01 ; }
  $F124 RET             ; Return.
 
-; Reveal Ladder
+; Event: Reveal Ladder
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9140,7 +9483,7 @@ c$F125 LD IX,($6428)   ; #REGix=*#R$6428.
  $F15F LD (IX+$09),$01 ; }
  $F163 RET             ; Return.
 
-; Show Enemy
+; Event: Show Enemy
 ;
 ; Used by the routines at #R$EDD9, #R$EED2 and #R$EEE5.
 ; .
@@ -9164,7 +9507,7 @@ c$F164 LD IX,($6432) ; #REGix=*#R$6432.
  $F184 ADD IX,DE     ; }
  $F186 JR $F168      ; Jump to #R$F168.
 
-; Award Digit
+; Event: Award Digit
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9196,7 +9539,7 @@ c$F193 POP BC         ; Restore the return address from the stack.
  $F1B1 LD A,$C8       ; #REGa=#N$C8.
  $F1B3 JP $F454       ; Jump to #R$F454.
 
-; Test Header
+; Event: Test Header
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9209,7 +9552,7 @@ c$F1B6 LD IX,($641E)  ; #REGix=*#R$641E.
  $F1C3 RET Z          ; }
 ; Continue on to #R$F1C4.
 
-; Reveal Decor And Mover
+; Event: Reveal Decor And Mover
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9221,7 +9564,7 @@ c$F1C4 LD IX,($642E)  ; #REGix=*#R$642E.
  $F1CF RES 7,(IX+$00) ; }
  $F1D3 RET            ; Return.
 
-; Reveal Next Pair
+; Event: Reveal Next Pair
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9237,7 +9580,7 @@ c$F1D4 LD IX,($642E)  ; {#REGix=*#R$642E+#N($0006,$04,$04).
  $F1E9 RES 7,(IX+$00) ; }
  $F1ED RET            ; Return.
 
-; Reveal Three Decorations
+; Event: Reveal Three Decorations
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9263,7 +9606,7 @@ c$F1EE LD IX,($642E)  ; #REGix=*#R$642E.
  $F215 DJNZ $F1F4     ; Decrease the count and loop back to #R$F1F4.
 ; Continue on to #R$F217.
 
-; Show Movers
+; Event: Show Movers
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9279,7 +9622,7 @@ c$F217 LD IX,($642A)  ; #REGix=*#R$642A.
  $F228 ADD IX,DE      ; }
  $F22A JR $F21B       ; Jump to #R$F21B.
 
-; Hide Furniture
+; Event: Hide Furniture
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9295,7 +9638,7 @@ c$F22C LD IX,($6420) ; #REGix=*#R$6420.
  $F23E LD DE,$0403   ; {Jump to #R$F463 with size #N$04 by #N$03.
  $F241 JP $F463      ; }
 
-; Bump Digit Three
+; Event: Bump Digit Three
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9304,7 +9647,7 @@ c$F22C LD IX,($6420) ; #REGix=*#R$6420.
 c$F244 LD HL,$64C3   ; #REGhl=#R$64C3.
  $F247 JR $F256      ; Jump to #R$F256.
 
-; Bump Digit Four
+; Event: Bump Digit Four
 ;
 ; Used by the routines at #R$EDD9 and #R$F188.
 ; .
@@ -9313,7 +9656,7 @@ c$F244 LD HL,$64C3   ; #REGhl=#R$64C3.
 c$F249 LD HL,$64C4   ; #REGhl=#R$64C4.
  $F24C JR $F256      ; Jump to #R$F256.
 
-; Bump Digit Two
+; Event: Bump Digit Two
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9322,7 +9665,7 @@ c$F249 LD HL,$64C4   ; #REGhl=#R$64C4.
 c$F24E LD HL,$64C2   ; #REGhl=#R$64C2.
  $F251 JR $F256      ; Jump to #R$F256.
 
-; Bump Digit One
+; Event: Bump Digit One
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9331,7 +9674,7 @@ c$F24E LD HL,$64C2   ; #REGhl=#R$64C2.
 c$F253 LD HL,$64C1   ; #REGhl=#R$64C1.
 ; Continue on to #R$F256.
 
-; Bump Digit
+; Event: Bump Digit
 ;
 ; Used by the routines at #R$F244, #R$F249 and #R$F24E.
 ; .
@@ -9348,7 +9691,7 @@ c$F256 LD BC,$2614   ; {Write #N$2614 to *#R$649F.
  $F266 LD (HL),A     ; }
  $F267 JP $ECF2      ; Jump to #R$ECF2.
 
-; Hide Later Actor
+; Event: Hide Later Actor
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9379,7 +9722,7 @@ c$F284 LD A,($6434)  ; {Return unless *#R$6434 is #N$03.
  $F28B LD ($6434),A  ; }
  $F28E RET           ; Return.
 
-; Hide Actor
+; Event: Hide Actor
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9402,7 +9745,7 @@ c$F28F CALL $F284    ; Call #R$F284.
  $F2AE ADD IX,DE     ; }
  $F2B0 JR $F296      ; Jump to #R$F296.
 
-; Randomise Combination
+; Event: Randomise Combination
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9428,7 +9771,7 @@ c$F2B2 LD BC,$013A   ; {Write #N$013A to *#R$649F.
  $F2DE INC A         ; Increase #REGa by one.
  $F2DF RET           ; Return.
 
-; Reveal Door
+; Event: Reveal Door
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9459,7 +9802,7 @@ c$F2E0 LD IX,($6422)   ; #REGix=*#R$6422.
  $F318 LD (IX+$09),$FF ; }
  $F31C RET             ; Return.
 
-; Reveal Next Door
+; Event: Reveal Next Door
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9470,7 +9813,7 @@ c$F31D LD IX,($6422) ; #REGix=*#R$6422.
  $F324 ADD IX,DE     ; }
  $F326 JR $F2E4      ; Jump to #R$F2E4.
 
-; Reveal Third Door
+; Event: Reveal Third Door
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9498,7 +9841,7 @@ c$F333 LD A,(IX+$00)   ; {Copy the column and row into *#REGix+#N$0E and
  $F34B LD (IX+$13),$02 ; }
  $F34F RET             ; Return.
 
-; Print Event Message
+; Event: Print Event Message
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9511,7 +9854,7 @@ c$F350 LD HL,$3C00   ; {Write #N$3C00 to *#SKOOLKID$5C36(CHARS).
  $F35B LD HL,$F3A5   ; #REGhl=#R$F3A5.
  $F35E JP $F460      ; Jump to #R$F460.
 
-; Reveal All Decorations
+; Event: Reveal All Decorations
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9539,7 +9882,7 @@ c$F361 LD IX,($642E)  ; #REGix=*#R$642E.
  $F391 ADD IX,DE      ; }
  $F393 JR $F365       ; Jump to #R$F365.
 
-; Toggle Tune
+; Event: Toggle Tune
 ;
 ; Used by the routine at #R$EDD9.
 ; .
@@ -9598,15 +9941,15 @@ c$F42A JP $F56A      ; Jump to #R$F56A.
 
 ; Jump Set Print Position
 ;
-; Used by the routines at #R$D5AC, #R$D9B6, #R$DC62, #R$DD97, #R$DE19, #R$EA02,
+; Used by the routines at #R$D5AC, #R$DA15, #R$DC62, #R$DD97, #R$DE19, #R$EA02,
 ; #R$ECF2, #R$ED82, #R$ED9A, #R$EDB1, #R$F090 and #R$F361.
 @label=JumpTable_SetPrintPosition
 c$F42D JP $F5C4      ; Jump to #R$F5C4.
 
 ; Jump Delay
 ;
-; Used by the routines at #R$D5AC, #R$D877, #R$DC26, #R$DC62, #R$E46C, #R$E51D
-; and #R$E666.
+; Used by the routines at #R$D5AC, #R$D877, #R$DC53, #R$DD37, #R$DD84, #R$E46C,
+; #R$E51D and #R$E666.
 @label=JumpTable_Delay
 c$F430 JP $F5EC      ; Jump to #R$F5EC.
 
@@ -9619,7 +9962,7 @@ c$F433 JP $F5F4      ; Jump to #R$F5F4.
 
 ; Jump Print Character
 ;
-; Used by the routines at #R$D5AC, #R$D9B6, #R$DD97, #R$DE19, #R$ECF2, #R$EDB1
+; Used by the routines at #R$D5AC, #R$DA15, #R$DD97, #R$DE19, #R$ECF2, #R$EDB1
 ; and #R$F090.
 @label=JumpTable_PrintCharacter
 c$F436 JP $F60A      ; Jump to #R$F60A.
@@ -9650,7 +9993,7 @@ c$F442 JP $F6E1      ; Jump to #R$F6E1.
 
 ; Jump Print Sprite
 ;
-; Used by the routines at #R$DA3F, #R$DB05, #R$EA02, #R$ED82, #R$ED9A and
+; Used by the routines at #R$DA3F, #R$DB24, #R$EA02, #R$ED82, #R$ED9A and
 ; #R$F361.
 @label=JumpTable_PrintSprite
 c$F445 JP $F7AA      ; Jump to #R$F7AA.
@@ -9706,7 +10049,7 @@ c$F45D JP $FB90      ; Jump to #R$FB90.
 
 ; Jump Print Message
 ;
-; Used by the routines at #R$D5AC, #R$DC62 and #R$F350.
+; Used by the routines at #R$D5AC, #R$DD37 and #R$F350.
 @label=JumpTable_PrintMessage
 c$F460 JP $F544      ; Jump to #R$F544.
 
@@ -9774,6 +10117,9 @@ c$F4A8 CALL $F5C4    ; Call #R$F5C4.
  $F4AB LD A,($64B4)  ; {Jump to #R$F4B9 if *#R$64B4 is the last life.
  $F4AE DEC A         ;
  $F4AF JR Z,$F4B9    ; }
+; #UDGTABLE
+; { #GLYPH$E3,$07(glyph-e3) }
+; UDGTABLE#
  $F4B1 LD B,A        ; {Set the remaining-life count and the #N$E3 icon.
  $F4B2 LD A,$E3      ; }
 @label=Draw_StatusIcons_Target

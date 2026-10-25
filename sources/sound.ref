@@ -20,9 +20,9 @@
 
 #AUDIO0(bonus.wav)(#INCLUDE(Bonus))
 
-[Audio:Click:Click]
+[Audio:Noise:Noise]
 
-#AUDIO0(click.wav)(#INCLUDE(Click))
+#AUDIO0(noise.wav)(#INCLUDE(Noise))
 
 Note, this uses #R$F433 and so isn't the same twice.
 
