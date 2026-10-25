@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 56005</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56004.html">56004</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56005">Map</a></td>
+<td class="next">
+Next: <a href="56069.html">56069</a>
+</td>
+</tr>
+</table>
+<div class="description">56005: Animate Pendulum</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="56069.html">Handler_PendulumRooms</a>.
+</div>
+<div class="paragraph">
+Steps the pendulum sprite IDs for rooms 10 and 11.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56005"></span>
+<div class="comments">
+<div class="paragraph">
+Reset after a room change.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum</td>
+<td class="address-2"><span id="56005"></span>56005</td>
+<td class="instruction">LD A,(56003)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56005.html#56022">Handler_Pendulum_Step</a> unless the position is 255.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56008"></span>56008</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56010"></span>56010</td>
+<td class="instruction">JR NZ,<a href="56005.html#56022">Handler_Pendulum_Step</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56012"></span>56012</td>
+<td class="instruction">LD A,216</td>
+<td class="comment-1" rowspan="4">Write 216 to *<a href="56003.html">Pendulum_Position</a> and 2 to *<a href="56004.html">Pendulum_Delta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56014"></span>56014</td>
+<td class="instruction">LD (56003),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56017"></span>56017</td>
+<td class="instruction">LD A,2</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56019"></span>56019</td>
+<td class="instruction">LD (56004),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56022"></span>
+<div class="comments">
+<div class="paragraph">
+Advance the position.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum_Step</td>
+<td class="address-2"><span id="56022"></span>56022</td>
+<td class="instruction">LD A,(56003)</td>
+<td class="comment-1" rowspan="5">Add *<a href="56004.html">Pendulum_Delta</a> to *<a href="56003.html">Pendulum_Position</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56025"></span>56025</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56026"></span>56026</td>
+<td class="instruction">LD A,(56004)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56029"></span>56029</td>
+<td class="instruction">ADD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56030"></span>56030</td>
+<td class="instruction">LD (56003),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56033"></span>
+<div class="comments">
+<div class="paragraph">
+Keep the new position as both sprite IDs.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56033"></span>56033</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="2">Copy the position into <span class="register">B</span> and <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56034"></span>56034</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56035"></span>
+<div class="comments">
+<div class="paragraph">
+Bounce at the end-stops.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56035"></span>56035</td>
+<td class="instruction">CP 214</td>
+<td class="comment-1" rowspan="4">Jump to <a href="56005.html#56058">Handler_Pendulum_Bounce</a> if the position is 214 or 226.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56037"></span>56037</td>
+<td class="instruction">JR Z,<a href="56005.html#56058">Handler_Pendulum_Bounce</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56039"></span>56039</td>
+<td class="instruction">CP 226</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56041"></span>56041</td>
+<td class="instruction">JR Z,<a href="56005.html#56058">Handler_Pendulum_Bounce</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56043"></span>
+<div class="comments">
+<div class="paragraph">
+Use the same frame for both sprites in room 10.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56043"></span>56043</td>
+<td class="instruction">LD A,(25762)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56100.html">Draw_Pendulum</a> if the room is 10.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56046"></span>56046</td>
+<td class="instruction">CP 10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56048"></span>56048</td>
+<td class="instruction">JR Z,<a href="56100.html">Draw_Pendulum</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56050"></span>
+<div class="comments">
+<div class="paragraph">
+Mirror the first sprite in room 11.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56050"></span>56050</td>
+<td class="instruction">LD A,220</td>
+<td class="comment-1" rowspan="4">Mirror the first sprite around 220.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56052"></span>56052</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56053"></span>56053</td>
+<td class="instruction">ADD A,220</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56055"></span>56055</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56056"></span>56056</td>
+<td class="instruction">JR <a href="56100.html">Draw_Pendulum</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="56100.html">Draw_Pendulum</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56058"></span>
+<div class="comments">
+<div class="paragraph">
+Negate the delta and apply it again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum_Bounce</td>
+<td class="address-2"><span id="56058"></span>56058</td>
+<td class="instruction">LD A,(56004)</td>
+<td class="comment-1" rowspan="2">Decrease the delta by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56061"></span>56061</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56062"></span>56062</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert every bit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56064"></span>56064</td>
+<td class="instruction">LD (56004),A</td>
+<td class="comment-1" rowspan="1">Write the negated delta to *<a href="56004.html">Pendulum_Delta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56067"></span>56067</td>
+<td class="instruction">JR <a href="56005.html#56022">Handler_Pendulum_Step</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="56005.html#56022">Handler_Pendulum_Step</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56004.html">56004</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56005">Map</a></td>
+<td class="next">
+Next: <a href="56069.html">56069</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DAC5.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

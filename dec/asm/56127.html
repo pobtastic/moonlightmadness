@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 56127</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56100.html">56100</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56127">Map</a></td>
+<td class="next">
+Next: <a href="56265.html">56265</a>
+</td>
+</tr>
+</table>
+<div class="description">56127: Test Actor Collision</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="57804.html">Handler_Player</a> and <a href="58334.html">Handler_Actors</a>.
+</div>
+<div class="paragraph">
+Reverses the actor at a destination. On a player hit, copies the actor deltas onto <a href="25764.html">Player</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="register-desc">Actor record</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56127"></span>
+<div class="comments">
+<div class="paragraph">
+Reverse at the destination when cell-aligned.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Test_ActorCollision</td>
+<td class="address-2"><span id="56127"></span>56127</td>
+<td class="instruction">LD A,(IY+8)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56127.html#56151">Test_ActorCollision_Column</a> if the horizontal delta is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56130"></span>56130</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56131"></span>56131</td>
+<td class="instruction">JR NZ,<a href="56127.html#56151">Test_ActorCollision_Column</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56133"></span>
+<div class="comments">
+<div class="paragraph">
+Test the destination row.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56133"></span>56133</td>
+<td class="instruction">LD A,7</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56127.html#56167">Test_ActorCollision_Bounds</a> unless the fine-Y is 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56135"></span>56135</td>
+<td class="instruction">CP (IY+3)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56138"></span>56138</td>
+<td class="instruction">JR NZ,<a href="56127.html#56167">Test_ActorCollision_Bounds</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56140"></span>56140</td>
+<td class="instruction">LD A,(IY+1)</td>
+<td class="comment-1" rowspan="3">Call <a href="58334.html#58427">Actor_Reverse</a> if the row matches the destination.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56143"></span>56143</td>
+<td class="instruction">CP (IY+6)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56146"></span>56146</td>
+<td class="instruction">CALL Z,<a href="58334.html#58427">Actor_Reverse</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56149"></span>56149</td>
+<td class="instruction">JR <a href="56127.html#56167">Test_ActorCollision_Bounds</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="56127.html#56167">Test_ActorCollision_Bounds</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56151"></span>
+<div class="comments">
+<div class="paragraph">
+Test the destination column.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Test_ActorCollision_Column</td>
+<td class="address-2"><span id="56151"></span>56151</td>
+<td class="instruction">LD A,7</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56127.html#56167">Test_ActorCollision_Bounds</a> unless the fine-X is 7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56153"></span>56153</td>
+<td class="instruction">CP (IY+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56156"></span>56156</td>
+<td class="instruction">JR NZ,<a href="56127.html#56167">Test_ActorCollision_Bounds</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56158"></span>56158</td>
+<td class="instruction">LD A,(IY+0)</td>
+<td class="comment-1" rowspan="3">Call <a href="58334.html#58427">Actor_Reverse</a> if the column matches the destination.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56161"></span>56161</td>
+<td class="instruction">CP (IY+5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56164"></span>56164</td>
+<td class="instruction">CALL Z,<a href="58334.html#58427">Actor_Reverse</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56167"></span>
+<div class="comments">
+<div class="paragraph">
+Skip the hit test while jumping or falling.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Test_ActorCollision_Bounds</td>
+<td class="address-2"><span id="56167"></span>56167</td>
+<td class="instruction">LD A,(25616)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="25616.html">Player_JumpTimer</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56170"></span>56170</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56171"></span>56171</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56172"></span>
+<div class="comments">
+<div class="paragraph">
+Require a close vertical overlap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56172"></span>56172</td>
+<td class="instruction">LD A,(IY+1)</td>
+<td class="comment-1" rowspan="6">Convert the actor row and fine-Y into a pixel row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56175"></span>56175</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56176"></span>56176</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56177"></span>56177</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56178"></span>56178</td>
+<td class="instruction">ADD A,(IY+3)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56181"></span>56181</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56182"></span>
+<div class="comments">
+<div class="paragraph">
+Convert the player row the same way.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56182"></span>56182</td>
+<td class="instruction">LD A,(25767)</td>
+<td class="comment-1" rowspan="8">Convert the player row and fine-Y into a pixel row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56185"></span>56185</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56186"></span>56186</td>
+<td class="instruction">LD A,(25765)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56189"></span>56189</td>
+<td class="instruction">SUB 3</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56191"></span>56191</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56192"></span>56192</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56193"></span>56193</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56194"></span>56194</td>
+<td class="instruction">ADD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56195"></span>56195</td>
+<td class="instruction">SUB C</td>
+<td class="comment-1" rowspan="3">Return unless the difference is less than 4.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56196"></span>56196</td>
+<td class="instruction">CP 4</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56198"></span>56198</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56199"></span>
+<div class="comments">
+<div class="paragraph">
+Keep the gap and convert the actor column.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56199"></span>56199</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1">Keep the vertical gap in <span class="register">D</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56200"></span>56200</td>
+<td class="instruction">LD A,(IY+0)</td>
+<td class="comment-1" rowspan="8">Convert the actor column and fine-X into a pixel column.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56203"></span>56203</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56204"></span>56204</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56205"></span>56205</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56206"></span>56206</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56207"></span>56207</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56208"></span>56208</td>
+<td class="instruction">ADD A,(IY+2)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56211"></span>56211</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56212"></span>
+<div class="comments">
+<div class="paragraph">
+Build the overlap limit.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56212"></span>56212</td>
+<td class="instruction">LD A,(25673)</td>
+<td class="comment-1" rowspan="2">Copy the footprint offset into <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56215"></span>56215</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56216"></span>56216</td>
+<td class="instruction">LD A,(IY+4)</td>
+<td class="comment-1" rowspan="7">Write the actor pixel width plus that offset into *<a href="56127.html">56237</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56219"></span>56219</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56220"></span>56220</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56221"></span>56221</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56222"></span>56222</td>
+<td class="instruction">ADD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56223"></span>56223</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56224"></span>56224</td>
+<td class="instruction">LD (56237),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56227"></span>
+<div class="comments">
+<div class="paragraph">
+Test the player width against the actor column.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56227"></span>56227</td>
+<td class="instruction">SUB C</td>
+<td class="comment-1" rowspan="3">Restore the actor pixel width in <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56228"></span>56228</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56229"></span>56229</td>
+<td class="instruction">INC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56230"></span>56230</td>
+<td class="instruction">LD A,(25672)</td>
+<td class="comment-1" rowspan="6">Return unless the ranges overlap.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56233"></span>56233</td>
+<td class="instruction">ADD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56234"></span>56234</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56235"></span>56235</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56236"></span>56236</td>
+<td class="instruction">CP 200</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56238"></span>56238</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56239"></span>
+<div class="comments">
+<div class="paragraph">
+Copy the actor movement onto the player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56239"></span>56239</td>
+<td class="instruction">LD A,(IY+8)</td>
+<td class="comment-1" rowspan="2">Write the horizontal delta to *<a href="25764.html#25772">Player_HorizontalDelta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56242"></span>56242</td>
+<td class="instruction">LD (25772),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56245"></span>56245</td>
+<td class="instruction">LD A,3</td>
+<td class="comment-1" rowspan="2">Write 3 to *<a href="25652.html">CollisionState</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56247"></span>56247</td>
+<td class="instruction">LD (25652),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56250"></span>
+<div class="comments">
+<div class="paragraph">
+Adjust the vertical delta by the gap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56250"></span>56250</td>
+<td class="instruction">LD A,(IY+9)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56127.html#56257">Test_ActorCollision_Store</a> if the vertical delta is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56253"></span>56253</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56254"></span>56254</td>
+<td class="instruction">JR Z,<a href="56127.html#56257">Test_ActorCollision_Store</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56256"></span>56256</td>
+<td class="instruction">SUB D</td>
+<td class="comment-1" rowspan="1">Subtract the vertical gap.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56257"></span>
+<div class="comments">
+<div class="paragraph">
+Store the vertical delta and the actor.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Test_ActorCollision_Store</td>
+<td class="address-2"><span id="56257"></span>56257</td>
+<td class="instruction">LD (25773),A</td>
+<td class="comment-1" rowspan="1">Write the vertical delta to *<a href="25764.html#25773">Player_VerticalDelta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56260"></span>56260</td>
+<td class="instruction">LD (25675),IY</td>
+<td class="comment-1" rowspan="1">Write the actor pointer to *<a href="25675.html">Pointer_CollidedActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56264"></span>56264</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56100.html">56100</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56127">Map</a></td>
+<td class="next">
+Next: <a href="56265.html">56265</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DB3F.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

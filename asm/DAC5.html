@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at DAC5</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="DAC4.html">DAC4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#dac5">Map</a></td>
+<td class="next">
+Next: <a href="DB05.html">DB05</a>
+</td>
+</tr>
+</table>
+<div class="description">DAC5: Animate Pendulum</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="DB05.html">Handler_PendulumRooms</a>.
+</div>
+<div class="paragraph">
+Steps the pendulum sprite IDs for rooms 0A and 0B.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dac5"></span>
+<div class="comments">
+<div class="paragraph">
+Reset after a room change.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum</td>
+<td class="address-2"><span id="dac5"></span>DAC5</td>
+<td class="instruction">LD A,($DAC3)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DAC5.html#dad6">Handler_Pendulum_Step</a> unless the position is FF.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dac8"></span>DAC8</td>
+<td class="instruction">CP $FF</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daca"></span>DACA</td>
+<td class="instruction">JR NZ,<a href="DAC5.html#dad6">Handler_Pendulum_Step</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dacc"></span>DACC</td>
+<td class="instruction">LD A,$D8</td>
+<td class="comment-1" rowspan="4">Write D8 to *<a href="DAC3.html">Pendulum_Position</a> and 02 to *<a href="DAC4.html">Pendulum_Delta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dace"></span>DACE</td>
+<td class="instruction">LD ($DAC3),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dad1"></span>DAD1</td>
+<td class="instruction">LD A,$02</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dad3"></span>DAD3</td>
+<td class="instruction">LD ($DAC4),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dad6"></span>
+<div class="comments">
+<div class="paragraph">
+Advance the position.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum_Step</td>
+<td class="address-2"><span id="dad6"></span>DAD6</td>
+<td class="instruction">LD A,($DAC3)</td>
+<td class="comment-1" rowspan="5">Add *<a href="DAC4.html">Pendulum_Delta</a> to *<a href="DAC3.html">Pendulum_Position</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dad9"></span>DAD9</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dada"></span>DADA</td>
+<td class="instruction">LD A,($DAC4)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dadd"></span>DADD</td>
+<td class="instruction">ADD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dade"></span>DADE</td>
+<td class="instruction">LD ($DAC3),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dae1"></span>
+<div class="comments">
+<div class="paragraph">
+Keep the new position as both sprite IDs.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dae1"></span>DAE1</td>
+<td class="instruction">LD C,A</td>
+<td class="comment-1" rowspan="2">Copy the position into <span class="register">B</span> and <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dae2"></span>DAE2</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dae3"></span>
+<div class="comments">
+<div class="paragraph">
+Bounce at the end-stops.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dae3"></span>DAE3</td>
+<td class="instruction">CP $D6</td>
+<td class="comment-1" rowspan="4">Jump to <a href="DAC5.html#dafa">Handler_Pendulum_Bounce</a> if the position is D6 or E2.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dae5"></span>DAE5</td>
+<td class="instruction">JR Z,<a href="DAC5.html#dafa">Handler_Pendulum_Bounce</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dae7"></span>DAE7</td>
+<td class="instruction">CP $E2</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dae9"></span>DAE9</td>
+<td class="instruction">JR Z,<a href="DAC5.html#dafa">Handler_Pendulum_Bounce</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="daeb"></span>
+<div class="comments">
+<div class="paragraph">
+Use the same frame for both sprites in room 0A.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daeb"></span>DAEB</td>
+<td class="instruction">LD A,($64A2)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DB24.html">Draw_Pendulum</a> if the room is 0A.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daee"></span>DAEE</td>
+<td class="instruction">CP $0A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daf0"></span>DAF0</td>
+<td class="instruction">JR Z,<a href="DB24.html">Draw_Pendulum</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="daf2"></span>
+<div class="comments">
+<div class="paragraph">
+Mirror the first sprite in room 0B.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daf2"></span>DAF2</td>
+<td class="instruction">LD A,$DC</td>
+<td class="comment-1" rowspan="4">Mirror the first sprite around DC.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daf4"></span>DAF4</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daf5"></span>DAF5</td>
+<td class="instruction">ADD A,$DC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daf7"></span>DAF7</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="daf8"></span>DAF8</td>
+<td class="instruction">JR <a href="DB24.html">Draw_Pendulum</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DB24.html">Draw_Pendulum</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dafa"></span>
+<div class="comments">
+<div class="paragraph">
+Negate the delta and apply it again.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum_Bounce</td>
+<td class="address-2"><span id="dafa"></span>DAFA</td>
+<td class="instruction">LD A,($DAC4)</td>
+<td class="comment-1" rowspan="2">Decrease the delta by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dafd"></span>DAFD</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dafe"></span>DAFE</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert every bit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db00"></span>DB00</td>
+<td class="instruction">LD ($DAC4),A</td>
+<td class="comment-1" rowspan="1">Write the negated delta to *<a href="DAC4.html">Pendulum_Delta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db03"></span>DB03</td>
+<td class="instruction">JR <a href="DAC5.html#dad6">Handler_Pendulum_Step</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DAC5.html#dad6">Handler_Pendulum_Step</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="DAC4.html">DAC4</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#dac5">Map</a></td>
+<td class="next">
+Next: <a href="DB05.html">DB05</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/56005.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

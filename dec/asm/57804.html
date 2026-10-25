@@ -228,8 +228,8 @@ Moves, collides and draws the player entity at <a href="25764.html">Player</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="57881"></span>57881</td>
-<td class="instruction">CALL <a href="56069.html#56127">Test_ActorCollision</a></td>
-<td class="comment-1" rowspan="1">Call <a href="56069.html#56127">Test_ActorCollision</a>.</td>
+<td class="instruction">CALL <a href="56127.html">Test_ActorCollision</a></td>
+<td class="comment-1" rowspan="1">Call <a href="56127.html">Test_ActorCollision</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -363,7 +363,7 @@ Moves, collides and draws the player entity at <a href="25764.html">Player</a>.
 <td class="asm-label"></td>
 <td class="address-1"><span id="57938"></span>57938</td>
 <td class="instruction">LD A,(25726)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="55295.html#55341">Controls_Kempston</a> if Kempston is selected.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="55341.html">Controls_Kempston</a> if Kempston is selected.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -373,7 +373,7 @@ Moves, collides and draws the player entity at <a href="25764.html">Player</a>.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="57942"></span>57942</td>
-<td class="instruction">JP NZ,<a href="55295.html#55341">Controls_Kempston</a></td>
+<td class="instruction">JP NZ,<a href="55341.html">Controls_Kempston</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -518,7 +518,7 @@ Moves, collides and draws the player entity at <a href="25764.html">Player</a>.
 <span id="57996"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="55295.html">Handler_Housekeeping</a>.
+This entry point is used by the routine at <a href="55341.html">Controls_Kempston</a>.
 </div>
 </div>
 </td>
@@ -1126,7 +1126,7 @@ Probe the tiles to the left while moving left.
 <span id="58200"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="55295.html">Handler_Housekeeping</a> and <a href="56857.html">Handler_Combination</a>.
+This entry point is used by the routines at <a href="55396.html">Controls_Kempston_Climb</a> and <a href="56857.html">Handler_Combination</a>.
 </div>
 </div>
 </td>
@@ -1249,15 +1249,26 @@ Store, move and draw the player.
 <td class="instruction">CALL <a href="62554.html">JumpTable_DrawActor</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="58250"></span>
+<div class="comments">
+<div class="paragraph">
+Reset after drawing.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_Player_Reset</td>
 <td class="address-2"><span id="58250"></span>58250</td>
 <td class="instruction">LD IX,25764</td>
-<td class="comment-1" rowspan="10">Clear movement when the player is not jumping.</td>
+<td class="comment-1" rowspan="1">Point <span class="register">IX</span> at <a href="25764.html">Player</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="58254"></span>58254</td>
 <td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="25652.html">CollisionState</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1268,6 +1279,7 @@ Store, move and draw the player.
 <td class="asm-label"></td>
 <td class="address-1"><span id="58258"></span>58258</td>
 <td class="instruction">LD A,(25616)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="57804.html#58276">Handler_Player_Floor</a> if *<a href="25616.html">Player_JumpTimer</a> is set.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1280,9 +1292,20 @@ Store, move and draw the player.
 <td class="instruction">JR NZ,<a href="57804.html#58276">Handler_Player_Floor</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="58264"></span>
+<div class="comments">
+<div class="paragraph">
+Clear the jump timer and both deltas.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_Player_ClearDeltas</td>
 <td class="address-2"><span id="58264"></span>58264</td>
 <td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="2">Write 0 to *<a href="25616.html">Player_JumpTimer</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1293,6 +1316,7 @@ Store, move and draw the player.
 <td class="asm-label"></td>
 <td class="address-1"><span id="58268"></span>58268</td>
 <td class="instruction">LD (IX+8),0</td>
+<td class="comment-1" rowspan="2">Write 0 to both movement deltas.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1498,7 +1522,7 @@ Next: <a href="58334.html">58334</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../../asm/E1CC.html">Switch to hexadecimal</a>.</div>

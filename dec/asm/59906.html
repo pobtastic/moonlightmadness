@@ -138,7 +138,7 @@ Builds <a href="25797.html">Table_RoomData</a> and copies each packed room into 
 <td class="asm-label"></td>
 <td class="address-1"><span id="59949"></span>59949</td>
 <td class="instruction">LD (25623),HL</td>
-<td class="comment-1" rowspan="4">Write 0 to *<a href="25761.html">CollectedCount</a> and *<a href="25725.html">GameCompleteFlag</a>.</td>
+<td class="comment-1" rowspan="4">Write 0 to *<a href="25761.html">CollectedKeys</a> and *<a href="25725.html">GameCompleteFlag</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1030,7 +1030,7 @@ Skip each collectible record into *<a href="25636.html">ReferenceCollectibles</a
 <span id="60268"></span>
 <div class="comments">
 <div class="paragraph">
-Draw each visible inventory item into *<a href="25638.html">ReferenceInventoryItems</a>.
+Draw each visible key into *<a href="25638.html">ReferenceInventoryItems</a>.
 </div>
 </div>
 </td>
@@ -1104,7 +1104,7 @@ Draw each visible inventory item into *<a href="25638.html">ReferenceInventoryIt
 <td class="asm-label"></td>
 <td class="address-1"><span id="60297"></span>60297</td>
 <td class="instruction">LD A,128</td>
-<td class="comment-1" rowspan="3">Call <a href="62533.html">JumpTable_PrintSprite</a> with glyph 128 and size 2 by 2.</td>
+<td class="comment-1" rowspan="3">Call <a href="62533.html">JumpTable_PrintSprite</a> with the key glyph 128 and size 2 by 2.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1953,7 +1953,7 @@ Next: <a href="60658.html">60658</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../../asm/EA02.html">Switch to hexadecimal</a>.</div>

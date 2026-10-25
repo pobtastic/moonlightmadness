@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 56631</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56610.html">56610</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56631">Map</a></td>
+<td class="next">
+Next: <a href="56684.html">56684</a>
+</td>
+</tr>
+</table>
+<div class="description">56631: Load Game</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="56727.html">Handler_Keyboard</a>.
+</div>
+<div class="paragraph">
+Prints <a href="59364.html">Messaging_LoadGame</a>, waits for "2", then loads the tape block.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56631"></span>
+<div class="comments">
+<div class="paragraph">
+Use the ROM font and print the load message.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Tape_Load</td>
+<td class="address-2"><span id="56631"></span>56631</td>
+<td class="instruction">LD HL,15360</td>
+<td class="comment-1" rowspan="2">Write 15360 to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23606.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56634"></span>56634</td>
+<td class="instruction">LD (23606),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56637"></span>56637</td>
+<td class="instruction">LD HL,59364</td>
+<td class="comment-1" rowspan="2">Print the messaging at <a href="59364.html">Messaging_LoadGame</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56640"></span>56640</td>
+<td class="instruction">CALL <a href="62560.html">JumpTable_PrintMessage</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56643"></span>
+<div class="comments">
+<div class="paragraph">
+Wait until a key is pressed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Tape_Load_Wait</td>
+<td class="address-2"><span id="56643"></span>56643</td>
+<td class="instruction">LD BC,10000</td>
+<td class="comment-1" rowspan="2">Call <a href="62512.html">JumpTable_Delay</a> with a pause of 10000.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56646"></span>56646</td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56649"></span>56649</td>
+<td class="instruction">CALL 654</td>
+<td class="comment-1" rowspan="1">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/654.html">KEY_SCAN</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56652"></span>56652</td>
+<td class="instruction">LD A,E</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56631.html#56643">Tape_Load_Wait</a> if no key is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56653"></span>56653</td>
+<td class="instruction">CP 255</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56655"></span>56655</td>
+<td class="instruction">JR Z,<a href="56631.html#56643">Tape_Load_Wait</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56657"></span>
+<div class="comments">
+<div class="paragraph">
+Load only if "2" was pressed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56657"></span>56657</td>
+<td class="instruction">CP 2</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56631.html#56676">Tape_Load_Resume</a> unless "2" was pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56659"></span>56659</td>
+<td class="instruction">JR NZ,<a href="56631.html#56676">Tape_Load_Resume</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56661"></span>56661</td>
+<td class="instruction">POP BC</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">BC</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56662"></span>56662</td>
+<td class="instruction">CALL <a href="56594.html">Tape_BlockRange</a></td>
+<td class="comment-1" rowspan="1">Call <a href="56594.html">Tape_BlockRange</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56665"></span>56665</td>
+<td class="instruction">SCF</td>
+<td class="comment-1" rowspan="2">Call <a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/1366.html">LD_BYTES</a> with carry set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56666"></span>56666</td>
+<td class="instruction">CALL 1366</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56669"></span>56669</td>
+<td class="instruction">CALL <a href="56684.html">Tape_Checksum</a></td>
+<td class="comment-1" rowspan="3">Jump to <a href="54700.html#54741">Reset_Introduction</a> if the checksum does not match.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56672"></span>56672</td>
+<td class="instruction">CP L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56673"></span>56673</td>
+<td class="instruction">JP NZ,<a href="54700.html#54741">Reset_Introduction</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56676"></span>
+<div class="comments">
+<div class="paragraph">
+Reload the room with bit 7 set.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Tape_Load_Resume</td>
+<td class="address-2"><span id="56676"></span>56676</td>
+<td class="instruction">LD A,(25762)</td>
+<td class="comment-1" rowspan="2">Set bit 7 of the room ID.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56679"></span>56679</td>
+<td class="instruction">SET 7,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56681"></span>56681</td>
+<td class="instruction">JP <a href="55096.html">Change_Room</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55096.html">Change_Room</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56610.html">56610</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56631">Map</a></td>
+<td class="next">
+Next: <a href="56684.html">56684</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DD37.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

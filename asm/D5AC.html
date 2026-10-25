@@ -147,7 +147,7 @@ Sets up the stack, copies the default keys, shows the introduction screen and in
 <span id="d5d5"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routines at <a href="D765.html">Game_Loop</a>, <a href="DC62.html">Handler_Enemies</a> and <a href="DE19.html">Handler_Combination</a>.
+This entry point is used by the routines at <a href="D765.html">Game_Loop</a>, <a href="DD37.html">Tape_Load</a> and <a href="DE19.html">Handler_Combination</a>.
 </div>
 <div class="paragraph">
 Reset the introduction / demo state.
@@ -371,7 +371,7 @@ Install IM 02. Every interrupt vector in the FD page holds FE so the CPU jumps t
 <span id="d62b"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="D877.html">Handler_RoomPause</a>.
+This entry point is used by the routine at <a href="D889.html">Select_Keyboard</a>.
 </div>
 <div class="paragraph">
 Print the introduction menu.
@@ -510,8 +510,8 @@ Wait for a Kempston menu choice.
 <tr>
 <td class="asm-label">Menu_Kempston_Loop</td>
 <td class="address-2"><span id="d661"></span>D661</td>
-<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
-<td class="comment-1" rowspan="1">Call <a href="D7FF.html#d826">Read_Kempston</a>.</td>
+<td class="instruction">CALL <a href="D826.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="1">Call <a href="D826.html">Read_Kempston</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -554,8 +554,8 @@ Wait for a Kempston menu choice.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d670"></span>D670</td>
-<td class="instruction">JP <a href="D877.html#d889">Select_Keyboard</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="D877.html#d889">Select_Keyboard</a>.</td>
+<td class="instruction">JP <a href="D889.html">Select_Keyboard</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="D889.html">Select_Keyboard</a>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
@@ -605,23 +605,23 @@ Keyboard menu. Codes are from <a rel="noopener nofollow" href="https://skoolkit.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d681"></span>D681</td>
 <td class="instruction">CP $24</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D877.html#d889">Select_Keyboard</a> if "1" was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D889.html">Select_Keyboard</a> if "1" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d683"></span>D683</td>
-<td class="instruction">JP Z,<a href="D877.html#d889">Select_Keyboard</a></td>
+<td class="instruction">JP Z,<a href="D889.html">Select_Keyboard</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d686"></span>D686</td>
 <td class="instruction">CP $1C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D877.html#d88c">Select_Kempston</a> if "2" was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D889.html#d88c">Select_Kempston</a> if "2" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d688"></span>D688</td>
-<td class="instruction">JP Z,<a href="D877.html#d88c">Select_Kempston</a></td>
+<td class="instruction">JP Z,<a href="D889.html#d88c">Select_Kempston</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -1127,7 +1127,7 @@ Next: <a href="D730.html">D730</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/asm/54700.html">Switch to decimal</a>.</div>

@@ -124,6 +124,18 @@ IM 02 lands here from <a href="FEFE.html">AliasInterruptRedirect</a>. Plays the 
 <td class="instruction">LD ($646E),A</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="e486"></span>
+<div class="comments">
+<div class="paragraph">
+<audio controls="" src="../audio/score.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/score.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e486"></span>E486</td>
 <td class="instruction">LD A,($6472)</td>
@@ -140,6 +152,18 @@ IM 02 lands here from <a href="FEFE.html">AliasInterruptRedirect</a>. Plays the 
 <td class="instruction">CALL NZ,<a href="E46C.html#e4d3">Sound_Score</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="e48e"></span>
+<div class="comments">
+<div class="paragraph">
+<audio controls="" src="../audio/beep.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/beep.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e48e"></span>E48E</td>
 <td class="instruction">LD A,($6473)</td>
@@ -154,6 +178,18 @@ IM 02 lands here from <a href="FEFE.html">AliasInterruptRedirect</a>. Plays the 
 <td class="asm-label"></td>
 <td class="address-1"><span id="e492"></span>E492</td>
 <td class="instruction">JP NZ,<a href="E46C.html#e4a3">Handler_Interrupts_Beep</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="e495"></span>
+<div class="comments">
+<div class="paragraph">
+<audio controls="" src="../audio/theme-tune.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/theme-tune.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -240,7 +276,7 @@ IM 02 lands here from <a href="FEFE.html">AliasInterruptRedirect</a>. Plays the 
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e4ab"></span>E4AB</td>
-<td class="instruction">CALL <a href="E46C.html#e4b1">Play_Click</a></td>
+<td class="instruction">CALL <a href="E46C.html#e4b1">Play_Noise</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -256,17 +292,17 @@ IM 02 lands here from <a href="FEFE.html">AliasInterruptRedirect</a>. Plays the 
 This entry point is used by the routine at <a href="D904.html">Handler_RoomSixteen</a>.
 </div>
 <div class="paragraph">
-Click the speaker <span class="register">D</span> times using a random delay. <audio controls="" src="../audio/click.wav">
-<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/click.wav">link to the audio</a> instead.</p>
+Toggle the speaker <span class="register">D</span> times using a random delay. <audio controls="" src="../audio/noise.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/noise.wav">link to the audio</a> instead.</p>
 </audio>
 </div>
 </div>
 </td>
 </tr>
 <tr>
-<td class="asm-label">Play_Click</td>
+<td class="asm-label">Play_Noise</td>
 <td class="address-2"><span id="e4b1"></span>E4B1</td>
-<td class="instruction">CALL <a href="E46C.html#e4c1">Play_Click_Delay</a></td>
+<td class="instruction">CALL <a href="E46C.html#e4c1">Play_Noise_Delay</a></td>
 <td class="comment-1" rowspan="8">Toggle bit 4 of the speaker for <span class="register">D</span> iterations.</td>
 </tr>
 <tr>
@@ -277,7 +313,7 @@ Click the speaker <span class="register">D</span> times using a random delay. <a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e4b6"></span>E4B6</td>
-<td class="instruction">CALL <a href="E46C.html#e4c1">Play_Click_Delay</a></td>
+<td class="instruction">CALL <a href="E46C.html#e4c1">Play_Noise_Delay</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -297,7 +333,7 @@ Click the speaker <span class="register">D</span> times using a random delay. <a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e4be"></span>E4BE</td>
-<td class="instruction">JR NZ,<a href="E46C.html#e4b1">Play_Click</a></td>
+<td class="instruction">JR NZ,<a href="E46C.html#e4b1">Play_Noise</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -305,7 +341,7 @@ Click the speaker <span class="register">D</span> times using a random delay. <a
 <td class="instruction">RET</td>
 </tr>
 <tr>
-<td class="asm-label">Play_Click_Delay</td>
+<td class="asm-label">Play_Noise_Delay</td>
 <td class="address-2"><span id="e4c1"></span>E4C1</td>
 <td class="instruction">PUSH BC</td>
 <td class="comment-1" rowspan="9">Delay by a random count masked with <span class="register">B</span>.</td>
@@ -333,10 +369,10 @@ Click the speaker <span class="register">D</span> times using a random delay. <a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e4c8"></span>E4C8</td>
-<td class="instruction">JR Z,<a href="E46C.html#e4ce">Play_Click_Done</a></td>
+<td class="instruction">JR Z,<a href="E46C.html#e4ce">Play_Noise_Done</a></td>
 </tr>
 <tr>
-<td class="asm-label">Play_Click_Wait</td>
+<td class="asm-label">Play_Noise_Wait</td>
 <td class="address-2"><span id="e4ca"></span>E4CA</td>
 <td class="instruction">NOP</td>
 </tr>
@@ -348,10 +384,10 @@ Click the speaker <span class="register">D</span> times using a random delay. <a
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="e4cc"></span>E4CC</td>
-<td class="instruction">DJNZ <a href="E46C.html#e4ca">Play_Click_Wait</a></td>
+<td class="instruction">DJNZ <a href="E46C.html#e4ca">Play_Noise_Wait</a></td>
 </tr>
 <tr>
-<td class="asm-label">Play_Click_Done</td>
+<td class="asm-label">Play_Noise_Done</td>
 <td class="address-2"><span id="e4ce"></span>E4CE</td>
 <td class="instruction">POP BC</td>
 <td class="comment-1" rowspan="2"><span class="register">A</span>=*<a href="641D.html">Active_BorderColour</a>.</td>
@@ -619,7 +655,7 @@ Next: <a href="E51D.html">E51D</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/asm/58476.html">Switch to decimal</a>.</div>

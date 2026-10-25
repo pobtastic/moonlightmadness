@@ -25,11 +25,11 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="D9B6.html">D9B6</a>
+Prev: <a href="DA15.html">DA15</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#da3f">Map</a></td>
 <td class="next">
-Next: <a href="DB05.html">DB05</a>
+Next: <a href="DAC3.html">DAC3</a>
 </td>
 </tr>
 </table>
@@ -43,6 +43,16 @@ Used by the routine at <a href="D7A2.html">Dispatch_Handlers</a>.
 </div>
 <div class="paragraph">
 Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a slot.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da3f"></span>
+<div class="comments">
+<div class="paragraph">
+Point at the carried object.
 </div>
 </div>
 </td>
@@ -62,13 +72,23 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="da45"></span>DA45</td>
 <td class="instruction">LD IX,$648B</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=<a href="648B.html">CarriedObject</a>.</td>
+<td class="comment-1" rowspan="1">Point <span class="register">IX</span> at <a href="648B.html">CarriedObject</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da49"></span>
+<div class="comments">
+<div class="paragraph">
+Return unless something is being carried.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da49"></span>DA49</td>
 <td class="instruction">LD A,(IX+$00)</td>
-<td class="comment-1" rowspan="2">Return if bit 7 is set (nothing carried).</td>
+<td class="comment-1" rowspan="3">Return if nothing is being carried.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -79,12 +99,22 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="da4e"></span>DA4E</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="4">Stash the current clip window on the stack.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da4f"></span>
+<div class="comments">
+<div class="paragraph">
+Stash the clip window and use the object's.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da4f"></span>DA4F</td>
 <td class="instruction">LD HL,($6419)</td>
+<td class="comment-1" rowspan="4">Stash the current clip window on the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -100,12 +130,12 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="da56"></span>DA56</td>
 <td class="instruction">PUSH HL</td>
-<td class="comment-1" rowspan="6">Use the object's own clip window.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da57"></span>DA57</td>
 <td class="instruction">LD L,(IX+$10)</td>
+<td class="comment-1" rowspan="6">Write the object's clip window to *<a href="6419.html">ClipWindow</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -131,30 +161,50 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="da66"></span>DA66</td>
 <td class="instruction">LD ($641B),HL</td>
-<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da69"></span>
+<div class="comments">
+<div class="paragraph">
+Store and draw the object.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da69"></span>DA69</td>
 <td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F424.html">JumpTable_StorePosition</a>.</td>
+<td class="comment-1" rowspan="1">Call <a href="F448.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da6c"></span>DA6C</td>
 <td class="instruction">CALL <a href="F424.html">JumpTable_StorePosition</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
+<td class="comment-1" rowspan="1">Call <a href="F424.html">JumpTable_StorePosition</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da6f"></span>DA6F</td>
 <td class="instruction">CALL <a href="F44B.html">JumpTable_DrawEntity</a></td>
-<td class="comment-1" rowspan="3">Restore the clip window from the stack.</td>
+<td class="comment-1" rowspan="1">Call <a href="F44B.html">JumpTable_DrawEntity</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da72"></span>
+<div class="comments">
+<div class="paragraph">
+Restore the clip window.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da72"></span>DA72</td>
 <td class="instruction">POP HL</td>
+<td class="comment-1" rowspan="4">Restore the clip window from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -165,7 +215,6 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="da76"></span>DA76</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="7">Return unless the object is at the drop cell.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -173,9 +222,20 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="instruction">LD ($6419),HL</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="da7a"></span>
+<div class="comments">
+<div class="paragraph">
+Only drop when the object is cell-aligned.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da7a"></span>DA7A</td>
 <td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="5">Return unless both fine offsets are 07.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -198,10 +258,20 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="da84"></span>
+<div class="comments">
+<div class="paragraph">
+Only drop on the stored drop cell.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da84"></span>DA84</td>
 <td class="instruction">LD A,(IX+$00)</td>
-<td class="comment-1" rowspan="6">Return unless it matches the stored drop mark.</td>
+<td class="comment-1" rowspan="6">Return unless the column and row match the stored drop cell.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -229,10 +299,20 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="instruction">RET NZ</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="da92"></span>
+<div class="comments">
+<div class="paragraph">
+Stamp the object into the room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="da92"></span>DA92</td>
 <td class="instruction">LD C,(IX+$00)</td>
-<td class="comment-1" rowspan="5">Call <a href="F445.html">JumpTable_PrintSprite</a> to stamp the object into the room.</td>
+<td class="comment-1" rowspan="6">Call <a href="F445.html">JumpTable_PrintSprite</a> with the object's cell, size and sprite ID.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -258,18 +338,42 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="asm-label"></td>
 <td class="address-1"><span id="daa1"></span>DAA1</td>
 <td class="instruction">CALL <a href="F445.html">JumpTable_PrintSprite</a></td>
-<td class="comment-1" rowspan="2">Set bit 7 (no longer carried).</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="daa4"></span>
+<div class="comments">
+<div class="paragraph">
+Mark it as no longer carried.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="daa4"></span>DAA4</td>
 <td class="instruction">SET 7,(IX+$00)</td>
+<td class="comment-1" rowspan="1">Set bit 7 of *<span class="register">IX</span>+00.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="daa8"></span>
+<div class="comments">
+<div class="paragraph">
+Only the <a href="F125.html">Event_RevealLadder</a> object writes a window into the room. <table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="object-d9" src="../images/udgs/object-d9.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="daa8"></span>DAA8</td>
 <td class="instruction">LD A,(IX+$06)</td>
-<td class="comment-1" rowspan="3">Return unless the object ID is D9.</td>
+<td class="comment-1" rowspan="3">Skip the window write unless this is D9.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -303,10 +407,25 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="instruction">CALL <a href="F43C.html">JumpTable_ConvertCoordinate</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="dab9"></span>
+<div class="comments">
+<div class="paragraph">
+Write a 2-wide window into those tiles. <table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="window-0e" src="../images/udgs/window-0e.png" /></td>
+<td class="" colspan="1" rowspan="1"><img alt="window-0f" src="../images/udgs/window-0f.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dab9"></span>DAB9</td>
 <td class="instruction">LD DE,$5DCE</td>
-<td class="comment-1" rowspan="5">Write 0E/0F into that tile.</td>
+<td class="comment-1" rowspan="5">Write 0E and 0F into those tiles.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -334,209 +453,21 @@ Draws <a href="648B.html">CarriedObject</a> and drops it when it lines up with a
 <td class="instruction">RET</td>
 <td class="comment-1" rowspan="1">Return.</td>
 </tr>
-<tr>
-<td class="asm-label">Pendulum_Position</td>
-<td class="address-1"><span id="dac3"></span>DAC3</td>
-<td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="asm-label">Pendulum_Delta</td>
-<td class="address-1"><span id="dac4"></span>DAC4</td>
-<td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1"></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="dac5"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="DB05.html">Handler_PendulumRooms</a>.
-</div>
-<div class="paragraph">
-Animate the pendulum in rooms 09-0B.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Handler_Pendulum</td>
-<td class="address-2"><span id="dac5"></span>DAC5</td>
-<td class="instruction">LD A,($DAC3)</td>
-<td class="comment-1" rowspan="7">Reset the pendulum to D8 / 02 if it holds FF.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dac8"></span>DAC8</td>
-<td class="instruction">CP $FF</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daca"></span>DACA</td>
-<td class="instruction">JR NZ,<a href="DA3F.html#dad6">Handler_Pendulum_Step</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dacc"></span>DACC</td>
-<td class="instruction">LD A,$D8</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dace"></span>DACE</td>
-<td class="instruction">LD ($DAC3),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dad1"></span>DAD1</td>
-<td class="instruction">LD A,$02</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dad3"></span>DAD3</td>
-<td class="instruction">LD ($DAC4),A</td>
-</tr>
-<tr>
-<td class="asm-label">Handler_Pendulum_Step</td>
-<td class="address-2"><span id="dad6"></span>DAD6</td>
-<td class="instruction">LD A,($DAC3)</td>
-<td class="comment-1" rowspan="5">Add the delta to the position.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dad9"></span>DAD9</td>
-<td class="instruction">LD C,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dada"></span>DADA</td>
-<td class="instruction">LD A,($DAC4)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dadd"></span>DADD</td>
-<td class="instruction">ADD A,C</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dade"></span>DADE</td>
-<td class="instruction">LD ($DAC3),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dae1"></span>DAE1</td>
-<td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="5">Jump to <a href="DA3F.html#dafa">Handler_Pendulum_Bounce</a> at either end-stop.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dae2"></span>DAE2</td>
-<td class="instruction">LD B,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dae3"></span>DAE3</td>
-<td class="instruction">CP $D6</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dae5"></span>DAE5</td>
-<td class="instruction">JR Z,<a href="DA3F.html#dafa">Handler_Pendulum_Bounce</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dae7"></span>DAE7</td>
-<td class="instruction">CP $E2</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dae9"></span>DAE9</td>
-<td class="instruction">JR Z,<a href="DA3F.html#dafa">Handler_Pendulum_Bounce</a></td>
-<td class="comment-1" rowspan="2">Jump to <a href="DB05.html#db24">Draw_Pendulum</a> if the room is 0A.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daeb"></span>DAEB</td>
-<td class="instruction">LD A,($64A2)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daee"></span>DAEE</td>
-<td class="instruction">CP $0A</td>
-<td class="comment-1" rowspan="5">Mirror the position for the other rooms.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daf0"></span>DAF0</td>
-<td class="instruction">JR Z,<a href="DB05.html#db24">Draw_Pendulum</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daf2"></span>DAF2</td>
-<td class="instruction">LD A,$DC</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daf4"></span>DAF4</td>
-<td class="instruction">SUB B</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daf5"></span>DAF5</td>
-<td class="instruction">ADD A,$DC</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daf7"></span>DAF7</td>
-<td class="instruction">LD B,A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="DB05.html#db24">Draw_Pendulum</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="daf8"></span>DAF8</td>
-<td class="instruction">JR <a href="DB05.html#db24">Draw_Pendulum</a></td>
-</tr>
-<tr>
-<td class="asm-label">Handler_Pendulum_Bounce</td>
-<td class="address-2"><span id="dafa"></span>DAFA</td>
-<td class="instruction">LD A,($DAC4)</td>
-<td class="comment-1" rowspan="4">Negate *<a href="DA3F.html#dac4">Pendulum_Delta</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dafd"></span>DAFD</td>
-<td class="instruction">DEC A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dafe"></span>DAFE</td>
-<td class="instruction">XOR $FF</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="db00"></span>DB00</td>
-<td class="instruction">LD ($DAC4),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="db03"></span>DB03</td>
-<td class="instruction">JR <a href="DA3F.html#dad6">Handler_Pendulum_Step</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="DA3F.html#dad6">Handler_Pendulum_Step</a>.</td>
-</tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="D9B6.html">D9B6</a>
+Prev: <a href="DA15.html">DA15</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#da3f">Map</a></td>
 <td class="next">
-Next: <a href="DB05.html">DB05</a>
+Next: <a href="DAC3.html">DAC3</a>
 </td>
 </tr>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/asm/55871.html">Switch to decimal</a>.</div>

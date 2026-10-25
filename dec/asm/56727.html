@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="56418.html">56418</a>
+Prev: <a href="56722.html">56722</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#56727">Map</a></td>
 <td class="next">
@@ -42,7 +42,7 @@ Next: <a href="56857.html">56857</a>
 Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
 </div>
 <div class="paragraph">
-In-game keypresses: save, load, pause, and the hidden room cheats when *65535 is 10.
+In-game keypresses: save, load, pause, toggle tune, and the hidden room cheats when *65535 is 10.
 </div>
 </div>
 </td>
@@ -63,45 +63,45 @@ In-game keypresses: save, load, pause, and the hidden room cheats when *65535 is
 <td class="asm-label"></td>
 <td class="address-1"><span id="56731"></span>56731</td>
 <td class="instruction">CP 30</td>
-<td class="comment-1" rowspan="2">Jump to <a href="56418.html#56610">Tape_Save</a> if "S" was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56610.html">Tape_Save</a> if "S" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56733"></span>56733</td>
-<td class="instruction">JR Z,<a href="56418.html#56610">Tape_Save</a></td>
+<td class="instruction">JR Z,<a href="56610.html">Tape_Save</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56735"></span>56735</td>
 <td class="instruction">CP 25</td>
-<td class="comment-1" rowspan="2">Jump to <a href="56418.html#56631">Tape_Load</a> if "J" was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56631.html">Tape_Load</a> if "J" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56737"></span>56737</td>
-<td class="instruction">JR Z,<a href="56418.html#56631">Tape_Load</a></td>
+<td class="instruction">JR Z,<a href="56631.html">Tape_Load</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56739"></span>56739</td>
 <td class="instruction">CP 34</td>
-<td class="comment-1" rowspan="2">Jump to <a href="56418.html#56708">Wait_Keypress</a> if "H" was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56708.html">Wait_Keypress</a> if "H" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56741"></span>56741</td>
-<td class="instruction">JR Z,<a href="56418.html#56708">Wait_Keypress</a></td>
+<td class="instruction">JR Z,<a href="56708.html">Wait_Keypress</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56743"></span>56743</td>
 <td class="instruction">CP 16</td>
-<td class="comment-1" rowspan="2">Jump to <a href="56418.html#56722">Cheat_LoseLife</a> if "Q" was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56722.html">Toggle_Tune</a> if "Q" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56745"></span>56745</td>
-<td class="instruction">JR Z,<a href="56418.html#56722">Cheat_LoseLife</a></td>
+<td class="instruction">JR Z,<a href="56722.html">Toggle_Tune</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -160,7 +160,7 @@ In-game keypresses: save, load, pause, and the hidden room cheats when *65535 is
 <td class="asm-label"></td>
 <td class="address-1"><span id="56771"></span>56771</td>
 <td class="instruction">LD A,E</td>
-<td class="comment-1" rowspan="3">Jump to <a href="56418.html#56565">Cheat_NextRoom</a> if "8" was pressed.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56565.html">Cheat_NextRoom</a> if "8" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -170,18 +170,18 @@ In-game keypresses: save, load, pause, and the hidden room cheats when *65535 is
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56774"></span>56774</td>
-<td class="instruction">JP Z,<a href="56418.html#56565">Cheat_NextRoom</a></td>
+<td class="instruction">JP Z,<a href="56565.html">Cheat_NextRoom</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56777"></span>56777</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="56418.html#56579">Cheat_PreviousRoom</a> if "1" was pressed.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56579.html">Cheat_PreviousRoom</a> if "1" was pressed.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56778"></span>56778</td>
-<td class="instruction">JP Z,<a href="56418.html#56579">Cheat_PreviousRoom</a></td>
+<td class="instruction">JP Z,<a href="56579.html">Cheat_PreviousRoom</a></td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -369,7 +369,7 @@ Print <span class="register">C</span> as an ASCII digit.
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="56418.html">56418</a>
+Prev: <a href="56722.html">56722</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#56727">Map</a></td>
 <td class="next">
@@ -379,7 +379,7 @@ Next: <a href="56857.html">56857</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../../asm/DD97.html">Switch to hexadecimal</a>.</div>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at DB3F</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="DB24.html">DB24</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#db3f">Map</a></td>
+<td class="next">
+Next: <a href="DBC9.html">DBC9</a>
+</td>
+</tr>
+</table>
+<div class="description">DB3F: Test Actor Collision</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="E1CC.html">Handler_Player</a> and <a href="E3DE.html">Handler_Actors</a>.
+</div>
+<div class="paragraph">
+Reverses the actor at a destination. On a player hit, copies the actor deltas onto <a href="64A4.html">Player</a>.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IY</td>
+<td class="register-desc">Actor record</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="db3f"></span>
+<div class="comments">
+<div class="paragraph">
+Reverse at the destination when cell-aligned.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Test_ActorCollision</td>
+<td class="address-2"><span id="db3f"></span>DB3F</td>
+<td class="instruction">LD A,(IY+$08)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DB3F.html#db57">Test_ActorCollision_Column</a> if the horizontal delta is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db42"></span>DB42</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db43"></span>DB43</td>
+<td class="instruction">JR NZ,<a href="DB3F.html#db57">Test_ActorCollision_Column</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="db45"></span>
+<div class="comments">
+<div class="paragraph">
+Test the destination row.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db45"></span>DB45</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DB3F.html#db67">Test_ActorCollision_Bounds</a> unless the fine-Y is 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db47"></span>DB47</td>
+<td class="instruction">CP (IY+$03)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db4a"></span>DB4A</td>
+<td class="instruction">JR NZ,<a href="DB3F.html#db67">Test_ActorCollision_Bounds</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db4c"></span>DB4C</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="3">Call <a href="E3DE.html#e43b">Actor_Reverse</a> if the row matches the destination.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db4f"></span>DB4F</td>
+<td class="instruction">CP (IY+$06)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db52"></span>DB52</td>
+<td class="instruction">CALL Z,<a href="E3DE.html#e43b">Actor_Reverse</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db55"></span>DB55</td>
+<td class="instruction">JR <a href="DB3F.html#db67">Test_ActorCollision_Bounds</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="DB3F.html#db67">Test_ActorCollision_Bounds</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="db57"></span>
+<div class="comments">
+<div class="paragraph">
+Test the destination column.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Test_ActorCollision_Column</td>
+<td class="address-2"><span id="db57"></span>DB57</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DB3F.html#db67">Test_ActorCollision_Bounds</a> unless the fine-X is 07.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db59"></span>DB59</td>
+<td class="instruction">CP (IY+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db5c"></span>DB5C</td>
+<td class="instruction">JR NZ,<a href="DB3F.html#db67">Test_ActorCollision_Bounds</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db5e"></span>DB5E</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="3">Call <a href="E3DE.html#e43b">Actor_Reverse</a> if the column matches the destination.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db61"></span>DB61</td>
+<td class="instruction">CP (IY+$05)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db64"></span>DB64</td>
+<td class="instruction">CALL Z,<a href="E3DE.html#e43b">Actor_Reverse</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="db67"></span>
+<div class="comments">
+<div class="paragraph">
+Skip the hit test while jumping or falling.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Test_ActorCollision_Bounds</td>
+<td class="address-2"><span id="db67"></span>DB67</td>
+<td class="instruction">LD A,($6410)</td>
+<td class="comment-1" rowspan="3">Return if *<a href="6410.html">Player_JumpTimer</a> is set.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db6a"></span>DB6A</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db6b"></span>DB6B</td>
+<td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="db6c"></span>
+<div class="comments">
+<div class="paragraph">
+Require a close vertical overlap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db6c"></span>DB6C</td>
+<td class="instruction">LD A,(IY+$01)</td>
+<td class="comment-1" rowspan="6">Convert the actor row and fine-Y into a pixel row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db6f"></span>DB6F</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db70"></span>DB70</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db71"></span>DB71</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db72"></span>DB72</td>
+<td class="instruction">ADD A,(IY+$03)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db75"></span>DB75</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="db76"></span>
+<div class="comments">
+<div class="paragraph">
+Convert the player row the same way.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db76"></span>DB76</td>
+<td class="instruction">LD A,($64A7)</td>
+<td class="comment-1" rowspan="8">Convert the player row and fine-Y into a pixel row.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db79"></span>DB79</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db7a"></span>DB7A</td>
+<td class="instruction">LD A,($64A5)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db7d"></span>DB7D</td>
+<td class="instruction">SUB $03</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db7f"></span>DB7F</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db80"></span>DB80</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db81"></span>DB81</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db82"></span>DB82</td>
+<td class="instruction">ADD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db83"></span>DB83</td>
+<td class="instruction">SUB C</td>
+<td class="comment-1" rowspan="3">Return unless the difference is less than 04.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db84"></span>DB84</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db86"></span>DB86</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="db87"></span>
+<div class="comments">
+<div class="paragraph">
+Keep the gap and convert the actor column.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db87"></span>DB87</td>
+<td class="instruction">LD D,A</td>
+<td class="comment-1" rowspan="1">Keep the vertical gap in <span class="register">D</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db88"></span>DB88</td>
+<td class="instruction">LD A,(IY+$00)</td>
+<td class="comment-1" rowspan="8">Convert the actor column and fine-X into a pixel column.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db8b"></span>DB8B</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db8c"></span>DB8C</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db8d"></span>DB8D</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db8e"></span>DB8E</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db8f"></span>DB8F</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db90"></span>DB90</td>
+<td class="instruction">ADD A,(IY+$02)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db93"></span>DB93</td>
+<td class="instruction">LD B,A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="db94"></span>
+<div class="comments">
+<div class="paragraph">
+Build the overlap limit.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db94"></span>DB94</td>
+<td class="instruction">LD A,($6449)</td>
+<td class="comment-1" rowspan="2">Copy the footprint offset into <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db97"></span>DB97</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db98"></span>DB98</td>
+<td class="instruction">LD A,(IY+$04)</td>
+<td class="comment-1" rowspan="7">Write the actor pixel width plus that offset into *<a href="DB3F.html">DBAD</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db9b"></span>DB9B</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db9c"></span>DB9C</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db9d"></span>DB9D</td>
+<td class="instruction">ADD A,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db9e"></span>DB9E</td>
+<td class="instruction">ADD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="db9f"></span>DB9F</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dba0"></span>DBA0</td>
+<td class="instruction">LD ($DBAD),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dba3"></span>
+<div class="comments">
+<div class="paragraph">
+Test the player width against the actor column.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dba3"></span>DBA3</td>
+<td class="instruction">SUB C</td>
+<td class="comment-1" rowspan="3">Restore the actor pixel width in <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dba4"></span>DBA4</td>
+<td class="instruction">LD C,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dba5"></span>DBA5</td>
+<td class="instruction">INC C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dba6"></span>DBA6</td>
+<td class="instruction">LD A,($6448)</td>
+<td class="comment-1" rowspan="6">Return unless the ranges overlap.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dba9"></span>DBA9</td>
+<td class="instruction">ADD A,C</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbaa"></span>DBAA</td>
+<td class="instruction">SUB B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbab"></span>DBAB</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbac"></span>DBAC</td>
+<td class="instruction">CP $C8</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbae"></span>DBAE</td>
+<td class="instruction">RET NC</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dbaf"></span>
+<div class="comments">
+<div class="paragraph">
+Copy the actor movement onto the player.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbaf"></span>DBAF</td>
+<td class="instruction">LD A,(IY+$08)</td>
+<td class="comment-1" rowspan="2">Write the horizontal delta to *<a href="64A4.html#64ac">Player_HorizontalDelta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbb2"></span>DBB2</td>
+<td class="instruction">LD ($64AC),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbb5"></span>DBB5</td>
+<td class="instruction">LD A,$03</td>
+<td class="comment-1" rowspan="2">Write 03 to *<a href="6434.html">CollisionState</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbb7"></span>DBB7</td>
+<td class="instruction">LD ($6434),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dbba"></span>
+<div class="comments">
+<div class="paragraph">
+Adjust the vertical delta by the gap.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbba"></span>DBBA</td>
+<td class="instruction">LD A,(IY+$09)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DB3F.html#dbc1">Test_ActorCollision_Store</a> if the vertical delta is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbbd"></span>DBBD</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbbe"></span>DBBE</td>
+<td class="instruction">JR Z,<a href="DB3F.html#dbc1">Test_ActorCollision_Store</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbc0"></span>DBC0</td>
+<td class="instruction">SUB D</td>
+<td class="comment-1" rowspan="1">Subtract the vertical gap.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dbc1"></span>
+<div class="comments">
+<div class="paragraph">
+Store the vertical delta and the actor.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Test_ActorCollision_Store</td>
+<td class="address-2"><span id="dbc1"></span>DBC1</td>
+<td class="instruction">LD ($64AD),A</td>
+<td class="comment-1" rowspan="1">Write the vertical delta to *<a href="64A4.html#64ad">Player_VerticalDelta</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbc4"></span>DBC4</td>
+<td class="instruction">LD ($644B),IY</td>
+<td class="comment-1" rowspan="1">Write the actor pointer to *<a href="644B.html">Pointer_CollidedActor</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="dbc8"></span>DBC8</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="DB24.html">DB24</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#db3f">Map</a></td>
+<td class="next">
+Next: <a href="DBC9.html">DBC9</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/56127.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

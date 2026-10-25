@@ -66,8 +66,8 @@ Watches demo input and *<a href="25712.html">PauseTimer</a>. Jumps to <a href="5
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55147"></span>55147</td>
-<td class="instruction">CALL <a href="55295.html#55334">Read_Kempston</a></td>
-<td class="comment-1" rowspan="1">Call <a href="55295.html#55334">Read_Kempston</a>.</td>
+<td class="instruction">CALL <a href="55334.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="1">Call <a href="55334.html">Read_Kempston</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -144,7 +144,7 @@ Watches demo input and *<a href="25712.html">PauseTimer</a>. Jumps to <a href="5
 <td class="asm-label"></td>
 <td class="address-1"><span id="55178"></span>55178</td>
 <td class="instruction">LD A,(55432)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="54700.html#54741">Reset_Introduction</a> if *<a href="55415.html#55432">Demo_RoomCount</a> is 1.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="54700.html#54741">Reset_Introduction</a> if *<a href="55432.html">Demo_RoomCount</a> is 1.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -160,43 +160,49 @@ Watches demo input and *<a href="25712.html">PauseTimer</a>. Jumps to <a href="5
 <td class="asm-label"></td>
 <td class="address-1"><span id="55185"></span>55185</td>
 <td class="instruction">LD (55432),A</td>
-<td class="comment-1" rowspan="1">Write the decreased count back to *<a href="55415.html#55432">Demo_RoomCount</a>.</td>
+<td class="comment-1" rowspan="1">Write the decreased count back to *<a href="55432.html">Demo_RoomCount</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="55188"></span>
+<div class="comments">
+<div class="paragraph">
+Pick a random room between 0-22 and jump to <a href="55096.html">Change_Room</a>.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55188"></span>55188</td>
 <td class="instruction">CALL <a href="62515.html">JumpTable_GetRandomNumber</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62515.html">JumpTable_GetRandomNumber</a>.</td>
+<td class="comment-1" rowspan="3">Generate a random number between 0-15 in <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55191"></span>55191</td>
 <td class="instruction">AND %00001111</td>
-<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55193"></span>55193</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-1" rowspan="1">Copy that room nibble into <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55194"></span>55194</td>
 <td class="instruction">CALL <a href="62515.html">JumpTable_GetRandomNumber</a></td>
-<td class="comment-1" rowspan="1">Call <a href="62515.html">JumpTable_GetRandomNumber</a>.</td>
+<td class="comment-1" rowspan="3">Generate a random number between 0-7 and add it to <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55197"></span>55197</td>
 <td class="instruction">AND %00000111</td>
-<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55199"></span>55199</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-1" rowspan="1">Add the two nibbles together.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -218,7 +224,7 @@ Next: <a href="55202.html">55202</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../../asm/D765.html">Switch to hexadecimal</a>.</div>

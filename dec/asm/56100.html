@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 56100</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56069.html">56069</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56100">Map</a></td>
+<td class="next">
+Next: <a href="56127.html">56127</a>
+</td>
+</tr>
+</table>
+<div class="description">56100: Draw Pendulum</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="56005.html">Handler_Pendulum</a>.
+</div>
+<div class="paragraph">
+Draws the two pendulum sprites.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">B</td>
+<td class="register-desc">First sprite ID</td>
+</tr>
+<tr>
+<td class="register">C</td>
+<td class="register-desc">Second sprite ID</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56100"></span>
+<div class="comments">
+<div class="paragraph">
+Draw the pair.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Draw_Pendulum</td>
+<td class="address-2"><span id="56100"></span>56100</td>
+<td class="instruction">LD A,71</td>
+<td class="comment-1" rowspan="2">Write WHITE (BRIGHT) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56102"></span>56102</td>
+<td class="instruction">LD (23695),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56105"></span>56105</td>
+<td class="instruction">PUSH BC</td>
+<td class="comment-1" rowspan="6">Draw the first sprite at row 18 column 20.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56106"></span>56106</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56107"></span>56107</td>
+<td class="instruction">LD BC,4628</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56110"></span>56110</td>
+<td class="instruction">LD DE,258</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56113"></span>56113</td>
+<td class="instruction">CALL <a href="62533.html">JumpTable_PrintSprite</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56116"></span>56116</td>
+<td class="instruction">POP BC</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56117"></span>56117</td>
+<td class="instruction">LD A,C</td>
+<td class="comment-1" rowspan="4">Jump to <a href="62533.html">JumpTable_PrintSprite</a> for the second sprite at row 18 column 16.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56118"></span>56118</td>
+<td class="instruction">LD BC,4624</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56121"></span>56121</td>
+<td class="instruction">LD DE,258</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56124"></span>56124</td>
+<td class="instruction">JP <a href="62533.html">JumpTable_PrintSprite</a></td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56069.html">56069</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56100">Map</a></td>
+<td class="next">
+Next: <a href="56127.html">56127</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DB24.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

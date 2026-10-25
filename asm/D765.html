@@ -66,8 +66,8 @@ Watches demo input and *<a href="6470.html">PauseTimer</a>. Jumps to <a href="D7
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d76b"></span>D76B</td>
-<td class="instruction">CALL <a href="D7FF.html#d826">Read_Kempston</a></td>
-<td class="comment-1" rowspan="1">Call <a href="D7FF.html#d826">Read_Kempston</a>.</td>
+<td class="instruction">CALL <a href="D826.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="1">Call <a href="D826.html">Read_Kempston</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -144,7 +144,7 @@ Watches demo input and *<a href="6470.html">PauseTimer</a>. Jumps to <a href="D7
 <td class="asm-label"></td>
 <td class="address-1"><span id="d78a"></span>D78A</td>
 <td class="instruction">LD A,($D888)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="D5AC.html#d5d5">Reset_Introduction</a> if *<a href="D877.html#d888">Demo_RoomCount</a> is 01.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D5AC.html#d5d5">Reset_Introduction</a> if *<a href="D888.html">Demo_RoomCount</a> is 01.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -160,43 +160,49 @@ Watches demo input and *<a href="6470.html">PauseTimer</a>. Jumps to <a href="D7
 <td class="asm-label"></td>
 <td class="address-1"><span id="d791"></span>D791</td>
 <td class="instruction">LD ($D888),A</td>
-<td class="comment-1" rowspan="1">Write the decreased count back to *<a href="D877.html#d888">Demo_RoomCount</a>.</td>
+<td class="comment-1" rowspan="1">Write the decreased count back to *<a href="D888.html">Demo_RoomCount</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d794"></span>
+<div class="comments">
+<div class="paragraph">
+Pick a random room between 00-16 and jump to <a href="D738.html">Change_Room</a>.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d794"></span>D794</td>
 <td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F433.html">JumpTable_GetRandomNumber</a>.</td>
+<td class="comment-1" rowspan="3">Generate a random number between 00-0F in <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d797"></span>D797</td>
 <td class="instruction">AND %00001111</td>
-<td class="comment-1" rowspan="1">Keep only bits 0-3.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d799"></span>D799</td>
 <td class="instruction">LD E,A</td>
-<td class="comment-1" rowspan="1">Copy that room nibble into <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d79a"></span>D79A</td>
 <td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
-<td class="comment-1" rowspan="1">Call <a href="F433.html">JumpTable_GetRandomNumber</a>.</td>
+<td class="comment-1" rowspan="3">Generate a random number between 00-07 and add it to <span class="register">E</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d79d"></span>D79D</td>
 <td class="instruction">AND %00000111</td>
-<td class="comment-1" rowspan="1">Keep only bits 0-2.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d79f"></span>D79F</td>
 <td class="instruction">ADD A,E</td>
-<td class="comment-1" rowspan="1">Add the two nibbles together.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -218,7 +224,7 @@ Next: <a href="D7A2.html">D7A2</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/asm/55141.html">Switch to decimal</a>.</div>

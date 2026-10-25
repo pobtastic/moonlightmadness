@@ -48,10 +48,20 @@ Special actor for room 16.
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d904"></span>
+<div class="comments">
+<div class="paragraph">
+Return unless this is room 16.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_RoomSixteen</td>
 <td class="address-2"><span id="d904"></span>D904</td>
 <td class="instruction">LD A,($64A2)</td>
-<td class="comment-1" rowspan="2">Return if *<a href="64A2.html">CurrentRoom</a> is not 16.</td>
+<td class="comment-1" rowspan="3">Return if *<a href="64A2.html">CurrentRoom</a> is not 16.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -62,12 +72,22 @@ Special actor for room 16.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d909"></span>D909</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="2"><span class="register">IX</span>=<a href="644D.html">SpecialActor</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d90a"></span>
+<div class="comments">
+<div class="paragraph">
+Point at the special actor and set the clip window.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d90a"></span>D90A</td>
 <td class="instruction">LD IX,$644D</td>
+<td class="comment-1" rowspan="1">Point <span class="register">IX</span> at <a href="644D.html">SpecialActor</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -81,21 +101,41 @@ Special actor for room 16.
 <td class="instruction">LD ($641B),BC</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d915"></span>
+<div class="comments">
+<div class="paragraph">
+Draw the actor if it is already active.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d915"></span>D915</td>
 <td class="instruction">BIT 7,(IX+$00)</td>
-<td class="comment-1" rowspan="1">Jump to <a href="D904.html#d994">Handler_RoomSixteen_Draw</a> if the actor is already active.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="D904.html#d994">Handler_RoomSixteen_Draw</a> if the actor is already active.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d919"></span>D919</td>
 <td class="instruction">JR Z,<a href="D904.html#d994">Handler_RoomSixteen_Draw</a></td>
-<td class="comment-1" rowspan="4">Jump to <a href="D904.html#d92b">Handler_RoomSixteen_Column</a> if the player row is 07 14 or 11.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d91b"></span>
+<div class="comments">
+<div class="paragraph">
+Only spawn when the player is on a trigger row.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d91b"></span>D91B</td>
 <td class="instruction">LD A,($64A5)</td>
+<td class="comment-1" rowspan="7">Jump to <a href="D904.html#d92b">Handler_RoomSixteen_Column</a> if the player row is 07, 14 or 11, otherwise jump to <a href="D904.html#d9ae">Handler_RoomSixteen_Done</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -111,7 +151,6 @@ Special actor for room 16.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d922"></span>D922</td>
 <td class="instruction">CP $14</td>
-<td class="comment-1" rowspan="4">Jump to <a href="D904.html#d9ae">Handler_RoomSixteen_Done</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -129,10 +168,20 @@ Special actor for room 16.
 <td class="instruction">JP NZ,<a href="D904.html#d9ae">Handler_RoomSixteen_Done</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d92b"></span>
+<div class="comments">
+<div class="paragraph">
+Only spawn when the player is in the trigger columns.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_RoomSixteen_Column</td>
 <td class="address-2"><span id="d92b"></span>D92B</td>
 <td class="instruction">LD A,($64A4)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="D904.html#d9ae">Handler_RoomSixteen_Done</a> unless the player column is 0F-16.</td>
+<td class="comment-1" rowspan="5">Jump to <a href="D904.html#d9ae">Handler_RoomSixteen_Done</a> unless the player column is 0F-16.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -148,7 +197,6 @@ Special actor for room 16.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d933"></span>D933</td>
 <td class="instruction">CP $0F</td>
-<td class="comment-1" rowspan="3">Return to <a href="D904.html#d9ae">Handler_RoomSixteen_Done</a> unless <a href="F433.html">JumpTable_GetRandomNumber</a> is less than DC.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -156,15 +204,25 @@ Special actor for room 16.
 <td class="instruction">JR C,<a href="D904.html#d9ae">Handler_RoomSixteen_Done</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d937"></span>
+<div class="comments">
+<div class="paragraph">
+Spawn on a random roll.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d937"></span>D937</td>
 <td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
+<td class="comment-1" rowspan="3">Jump to <a href="D904.html#d9ae">Handler_RoomSixteen_Done</a> if the random number is DC or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d93a"></span>D93A</td>
 <td class="instruction">CP $DC</td>
-<td class="comment-1" rowspan="4">Call <a href="F457.html">JumpTable_SpawnEntity</a> with sprite E6.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -172,9 +230,24 @@ Special actor for room 16.
 <td class="instruction">JR NC,<a href="D904.html#d9ae">Handler_RoomSixteen_Done</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d93e"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="sprite-e6" src="../images/udgs/sprite-e6.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d93e"></span>D93E</td>
 <td class="instruction">LD A,$E6</td>
+<td class="comment-1" rowspan="4">Spawn the actor with sprite E6, colour WHITE (BRIGHT) and size 01 by 01.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -185,7 +258,6 @@ Special actor for room 16.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d942"></span>D942</td>
 <td class="instruction">LD DE,$0101</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D904.html#d95d">Handler_RoomSixteen_Right</a> if <a href="F433.html">JumpTable_GetRandomNumber</a> is 80 or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -193,10 +265,20 @@ Special actor for room 16.
 <td class="instruction">CALL <a href="F457.html">JumpTable_SpawnEntity</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d948"></span>
+<div class="comments">
+<div class="paragraph">
+Choose left or right movement.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d948"></span>D948</td>
 <td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
-<td class="comment-1" rowspan="5">Write the left-moving frame into the actor.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D904.html#d95d">Handler_RoomSixteen_Right</a> if the random number is 80 or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -212,6 +294,7 @@ Special actor for room 16.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d94f"></span>D94F</td>
 <td class="instruction">LD (IX+$00),$1E</td>
+<td class="comment-1" rowspan="3">Start at column 1E and write FB as the horizontal delta.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -222,18 +305,28 @@ Special actor for room 16.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d957"></span>D957</td>
 <td class="instruction">LD (IX+$08),$FB</td>
-<td class="comment-1" rowspan="2">Jump to <a href="D904.html#d969">Handler_RoomSixteen_Sound</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d95b"></span>D95B</td>
 <td class="instruction">JR <a href="D904.html#d969">Handler_RoomSixteen_Sound</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="D904.html#d969">Handler_RoomSixteen_Sound</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d95d"></span>
+<div class="comments">
+<div class="paragraph">
+Start on the left and move right.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_RoomSixteen_Right</td>
 <td class="address-2"><span id="d95d"></span>D95D</td>
 <td class="instruction">LD (IX+$00),$05</td>
-<td class="comment-1" rowspan="3">Write the right-moving frame into the actor.</td>
+<td class="comment-1" rowspan="3">Start at column 05 and write 05 as the horizontal delta.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -250,7 +343,9 @@ Special actor for room 16.
 <span id="d969"></span>
 <div class="comments">
 <div class="paragraph">
-Play a short beep.
+Sound the actor appearing. <audio controls="" src="../audio/noise.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../audio/noise.wav">link to the audio</a> instead.</p>
+</audio>
 </div>
 </div>
 </td>
@@ -259,19 +354,27 @@ Play a short beep.
 <td class="asm-label">Handler_RoomSixteen_Sound</td>
 <td class="address-2"><span id="d969"></span>D969</td>
 <td class="instruction">LD B,$FF</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=FF.</td>
+<td class="comment-1" rowspan="3">Call <a href="E46C.html#e4b1">Play_Noise</a> with mask FF and 32 iterations.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d96b"></span>D96B</td>
 <td class="instruction">LD D,$32</td>
-<td class="comment-1" rowspan="1"><span class="register">D</span>=32.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d96d"></span>D96D</td>
-<td class="instruction">CALL <a href="E46C.html#e4b1">Play_Click</a></td>
-<td class="comment-1" rowspan="1">Call <a href="E46C.html#e4b1">Play_Click</a>.</td>
+<td class="instruction">CALL <a href="E46C.html#e4b1">Play_Noise</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d970"></span>
+<div class="comments">
+<div class="paragraph">
+Choose the actor row.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -304,7 +407,7 @@ Play a short beep.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d97b"></span>D97B</td>
 <td class="instruction">CALL <a href="F433.html">JumpTable_GetRandomNumber</a></td>
-<td class="comment-1" rowspan="3">Jump to <a href="D904.html#d98c">Handler_RoomSixteen_RowHigh</a> if <a href="F433.html">JumpTable_GetRandomNumber</a> is 80 or higher.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="D904.html#d98c">Handler_RoomSixteen_RowHigh</a> if the random number is 80 or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -345,6 +448,16 @@ Play a short beep.
 <td class="instruction">LD (IX+$0B),$10</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d994"></span>
+<div class="comments">
+<div class="paragraph">
+Store, move, draw and erase the actor.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_RoomSixteen_Draw</td>
 <td class="address-2"><span id="d994"></span>D994</td>
 <td class="instruction">CALL <a href="F448.html">JumpTable_AdvanceEntity</a></td>
@@ -375,6 +488,16 @@ Play a short beep.
 <td class="comment-1" rowspan="1">Call <a href="F44E.html">JumpTable_EraseEntity</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="d9a3"></span>
+<div class="comments">
+<div class="paragraph">
+Hide the actor once it has left the room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="d9a3"></span>D9A3</td>
 <td class="instruction">LD A,(IX+$00)</td>
@@ -394,6 +517,16 @@ Play a short beep.
 <td class="asm-label"></td>
 <td class="address-1"><span id="d9aa"></span>D9AA</td>
 <td class="instruction">LD (IX+$00),$80</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d9ae"></span>
+<div class="comments">
+<div class="paragraph">
+Restore the clip window.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_RoomSixteen_Done</td>
@@ -426,7 +559,7 @@ Next: <a href="D9B6.html">D9B6</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/asm/55556.html">Switch to decimal</a>.</div>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 55334</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55295.html">55295</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55334">Map</a></td>
+<td class="next">
+Next: <a href="55341.html">55341</a>
+</td>
+</tr>
+</table>
+<div class="description">55334: Read Kempston</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="54700.html">Initialise_Game</a>, <a href="55141.html">Game_Loop</a>, <a href="55341.html">Controls_Kempston</a> and <a href="55396.html">Controls_Kempston_Climb</a>.
+</div>
+<div class="paragraph">
+Reads the Kempston port twice and returns with the Z flag set if the two reads match.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Kempston port value</td>
+</tr>
+<tr>
+<td class="register">F</td>
+<td class="register-desc">Z flag set if the two reads match</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Read_Kempston</td>
+<td class="address-2"><span id="55334"></span>55334</td>
+<td class="instruction">IN A,(31)</td>
+<td class="comment-1" rowspan="3">Read from the Kempston joystick port twice.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55336"></span>55336</td>
+<td class="instruction">LD E,A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55337"></span>55337</td>
+<td class="instruction">IN A,(31)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55339"></span>55339</td>
+<td class="instruction">CP E</td>
+<td class="comment-1" rowspan="1">Set the Z flag if the two reads match.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="55340"></span>55340</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="55295.html">55295</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#55334">Map</a></td>
+<td class="next">
+Next: <a href="55341.html">55341</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/D826.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

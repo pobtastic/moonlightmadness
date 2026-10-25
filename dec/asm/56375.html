@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 56375</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56358.html">56358</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56375">Map</a></td>
+<td class="next">
+Next: <a href="56403.html">56403</a>
+</td>
+</tr>
+</table>
+<div class="description">56375: Reverse Direction</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="55444.html">Handler_MovingObjects</a> and <a href="56418.html">Handler_Enemies</a>.
+</div>
+<div class="paragraph">
+Negates both deltas and flips facing when the horizontal delta is non-zero.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Entity record</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56375"></span>
+<div class="comments">
+<div class="paragraph">
+Negate the vertical delta.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Reverse_Direction</td>
+<td class="address-2"><span id="56375"></span>56375</td>
+<td class="instruction">LD A,(IX+9)</td>
+<td class="comment-1" rowspan="2">Fetch the vertical delta and decrease it by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56378"></span>56378</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56379"></span>56379</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert every bit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56381"></span>56381</td>
+<td class="instruction">LD (IX+9),A</td>
+<td class="comment-1" rowspan="1">Write the negated vertical delta.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56384"></span>
+<div class="comments">
+<div class="paragraph">
+Negate the horizontal delta.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56384"></span>56384</td>
+<td class="instruction">LD A,(IX+8)</td>
+<td class="comment-1" rowspan="2">Fetch the horizontal delta and decrease it by one.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56387"></span>56387</td>
+<td class="instruction">DEC A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56388"></span>56388</td>
+<td class="instruction">XOR %11111111</td>
+<td class="comment-1" rowspan="1">Invert every bit.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56390"></span>56390</td>
+<td class="instruction">LD (IX+8),A</td>
+<td class="comment-1" rowspan="1">Write the negated horizontal delta.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56393"></span>56393</td>
+<td class="instruction">RET Z</td>
+<td class="comment-1" rowspan="1">Return if it is now zero.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56394"></span>
+<div class="comments">
+<div class="paragraph">
+Flip the facing bit.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56394"></span>56394</td>
+<td class="instruction">LD A,128</td>
+<td class="comment-1" rowspan="3">Toggle bit 7 of *<span class="register">IX</span>+7.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56396"></span>56396</td>
+<td class="instruction">XOR (IX+7)</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56399"></span>56399</td>
+<td class="instruction">LD (IX+7),A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56402"></span>56402</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56358.html">56358</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56375">Map</a></td>
+<td class="next">
+Next: <a href="56403.html">56403</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DC37.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

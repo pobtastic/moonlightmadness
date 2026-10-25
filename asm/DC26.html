@@ -29,7 +29,7 @@ Prev: <a href="DBC9.html">DBC9</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#dc26">Map</a></td>
 <td class="next">
-Next: <a href="DC62.html">DC62</a>
+Next: <a href="DC37.html">DC37</a>
 </td>
 </tr>
 </table>
@@ -48,10 +48,20 @@ Counts *<a href="649F.html">EventTimer</a> down and fires *<a href="64A0.html">P
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="dc26"></span>
+<div class="comments">
+<div class="paragraph">
+Return unless a timer is running.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_EventTimer</td>
 <td class="address-2"><span id="dc26"></span>DC26</td>
 <td class="instruction">LD A,($649F)</td>
-<td class="comment-1" rowspan="2">Return if *<a href="649F.html">EventTimer</a> is zero.</td>
+<td class="comment-1" rowspan="3">Return if *<a href="649F.html">EventTimer</a> is zero.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -62,12 +72,22 @@ Counts *<a href="649F.html">EventTimer</a> down and fires *<a href="64A0.html">P
 <td class="asm-label"></td>
 <td class="address-1"><span id="dc2a"></span>DC2A</td>
 <td class="instruction">RET Z</td>
-<td class="comment-1" rowspan="3">Decrease *<a href="649F.html">EventTimer</a> by one.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="dc2b"></span>
+<div class="comments">
+<div class="paragraph">
+Count down and fire when it hits zero.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dc2b"></span>DC2B</td>
 <td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="2">Decrease *<a href="649F.html">EventTimer</a> by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -78,163 +98,23 @@ Counts *<a href="649F.html">EventTimer</a> down and fires *<a href="64A0.html">P
 <td class="asm-label"></td>
 <td class="address-1"><span id="dc2f"></span>DC2F</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="1">Return if the timer is still running.</td>
+<td class="comment-1" rowspan="2">Return if the timer is still running.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dc30"></span>DC30</td>
 <td class="instruction">RET NZ</td>
-<td class="comment-1" rowspan="3">Jump to <a href="E9FF.html">Dispatch_Events</a> with *<a href="64A0.html">PendingEvent</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dc31"></span>DC31</td>
 <td class="instruction">LD A,($64A0)</td>
+<td class="comment-1" rowspan="2">Jump to <a href="E9FF.html">Dispatch_Events</a> with *<a href="64A0.html">PendingEvent</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="dc34"></span>DC34</td>
 <td class="instruction">JP <a href="E9FF.html">Dispatch_Events</a></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="dc37"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routines at <a href="D894.html">Handler_MovingObjects</a> and <a href="DC62.html">Handler_Enemies</a>.
-</div>
-<div class="paragraph">
-Reverse an object's horizontal/vertical direction.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Reverse_Direction</td>
-<td class="address-2"><span id="dc37"></span>DC37</td>
-<td class="instruction">LD A,(IX+$09)</td>
-<td class="comment-1" rowspan="5">Negate *<span class="register">IX</span>+09 and *<span class="register">IX</span>+08.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc3a"></span>DC3A</td>
-<td class="instruction">DEC A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc3b"></span>DC3B</td>
-<td class="instruction">XOR $FF</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc3d"></span>DC3D</td>
-<td class="instruction">LD (IX+$09),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc40"></span>DC40</td>
-<td class="instruction">LD A,(IX+$08)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc43"></span>DC43</td>
-<td class="instruction">DEC A</td>
-<td class="comment-1" rowspan="2">Return if the vertical delta is now zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc44"></span>DC44</td>
-<td class="instruction">XOR $FF</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc46"></span>DC46</td>
-<td class="instruction">LD (IX+$08),A</td>
-<td class="comment-1" rowspan="3">Toggle bit 7 of *<span class="register">IX</span>+07.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc49"></span>DC49</td>
-<td class="instruction">RET Z</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc4a"></span>DC4A</td>
-<td class="instruction">LD A,$80</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc4c"></span>DC4C</td>
-<td class="instruction">XOR (IX+$07)</td>
-<td class="comment-1" rowspan="3">Return.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc4f"></span>DC4F</td>
-<td class="instruction">LD (IX+$07),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc52"></span>DC52</td>
-<td class="instruction">RET</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="dc53"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="DC62.html">Handler_Enemies</a>.
-</div>
-<div class="paragraph">
-Pause when leaving a non-zero room.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Pause_LeavingRoom</td>
-<td class="address-2"><span id="dc53"></span>DC53</td>
-<td class="instruction">PUSH AF</td>
-<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc54"></span>DC54</td>
-<td class="instruction">LD A,($64A2)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="DC26.html#dc60">Pause_LeavingRoom_Done</a> if *<a href="64A2.html">CurrentRoom</a> is zero.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc57"></span>DC57</td>
-<td class="instruction">OR A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc58"></span>DC58</td>
-<td class="instruction">JR Z,<a href="DC26.html#dc60">Pause_LeavingRoom_Done</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc5a"></span>DC5A</td>
-<td class="instruction">LD BC,$03E8</td>
-<td class="comment-1" rowspan="2">Call <a href="F430.html">JumpTable_Delay</a> with a pause of 03E8.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc5d"></span>DC5D</td>
-<td class="instruction">CALL <a href="F430.html">JumpTable_Delay</a></td>
-</tr>
-<tr>
-<td class="asm-label">Pause_LeavingRoom_Done</td>
-<td class="address-2"><span id="dc60"></span>DC60</td>
-<td class="instruction">POP AF</td>
-<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="dc61"></span>DC61</td>
-<td class="instruction">RET</td>
-<td class="comment-1" rowspan="1">Return.</td>
 </tr>
 </table>
 <table class="asm-navigation">
@@ -244,13 +124,13 @@ Prev: <a href="DBC9.html">DBC9</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#dc26">Map</a></td>
 <td class="next">
-Next: <a href="DC62.html">DC62</a>
+Next: <a href="DC37.html">DC37</a>
 </td>
 </tr>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/asm/56358.html">Switch to decimal</a>.</div>

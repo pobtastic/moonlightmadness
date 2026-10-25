@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 56403</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56375.html">56375</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56403">Map</a></td>
+<td class="next">
+Next: <a href="56418.html">56418</a>
+</td>
+</tr>
+</table>
+<div class="description">56403: Pause Leaving Room</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="56418.html">Handler_Enemies</a>.
+</div>
+<div class="paragraph">
+Delays when leaving a non-zero room.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56403"></span>
+<div class="comments">
+<div class="paragraph">
+Skip the pause in room 0.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Pause_LeavingRoom</td>
+<td class="address-2"><span id="56403"></span>56403</td>
+<td class="instruction">PUSH AF</td>
+<td class="comment-1" rowspan="1">Stash <span class="register">AF</span> on the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56404"></span>56404</td>
+<td class="instruction">LD A,(25762)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56403.html#56416">Pause_LeavingRoom_Done</a> if the room is zero.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56407"></span>56407</td>
+<td class="instruction">OR A</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56408"></span>56408</td>
+<td class="instruction">JR Z,<a href="56403.html#56416">Pause_LeavingRoom_Done</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56410"></span>
+<div class="comments">
+<div class="paragraph">
+Wait, then restore.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56410"></span>56410</td>
+<td class="instruction">LD BC,1000</td>
+<td class="comment-1" rowspan="2">Call <a href="62512.html">JumpTable_Delay</a> with a pause of 1000.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56413"></span>56413</td>
+<td class="instruction">CALL <a href="62512.html">JumpTable_Delay</a></td>
+</tr>
+<tr>
+<td class="asm-label">Pause_LeavingRoom_Done</td>
+<td class="address-2"><span id="56416"></span>56416</td>
+<td class="instruction">POP AF</td>
+<td class="comment-1" rowspan="1">Restore <span class="register">AF</span> from the stack.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56417"></span>56417</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56375.html">56375</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56403">Map</a></td>
+<td class="next">
+Next: <a href="56418.html">56418</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DC53.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

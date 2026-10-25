@@ -25,11 +25,11 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="D7FF.html">D7FF</a>
+Prev: <a href="D864.html">D864</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#d877">Map</a></td>
 <td class="next">
-Next: <a href="D894.html">D894</a>
+Next: <a href="D888.html">D888</a>
 </td>
 </tr>
 </table>
@@ -94,84 +94,21 @@ Pauses using the per-room delay at <a href="E82A.html">Table_RoomPause</a>.
 <td class="instruction">JP <a href="F430.html">JumpTable_Delay</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="F430.html">JumpTable_Delay</a>.</td>
 </tr>
-<tr>
-<td class="asm-label">Demo_RoomCount</td>
-<td class="address-1"><span id="d888"></span>D888</td>
-<td class="instruction">DEFB $00</td>
-<td class="comment-1" rowspan="1">Remaining demo rooms before returning to the menu.</td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="d889"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="D5AC.html">Initialise_Game</a>.
-</div>
-<div class="paragraph">
-Select keyboard (A=00) or Kempston (A=FF).
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Select_Keyboard</td>
-<td class="address-2"><span id="d889"></span>D889</td>
-<td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2"><span class="register">A</span>=00.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d88a"></span>D88A</td>
-<td class="instruction">JR <a href="D877.html#d88e">Select_ControlMethod</a></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="d88c"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routine at <a href="D5AC.html">Initialise_Game</a>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Select_Kempston</td>
-<td class="address-2"><span id="d88c"></span>D88C</td>
-<td class="instruction">XOR A</td>
-<td class="comment-1" rowspan="2"><span class="register">A</span>=FF.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d88d"></span>D88D</td>
-<td class="instruction">DEC A</td>
-</tr>
-<tr>
-<td class="asm-label">Select_ControlMethod</td>
-<td class="address-2"><span id="d88e"></span>D88E</td>
-<td class="instruction">LD ($647E),A</td>
-<td class="comment-1" rowspan="1">Write <span class="register">A</span> to *<a href="647E.html">ControlMethod</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="d891"></span>D891</td>
-<td class="instruction">JP <a href="D5AC.html#d62b">Print_Menu</a></td>
-<td class="comment-1" rowspan="1">Jump to <a href="D5AC.html#d62b">Print_Menu</a>.</td>
-</tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="D7FF.html">D7FF</a>
+Prev: <a href="D864.html">D864</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#d877">Map</a></td>
 <td class="next">
-Next: <a href="D894.html">D894</a>
+Next: <a href="D888.html">D888</a>
 </td>
 </tr>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/asm/55415.html">Switch to decimal</a>.</div>

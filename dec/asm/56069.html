@@ -25,11 +25,11 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="55871.html">55871</a>
+Prev: <a href="56005.html">56005</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#56069">Map</a></td>
 <td class="next">
-Next: <a href="56265.html">56265</a>
+Next: <a href="56100.html">56100</a>
 </td>
 </tr>
 </table>
@@ -42,7 +42,17 @@ Next: <a href="56265.html">56265</a>
 Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
 </div>
 <div class="paragraph">
-Rooms 9-11 share a swinging pendulum.
+Room 9 chooses a frame from the player column. Rooms 10 and 11 animate at <a href="56005.html">Handler_Pendulum</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56069"></span>
+<div class="comments">
+<div class="paragraph">
+Return unless this is a pendulum room.
 </div>
 </div>
 </td>
@@ -51,7 +61,7 @@ Rooms 9-11 share a swinging pendulum.
 <td class="asm-label">Handler_PendulumRooms</td>
 <td class="address-2"><span id="56069"></span>56069</td>
 <td class="instruction">LD A,(25762)</td>
-<td class="comment-1" rowspan="2">Return if *<a href="25762.html">CurrentRoom</a> is 12 or higher.</td>
+<td class="comment-1" rowspan="3">Return if the room is 12 or higher.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -62,12 +72,12 @@ Rooms 9-11 share a swinging pendulum.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56074"></span>56074</td>
 <td class="instruction">RET NC</td>
-<td class="comment-1" rowspan="3">Return if *<a href="25762.html">CurrentRoom</a> is lower than 9.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56075"></span>56075</td>
 <td class="instruction">CP 9</td>
+<td class="comment-1" rowspan="2">Return if the room is lower than 9.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -75,21 +85,41 @@ Rooms 9-11 share a swinging pendulum.
 <td class="instruction">RET C</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="56078"></span>
+<div class="comments">
+<div class="paragraph">
+Animate rooms 10 and 11.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56078"></span>56078</td>
 <td class="instruction">CP 10</td>
-<td class="comment-1" rowspan="2">Jump to <a href="55871.html#56005">Handler_Pendulum</a> if the room is 10 or 11.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56005.html">Handler_Pendulum</a> if the room is 10 or 11.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56080"></span>56080</td>
-<td class="instruction">JR NC,<a href="55871.html#56005">Handler_Pendulum</a></td>
+<td class="instruction">JR NC,<a href="56005.html">Handler_Pendulum</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56082"></span>
+<div class="comments">
+<div class="paragraph">
+Choose a frame from the player column.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56082"></span>56082</td>
 <td class="instruction">LD A,(25764)</td>
-<td class="comment-1" rowspan="2"><span class="register">A</span>=*<a href="25764.html">Player</a>-4.</td>
+<td class="comment-1" rowspan="2">Start from the player column minus 4.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -97,16 +127,41 @@ Rooms 9-11 share a swinging pendulum.
 <td class="instruction">SUB 4</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="56087"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="pendulum-e0" src="../../images/udgs/pendulum-e0.png" /></td>
+<td class="" colspan="1" rowspan="1"><img alt="pendulum-e1" src="../../images/udgs/pendulum-e1.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56087"></span>56087</td>
 <td class="instruction">LD B,224</td>
-<td class="comment-1" rowspan="1"><span class="register">B</span>=224.</td>
+<td class="comment-1" rowspan="1">Set the sprite ID to 224.</td>
 </tr>
 <tr>
-<td class="asm-label">Handler_PendulumRooms_NextRoom</td>
+<td class="routine-comment" colspan="5">
+<span id="56089"></span>
+<div class="comments">
+<div class="paragraph">
+Step the sprite ID back for each six columns.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Handler_Pendulum_FrameLoop</td>
 <td class="address-2"><span id="56089"></span>56089</td>
 <td class="instruction">SUB 6</td>
-<td class="comment-1" rowspan="6">Subtract 6 until <span class="register">A</span> is negative, decreasing <span class="register">B</span> by two each pass.</td>
+<td class="comment-1" rowspan="6">Subtract 6 until <span class="register">A</span> is negative, decreasing the sprite ID by two each pass.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -131,501 +186,48 @@ Rooms 9-11 share a swinging pendulum.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56097"></span>56097</td>
-<td class="instruction">JR <a href="56069.html#56089">Handler_PendulumRooms_NextRoom</a></td>
+<td class="instruction">JR <a href="56069.html#56089">Handler_Pendulum_FrameLoop</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56099"></span>
+<div class="comments">
+<div class="paragraph">
+Use the same frame for both sprites.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_Pendulum_DrawPair</td>
 <td class="address-2"><span id="56099"></span>56099</td>
 <td class="instruction">LD C,B</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=<span class="register">B</span>.</td>
+<td class="comment-1" rowspan="1">Copy the sprite ID into <span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="routine-comment" colspan="5">
-<span id="56100"></span>
 <div class="comments">
 <div class="paragraph">
-This entry point is used by the routine at <a href="55871.html">Handler_CarriedObject</a>.
-</div>
-<div class="paragraph">
-Draw one pendulum pair.
+Continue on to <a href="56100.html">Draw_Pendulum</a>.
 </div>
 </div>
 </td>
-</tr>
-<tr>
-<td class="asm-label">Draw_Pendulum</td>
-<td class="address-2"><span id="56100"></span>56100</td>
-<td class="instruction">LD A,71</td>
-<td class="comment-1" rowspan="2">Write WHITE (BRIGHT) to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/asm/23695.html">ATTR_T</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56102"></span>56102</td>
-<td class="instruction">LD (23695),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56105"></span>56105</td>
-<td class="instruction">PUSH BC</td>
-<td class="comment-1" rowspan="6">Draw the first bob at 1820.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56106"></span>56106</td>
-<td class="instruction">LD A,B</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56107"></span>56107</td>
-<td class="instruction">LD BC,4628</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56110"></span>56110</td>
-<td class="instruction">LD DE,258</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56113"></span>56113</td>
-<td class="instruction">CALL <a href="62533.html">JumpTable_PrintSprite</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56116"></span>56116</td>
-<td class="instruction">POP BC</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56117"></span>56117</td>
-<td class="instruction">LD A,C</td>
-<td class="comment-1" rowspan="4">Jump to <a href="62533.html">JumpTable_PrintSprite</a> for the second bob at 1816.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56118"></span>56118</td>
-<td class="instruction">LD BC,4624</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56121"></span>56121</td>
-<td class="instruction">LD DE,258</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56124"></span>56124</td>
-<td class="instruction">JP <a href="62533.html">JumpTable_PrintSprite</a></td>
-</tr>
-<tr>
-<td class="routine-comment" colspan="5">
-<span id="56127"></span>
-<div class="comments">
-<div class="paragraph">
-This entry point is used by the routines at <a href="57804.html">Handler_Player</a> and <a href="58334.html">Handler_Actors</a>.
-</div>
-<div class="paragraph">
-Test the player against one actor pointed to by <span class="register">IY</span>.
-</div>
-</div>
-</td>
-</tr>
-<tr>
-<td class="asm-label">Test_ActorCollision</td>
-<td class="address-2"><span id="56127"></span>56127</td>
-<td class="instruction">LD A,(IY+8)</td>
-<td class="comment-1" rowspan="3">Jump to <a href="56069.html#56151">Test_ActorCollision_Vertical</a> if the actor is moving vertically.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56130"></span>56130</td>
-<td class="instruction">OR A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56131"></span>56131</td>
-<td class="instruction">JR NZ,<a href="56069.html#56151">Test_ActorCollision_Vertical</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56133"></span>56133</td>
-<td class="instruction">LD A,7</td>
-<td class="comment-1" rowspan="5">Call <a href="58334.html#58427">Actor_Reverse</a> if the actor lines up horizontally.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56135"></span>56135</td>
-<td class="instruction">CP (IY+3)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56138"></span>56138</td>
-<td class="instruction">JR NZ,<a href="56069.html#56167">Test_ActorCollision_Bounds</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56140"></span>56140</td>
-<td class="instruction">LD A,(IY+1)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56143"></span>56143</td>
-<td class="instruction">CP (IY+6)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56146"></span>56146</td>
-<td class="instruction">CALL Z,<a href="58334.html#58427">Actor_Reverse</a></td>
-<td class="comment-1" rowspan="2">Jump to <a href="56069.html#56167">Test_ActorCollision_Bounds</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56149"></span>56149</td>
-<td class="instruction">JR <a href="56069.html#56167">Test_ActorCollision_Bounds</a></td>
-</tr>
-<tr>
-<td class="asm-label">Test_ActorCollision_Vertical</td>
-<td class="address-2"><span id="56151"></span>56151</td>
-<td class="instruction">LD A,7</td>
-<td class="comment-1" rowspan="6">Call <a href="58334.html#58427">Actor_Reverse</a> if the actor lines up vertically.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56153"></span>56153</td>
-<td class="instruction">CP (IY+2)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56156"></span>56156</td>
-<td class="instruction">JR NZ,<a href="56069.html#56167">Test_ActorCollision_Bounds</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56158"></span>56158</td>
-<td class="instruction">LD A,(IY+0)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56161"></span>56161</td>
-<td class="instruction">CP (IY+5)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56164"></span>56164</td>
-<td class="instruction">CALL Z,<a href="58334.html#58427">Actor_Reverse</a></td>
-</tr>
-<tr>
-<td class="asm-label">Test_ActorCollision_Bounds</td>
-<td class="address-2"><span id="56167"></span>56167</td>
-<td class="instruction">LD A,(25616)</td>
-<td class="comment-1" rowspan="3">Return if *<a href="25616.html">Player_JumpTimer</a> is set.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56170"></span>56170</td>
-<td class="instruction">OR A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56171"></span>56171</td>
-<td class="instruction">RET NZ</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56172"></span>56172</td>
-<td class="instruction">LD A,(IY+1)</td>
-<td class="comment-1" rowspan="6">Convert the actor row and fine-Y into a pixel row.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56175"></span>56175</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56176"></span>56176</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56177"></span>56177</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56178"></span>56178</td>
-<td class="instruction">ADD A,(IY+3)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56181"></span>56181</td>
-<td class="instruction">LD C,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56182"></span>56182</td>
-<td class="instruction">LD A,(25767)</td>
-<td class="comment-1" rowspan="11">Convert the player row the same way and return unless the difference is less than 4.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56185"></span>56185</td>
-<td class="instruction">LD B,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56186"></span>56186</td>
-<td class="instruction">LD A,(25765)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56189"></span>56189</td>
-<td class="instruction">SUB 3</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56191"></span>56191</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56192"></span>56192</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56193"></span>56193</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56194"></span>56194</td>
-<td class="instruction">ADD A,B</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56195"></span>56195</td>
-<td class="instruction">SUB C</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56196"></span>56196</td>
-<td class="instruction">CP 4</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56198"></span>56198</td>
-<td class="instruction">RET NC</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56199"></span>56199</td>
-<td class="instruction">LD D,A</td>
-<td class="comment-1" rowspan="9">Convert the actor column and fine-X into a pixel column.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56200"></span>56200</td>
-<td class="instruction">LD A,(IY+0)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56203"></span>56203</td>
-<td class="instruction">DEC A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56204"></span>56204</td>
-<td class="instruction">DEC A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56205"></span>56205</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56206"></span>56206</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56207"></span>56207</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56208"></span>56208</td>
-<td class="instruction">ADD A,(IY+2)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56211"></span>56211</td>
-<td class="instruction">LD B,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56212"></span>56212</td>
-<td class="instruction">LD A,(25673)</td>
-<td class="comment-1" rowspan="18">Compare the player footprint at <a href="25672.html">Player_Footprint</a> and return unless the ranges overlap.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56215"></span>56215</td>
-<td class="instruction">LD C,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56216"></span>56216</td>
-<td class="instruction">LD A,(IY+4)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56219"></span>56219</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56220"></span>56220</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56221"></span>56221</td>
-<td class="instruction">ADD A,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56222"></span>56222</td>
-<td class="instruction">ADD A,C</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56223"></span>56223</td>
-<td class="instruction">DEC A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56224"></span>56224</td>
-<td class="instruction">LD (56237),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56227"></span>56227</td>
-<td class="instruction">SUB C</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56228"></span>56228</td>
-<td class="instruction">LD C,A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56229"></span>56229</td>
-<td class="instruction">INC C</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56230"></span>56230</td>
-<td class="instruction">LD A,(25672)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56233"></span>56233</td>
-<td class="instruction">ADD A,C</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56234"></span>56234</td>
-<td class="instruction">SUB B</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56235"></span>56235</td>
-<td class="instruction">DEC A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56236"></span>56236</td>
-<td class="instruction">CP 200</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56238"></span>56238</td>
-<td class="instruction">RET NC</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56239"></span>56239</td>
-<td class="instruction">LD A,(IY+8)</td>
-<td class="comment-1" rowspan="2">Store the actor state in *<a href="25764.html#25772">Player_StoredState</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56242"></span>56242</td>
-<td class="instruction">LD (25772),A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56245"></span>56245</td>
-<td class="instruction">LD A,3</td>
-<td class="comment-1" rowspan="1"><span class="register">A</span>=3.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56247"></span>56247</td>
-<td class="instruction">LD (25652),A</td>
-<td class="comment-1" rowspan="5">Write the actor pointer to *<a href="25675.html">Pointer_CollidedActor</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56250"></span>56250</td>
-<td class="instruction">LD A,(IY+9)</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56253"></span>56253</td>
-<td class="instruction">OR A</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56254"></span>56254</td>
-<td class="instruction">JR Z,<a href="56069.html#56257">Handler_PendulumRooms_StoreActor</a></td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56256"></span>56256</td>
-<td class="instruction">SUB D</td>
-</tr>
-<tr>
-<td class="asm-label">Handler_PendulumRooms_StoreActor</td>
-<td class="address-2"><span id="56257"></span>56257</td>
-<td class="instruction">LD (25773),A</td>
-<td class="comment-1" rowspan="3">Write the actor pointer to *<a href="25675.html">Pointer_CollidedActor</a>.</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56260"></span>56260</td>
-<td class="instruction">LD (25675),IY</td>
-</tr>
-<tr>
-<td class="asm-label"></td>
-<td class="address-1"><span id="56264"></span>56264</td>
-<td class="instruction">RET</td>
 </tr>
 </table>
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="55871.html">55871</a>
+Prev: <a href="56005.html">56005</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#56069">Map</a></td>
 <td class="next">
-Next: <a href="56265.html">56265</a>
+Next: <a href="56100.html">56100</a>
 </td>
 </tr>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../../asm/DB05.html">Switch to hexadecimal</a>.</div>

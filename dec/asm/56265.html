@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="56069.html">56069</a>
+Prev: <a href="56127.html">56127</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#56265">Map</a></td>
 <td class="next">
@@ -42,7 +42,17 @@ Next: <a href="56358.html">56358</a>
 Used by the routine at <a href="55202.html">Dispatch_Handlers</a>.
 </div>
 <div class="paragraph">
-Picks up a two-byte record when the player stands on it.
+Picks up the first matching 2-wide key and redraws <a href="55829.html">Print_KeyBar</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56265"></span>
+<div class="comments">
+<div class="paragraph">
+Point at the inventory list.
 </div>
 </div>
 </td>
@@ -62,25 +72,34 @@ Picks up a two-byte record when the player stands on it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56271"></span>56271</td>
 <td class="instruction">LD IX,(25638)</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25638.html">ReferenceInventoryItems</a>.</td>
+<td class="comment-1" rowspan="1">Point <span class="register">IX</span> at *<a href="25638.html">ReferenceInventoryItems</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56275"></span>56275</td>
 <td class="instruction">LD A,(25764)</td>
-<td class="comment-1" rowspan="1"><span class="register">C</span>=*<a href="25764.html">Player</a>.</td>
+<td class="comment-1" rowspan="2">Copy the player column into <span class="register">C</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56278"></span>56278</td>
 <td class="instruction">LD C,A</td>
-<td class="comment-1" rowspan="1">Copy the player column into <span class="register">C</span>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56279"></span>
+<div class="comments">
+<div class="paragraph">
+Walk each key record.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_InventoryItems_Loop</td>
 <td class="address-2"><span id="56279"></span>56279</td>
 <td class="instruction">LD A,(IX+0)</td>
-<td class="comment-1" rowspan="2">Return if the terminator 255 is reached.</td>
+<td class="comment-1" rowspan="3">Return if the terminator 255 is reached.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -91,23 +110,33 @@ Picks up a two-byte record when the player stands on it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56284"></span>56284</td>
 <td class="instruction">RET Z</td>
-<td class="comment-1" rowspan="2">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> if this item is already taken.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56285"></span>56285</td>
 <td class="instruction">BIT 7,A</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> if this item is already taken.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56287"></span>56287</td>
 <td class="instruction">JR NZ,<a href="56265.html#56352">Handler_InventoryItems_Next</a></td>
-<td class="comment-1" rowspan="5">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> unless the player column matches.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56289"></span>
+<div class="comments">
+<div class="paragraph">
+Accept this column or the next.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56289"></span>56289</td>
 <td class="instruction">CP C</td>
+<td class="comment-1" rowspan="2">Jump to <a href="56265.html#56296">Handler_InventoryItems_Row</a> if the column matches.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -118,6 +147,7 @@ Picks up a two-byte record when the player stands on it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56292"></span>56292</td>
 <td class="instruction">INC A</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> unless the next column matches.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -128,13 +158,22 @@ Picks up a two-byte record when the player stands on it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56294"></span>56294</td>
 <td class="instruction">JR NZ,<a href="56265.html#56352">Handler_InventoryItems_Next</a></td>
-<td class="comment-1" rowspan="1"></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56296"></span>
+<div class="comments">
+<div class="paragraph">
+Require the same row.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_InventoryItems_Row</td>
 <td class="address-2"><span id="56296"></span>56296</td>
 <td class="instruction">LD A,(25765)</td>
-<td class="comment-1" rowspan="2">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> unless the player row matches.</td>
+<td class="comment-1" rowspan="3">Jump to <a href="56265.html#56352">Handler_InventoryItems_Next</a> unless the player row matches.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -145,12 +184,22 @@ Picks up a two-byte record when the player stands on it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56302"></span>56302</td>
 <td class="instruction">JR NZ,<a href="56265.html#56352">Handler_InventoryItems_Next</a></td>
-<td class="comment-1" rowspan="4">Clear a 2 by 2 hole in the tile buffer.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56304"></span>
+<div class="comments">
+<div class="paragraph">
+Punch a hole in the room tiles.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56304"></span>56304</td>
 <td class="instruction">LD C,(IX+0)</td>
+<td class="comment-1" rowspan="3">Convert the item cell into a <a href="24014.html">Buffer_RoomTiles</a> offset.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -166,7 +215,7 @@ Picks up a two-byte record when the player stands on it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56313"></span>56313</td>
 <td class="instruction">LD DE,24014</td>
-<td class="comment-1" rowspan="4">Mark the record collected.</td>
+<td class="comment-1" rowspan="5">Fill a 2 by 2 hole with 200.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -187,28 +236,50 @@ Picks up a two-byte record when the player stands on it.
 <td class="asm-label"></td>
 <td class="address-1"><span id="56322"></span>56322</td>
 <td class="instruction">CALL <a href="62548.html">JumpTable_FillAttributes</a></td>
-<td class="comment-1" rowspan="3">Increase *<a href="25761.html">CollectedCount</a> by one.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56325"></span>
+<div class="comments">
+<div class="paragraph">
+Hide the record.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56325"></span>56325</td>
 <td class="instruction">LD A,(IX+0)</td>
+<td class="comment-1" rowspan="1">Reload the item column.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56328"></span>56328</td>
-<td class="instruction">OR 128</td>
+<td class="instruction">OR %10000000</td>
+<td class="comment-1" rowspan="1">Set bit 7.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56330"></span>56330</td>
 <td class="instruction">LD (IX+0),A</td>
-<td class="comment-1" rowspan="4">Call <a href="58476.html#58625">Sound_Pickup</a> (pickup sound).</td>
+<td class="comment-1" rowspan="1">Write the hidden record.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56333"></span>
+<div class="comments">
+<div class="paragraph">
+Count the key.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56333"></span>56333</td>
 <td class="instruction">LD A,(25761)</td>
+<td class="comment-1" rowspan="3">Increase *<a href="25761.html">CollectedKeys</a> by one.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -221,10 +292,22 @@ Picks up a two-byte record when the player stands on it.
 <td class="instruction">LD (25761),A</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="56340"></span>
+<div class="comments">
+<div class="paragraph">
+Play the pickup sound and redraw the key bar. <audio controls="" src="../../audio/pickup.wav">
+<p>Your browser doesn't support HTML5 audio. Here is a <a href="../../audio/pickup.wav">link to the audio</a> instead.</p>
+</audio>
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56340"></span>56340</td>
 <td class="instruction">LD BC,50</td>
-<td class="comment-1" rowspan="4">Jump to <a href="55734.html#55829">Print_CollectionBar</a>.</td>
+<td class="comment-1" rowspan="3">Call <a href="58476.html#58625">Sound_Pickup</a> with delay 50 and 25 iterations.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -239,7 +322,18 @@ Picks up a two-byte record when the player stands on it.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="56349"></span>56349</td>
-<td class="instruction">JP <a href="55734.html#55829">Print_CollectionBar</a></td>
+<td class="instruction">JP <a href="55829.html">Print_KeyBar</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="55829.html">Print_KeyBar</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56352"></span>
+<div class="comments">
+<div class="paragraph">
+Step to the next record.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_InventoryItems_Next</td>
@@ -262,7 +356,7 @@ Picks up a two-byte record when the player stands on it.
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="56069.html">56069</a>
+Prev: <a href="56127.html">56127</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#56265">Map</a></td>
 <td class="next">
@@ -272,7 +366,7 @@ Next: <a href="56358.html">56358</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../../asm/DBC9.html">Switch to hexadecimal</a>.</div>

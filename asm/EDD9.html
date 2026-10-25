@@ -42,7 +42,30 @@ Next: <a href="EED2.html">EED2</a>
 Used by the routine at <a href="E9FF.html">Dispatch_Events</a>.
 </div>
 <div class="paragraph">
-Dispatches the event ID in <span class="register">A</span>. Each ID is a collectible, door or scenery action for the current room.
+Dispatches the event ID in <span class="register">A</span> to a room action. Bit 7 marks a collectible pickup.
+</div>
+</div>
+<table class="input">
+<tr class="asm-input-header">
+<th colspan="2">Input</th>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Event ID (bit 7 set for a collectible)</td>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Player entity (unused)</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="edd9"></span>
+<div class="comments">
+<div class="paragraph">
+Stash the caller context.
 </div>
 </div>
 </td>
@@ -75,6 +98,16 @@ Dispatches the event ID in <span class="register">A</span>. Each ID is a collect
 <td class="instruction">PUSH HL</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ede3"></span>
+<div class="comments">
+<div class="paragraph">
+Use the in-game font.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ede3"></span>EDE3</td>
 <td class="instruction">LD HL,$7C70</td>
@@ -86,10 +119,20 @@ Dispatches the event ID in <span class="register">A</span>. Each ID is a collect
 <td class="instruction">LD ($5C36),HL</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="ede9"></span>
+<div class="comments">
+<div class="paragraph">
+Ignore event 26.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="ede9"></span>EDE9</td>
 <td class="instruction">CP $26</td>
-<td class="comment-1" rowspan="2">Return if the event is 26.</td>
+<td class="comment-1" rowspan="2">Return through <a href="EDD9.html#eecb">Handler_Events_Restore</a> if the event is 26.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -97,15 +140,26 @@ Dispatches the event ID in <span class="register">A</span>. Each ID is a collect
 <td class="instruction">RET Z</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="edec"></span>
+<div class="comments">
+<div class="paragraph">
+Return if a timer is already running.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="edec"></span>EDEC</td>
 <td class="instruction">LD L,A</td>
-<td class="comment-1" rowspan="4">Return if *<a href="649F.html">EventTimer</a> is already running.</td>
+<td class="comment-1" rowspan="1">Copy the event ID into <span class="register">L</span>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eded"></span>EDED</td>
 <td class="instruction">LD A,($649F)</td>
+<td class="comment-1" rowspan="3">Return through <a href="EDD9.html#eecb">Handler_Events_Restore</a> if *<a href="649F.html">EventTimer</a> is already running.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -116,6 +170,16 @@ Dispatches the event ID in <span class="register">A</span>. Each ID is a collect
 <td class="asm-label"></td>
 <td class="address-1"><span id="edf1"></span>EDF1</td>
 <td class="instruction">RET NZ</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="edf2"></span>
+<div class="comments">
+<div class="paragraph">
+Collectibles skip the event sound.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -144,7 +208,7 @@ Dispatches the event ID in <span class="register">A</span>. Each ID is a collect
 <span id="edfb"></span>
 <div class="comments">
 <div class="paragraph">
-Jump to the handler for this event ID.
+Keep only the event ID.
 </div>
 </div>
 </td>
@@ -162,10 +226,20 @@ Jump to the handler for this event ID.
 <td class="comment-1" rowspan="1">Keep only bits 0-6.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="edfe"></span>
+<div class="comments">
+<div class="paragraph">
+Jump to the handler for this event ID.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="edfe"></span>EDFE</td>
 <td class="instruction">OR A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EFE6.html">Event_DrawHeader</a> if the event is 00.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EFE6.html">Event_DrawHeader</a> if the event is 00 (draw the first header item).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -176,7 +250,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee02"></span>EE02</td>
 <td class="instruction">CP $01</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EFF5.html">Event_DrawHeaderNext</a> if the event is 01.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EFF5.html">Event_DrawHeaderNext</a> if the event is 01 (draw the next header item).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -187,7 +261,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee07"></span>EE07</td>
 <td class="instruction">CP $03</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F000.html">Event_DrawHeaderPair</a> if the event is 03.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F000.html">Event_DrawHeaderPair</a> if the event is 03 (draw the first two header items).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -198,7 +272,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee0c"></span>EE0C</td>
 <td class="instruction">CP $02</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F011.html">Event_NudgeActor</a> if the event is 02.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F011.html">Event_NudgeActor</a> if the event is 02 (nudge the first actor).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -209,7 +283,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee11"></span>EE11</td>
 <td class="instruction">CP $04</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F350.html">Event_PrintMessage</a> if the event is 04.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F350.html">Event_PrintMessage</a> if the event is 04 (print the event message).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -220,7 +294,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee16"></span>EE16</td>
 <td class="instruction">CP $05</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F03E.html">Event_StartEnemy</a> if the event is 05.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F03E.html">Event_StartEnemy</a> if the event is 05 (start the first enemy).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -231,7 +305,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee1b"></span>EE1B</td>
 <td class="instruction">CP $06</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EEFA.html">Event_RevealHeader</a> if the event is 06.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EEFA.html">Event_RevealHeader</a> if the event is 06 (reveal the room-header item).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -242,7 +316,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee20"></span>EE20</td>
 <td class="instruction">CP $07</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F0C0.html">Event_RevealHeaderTriple</a> if the event is 07.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F0C0.html">Event_RevealHeaderTriple</a> if the event is 07 (reveal three header items).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -253,7 +327,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee25"></span>EE25</td>
 <td class="instruction">CP $08</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EF8A.html">Event_StartActor</a> if the event is 08.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EF8A.html">Event_StartActor</a> if the event is 08 (start an actor walking).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -264,7 +338,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee2a"></span>EE2A</td>
 <td class="instruction">CP $09</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F395.html">Event_ToggleTune</a> if the event is 09.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F395.html">Event_ToggleTune</a> if the event is 09 (toggle the silent-tune flag).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -275,7 +349,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee2f"></span>EE2F</td>
 <td class="instruction">CP $0A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F06A.html">Event_ShortTimer</a> if the event is 0A.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F06A.html">Event_ShortTimer</a> if the event is 0A (start a short event timer).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -286,7 +360,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee34"></span>EE34</td>
 <td class="instruction">CP $0B</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F1C4.html">Event_RevealDecorAndMover</a> if the event is 0B.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F1C4.html">Event_RevealDecorAndMover</a> if the event is 0B (reveal a decoration and a mover).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -297,7 +371,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee39"></span>EE39</td>
 <td class="instruction">CP $0C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F1D4.html">Event_RevealNextPair</a> if the event is 0C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F1D4.html">Event_RevealNextPair</a> if the event is 0C (reveal the next decoration and mover).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -308,7 +382,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee3e"></span>EE3E</td>
 <td class="instruction">CP $0D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F26A.html">Event_HideLaterActor</a> if the event is 0D.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F26A.html">Event_HideLaterActor</a> if the event is 0D (hide a later actor).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -319,7 +393,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee43"></span>EE43</td>
 <td class="instruction">CP $0E</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EFD3.html">Event_SwapKeys</a> if the event is 0E.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EFD3.html">Event_SwapKeys</a> if the event is 0E (swap the left/right keys).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -330,7 +404,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee48"></span>EE48</td>
 <td class="instruction">CP $0F</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F28F.html">Event_HideActor</a> if the event is 0F.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F28F.html">Event_HideActor</a> if the event is 0F (hide the first active actor).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -341,7 +415,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee4d"></span>EE4D</td>
 <td class="instruction">CP $11</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F22C.html">Event_HideFurniture</a> if the event is 11.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F22C.html">Event_HideFurniture</a> if the event is 11 (hide the first furniture item).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -352,7 +426,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee52"></span>EE52</td>
 <td class="instruction">CP $12</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F2E0.html">Event_RevealDoor</a> if the event is 12.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F2E0.html">Event_RevealDoor</a> if the event is 12 (reveal the first door).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -363,7 +437,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee57"></span>EE57</td>
 <td class="instruction">CP $13</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F31D.html">Event_RevealNextDoor</a> if the event is 13.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F31D.html">Event_RevealNextDoor</a> if the event is 13 (reveal the next door).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -374,7 +448,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee5c"></span>EE5C</td>
 <td class="instruction">CP $14</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EEE5.html">Event_RevealDecorations</a> if the event is 14.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EEE5.html">Event_RevealDecorations</a> if the event is 14 (reveal two decorations).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -385,7 +459,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee61"></span>EE61</td>
 <td class="instruction">CP $15</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F328.html">Event_RevealThirdDoor</a> if the event is 15.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F328.html">Event_RevealThirdDoor</a> if the event is 15 (reveal the third door).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -396,7 +470,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee66"></span>EE66</td>
 <td class="instruction">CP $16</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F2B2.html">Event_RandomCombination</a> if the event is 16.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F2B2.html">Event_RandomCombination</a> if the event is 16 (randomise the combination).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -407,7 +481,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee6b"></span>EE6B</td>
 <td class="instruction">CP $17</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F072.html">Event_HeaderAndTimer</a> if the event is 17.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F072.html">Event_HeaderAndTimer</a> if the event is 17 (draw two header items and start a timer).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -418,7 +492,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee70"></span>EE70</td>
 <td class="instruction">CP $18</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F164.html">Event_ShowEnemy</a> if the event is 18.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F164.html">Event_ShowEnemy</a> if the event is 18 (show the first hidden enemy).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -429,7 +503,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee75"></span>EE75</td>
 <td class="instruction">CP $19</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F0E4.html">Event_RevealFurniture</a> if the event is 19.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F0E4.html">Event_RevealFurniture</a> if the event is 19 (reveal the first furniture item).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -440,7 +514,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee7a"></span>EE7A</td>
 <td class="instruction">CP $1A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EF3A.html">Event_RevealPair</a> if the event is 1A.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EF3A.html">Event_RevealPair</a> if the event is 1A (reveal two decorations and a mover).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -451,7 +525,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee7f"></span>EE7F</td>
 <td class="instruction">CP $1B</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F125.html">Event_RevealLadder</a> if the event is 1B.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F125.html">Event_RevealLadder</a> if the event is 1B (reveal the first ladder).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -462,7 +536,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee84"></span>EE84</td>
 <td class="instruction">CP $1C</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EF5C.html">Event_RevealTriple</a> if the event is 1C.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EF5C.html">Event_RevealTriple</a> if the event is 1C (reveal three decorations and three movers).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -473,7 +547,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee89"></span>EE89</td>
 <td class="instruction">CP $1D</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F361.html">Event_RevealAllDecorations</a> if the event is 1D.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F361.html">Event_RevealAllDecorations</a> if the event is 1D (reveal every decoration).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -484,7 +558,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee8e"></span>EE8E</td>
 <td class="instruction">CP $1E</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F1EE.html">Event_RevealThreeDecorations</a> if the event is 1E.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F1EE.html">Event_RevealThreeDecorations</a> if the event is 1E (reveal three decorations).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -495,7 +569,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee93"></span>EE93</td>
 <td class="instruction">CP $1F</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F217.html">Event_ShowMovers</a> if the event is 1F.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F217.html">Event_ShowMovers</a> if the event is 1F (show every moving object).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -506,7 +580,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee98"></span>EE98</td>
 <td class="instruction">CP $20</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F249.html">Event_DigitFour</a> if the event is 20.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F249.html">Event_DigitFour</a> if the event is 20 (increment combination digit 4).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -517,7 +591,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="ee9d"></span>EE9D</td>
 <td class="instruction">CP $21</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F244.html">Event_DigitThree</a> if the event is 21.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F244.html">Event_DigitThree</a> if the event is 21 (increment combination digit 3).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -528,7 +602,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eea2"></span>EEA2</td>
 <td class="instruction">CP $22</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F188.html">Event_AwardDigit</a> if the event is 22.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F188.html">Event_AwardDigit</a> if the event is 22 (award a combination digit).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -539,7 +613,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eea7"></span>EEA7</td>
 <td class="instruction">CP $23</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F24E.html">Event_DigitTwo</a> if the event is 23.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F24E.html">Event_DigitTwo</a> if the event is 23 (increment combination digit 2).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -550,7 +624,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eeac"></span>EEAC</td>
 <td class="instruction">CP $24</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F07D.html">Event_HideHeaderPair</a> if the event is 24.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F07D.html">Event_HideHeaderPair</a> if the event is 24 (hide two header items).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -561,7 +635,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eeb1"></span>EEB1</td>
 <td class="instruction">CP $25</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F253.html">Event_DigitOne</a> if the event is 25.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F253.html">Event_DigitOne</a> if the event is 25 (increment combination digit 1).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -572,7 +646,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eeb6"></span>EEB6</td>
 <td class="instruction">CP $27</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F006.html">Event_DrawHeaderFourth</a> if the event is 27.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F006.html">Event_DrawHeaderFourth</a> if the event is 27 (draw the fourth header item).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -583,7 +657,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eebb"></span>EEBB</td>
 <td class="instruction">CP $28</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F0B4.html">Event_HideHeaderFourth</a> if the event is 28.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F0B4.html">Event_HideHeaderFourth</a> if the event is 28 (hide the fourth header item).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -594,7 +668,7 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eec0"></span>EEC0</td>
 <td class="instruction">CP $29</td>
-<td class="comment-1" rowspan="2">Jump to <a href="F1B6.html">Event_TestHeader</a> if the event is 29.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="F1B6.html">Event_TestHeader</a> if the event is 29 (test the second header item).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -605,12 +679,22 @@ Jump to the handler for this event ID.
 <td class="asm-label"></td>
 <td class="address-1"><span id="eec5"></span>EEC5</td>
 <td class="instruction">CP $2A</td>
-<td class="comment-1" rowspan="2">Jump to <a href="EED2.html">Event_HideEnemies</a> if the event is 2A.</td>
+<td class="comment-1" rowspan="2">Jump to <a href="EED2.html">Event_HideEnemies</a> if the event is 2A (hide the first two enemies).</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eec7"></span>EEC7</td>
 <td class="instruction">JP Z,<a href="EED2.html">Event_HideEnemies</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eeca"></span>
+<div class="comments">
+<div class="paragraph">
+Ignore an unhandled event ID.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_Events_Done</td>
@@ -619,22 +703,41 @@ Jump to the handler for this event ID.
 <td class="comment-1" rowspan="1">Drop the unused return address.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="eecb"></span>
+<div class="comments">
+<div class="paragraph">
+Restore the font and <span class="register">IX</span>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_Events_Restore</td>
 <td class="address-1"><span id="eecb"></span>EECB</td>
 <td class="instruction">POP HL</td>
-<td class="comment-1" rowspan="1">Restore *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a> from the stack.</td>
+<td class="comment-1" rowspan="2">Restore *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a> from the stack.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eecc"></span>EECC</td>
 <td class="instruction">LD ($5C36),HL</td>
-<td class="comment-1" rowspan="1">Write it back to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="eecf"></span>EECF</td>
 <td class="instruction">POP IX</td>
 <td class="comment-1" rowspan="1">Restore <span class="register">IX</span> from the stack.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="eed1"></span>
+<div class="comments">
+<div class="paragraph">
+Return.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -656,7 +759,7 @@ Next: <a href="EED2.html">EED2</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/asm/60889.html">Switch to decimal</a>.</div>

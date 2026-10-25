@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at D82D</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D826.html">D826</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d82d">Map</a></td>
+<td class="next">
+Next: <a href="D864.html">D864</a>
+</td>
+</tr>
+</table>
+<div class="description">D82D: Handler: Kempston</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="E1CC.html">Handler_Player</a>.
+</div>
+<div class="paragraph">
+Reads Kempston and walks, climbs, jumps or fires.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d82d"></span>
+<div class="comments">
+<div class="paragraph">
+Fetch the left/right Kempston masks.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston</td>
+<td class="address-2"><span id="d82d"></span>D82D</td>
+<td class="instruction">LD HL,($6486)</td>
+<td class="comment-1" rowspan="1">Fetch the left mask into <span class="register">L</span> and the right mask into <span class="register">H</span>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d830"></span>
+<div class="comments">
+<div class="paragraph">
+Walk left.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d830"></span>D830</td>
+<td class="instruction">CALL <a href="D826.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#df44">Player_MoveLeft</a> if left matches the stored mask.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d833"></span>D833</td>
+<td class="instruction">JR NZ,<a href="D82D.html#d839">Controls_Kempston_Right</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d835"></span>D835</td>
+<td class="instruction">CP L</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d836"></span>D836</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df44">Player_MoveLeft</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d839"></span>
+<div class="comments">
+<div class="paragraph">
+Walk right.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Right</td>
+<td class="address-2"><span id="d839"></span>D839</td>
+<td class="instruction">CALL <a href="D826.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#df69">Player_MoveRight</a> if right matches the stored mask.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d83c"></span>D83C</td>
+<td class="instruction">JR NZ,<a href="D82D.html#d842">Controls_Kempston_Up</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d83e"></span>D83E</td>
+<td class="instruction">CP H</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d83f"></span>D83F</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df69">Player_MoveRight</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d842"></span>
+<div class="comments">
+<div class="paragraph">
+Climb up, or start a jump.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Up</td>
+<td class="address-2"><span id="d842"></span>D842</td>
+<td class="instruction">CALL <a href="D826.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#e06a">Player_ClimbUp</a> if up (bit 3) is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d845"></span>D845</td>
+<td class="instruction">JR NZ,<a href="D82D.html#d84c">Controls_Kempston_Down</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d847"></span>D847</td>
+<td class="instruction">CP $08</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d849"></span>D849</td>
+<td class="instruction">CALL Z,<a href="DE19.html#e06a">Player_ClimbUp</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d84c"></span>
+<div class="comments">
+<div class="paragraph">
+Climb down.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Down</td>
+<td class="address-2"><span id="d84c"></span>D84C</td>
+<td class="instruction">CALL <a href="D826.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#e013">Player_ClimbDown</a> if down (bit 2) is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d84f"></span>D84F</td>
+<td class="instruction">JR NZ,<a href="D82D.html#d856">Controls_Kempston_Action</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d851"></span>D851</td>
+<td class="instruction">CP $04</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d853"></span>D853</td>
+<td class="instruction">CALL Z,<a href="DE19.html#e013">Player_ClimbDown</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d856"></span>
+<div class="comments">
+<div class="paragraph">
+Fire / use the furniture.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Action</td>
+<td class="address-2"><span id="d856"></span>D856</td>
+<td class="instruction">CALL <a href="D826.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="4">Call <a href="DE19.html#df8e">Player_Action</a> if fire (bit 4) is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d859"></span>D859</td>
+<td class="instruction">JP NZ,<a href="E1CC.html#e28c">Handler_Player_Resolve</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d85c"></span>D85C</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d85e"></span>D85E</td>
+<td class="instruction">CALL Z,<a href="DE19.html#df8e">Player_Action</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d861"></span>
+<div class="comments">
+<div class="paragraph">
+Resolve the player movement.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d861"></span>D861</td>
+<td class="instruction">JP <a href="E1CC.html#e28c">Handler_Player_Resolve</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E1CC.html#e28c">Handler_Player_Resolve</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D826.html">D826</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d82d">Map</a></td>
+<td class="next">
+Next: <a href="D864.html">D864</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/55341.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

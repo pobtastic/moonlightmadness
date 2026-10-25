@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at DA15</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D9B6.html">D9B6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#da15">Map</a></td>
+<td class="next">
+Next: <a href="DA3F.html">DA3F</a>
+</td>
+</tr>
+</table>
+<div class="description">DA15: Print Key Bar</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="D738.html">Change_Room</a> and <a href="DBC9.html">Handler_InventoryItems</a>.
+</div>
+<div class="paragraph">
+Draws the 10 collected-key icons along the bottom of the screen.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da15"></span>
+<div class="comments">
+<div class="paragraph">
+Set the icon font and print position.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_KeyBar</td>
+<td class="address-2"><span id="da15"></span>DA15</td>
+<td class="instruction">LD HL,$7C70</td>
+<td class="comment-1" rowspan="2">Write <a href="7C70.html">Buffer_ActiveFont</a> to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C36.html">CHARS</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da18"></span>DA18</td>
+<td class="instruction">LD ($5C36),HL</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da1b"></span>DA1B</td>
+<td class="instruction">LD BC,$0119</td>
+<td class="comment-1" rowspan="2">Call <a href="F42D.html">JumpTable_SetPrintPosition</a> at column 19 row 01 (the bottom line).</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da1e"></span>DA1E</td>
+<td class="instruction">CALL <a href="F42D.html">JumpTable_SetPrintPosition</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da21"></span>
+<div class="comments">
+<div class="paragraph">
+Start the key loop.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da21"></span>DA21</td>
+<td class="instruction">LD B,$00</td>
+<td class="comment-1" rowspan="1">Start at key 00.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da23"></span>DA23</td>
+<td class="instruction">LD A,$07</td>
+<td class="comment-1" rowspan="2">Write WHITE to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da25"></span>DA25</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da28"></span>
+<div class="comments">
+<div class="paragraph">
+Skip the highlight unless this key matches *<a href="64A1.html">CollectedKeys</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_KeyBar_Loop</td>
+<td class="address-2"><span id="da28"></span>DA28</td>
+<td class="instruction">LD A,($64A1)</td>
+<td class="comment-1" rowspan="3">Jump to <a href="DA15.html#da33">Print_KeyBar_Glyph</a> unless this key matches *<a href="64A1.html">CollectedKeys</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da2b"></span>DA2B</td>
+<td class="instruction">CP B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da2c"></span>DA2C</td>
+<td class="instruction">JR NZ,<a href="DA15.html#da33">Print_KeyBar_Glyph</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da2e"></span>
+<div class="comments">
+<div class="paragraph">
+Highlight this key.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da2e"></span>DA2E</td>
+<td class="instruction">LD A,$38</td>
+<td class="comment-1" rowspan="2">Write BLACK to *<a rel="noopener nofollow" href="https://skoolkit.ca/disassemblies/rom/hex/asm/5C8F.html">ATTR_T</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da30"></span>DA30</td>
+<td class="instruction">LD ($5C8F),A</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="da33"></span>
+<div class="comments">
+<div class="paragraph">
+<table class="">
+<tr>
+<td class="" colspan="1" rowspan="1"><img alt="glyph-e4" src="../images/udgs/glyph-e4.png" /></td>
+</tr>
+</table>
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Print_KeyBar_Glyph</td>
+<td class="address-2"><span id="da33"></span>DA33</td>
+<td class="instruction">LD A,$E4</td>
+<td class="comment-1" rowspan="2">Print key glyph E4.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da35"></span>DA35</td>
+<td class="instruction">CALL <a href="F436.html">JumpTable_PrintCharacter</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da38"></span>DA38</td>
+<td class="instruction">INC B</td>
+<td class="comment-1" rowspan="4">Jump to <a href="DA15.html#da28">Print_KeyBar_Loop</a> until 10 keys are printed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da39"></span>DA39</td>
+<td class="instruction">LD A,B</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da3a"></span>DA3A</td>
+<td class="instruction">CP $10</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da3c"></span>DA3C</td>
+<td class="instruction">JR NZ,<a href="DA15.html#da28">Print_KeyBar_Loop</a></td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="da3e"></span>DA3E</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D9B6.html">D9B6</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#da15">Map</a></td>
+<td class="next">
+Next: <a href="DA3F.html">DA3F</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/55829.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

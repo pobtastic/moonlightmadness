@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at D864</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D82D.html">D82D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d864">Map</a></td>
+<td class="next">
+Next: <a href="D877.html">D877</a>
+</td>
+</tr>
+</table>
+<div class="description">D864: Handler: Kempston Climb</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routine at <a href="DE19.html">Handler_Combination</a>.
+</div>
+<div class="paragraph">
+Reads Kempston while climbing and jumps to the matching climb routine.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d864"></span>
+<div class="comments">
+<div class="paragraph">
+Bail out if the port is unstable.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Controls_Kempston_Climb</td>
+<td class="address-2"><span id="d864"></span>D864</td>
+<td class="instruction">CALL <a href="D826.html">Read_Kempston</a></td>
+<td class="comment-1" rowspan="1">Call <a href="D826.html">Read_Kempston</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d867"></span>D867</td>
+<td class="instruction">JP NZ,<a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a> if the port is unstable.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d86a"></span>
+<div class="comments">
+<div class="paragraph">
+Climb up.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d86a"></span>D86A</td>
+<td class="instruction">CP $08</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e145">Player_ClimbUp_Anim</a> if up (bit 3) is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d86c"></span>D86C</td>
+<td class="instruction">JP Z,<a href="DE19.html#e145">Player_ClimbUp_Anim</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d86f"></span>
+<div class="comments">
+<div class="paragraph">
+Climb down.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d86f"></span>D86F</td>
+<td class="instruction">CP $04</td>
+<td class="comment-1" rowspan="2">Jump to <a href="DE19.html#e130">Player_ClimbDown_Anim</a> if down (bit 2) is pressed.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d871"></span>D871</td>
+<td class="instruction">JP Z,<a href="DE19.html#e130">Player_ClimbDown_Anim</a></td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="d874"></span>
+<div class="comments">
+<div class="paragraph">
+Hold the current climb if neither direction is pressed.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="d874"></span>D874</td>
+<td class="instruction">JP <a href="E1CC.html#e358">Handler_Player_Commit</a></td>
+<td class="comment-1" rowspan="1">Jump to <a href="E1CC.html#e358">Handler_Player_Commit</a>.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="D82D.html">D82D</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#d864">Map</a></td>
+<td class="next">
+Next: <a href="D877.html">D877</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../dec/asm/55396.html">Switch to decimal</a>.</div>
+</footer>
+</body>
+</html>

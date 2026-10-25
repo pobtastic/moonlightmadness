@@ -189,7 +189,7 @@ Three-byte FF-terminated records. See <a href="../asm/D7D2.html">Handler_Collect
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/6426.html">Reference: Inventory Items</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Two-byte FF-terminated records. See <a href="../asm/DBC9.html">Handler_InventoryItems</a>.
+Two-byte FF-terminated key records. See <a href="../asm/DBC9.html">Handler_InventoryItems</a>.
 </div>
 </div>
 </td>
@@ -357,7 +357,7 @@ Three-byte shifted collision mask from <a href="../asm/DE19.html#de96">Build_Pla
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/644D.html">Special Actor</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Used by the room-07 bats and the room-16 special.
+Used by the room-07 balls and the room-16 special.
 </div>
 </div>
 </td>
@@ -468,7 +468,7 @@ When set, <a href="../asm/E666.html">Play_Tune</a> returns through the delay rou
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/647D.html">Game Complete Flag</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Set to FF by <a href="../asm/D7FF.html">Handler_Housekeeping</a> when all four collection slots hold 09.
+Set to FF by <a href="../asm/D7FF.html">Handler_Housekeeping</a> when the combination is complete (every <a href="../asm/64C1.html">CollectionSlots</a> digit is 09).
 </div>
 </div>
 </td>
@@ -582,8 +582,11 @@ Counts down; when it hits 00 <a href="../asm/DC26.html">Handler_EventTimer</a> f
 <td class="map-g"><span id="64a1"></span><a href="../asm/64A1.html">64A1</a></td>
 <td class="map-length">1</td>
 <td class="map-g-desc">
-<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64A1.html">Collected Count</a></div>
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64A1.html">Collected Keys</a></div>
 <div class="map-entry-desc">
+<div class="paragraph">
+Number of keys collected. <a href="../asm/DA15.html">Print_KeyBar</a> highlights this slot.
+</div>
 </div>
 </td>
 </tr>
@@ -648,7 +651,7 @@ Initialised to 04 by <a href="../asm/EA02.html">Unpack_Rooms</a>.
 <div class="map-entry-title-11"><a class="map-entry-title" href="../asm/64C1.html">Collection Slots</a></div>
 <div class="map-entry-desc">
 <div class="paragraph">
-Four digits shown on room 00. 09 in every slot sets <a href="../asm/647D.html">GameCompleteFlag</a>.
+Four combination digits shown on room 00. 09 in every slot is the completed combination and sets <a href="../asm/647D.html">GameCompleteFlag</a>.
 </div>
 </div>
 </td>
@@ -677,10 +680,46 @@ Working copy of the 17 packed rooms. See <a href="../asm/EA02.html">Unpack_Rooms
 </div>
 </td>
 </tr>
+<tr>
+<td class="map-g"><span id="d888"></span><a href="../asm/D888.html">D888</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/D888.html">Demo Room Count</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Remaining demo rooms before returning to the menu.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="dac3"></span><a href="../asm/DAC3.html">DAC3</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/DAC3.html">Pendulum Position</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Pendulum sprite ID for rooms 0A and 0B. FF resets at <a href="../asm/DAC5.html">Handler_Pendulum</a>.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="map-g"><span id="dac4"></span><a href="../asm/DAC4.html">DAC4</a></td>
+<td class="map-length">1</td>
+<td class="map-g-desc">
+<div class="map-entry-title-11"><a class="map-entry-title" href="../asm/DAC4.html">Pendulum Delta</a></div>
+<div class="map-entry-desc">
+<div class="paragraph">
+Added to <a href="../asm/DAC3.html">Pendulum_Position</a> each step. Negated at each end-stop.
+</div>
+</div>
+</td>
+</tr>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../dec/buffers/gbuffer.html">Switch to decimal</a>.</div>

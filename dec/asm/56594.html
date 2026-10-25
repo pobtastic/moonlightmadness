@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Moonlight Madness: Routine at 56594</title>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="../skoolkit.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-dark.css" />
+<link rel="stylesheet" type="text/css" href="../skoolkit-wide.css" />
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-75RERFCHBG"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-75RERFCHBG');
+</script>
+</head>
+<body class="Asm-c">
+<table class="header">
+<tr>
+<td class="logo"><a href="../index.html"><img alt="logo" src="../images/logo.png" /></a></td>
+<td class="page-header">Routines</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56579.html">56579</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56594">Map</a></td>
+<td class="next">
+Next: <a href="56610.html">56610</a>
+</td>
+</tr>
+</table>
+<div class="description">56594: Prepare Tape Block</div>
+<table class="disassembly">
+<tr>
+<td class="routine-comment" colspan="5">
+<div class="details">
+<div class="paragraph">
+Used by the routines at <a href="56610.html">Tape_Save</a>, <a href="56631.html">Tape_Load</a> and <a href="56684.html">Tape_Checksum</a>.
+</div>
+<div class="paragraph">
+Sets <span class="register">IX</span> to <a href="25724.html">SkipDelayFlag</a>, <span class="register">DE</span> to the length and <span class="register">A</span> to 255.
+</div>
+</div>
+<table class="output">
+<tr class="asm-output-header">
+<th colspan="2">Output</th>
+</tr>
+<tr>
+<td class="register">IX</td>
+<td class="register-desc">Start of the tape block</td>
+</tr>
+<tr>
+<td class="register">DE</td>
+<td class="register-desc">Length of the tape block</td>
+</tr>
+<tr>
+<td class="register">A</td>
+<td class="register-desc">Data block flag (255)</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56594"></span>
+<div class="comments">
+<div class="paragraph">
+Point at the start and the exclusive end.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label">Tape_BlockRange</td>
+<td class="address-2"><span id="56594"></span>56594</td>
+<td class="instruction">LD IX,25724</td>
+<td class="comment-1" rowspan="1">Point <span class="register">IX</span> at <a href="25724.html">SkipDelayFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56598"></span>56598</td>
+<td class="instruction">LD DE,25724</td>
+<td class="comment-1" rowspan="1">Point <span class="register">DE</span> at <a href="25724.html">SkipDelayFlag</a>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56601"></span>56601</td>
+<td class="instruction">LD HL,31847</td>
+<td class="comment-1" rowspan="1">Point <span class="register">HL</span> at 31847.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56604"></span>
+<div class="comments">
+<div class="paragraph">
+Make the length.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56604"></span>56604</td>
+<td class="instruction">XOR A</td>
+<td class="comment-1" rowspan="1">Clear <span class="register">A</span> and the carry flag.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56605"></span>56605</td>
+<td class="instruction">SBC HL,DE</td>
+<td class="comment-1" rowspan="1">Subtract <span class="register">DE</span> from <span class="register">HL</span>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56607"></span>
+<div class="comments">
+<div class="paragraph">
+Set the data-block flag.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56607"></span>56607</td>
+<td class="instruction">EX DE,HL</td>
+<td class="comment-1" rowspan="1">Put the length in <span class="register">DE</span>.</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56608"></span>56608</td>
+<td class="instruction">DEC A</td>
+<td class="comment-1" rowspan="1">Set <span class="register">A</span> to 255.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="56609"></span>
+<div class="comments">
+<div class="paragraph">
+Return.
+</div>
+</div>
+</td>
+</tr>
+<tr>
+<td class="asm-label"></td>
+<td class="address-1"><span id="56609"></span>56609</td>
+<td class="instruction">RET</td>
+<td class="comment-1" rowspan="1">Return.</td>
+</tr>
+</table>
+<table class="asm-navigation">
+<tr>
+<td class="prev">
+Prev: <a href="56579.html">56579</a>
+</td>
+<td class="up">Up: <a href="../maps/all.html#56594">Map</a></td>
+<td class="next">
+Next: <a href="56610.html">56610</a>
+</td>
+</tr>
+</table>
+<footer>
+<div class="release"></div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
+<div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
+<div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
+<div><a href="../../asm/DD12.html">Switch to hexadecimal</a>.</div>
+</footer>
+</body>
+</html>

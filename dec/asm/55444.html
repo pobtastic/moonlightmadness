@@ -25,7 +25,7 @@ gtag('config', 'G-75RERFCHBG');
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="55415.html">55415</a>
+Prev: <a href="55433.html">55433</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#55444">Map</a></td>
 <td class="next">
@@ -48,10 +48,30 @@ Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>
 </td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="55444"></span>
+<div class="comments">
+<div class="paragraph">
+Walk the moving-object list.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_MovingObjects</td>
 <td class="address-2"><span id="55444"></span>55444</td>
 <td class="instruction">LD IX,(25642)</td>
-<td class="comment-1" rowspan="1"><span class="register">IX</span>=*<a href="25642.html">ReferenceMovingObjects</a>.</td>
+<td class="comment-1" rowspan="1">Point <span class="register">IX</span> at the moving-object list.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="55448"></span>
+<div class="comments">
+<div class="paragraph">
+Skip inactive objects and expired timers.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_MovingObjects_Loop</td>
@@ -108,6 +128,16 @@ Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>
 <td class="instruction">JR <a href="55444.html#55541">Handler_MovingObjects_Next</a></td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="55471"></span>
+<div class="comments">
+<div class="paragraph">
+Set the font and clip window.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_MovingObjects_Draw</td>
 <td class="address-2"><span id="55471"></span>55471</td>
 <td class="instruction">LD HL,31856</td>
@@ -155,6 +185,16 @@ Animates the 19-byte records at *<a href="25642.html">ReferenceMovingObjects</a>
 <td class="address-1"><span id="55495"></span>55495</td>
 <td class="instruction">CALL <a href="62536.html">JumpTable_AdvanceEntity</a></td>
 <td class="comment-1" rowspan="1">Call <a href="62536.html">JumpTable_AdvanceEntity</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="55498"></span>
+<div class="comments">
+<div class="paragraph">
+Test the moving edge against the stored limit.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -206,8 +246,8 @@ Reverse at the stored limit.
 <tr>
 <td class="asm-label"></td>
 <td class="address-1"><span id="55511"></span>55511</td>
-<td class="instruction">CALL <a href="56358.html#56375">Reverse_Direction</a></td>
-<td class="comment-1" rowspan="1">Call <a href="56358.html#56375">Reverse_Direction</a>.</td>
+<td class="instruction">CALL <a href="56375.html">Reverse_Direction</a></td>
+<td class="comment-1" rowspan="1">Call <a href="56375.html">Reverse_Direction</a>.</td>
 </tr>
 <tr>
 <td class="asm-label"></td>
@@ -237,6 +277,16 @@ Reverse at the stored limit.
 <td class="comment-1" rowspan="1">Call <a href="62536.html">JumpTable_AdvanceEntity</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="55529"></span>
+<div class="comments">
+<div class="paragraph">
+Store, move, draw and erase the object.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_MovingObjects_Update</td>
 <td class="address-2"><span id="55529"></span>55529</td>
 <td class="instruction">CALL <a href="62500.html">JumpTable_StorePosition</a></td>
@@ -261,6 +311,16 @@ Reverse at the stored limit.
 <td class="comment-1" rowspan="1">Call <a href="62542.html">JumpTable_EraseEntity</a>.</td>
 </tr>
 <tr>
+<td class="routine-comment" colspan="5">
+<span id="55541"></span>
+<div class="comments">
+<div class="paragraph">
+Advance to the next moving object.
+</div>
+</div>
+</td>
+</tr>
+<tr>
 <td class="asm-label">Handler_MovingObjects_Next</td>
 <td class="address-2"><span id="55541"></span>55541</td>
 <td class="instruction">LD DE,19</td>
@@ -276,6 +336,16 @@ Reverse at the stored limit.
 <td class="address-1"><span id="55546"></span>55546</td>
 <td class="instruction">JR <a href="55444.html#55448">Handler_MovingObjects_Loop</a></td>
 <td class="comment-1" rowspan="1">Jump to <a href="55444.html#55448">Handler_MovingObjects_Loop</a>.</td>
+</tr>
+<tr>
+<td class="routine-comment" colspan="5">
+<span id="55548"></span>
+<div class="comments">
+<div class="paragraph">
+Restore the default clip window.
+</div>
+</div>
+</td>
 </tr>
 <tr>
 <td class="asm-label">Handler_MovingObjects_Done</td>
@@ -298,7 +368,7 @@ Reverse at the stored limit.
 <table class="asm-navigation">
 <tr>
 <td class="prev">
-Prev: <a href="55415.html">55415</a>
+Prev: <a href="55433.html">55433</a>
 </td>
 <td class="up">Up: <a href="../maps/all.html#55444">Map</a></td>
 <td class="next">
@@ -308,7 +378,7 @@ Next: <a href="55556.html">55556</a>
 </table>
 <footer>
 <div class="release"></div>
-<div class="copyright">&copy; 1986 Bubble Bus Software &copy; 2024 ArcadeGeek LTD.</div>
+<div class="copyright">&copy; 1986 Bubble Bus Software<br />&copy; 2026 ArcadeGeek LTD.</div>
 <div class="created">Created using <a href="https://skoolkit.ca">SkoolKit</a> 10.1.</div>
 <div class="repository">Link to <a rel="noopener nofollow" href="https://github.com/pobtastic/moonlightmadness/">Source code</a>.</div>
 <div><a href="../../asm/D894.html">Switch to hexadecimal</a>.</div>
